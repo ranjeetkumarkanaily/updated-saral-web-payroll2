@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %b Head name:
+  = @salary_head.head_name
+%p
+  %b Short name:
+  = @salary_head.short_name
+%p
+  %b Salary type:
+  = @salary_head.salary_type
+= link_to 'Edit', edit_salary_head_path(@salary_head)
+|
+\#{link_to 'Back', salary_heads_path}

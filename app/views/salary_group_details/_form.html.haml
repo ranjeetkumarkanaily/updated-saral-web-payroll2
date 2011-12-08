@@ -1,0 +1,34 @@
+= form_for(@salary_group_detail) do |f|
+  - if @salary_group_detail.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@salary_group_detail.errors.count, "error")
+        prohibited this salary_group_detail from being saved:
+      %ul
+        - @salary_group_detail.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :salary_group_id
+    %br/
+    = f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|ss| [ ss.salary_group_name, ss.id ] },
+    @salary_group_detail.salary_group_id), {:prompt => 'Select Structure'}
+  .field
+    = f.label :salary_head
+    %br/
+    = f.collection_select :salary_head_id, SalaryHead.find(:all), :id, :head_name, :prompt => "Select Salary Head"
+  .field
+    = f.label "Calculation Type"
+    %br/
+    = f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month"],@salary_group_detail.calc_type),
+    {:prompt => 'Select Type'}
+  .field
+    = f.label :calculation
+    %br/
+    = f.text_area :calculation, :rows => 3, :cols => 30
+  .field
+    = f.label :based_on
+    %br/
+    = f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],
+    @salary_group_detail.based_on), {:prompt => 'Select'}
+  .actions
+    = f.submit

@@ -1,0 +1,17 @@
+%h1 Listing salary_groups
+%table
+  %tr
+    %th Salary group name
+    %th Based on gross
+    %th
+    %th
+    %th
+  - @salary_groups.each do |salary_group|
+    %tr
+      %td= salary_group.salary_group_name
+      %td= salary_group.based_on_gross
+      %td= link_to 'Show', salary_group
+      %td= link_to 'Edit', edit_salary_group_path(salary_group)
+      %td= link_to 'Destroy', salary_group, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Salary group', new_salary_group_path

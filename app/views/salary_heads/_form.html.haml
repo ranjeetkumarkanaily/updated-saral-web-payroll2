@@ -1,0 +1,23 @@
+= form_for(@salary_head) do |f|
+  - if @salary_head.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@salary_head.errors.count, "error")
+        prohibited this salary_head from being saved:
+      %ul
+        - @salary_head.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :head_name
+    %br/
+    = f.text_field :head_name
+  .field
+    = f.label :short_name
+    %br/
+    = f.text_field :short_name
+  .field
+    = f.label :salary_type
+    %br/
+    = f.text_field :salary_type
+  .actions
+    = f.submit

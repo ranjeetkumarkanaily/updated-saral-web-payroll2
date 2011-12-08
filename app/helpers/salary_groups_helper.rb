@@ -1,0 +1,2 @@
+module SalaryGroupsHelper
+end

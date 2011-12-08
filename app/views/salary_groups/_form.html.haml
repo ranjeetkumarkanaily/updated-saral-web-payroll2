@@ -1,0 +1,19 @@
+= form_for(@salary_group) do |f|
+  - if @salary_group.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@salary_group.errors.count, "error")
+        prohibited this salary_group from being saved:
+      %ul
+        - @salary_group.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :salary_group_name
+    %br/
+    = f.text_field :salary_group_name
+  .field
+    = f.label :based_on_gross
+    %br/
+    = f.check_box :based_on_gross
+  .actions
+    = f.submit

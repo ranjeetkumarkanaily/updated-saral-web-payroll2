@@ -1,0 +1,19 @@
+%h1 Listing salary_heads
+%table
+  %tr
+    %th Head name
+    %th Short name
+    %th Salary type
+    %th
+    %th
+    %th
+  - @salary_heads.each do |salary_head|
+    %tr
+      %td= salary_head.head_name
+      %td= salary_head.short_name
+      %td= salary_head.salary_type
+      %td= link_to 'Show', salary_head
+      %td= link_to 'Edit', edit_salary_head_path(salary_head)
+      %td= link_to 'Destroy', salary_head, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Salary head', new_salary_head_path

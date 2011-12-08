@@ -1,0 +1,10 @@
+%p#notice= notice
+%p
+  %b Salary group name:
+  = @salary_group.salary_group_name
+%p
+  %b Based on gross:
+  = @salary_group.based_on_gross
+= link_to 'Edit', edit_salary_group_path(@salary_group)
+|
+\#{link_to 'Back', salary_groups_path}

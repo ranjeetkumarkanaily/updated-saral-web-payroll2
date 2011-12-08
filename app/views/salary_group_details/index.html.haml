@@ -1,0 +1,23 @@
+%h1 Listing salary_group_details
+%table
+  %tr
+    %th Calc type
+    %th Calculation
+    %th Based on
+    %th Salary group
+    %th Salary head
+    %th
+    %th
+    %th
+  - @salary_group_details.each do |salary_group_detail|
+    %tr
+      %td= salary_group_detail.calc_type
+      %td= salary_group_detail.calculation
+      %td= salary_group_detail.based_on
+      %td= salary_group_detail.salary_group.salary_group_name
+      %td= salary_group_detail.salary_head.head_name
+      %td= link_to 'Show', salary_group_detail
+      %td= link_to 'Edit', edit_salary_group_detail_path(salary_group_detail)
+      %td= link_to 'Destroy', salary_group_detail, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Salary group detail', new_salary_group_detail_path

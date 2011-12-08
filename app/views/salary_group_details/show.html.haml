@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %b Calc type:
+  = @salary_group_detail.calc_type
+%p
+  %b Calculation:
+  = @salary_group_detail.calculation
+%p
+  %b Based on:
+  = @salary_group_detail.based_on
+%p
+  %b Salary group:
+  = @salary_group_detail.salary_group.salary_group_name
+%p
+  %b Salary head:
+  = @salary_group_detail.salary_head.head_name
+= link_to 'Edit', edit_salary_group_detail_path(@salary_group_detail)
+|
+\#{link_to 'Back', salary_group_details_path}
