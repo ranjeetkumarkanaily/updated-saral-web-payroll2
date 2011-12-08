@@ -14,11 +14,11 @@
   .field
     = f.label :date_of_joining
     %br/
-    = f.date_select :date_of_joining
+    = f.date_select :date_of_joining,  :start_year => 2000, :end_year => 2014
   .field
     = f.label :date_of_leaving
     %br/
-    = f.date_select :date_of_leaving
+    = f.date_select :date_of_leaving, :include_blank => true,  :start_year => 2000, :end_year => 2014
   .actions
     = f.submit
 

@@ -1,5 +1,5 @@
 class EmployeeDetail < ActiveRecord::Base
 
-  belongs_to :employees
-  belongs_to :salary_groups
+  belongs_to :employee
+  belongs_to :salary_group
 end
