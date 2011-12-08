@@ -7,6 +7,15 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :salary_groups
 
+  root :to => 'welcome#index'
+
+  match 'login' => 'sessions#new', :as => :login
+  match 'logout' => 'sessions#destroy', :as => :logout
+  match 'welcome' => 'welcome#index', :as => :welcome
+
+  resources :sessions
+  resources :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

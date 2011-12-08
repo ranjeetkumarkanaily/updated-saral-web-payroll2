@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title Saral Web Payroll
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    - if @_current_user
+      %div{:style => "float:right;"}
+        = link_to "Logout", logout_path
+    #container
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
+    = yield
