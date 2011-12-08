@@ -14,6 +14,10 @@ UpdatedSaralWebPayroll::Application.routes.draw do
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'welcome' => 'welcome#index', :as => :welcome
 
+  resources :lops, :only => [:index, :create] do
+    post 'file_upload', :on => :collection
+  end
+
   resources :sessions
   resources :users
 
