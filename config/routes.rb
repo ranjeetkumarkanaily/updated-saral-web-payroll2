@@ -10,6 +10,8 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :salary_groups
 
+  resources :salary_allotments
+
   root :to => 'welcome#index'
 
   match 'login' => 'sessions#new', :as => :login

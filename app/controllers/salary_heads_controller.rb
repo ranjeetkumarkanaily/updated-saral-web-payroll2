@@ -2,7 +2,7 @@ class SalaryHeadsController < ApplicationController
   # GET /salary_heads
   # GET /salary_heads.json
   def index
-    @salary_heads = SalaryHead.all
+    @salary_heads = SalaryHead.all(:order => 'id ASC')
 
     respond_to do |format|
       format.html # index.html.haml
