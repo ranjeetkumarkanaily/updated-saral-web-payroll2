@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "employee_details/show.html.erb" do
+describe "employee_details/show.html.haml" do
   before(:each) do
     @employee_detail = assign(:employee_detail, stub_model(EmployeeDetail,
       :employee_id => 1,

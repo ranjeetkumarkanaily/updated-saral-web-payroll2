@@ -5,7 +5,7 @@ class EmployeeDetailsController < ApplicationController
     @employee_details = EmployeeDetail.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.json { render json: @employee_details }
     end
   end
@@ -16,7 +16,7 @@ class EmployeeDetailsController < ApplicationController
     @employee_detail = EmployeeDetail.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.json { render json: @employee_detail }
     end
   end
@@ -27,7 +27,7 @@ class EmployeeDetailsController < ApplicationController
     @employee_detail = EmployeeDetail.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # new.html.haml
       format.json { render json: @employee_detail }
     end
   end

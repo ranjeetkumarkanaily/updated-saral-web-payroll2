@@ -5,6 +5,7 @@
     %th Date of joining
     %th Date of leaving
     %th{:colspan => 3} Operations
+    %th Details
   - @employees.each do |employee|
     %tr
       %td= employee.empname
@@ -13,5 +14,6 @@
       %td= link_to 'Show', employee
       %td= link_to 'Edit', edit_employee_path(employee)
       %td= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete
+      %td= link_to 'Details', employee_details_path
 %br/
 = link_to 'New Employee', new_employee_path
