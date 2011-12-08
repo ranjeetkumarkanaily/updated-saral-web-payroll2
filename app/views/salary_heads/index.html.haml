@@ -1,12 +1,11 @@
-%h1 Listing salary_heads
-%table
+=link_to 'Home', root_url
+%h1 Listing Salary Heads
+%table{:width => 600, :cellpadding => 0, :cellspacing => 0, :border => 1}
   %tr
-    %th Head name
-    %th Short name
-    %th Salary type
-    %th
-    %th
-    %th
+    %th Head Name
+    %th Short Name
+    %th Salary Type
+    %th{:colspan => 3} Operations
   - @salary_heads.each do |salary_head|
     %tr
       %td= salary_head.head_name
@@ -16,4 +15,4 @@
       %td= link_to 'Edit', edit_salary_head_path(salary_head)
       %td= link_to 'Destroy', salary_head, confirm: 'Are you sure?', method: :delete
 %br/
-= link_to 'New Salary head', new_salary_head_path
+= link_to 'New Salary Head', new_salary_head_path

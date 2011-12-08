@@ -1,0 +1,57 @@
+= form_for(@company) do |f|
+  - if @company.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@company.errors.count, "error")
+        prohibited this company from being saved:
+      %ul
+        - @company.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :companyname, "Name of the Company"
+    %br/
+    = f.text_field :companyname
+  .field
+    = f.label :responsible_person, "Responsible Person"
+    %br/
+    = f.text_field :responsible_person
+  .field
+    = f.label :dateofestablishment, "Date of Establishment"
+    %br/
+    = f.date_select :dateofestablishment, :start_year => 1980, :end_year => 2012
+  -#.field
+  -#  = f.label :pf, "PF"
+  -#  = f.check_box :pf
+  -#  = f.label :esi, "ESI"
+  -#  = f.check_box :esi
+  .field
+    = f.label :phonenumber1, "Phone Number 1"
+    %br/
+    = f.text_field :phonenumber1
+  .field
+    = f.label :phonenumber2, "Phone Number 2"
+    %br/
+    = f.text_field :phonenumber2
+  .field
+    = f.label :address, "Address 1"
+    %br/
+    = f.text_field :address
+  .field
+    = f.label :address2, "Address 2"
+    %br/
+    = f.text_field :address2
+  .field
+    = f.label :address3, "Address 3"
+    %br/
+    = f.text_field :address3
+  .field
+    = f.label :email, "Email"
+    %br/
+    = f.text_field :email
+  .field
+    = f.label :website, "Website"
+    %br/
+    = f.text_field :website
+    %br/
+  .actions
+    = f.submit

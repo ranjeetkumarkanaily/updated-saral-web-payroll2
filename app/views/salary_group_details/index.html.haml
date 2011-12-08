@@ -1,23 +1,22 @@
-%h1 Listing salary_group_details
-%table
+=link_to 'Home', root_url
+%h1 Listing Salary Group Configuration
+%table{:width => 1000, :cellpadding => 0, :cellspacing => 0, :border => 1}
   %tr
-    %th Calc type
+    %th Salary Group
+    %th Salary Head
+    %th Calculation Type
     %th Calculation
-    %th Based on
-    %th Salary group
-    %th Salary head
-    %th
-    %th
-    %th
+    %th Based On
+    %th{:colspan => 3} Operations
   - @salary_group_details.each do |salary_group_detail|
     %tr
+      %td= salary_group_detail.salary_group.salary_group_name
+      %td= salary_group_detail.salary_head.head_name
       %td= salary_group_detail.calc_type
       %td= salary_group_detail.calculation
       %td= salary_group_detail.based_on
-      %td= salary_group_detail.salary_group.salary_group_name
-      %td= salary_group_detail.salary_head.head_name
       %td= link_to 'Show', salary_group_detail
       %td= link_to 'Edit', edit_salary_group_detail_path(salary_group_detail)
       %td= link_to 'Destroy', salary_group_detail, confirm: 'Are you sure?', method: :delete
 %br/
-= link_to 'New Salary group detail', new_salary_group_detail_path
+= link_to 'New Salary Group Configuration', new_salary_group_detail_path
