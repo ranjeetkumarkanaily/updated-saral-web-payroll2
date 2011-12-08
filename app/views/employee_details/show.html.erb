@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Employee:</b>
+  <%= @employee_detail.employee_id %>
+</p>
+
+<p>
+  <b>Effective date:</b>
+  <%= @employee_detail.effective_date %>
+</p>
+
+<p>
+  <b>Salary group:</b>
+  <%= @employee_detail.salary_group_id %>
+</p>
+
+<p>
+  <b>Allotted gross:</b>
+  <%= @employee_detail.allotted_gross %>
+</p>
+
+
+<%= link_to 'Edit', edit_employee_detail_path(@employee_detail) %> |
+<%= link_to 'Back', employee_details_path %>
