@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(:version => 20111208122227) do
     t.datetime "updated_at"
   end
 
+  create_table "lops", :force => true do |t|
+    t.integer  "employee_id"
+    t.string   "month_year"
+    t.float    "lop"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "salary_group_details", :force => true do |t|
     t.string   "calc_type"
     t.string   "calculation"
