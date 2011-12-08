@@ -1,0 +1,33 @@
+<%= form_for(@employee_detail) do |f| %>
+  <% if @employee_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee_detail.errors.count, "error") %> prohibited this employee_detail from being saved:</h2>
+
+      <ul>
+      <% @employee_detail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br />
+    <%= f.number_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :effective_date %><br />
+    <%= f.date_select :effective_date %>
+  </div>
+  <div class="field">
+    <%= f.label :salary_group_id %><br />
+    <%= f.number_field :salary_group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :allotted_gross %><br />
+    <%= f.text_field :allotted_gross %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
