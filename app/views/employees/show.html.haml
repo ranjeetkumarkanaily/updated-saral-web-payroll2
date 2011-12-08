@@ -1,0 +1,14 @@
+%p#notice= notice
+%p
+  %b Empname:
+  = @employee.empname
+%p
+  %b Date of joining:
+  = @employee.date_of_joining
+%p
+  %b Date of leaving:
+  = @employee.date_of_leaving
+= link_to 'Edit', edit_employee_path(@employee)
+|
+\#{link_to 'Back', employees_path}
+

@@ -1,0 +1,19 @@
+%h1 Listing employees
+%table
+  %tr
+    %th Empname
+    %th Date of joining
+    %th Date of leaving
+    %th
+    %th
+    %th
+  - @employees.each do |employee|
+    %tr
+      %td= employee.empname
+      %td= employee.date_of_joining
+      %td= employee.date_of_leaving
+      %td= link_to 'Show', employee
+      %td= link_to 'Edit', edit_employee_path(employee)
+      %td= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Employee', new_employee_path
