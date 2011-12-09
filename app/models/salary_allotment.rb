@@ -1,4 +1,6 @@
 class SalaryAllotment < ActiveRecord::Base
+  belongs_to :salary_head
+  belongs_to :employee_detail
 
   def salaryHead
     SalaryHead.find(salary_head_id).head_name
