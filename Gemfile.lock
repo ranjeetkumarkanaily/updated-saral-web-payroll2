@@ -169,7 +169,7 @@ GEM
       ffi (~> 1.0.9)
       multi_json (~> 1.0.4)
       rubyzip
-    sexp_processor (3.0.8)
+    sexp_processor (3.0.9)
     shoulda-matchers (1.0.0)
     simplecov (0.5.4)
       multi_json (~> 1.0.3)
