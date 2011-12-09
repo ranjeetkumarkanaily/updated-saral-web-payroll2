@@ -8,7 +8,11 @@ describe EmployeesController do
 
 
   def valid_attributes
-    {}
+    {
+        :empname => "simpleEmployee",
+        :date_of_joining => "2009-10-31",
+        :date_of_leaving => "2010-11-30",
+    }
   end
 
   describe "GET index" do

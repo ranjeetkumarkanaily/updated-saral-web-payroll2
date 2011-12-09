@@ -1,0 +1,29 @@
+= form_for(@employee_detail) do |f|
+  - if @employee_detail.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@employee_detail.errors.count, "error")
+        prohibited this employee_detail from being saved:
+      %ul
+        - @employee_detail.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :employee_id
+    %br/
+    = f.select :employee_id, options_for_select(Employee.all(:order => 'empname ASC').collect {|emp| [ emp.empname, emp.id ] },
+                                       @employee_detail.employee_id), {:prompt => 'Select Employee'}
+  .field
+    = f.label :effective_date
+    %br/
+    = f.date_select :effective_date
+  .field
+    = f.label :salary_group_id
+    %br/
+    = f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },
+                                                            @employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+  .field
+    = f.label :allotted_gross
+    %br/
+    = f.text_field :allotted_gross
+  .actions
+    = f.submit

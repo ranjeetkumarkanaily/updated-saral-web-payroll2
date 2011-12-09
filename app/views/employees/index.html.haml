@@ -1,12 +1,11 @@
 %h1 Listing employees
-%table
+%table{:cellpadding => 0, :cellspacing => 0, :border => 1}
   %tr
     %th Empname
     %th Date of joining
     %th Date of leaving
-    %th
-    %th
-    %th
+    %th{:colspan => 3} Operations
+    %th Details
   - @employees.each do |employee|
     %tr
       %td= employee.empname
@@ -15,5 +14,6 @@
       %td= link_to 'Show', employee
       %td= link_to 'Edit', edit_employee_path(employee)
       %td= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete
+      %td= link_to 'Details', employee_details_path(:id => employee.id)
 %br/
 = link_to 'New Employee', new_employee_path
