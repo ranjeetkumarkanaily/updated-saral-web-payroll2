@@ -7,13 +7,22 @@ describe EmployeeDetailsController do
   end
 
   def valid_attributes
-    {}
+    {:employee_id => "1",
+    :effective_date => "2009-10-31",
+    :salary_group_id => "1",
+    :allotted_gross => 5000}
   end
 
   describe "GET index" do
     it "assigns all employee_details as @employee_details" do
       employee_detail = EmployeeDetail.create! valid_attributes
       get :index
+      assigns(:employee_details).should eq([employee_detail])
+    end
+
+    it "assigns employee_details of specific as @employee_details" do
+      employee_detail = EmployeeDetail.create! valid_attributes
+      get :index, :param1 => 1
       assigns(:employee_details).should eq([employee_detail])
     end
   end
@@ -47,6 +56,13 @@ describe EmployeeDetailsController do
         expect {
           post :create, :employee_detail => valid_attributes
         }.to change(EmployeeDetail, :count).by(1)
+      end
+
+      it "creates salary allotments for the employee details created" do
+        FactoryGirl.create(:salary_group_detail)
+        expect {
+          post :create, :employee_detail => valid_attributes
+        }.to change(SalaryAllotment, :count)
       end
 
       it "assigns a newly created employee_detail as @employee_detail" do
