@@ -2,7 +2,7 @@ class EmployeeDetailsController < ApplicationController
   # GET /employee_details
   # GET /employee_details.json
   def index
-    @employee_details = EmployeeDetail.where(:employee_id=>2)
+    @employee_details = EmployeeDetail.where(:employee_id=>params[:param1])
 
     respond_to do |format|
       format.html # index.html.haml
@@ -44,8 +44,8 @@ class EmployeeDetailsController < ApplicationController
 
     respond_to do |format|
       if @employee_detail.save
-        #SalaryGroupDetail[:salary_head_id].find(:salary_group_id => @employee_detail.salary_group.id).each do |head_id|
-        #SalaryAllotment.new()
+        #SalaryGroupDetail.find(:all).each do |sgd|
+        #SalaryAllotment.create!(:employee_id => @employee_detail.employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_allotment =>0)
         #end
         format.html { redirect_to @employee_detail, notice: 'Employee detail was successfully created.' }
         format.json { render json: @employee_detail, status: :created, location: @employee_detail }
