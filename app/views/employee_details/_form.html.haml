@@ -10,7 +10,8 @@
   .field
     = f.label :employee_id
     %br/
-    = f.number_field :employee_id
+    = f.select :employee_id, options_for_select(Employee.all(:order => 'empname ASC').collect {|emp| [ emp.empname, emp.id ] },
+                                       @employee_detail.employee_id), {:prompt => 'Select Employee'}
   .field
     = f.label :effective_date
     %br/
@@ -18,7 +19,8 @@
   .field
     = f.label :salary_group_id
     %br/
-    = f.number_field :salary_group_id
+    = f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },
+                                                            @employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
   .field
     = f.label :allotted_gross
     %br/
