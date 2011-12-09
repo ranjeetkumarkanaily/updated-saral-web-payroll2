@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20111208163349) do
     t.integer  "employee_detail_id"
     t.date     "effective_date"
     t.integer  "salary_head_id"
-    t.decimal  "salary_allotment",   :precision => 8, :scale => 2
+    t.decimal  "salary_allotments",   :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
