@@ -1,2 +1,30 @@
 =link_to 'Home', root_url
 %h1 Salary Allotment Employee-wise
+= form_tag salary_allotments_path, :method => :get do
+  %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+    %tr
+      %td{:width => "100px"}
+        Employee
+      %td{:width => "100px"}= select_tag "employee_id", options_from_collection_for_select(Employee.all,'id','empname', params[:employee_id]),:prompt => 'Select Employee'
+      %td
+        = submit_tag("Submit")
+    %tr
+      %td
+        &nbsp;
+- if params[:employee_id]
+  = form_tag salary_allotments_path, :method => :put do
+    %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+      %tr
+        %td Salary Heads
+        %td Short Name
+        %td Salary Head Type
+        %td Salary Allotment
+      - @allotSal.each do |allotSal|
+        = hidden_field_tag "salAllotment[][id]", allotSal.id
+        %tr
+          %td= allotSal.salaryHead
+          %td= allotSal.shortName
+          %td= allotSal.salaryHeadType
+          %td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
+      %tr
+        %td= submit_tag "Allot Salary"

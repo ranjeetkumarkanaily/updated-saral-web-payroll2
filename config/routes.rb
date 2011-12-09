@@ -10,7 +10,9 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :salary_groups
 
-  resources :salary_allotments
+  resources :salary_allotments do
+    put :update, :on => :collection
+  end
 
   root :to => 'welcome#index'
 
