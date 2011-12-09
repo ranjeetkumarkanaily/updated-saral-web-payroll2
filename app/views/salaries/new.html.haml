@@ -1,0 +1,29 @@
+%h1 Salary Editor
+= form_tag salaries_path , :method => :post do
+  %table
+    %tr
+      %td{:width => "100px"} Employee
+      %td{:width => "100px"}
+        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname'), :prompt => "Select Employee")
+    %tr
+      %td{:width => "100px"} Month/Year
+      %td{:width => "100px"}
+        = select_tag("month_year", options_for_select([['Jan/2011', '01/2011'],['Feb/2011', '02/2011'],['Mar/2011', '03/2011'],['Apr/2011', '04/2011'],['May/2011', '05/2011'],['Jun/2011', '06/2011'],['Jul/2011', '07/2011'],['Aug/2011', '08/2011'],['Sep/2011', '09/2011'],['Oct/2011', '10/2011']],params[:month_year]), :prompt => "Select Month Year")
+    %tr
+      %td
+        = submit_tag("Get Salary")
+    %tr
+      %td &nbsp;
+- if(params[:month_year])
+  = form_tag salaries_path , :method => :post do
+    %table
+      %tr
+        %td
+          Salary Head ID
+        %td
+          Salary Allotment
+      - @salary_allotment.each do |sal_allot|
+        %tr
+          %td= sal_allot.salary_head_id
+          %td= sal_allot.salary_allotment
+
