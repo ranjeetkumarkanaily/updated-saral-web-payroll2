@@ -7,7 +7,12 @@ class SalariesController < ApplicationController
   end
 
   def create
-    if(params[:salary] && params[:month_year] && params[:employee_id])
+    if(params[:salary]) #&& params[:month_year] && params[:employee_id]
+      params[:salary].each do |sal|
+        puts sal
+        Salary.create(sal)
+      end
+      redirect_to salaries_path
 
     elsif(params[:month_year] && params[:employee_id])
       month_year = params[:month_year].split('/')

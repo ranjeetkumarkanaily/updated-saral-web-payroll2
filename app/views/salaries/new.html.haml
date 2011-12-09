@@ -18,12 +18,20 @@
   = form_tag salaries_path , :method => :post do
     %table
       %tr
-        %td
-          Salary Head ID
-        %td
-          Salary Allotment
+        %td Salary Heads
+        %td Short Name
+        %td Salary Head Type
+        -#%td Salary Effective From
+        %td Salary Allotment
       - @salary_allotment.each do |sal_allot|
+        = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
+        = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
+        = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
         %tr
-          %td= sal_allot.salary_head_id
-          %td= sal_allot.salary_allotment
-
+          %td= SalaryHead.find(sal_allot.salary_head_id).head_name
+          %td= SalaryHead.find(sal_allot.salary_head_id).short_name
+          %td= SalaryHead.find(sal_allot.salary_head_id).salary_type
+          -#%td= sal_allot.effective_date
+          %td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
+      %tr
+        %td= submit_tag "Save Salary"
