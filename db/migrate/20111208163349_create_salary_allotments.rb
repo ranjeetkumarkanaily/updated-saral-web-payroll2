@@ -5,7 +5,7 @@ class CreateSalaryAllotments < ActiveRecord::Migration
       t.integer :employee_detail_id
       t.date :effective_date
       t.integer :salary_head_id
-      t.decimal :salary_allotments, :precision => 8, :scale => 2
+      t.decimal :salary_allotment, :precision => 8, :scale => 2
 
       t.timestamps
     end

@@ -2,7 +2,7 @@ class SalaryAllotmentsController < ApplicationController
 
   def index
     if params[:employee_id]
-      @allotSal = SalaryAllotment.where("employee_id = #{params[:employee_id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = salary_allotments.employee_id)").order('id ASC')
+      @allotSal = SalaryAllotment.where("employee_id = #{params[:employee_id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{params[:employee_id]})").order('salary_head_id ASC')
       respond_to do |format|
         format.html # index.html.haml
         format.json { render json: @allotSal }
