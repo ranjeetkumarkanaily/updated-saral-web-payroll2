@@ -4,7 +4,7 @@
     %tr
       %td{:width => "100px"} Employee
       %td{:width => "100px"}
-        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname'), :prompt => "Select Employee")
+        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname', params[:employee_id]), :prompt => "Select Employee")
     %tr
       %td{:width => "100px"} Month/Year
       %td{:width => "100px"}
@@ -23,16 +23,20 @@
         %td Salary Head Type
         -#%td Salary Effective From
         %td Salary Allotment
-      - @salary_allotment.each do |sal_allot|
-        = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
-        = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
-        = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
-        = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
+      - if @salary_allotment.count > 0
+        - @salary_allotment.each do |sal_allot|
+          = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
+          = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
+          = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
+          = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
+          %tr
+            %td= SalaryHead.find(sal_allot.salary_head_id).head_name
+            %td= SalaryHead.find(sal_allot.salary_head_id).short_name
+            %td= SalaryHead.find(sal_allot.salary_head_id).salary_type
+            -#%td= sal_allot.effective_date
+            %td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
         %tr
-          %td= SalaryHead.find(sal_allot.salary_head_id).head_name
-          %td= SalaryHead.find(sal_allot.salary_head_id).short_name
-          %td= SalaryHead.find(sal_allot.salary_head_id).salary_type
-          -#%td= sal_allot.effective_date
-          %td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
-      %tr
-        %td= submit_tag "Save Salary"
+          %td= submit_tag "Save Salary"
+      - else
+        %tr
+          %td{:style => "color:#FF0000"} Salary already Generated
