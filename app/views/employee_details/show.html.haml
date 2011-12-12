@@ -1,15 +1,14 @@
-%p#notice= notice
 %p
   %b Employee:
   = @employee_detail.employee_id
 %p
-  %b Effective date:
+  %b Effective Date:
   = @employee_detail.effective_date
 %p
-  %b Salary group:
+  %b Salary Group:
   = @employee_detail.salary_group_id
 %p
-  %b Allotted gross:
+  %b Allotted Gross:
   = @employee_detail.allotted_gross
 = link_to 'Edit', edit_employee_detail_path(@employee_detail)
 |
