@@ -29,7 +29,8 @@ class EmployeeDetailsController < ApplicationController
   # GET /employee_details/new
   # GET /employee_details/new.json
   def new
-    @employee_detail = EmployeeDetail.new(:employee_id => @paramempid)
+    @paramempid = params[:param2]
+    @employee_detail = EmployeeDetail.new()
 
     respond_to do |format|
       format.html # new.html.haml

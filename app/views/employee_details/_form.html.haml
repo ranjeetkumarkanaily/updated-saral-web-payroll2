@@ -11,7 +11,7 @@
     = f.label :employee_id
     %br/
     = f.select :employee_id, options_for_select(Employee.all(:order => 'empname ASC').collect {|emp| [ emp.empname, emp.id ] },
-                                       @employee_detail.employee_id), {:prompt => 'Select Employee'}
+                                       @employee_detail.employee_id), {:prompt => @paramempid ? Employee.find_by_id(@paramempid).empname : "Select Employee" }
   .field
     = f.label :effective_date
     %br/
