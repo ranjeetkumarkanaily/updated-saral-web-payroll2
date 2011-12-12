@@ -14,7 +14,7 @@
         = submit_tag("Get Salary")
     %tr
       %td &nbsp;
-- if(params[:month_year])
+- if(params[:month_year] && params[:employee_id])
   = form_tag salaries_path , :method => :post do
     %table
       %tr
