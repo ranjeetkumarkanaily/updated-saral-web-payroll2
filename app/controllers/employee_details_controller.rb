@@ -2,8 +2,9 @@ class EmployeeDetailsController < ApplicationController
   # GET /employee_details
   # GET /employee_details.json
   def index
-    if params[:param1]
-    @employee_details = EmployeeDetail.where(:employee_id=>params[:param1])
+    @paramempid = params[:param1]
+    if @paramempid
+    @employee_details = EmployeeDetail.where(:employee_id=>@paramempid)
     else
     @employee_details = EmployeeDetail.all
     end
@@ -28,7 +29,7 @@ class EmployeeDetailsController < ApplicationController
   # GET /employee_details/new
   # GET /employee_details/new.json
   def new
-    @employee_detail = EmployeeDetail.new
+    @employee_detail = EmployeeDetail.new(:employee_id => @paramempid)
 
     respond_to do |format|
       format.html # new.html.haml
