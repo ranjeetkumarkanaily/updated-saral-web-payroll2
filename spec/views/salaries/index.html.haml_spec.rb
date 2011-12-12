@@ -12,7 +12,7 @@ describe "salaries/index.html.haml" do
 
   describe "Generated Salary" do
     before :each do
-      @salary = Factory(:salary)
+      @salary = FactoryGirl.create(:salary)
       view.stub!(:params).and_return :month_year => @salary.month_year
     end
 
