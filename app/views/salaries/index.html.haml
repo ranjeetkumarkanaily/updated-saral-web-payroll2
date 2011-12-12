@@ -8,10 +8,51 @@
     %tr
       %td{:width => "100px"} Month/Year
       %td{:width => "100px"}
-        = select_tag("month_year", options_for_select([['Jan/2011', 'Jan/2011'],['Feb/2011', 'Feb/2011'],['Mar/2011', 'Mar/2011'],['Apr/2011', 'Apr/2011'],['May/2011', 'May/2011'],['Jun/2011', 'Jun/2011'],['Jul/2011', 'Jul/2011'],['Aug/2011', 'Aug/2011'],['Sep/2011', 'Sep/2011'],['Oct/2011', 'Oct/2011']],params[:month_year]), :prompt => "Select Month Year")
+        = select_tag("month_year", options_for_select([['Jan/2011', '01/2011'],['Feb/2011', '02/2011'],['Mar/2011', '03/2011'],['Apr/2011', '04/2011'],['May/2011', '05/2011'],['Jun/2011', '06/2011'],['Jul/2011', '07/2011'],['Aug/2011', '08/2011'],['Sep/2011', '09/2011'],['Oct/2011', '10/2011']],params[:month_year]), :prompt => "Select Month Year")
     %tr
       %td
         = submit_tag("Generate Salary")
     %tr
       %td
         &nbsp;
+- if (params[:month_year] and params[:employee_id])
+  %table{:border => 0}
+    %tr
+      %td
+        %table{:border => 1}
+          %tr
+            %td Earnings
+            %td Deduction
+          %tr
+            %td
+              %table
+                - @sal_earning.each do |sal_head|
+                  %tr
+                    %td= sal_head.head_name
+                    %td= sal_head.total
+                    - gross_total =   gross_total + sal_head.total.to_i
+            %td{:valign => 'top'}
+              %table
+                - @sal_deduction.each do |sal_head|
+                  %tr
+                    %td= sal_head.head_name
+                    %td= sal_head.total
+                    - deduction_total = deduction_total + sal_head.total.to_i
+          %tr
+            %td
+              %table
+                %tr
+                  %td Gross Salary
+                  %td= gross_total
+            %td
+              %table
+                %tr
+                  %td Total Deductions
+                  %td= deduction_total
+          %tr
+            %td
+              %table
+                %tr
+                  %td Net Salary
+                  %td= gross_total-deduction_total
+            %td

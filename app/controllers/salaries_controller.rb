@@ -3,7 +3,13 @@ class SalariesController < ApplicationController
 
   end
   def index
+    @sal = Salary.first
 
+    if params[:month_year] && params[:employee_id]
+      @sal_earning = Salary.get_sal_on_sal_type "Earnings", params[:month_year], params[:employee_id]
+      @sal_deduction = Salary.get_sal_on_sal_type "Deductions", params[:month_year], params[:employee_id]
+
+    end
   end
 
   def create
