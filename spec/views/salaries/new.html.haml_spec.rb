@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe "salaries/index.html.haml" do
+describe "salaries/new.html.haml" do
 
   it "render form to generate salary" do
     render
@@ -9,5 +9,6 @@ describe "salaries/index.html.haml" do
       assert_select "select#month_year", :name => "month_year"
     end
   end
+
 
 end

@@ -29,11 +29,10 @@ class SalariesController < ApplicationController
         @salary_allotment = []
       else
         if effective_dates.count > 0
-        @salary_allotment = SalaryAllotment.where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{params[:employee_id]}").order("effective_date ASC")
-
-      else
-        @salary_allotment = SalaryAllotment.where("employee_id = #{params[:employee_id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = salary_allotments.employee_id)")
-      end
+          @salary_allotment = SalaryAllotment.where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{params[:employee_id]}").order("effective_date ASC")
+        else
+          @salary_allotment = SalaryAllotment.where("employee_id = #{params[:employee_id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{params[:employee_id]})")
+        end
       end
 
       render "new"
@@ -41,7 +40,7 @@ class SalariesController < ApplicationController
   end
 
   def edit
-    @salary_detail = Salary.find(params[:id])
+
   end
 
 end

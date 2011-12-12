@@ -1,5 +1,6 @@
 class Salary < ActiveRecord::Base
 
+
   def self.get_sal_on_sal_type  salary_type, month_year, employee_id
 
     month_year = month_year.split('/')
@@ -13,6 +14,5 @@ class Salary < ActiveRecord::Base
   scope :get_salary, lambda { |effective_date|
     where(:effective_date => effective_date).order('employee_id ASC')
   }
-
 
 end

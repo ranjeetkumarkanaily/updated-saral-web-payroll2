@@ -1,5 +1,11 @@
 # By using the symbol ':employee', we get Factory Girl to simulate the Employee model.
 FactoryGirl.define do
+  factory :employee do
+    empname "XYZ"
+    date_of_joining "2011-02-01"
+    date_of_leaving ""
+  end
+
   factory :lop do
     employee
     month_year "Jan/2011"
@@ -21,9 +27,17 @@ FactoryGirl.define do
     salary_allotment 1000.00
   end
 
+  factory :salary do
+    effective_date '2011-02-01'
+    salary_amount 1000
+    employee_id 1
+    employee_detail_id 1
+    salary_head_id 1
+  end
+
   factory :salary_group_detail do
     salary_group_id 1
-    salary_head_id 1
+    salary_head
     calc_type 'Lumpsum'
     calculation ""
     based_on "PayDays"
