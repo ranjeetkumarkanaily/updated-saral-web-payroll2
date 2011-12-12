@@ -19,9 +19,7 @@ class SalariesController < ApplicationController
 
       effective_dates = SalaryAllotment.select("effective_date").where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{params[:employee_id]}")
 
-      if(Salary.select("effective_date").where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{params[:employee_id]}").count > 0)
-        @salary_allotment = []
-      else
+      if(Salary.select("effective_date").where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{params[:employee_id]}").count == 0)
         if effective_dates.count > 0
           @salary_allotment = SalaryAllotment.where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{params[:employee_id]}").order("effective_date ASC")
         else
