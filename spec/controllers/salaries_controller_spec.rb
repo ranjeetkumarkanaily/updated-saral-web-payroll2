@@ -17,15 +17,20 @@ describe SalariesController do
         post :create, :salary => [salary.attributes]
         response.should redirect_to salaries_path
       end
+    end
+  end
 
-      it "should redirect to salary new page" do
-        post :create, :month_year => "01/2011", :employee_id => 1
-      end
+  describe "GET new" do
+    it "assigns a requested SalaryAllotment as @SalaryAllotment" do
+      sal_allot = FactoryGirl.create(:salary_allotment)
+      get :new, :month_year => "02/2011", :employee_id => sal_allot.employee_id
+      assigns(:salary_allotments).should eq([sal_allot])
+    end
 
-      it "should redirect to salary new page" do
-        salary = FactoryGirl.build(:salary_allotment)
-        post :create, :month_year => "02/2011", :employee_id => 1
-      end
+    it "assigns a requested SalaryAllotment as @SalaryAllotment" do
+      sal_allot = FactoryGirl.create(:salary_allotment)
+      get :new, :month_year => "03/2011", :employee_id => sal_allot.employee_id
+      assigns(:salary_allotments).should eq([sal_allot])
     end
   end
 end
