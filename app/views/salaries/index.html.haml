@@ -27,17 +27,17 @@
           %tr
             %td
               %table
-                - @sal_earning.each do |sal_head|
+                - @salary_earning.each do |salary|
                   %tr
-                    %td= sal_head.head_name
-                    %td= sal_head.total
+                    %td= salary.head_name
+                    %td= salary.total
                     - gross_total =   gross_total + sal_head.total.to_i
             %td{:valign => 'top'}
               %table
-                - @sal_deduction.each do |sal_head|
+                - @salary_deduction.each do |salary|
                   %tr
-                    %td= sal_head.head_name
-                    %td= sal_head.total
+                    %td= salary.head_name
+                    %td= salary.total
                     - deduction_total = deduction_total + sal_head.total.to_i
           %tr
             %td
