@@ -18,9 +18,6 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem "haml"
-  gem 'hpricot'
-  gem 'ruby_parser'
   gem 'factory_girl_rails', :require => false
   gem 'capybara'
   gem 'shoulda-matchers'
@@ -33,11 +30,13 @@ group :development, :test do
   gem 'guard-bundler'
   gem 'rb-inotify'
   gem 'libnotify'
-  gem "foreigner"
   gem 'simplecov'
 end
 
-
+gem "foreigner"
+gem 'ruby_parser'
+gem 'hpricot'
+gem "haml"
 gem 'jquery-rails'
 
 gem 'paperclip'
