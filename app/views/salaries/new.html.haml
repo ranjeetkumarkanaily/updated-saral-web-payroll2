@@ -24,7 +24,7 @@
         %td Salary Head Type
         -#%td Salary Effective From
         %td Salary Allotment
-      - if @salary_allotment.count > 0
+      - if @salary_allotment
         - @salary_allotment.each do |sal_allot|
           = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
           = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
