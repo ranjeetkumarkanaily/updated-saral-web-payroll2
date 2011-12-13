@@ -16,6 +16,8 @@
     %tr
       %td
         &nbsp;
+- gross_total = 0
+- deduction_total = 0
 - if (params[:month_year] and params[:employee_id])
   %table{:border => 0}
     %tr
@@ -31,14 +33,14 @@
                   %tr
                     %td= salary.head_name
                     %td= salary.total
-                    - gross_total =   gross_total + sal_head.total.to_i
+                    - gross_total =   gross_total + salary.total.to_i
             %td{:valign => 'top'}
               %table
                 - @salary_deduction.each do |salary|
                   %tr
                     %td= salary.head_name
                     %td= salary.total
-                    - deduction_total = deduction_total + sal_head.total.to_i
+                    - deduction_total = deduction_total + salary.total.to_i
           %tr
             %td
               %table
