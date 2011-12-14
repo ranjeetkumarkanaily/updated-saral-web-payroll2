@@ -9,7 +9,7 @@ describe "salary_allotments/index.html.haml" do
     end
   end
 
-  describe "Generated Salary" do
+  describe "Allotted Salary" do
     it "render form contains salary heads for selected employee" do
       salAllot = FactoryGirl.create(:salary_allotment)
       view.stub!(:params).and_return :employee_id => salAllot.employee_id
