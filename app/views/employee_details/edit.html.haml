@@ -1,5 +1,5 @@
 %h1 Editing Employee Detail for #{Employee.find_by_id(@paramempid).empname}
-= render 'form'
+  = render 'form'
 = link_to 'Show', @employee_detail
 |
 \#{link_to 'Back', employee_details_path}

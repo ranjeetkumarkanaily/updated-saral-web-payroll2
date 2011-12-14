@@ -12,4 +12,4 @@
   = @employee_detail.allotted_gross
 = link_to 'Edit', edit_employee_detail_path(@employee_detail)
 |
-\#{link_to 'Back', employee_details_path}
+= link_to 'Back', employee_details_path(:param1=>@paramempid)
