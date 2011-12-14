@@ -1,4 +1,6 @@
 class Salary < ActiveRecord::Base
+  belongs_to :salary_head
+  belongs_to :employee_detail
 
   def self.is_salary_generated? month_year, employee_id
     month_year = month_year.split('/')
@@ -16,8 +18,4 @@ class Salary < ActiveRecord::Base
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
         where(condition).group('head_name')
   end
-
-  #scope :get_salary, lambda { |effective_date|
-  #  where(:effective_date => effective_date).order('employee_id ASC')
-  #}
 end

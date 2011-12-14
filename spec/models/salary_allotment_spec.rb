@@ -12,7 +12,7 @@ describe SalaryAllotment do
 
   it "should return allotted salaries for previous effective date" do
     sal_allot = FactoryGirl.create(:salary_allotment)
-    SalaryAllotment.get_allotted_salaries_for_max_effective_date(sal_allot.employee_id).should be_true
+    SalaryAllotment.get_allotted_salaries_for_max_effective_date("02/2011", sal_allot.employee_id).should be_true
   end
 
 end

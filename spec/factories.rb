@@ -32,7 +32,7 @@ FactoryGirl.define do
     salary_amount 1000
     employee_id 1
     employee_detail_id 1
-    salary_head_id 1
+    salary_head
   end
 
   factory :salary_group_detail do
