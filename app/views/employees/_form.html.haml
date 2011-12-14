@@ -24,7 +24,7 @@
     = f.text_field :gender
   .field
     = f.label :date_of_birth
-    = f.date_select :date_of_birth,  :start_year => 1920, :end_year => 2010
+    = f.date_select :date_of_birth,:include_blank => true,  :start_year => 1920, :end_year => 2010
     &nbsp
     = f.label :date_of_joining
     = f.date_select :date_of_joining,  :start_year => 2000, :end_year => 2014
@@ -50,28 +50,28 @@
   .field
     = f.label :present_state_id
     = f.text_field :present_state_id
-  .field
-    = f.label :perm_sameas_present, "Is Permanent address same as Present Address"
-    = f.check_box :perm_sameas_present
-  %h2 Permanent Address
-  .field
-    = f.label :perm_res_no, "Permanent Residence No"
-    = f.text_field :perm_res_no
-  .field
-    = f.label :perm_res_name, "Permanent Residence Name."
-    = f.text_field :perm_res_name
-  .field
-    = f.label :perm_street
-    = f.text_field :perm_street
-  .field
-    = f.label :perm_locality
-    = f.text_field :perm_locality
-  .field
-    = f.label :perm_city
-    = f.text_field :perm_city
-  .field
-    = f.label :perm_state_id
-    = f.text_field :perm_state_id
+  -#.field
+  -#  = f.label :perm_sameas_present, "Is Permanent address same as Present Address"
+  -#  = f.check_box :perm_sameas_present
+  -#%h2 Permanent Address
+  -#.field
+  -#  = f.label :perm_res_no, "Permanent Residence No"
+  -#  = f.text_field :perm_res_no
+  -#.field
+  -#  = f.label :perm_res_name, "Permanent Residence Name."
+  -#  = f.text_field :perm_res_name
+  -#.field
+  -#  = f.label :perm_street
+  -#  = f.text_field :perm_street
+  -#.field
+  -#  = f.label :perm_locality
+  -#  = f.text_field :perm_locality
+  -#.field
+  -#  = f.label :perm_city
+  -#  = f.text_field :perm_city
+  -#.field
+  -#  = f.label :perm_state_id
+  -#  = f.text_field :perm_state_id
   .field
     = f.label :email
     = f.text_field :email
