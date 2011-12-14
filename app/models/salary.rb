@@ -1,4 +1,6 @@
 class Salary < ActiveRecord::Base
+  belongs_to :salary_head
+  belongs_to :employee_detail
 
   def self.is_salary_generated? month_year, employee_id
     month_year = month_year.split('/')
