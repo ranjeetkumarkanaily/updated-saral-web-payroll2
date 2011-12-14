@@ -10,4 +10,16 @@ describe "salaries/index.html.haml" do
     end
   end
 
+  it "Displays the Calculated salary for the selected employee"  do
+    salary = FactoryGirl.create(:salary)
+    view.stub!(:params).and_return :employee_id => salary.employee_id
+    view.stub!(:params).and_return :month_year => "02/2011"
+    assign(:salary_earning,[:head_name => "Basic", :total => 1000])
+    puts @salary_earning
+    render
+    puts rendered
+
+  end
+
+
 end

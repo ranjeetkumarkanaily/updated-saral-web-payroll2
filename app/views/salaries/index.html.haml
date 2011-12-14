@@ -16,9 +16,9 @@
     %tr
       %td
         &nbsp;
+- if (params[:month_year] and params[:employee_id])
 - gross_total = 0
 - deduction_total = 0
-- if (params[:month_year] and params[:employee_id])
   %table{:border => 0}
     %tr
       %td
