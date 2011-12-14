@@ -5,7 +5,7 @@
     %tr
       %td{:width => "100px"} Employee
       %td{:width => "100px"}
-        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname'), :prompt => "Select Employee")
+        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname',params[:employee_id]), :prompt => "Select Employee")
     %tr
       %td{:width => "100px"} Month/Year
       %td{:width => "100px"}
@@ -41,6 +41,9 @@
                     %td= salary.head_name
                     %td= salary.total
                     - deduction_total = deduction_total + salary.total.to_i
+                %tr
+                  %td PF
+                  %td= @pf_amount
           %tr
             %td
               %table
