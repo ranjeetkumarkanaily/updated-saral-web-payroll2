@@ -1,6 +1,6 @@
 =link_to 'Home', root_url
 %h1 Salary Editor
-= form_tag salaries_path , :method => :post do
+= form_tag new_salary_path, :method => :get do
   %table
     %tr
       %td{:width => "100px"} Employee
@@ -15,7 +15,7 @@
         = submit_tag("Get Salary")
     %tr
       %td &nbsp;
-- if(params[:month_year] && params[:employee_id])
+- if params[:month_year] && params[:employee_id]
   = form_tag salaries_path , :method => :post do
     %table
       %tr
@@ -24,8 +24,8 @@
         %td Salary Head Type
         -#%td Salary Effective From
         %td Salary Allotment
-      - if @salary_allotment
-        - @salary_allotment.each do |sal_allot|
+      - if @salary_allotments
+        - @salary_allotments.each do |sal_allot|
           = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
           = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
           = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
