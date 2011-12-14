@@ -9,7 +9,7 @@ describe EmployeeDetail do
 
   it "checks for the uniqueness of employee_id and effective_date" do
     emp_detail = FactoryGirl.create(:employee_detail)
-    duplicate_emp_detail = EmployeeDetail.new(:employee_id => 1, :effective_date => "2009-10-31", :salary_group_id =>1, :allotted_gross=>5000)
+    duplicate_emp_detail = EmployeeDetail.new(:employee_id => 1, :effective_date => "2009-10-31", :salary_group_id =>2, :allotted_gross=>6000)
     duplicate_emp_detail.should_not be_valid
   end
 end

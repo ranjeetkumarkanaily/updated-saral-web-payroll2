@@ -1,4 +1,6 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+  resources :states
+
   resources :employee_details
 
   resources :employees

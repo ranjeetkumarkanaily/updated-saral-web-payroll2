@@ -8,17 +8,77 @@
         - @employee.errors.full_messages.each do |msg|
           %li= msg
   .field
-    = f.label :empname
-    %br/
+    = f.label :empname, "Name of the Employee"
     = f.text_field :empname
+    &nbsp
+    = f.label :father_name
+    = f.text_field :father_name
   .field
+    = f.label :marital_status
+    = f.text_field :marital_status
+    &nbsp
+    = f.label :spouse_name
+    = f.text_field :spouse_name
+  .field
+    = f.label :gender
+    = f.text_field :gender
+  .field
+    = f.label :date_of_birth
+    = f.date_select :date_of_birth,  :start_year => 1920, :end_year => 2010
+    &nbsp
     = f.label :date_of_joining
-    %br/
     = f.date_select :date_of_joining,  :start_year => 2000, :end_year => 2014
-  .field
+    &nbsp
     = f.label :date_of_leaving
-    %br/
     = f.date_select :date_of_leaving, :include_blank => true,  :start_year => 2000, :end_year => 2014
+  %h2 Present Address
+  .field
+    = f.label :present_res_no, "Present Residence No."
+    = f.text_field :present_res_no
+  .field
+    = f.label :present_res_name, "Present Residence Name"
+    = f.text_field :present_res_name
+  .field
+    = f.label :present_street
+    = f.text_field :present_street
+  .field
+    = f.label :present_locality
+    = f.text_field :present_locality
+  .field
+    = f.label :present_city
+    = f.text_field :present_city
+  .field
+    = f.label :present_state_id
+    = f.text_field :present_state_id
+  .field
+    = f.label :perm_sameas_present, "Is Permanent address same as Present Address"
+    = f.check_box :perm_sameas_present
+  %h2 Permanent Address
+  .field
+    = f.label :perm_res_no, "Permanent Residence No"
+    = f.text_field :perm_res_no
+  .field
+    = f.label :perm_res_name, "Permanent Residence Name."
+    = f.text_field :perm_res_name
+  .field
+    = f.label :perm_street
+    = f.text_field :perm_street
+  .field
+    = f.label :perm_locality
+    = f.text_field :perm_locality
+  .field
+    = f.label :perm_city
+    = f.text_field :perm_city
+  .field
+    = f.label :perm_state_id
+    = f.text_field :perm_state_id
+  .field
+    = f.label :email
+    = f.text_field :email
+    &nbsp
+    = f.label :mobile
+    = f.text_field :mobile
   .actions
     = f.submit
+
 
