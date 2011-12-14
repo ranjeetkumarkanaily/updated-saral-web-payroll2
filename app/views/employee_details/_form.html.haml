@@ -8,9 +8,6 @@
         - @employee_detail.errors.full_messages.each do |msg|
           %li= msg
 
-  %b
-  .field
-    = f.label Employee.find_by_id(@paramempid).empname
   .field
     = f.hidden_field :employee_id, :value => @paramempid
 

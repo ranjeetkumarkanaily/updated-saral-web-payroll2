@@ -1,4 +1,4 @@
-%h1 New Employee Detail
+%h1 New Employee Detail for #{Employee.find_by_id(@paramempid).empname}
 = render 'form'
-= link_to 'Back', employee_details_path
+= link_to 'Back', employee_details_path(:param1=>@paramempid)
 

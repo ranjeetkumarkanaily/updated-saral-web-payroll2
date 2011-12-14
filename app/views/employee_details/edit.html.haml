@@ -1,4 +1,4 @@
-%h1 Editing Employee Detail
+%h1 Editing Employee Detail for #{Employee.find_by_id(@paramempid).empname}
 = render 'form'
 = link_to 'Show', @employee_detail
 |
