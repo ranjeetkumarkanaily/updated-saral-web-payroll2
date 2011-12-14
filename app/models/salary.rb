@@ -16,8 +16,4 @@ class Salary < ActiveRecord::Base
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
         where(condition).group('head_name')
   end
-
-  #scope :get_salary, lambda { |effective_date|
-  #  where(:effective_date => effective_date).order('employee_id ASC')
-  #}
 end
