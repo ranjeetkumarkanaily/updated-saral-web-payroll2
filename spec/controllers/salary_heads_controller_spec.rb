@@ -4,10 +4,14 @@ describe SalaryHeadsController do
 
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    SalaryHead.delete_all
   end
 
   def valid_attributes
-    {}
+    {:head_name => "Basic",
+     :short_name => "BASIC",
+     :salary_type => "Earnings"
+     }
   end
 
   describe "GET index" do
