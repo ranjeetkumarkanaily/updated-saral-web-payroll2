@@ -11,8 +11,15 @@ namespace :bootstrap do
     DefaultValue.create( :default_type => 'Salary Head', :value => 'HRA', :value_id => 3 )
   end
 
+  desc "Add Default Salary Heads"
+  task :salary_head => :environment do
+    SalaryHead.create( :head_name => 'Basic', :short_name => 'BASIC', :salary_type => "Earnings" )
+    SalaryHead.create( :head_name => 'DA', :short_name => 'DA', :salary_type => "Earnings" )
+    SalaryHead.create( :head_name => 'HRA', :short_name => 'HRA', :salary_type => "Earnings" )
+  end
+
 
 
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :default_value]
+  task :all => [:default_user, :default_value, :salary_head]
 end
