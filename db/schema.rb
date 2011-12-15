@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209174150) do
+ActiveRecord::Schema.define(:version => 20111214061206) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -45,6 +45,26 @@ ActiveRecord::Schema.define(:version => 20111209174150) do
     t.date     "date_of_leaving"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "date_of_birth"
+    t.string   "marital_status"
+    t.string   "father_name"
+    t.string   "spouse_name"
+    t.string   "gender"
+    t.string   "present_res_no"
+    t.string   "present_res_name"
+    t.string   "present_street"
+    t.string   "present_locality"
+    t.string   "present_city"
+    t.integer  "present_state_id"
+    t.string   "perm_res_no"
+    t.string   "perm_res_name"
+    t.string   "perm_street"
+    t.string   "perm_locality"
+    t.string   "perm_city"
+    t.integer  "perm_state_id"
+    t.boolean  "perm_sameas_present"
+    t.string   "email"
+    t.string   "mobile"
   end
 
   create_table "lops", :force => true do |t|
@@ -103,6 +123,12 @@ ActiveRecord::Schema.define(:version => 20111209174150) do
     t.string   "head_name"
     t.string   "short_name"
     t.string   "salary_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "states", :force => true do |t|
+    t.string   "state_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

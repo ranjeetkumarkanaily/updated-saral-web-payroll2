@@ -7,11 +7,10 @@
       %ul
         - @employee_detail.errors.full_messages.each do |msg|
           %li= msg
+
   .field
-    = f.label :employee_id
-    %br/
-    = f.select :employee_id, options_for_select(Employee.all(:order => 'empname ASC').collect {|emp| [ emp.empname, emp.id ] },
-                                       @employee_detail.employee_id), {:prompt => @paramempid ? Employee.find_by_id(@paramempid).empname : "Select Employee" }
+    = f.hidden_field :employee_id, :value => @paramempid
+
   .field
     = f.label :effective_date
     %br/

@@ -5,7 +5,7 @@
     %tr
       %td{:width => "100px"} Employee
       %td{:width => "100px"}
-        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname'), :prompt => "Select Employee")
+        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname',params[:employee_id]), :prompt => "Select Employee")
     %tr
       %td{:width => "100px"} Month/Year
       %td{:width => "100px"}
@@ -32,30 +32,39 @@
                 - @salary_earning.each do |salary|
                   %tr
                     %td= salary.head_name
-                    %td= salary.total
+                    %td= number_with_precision(salary.total, :precision => 2, :delimiter => ',')
                     - gross_total =   gross_total + salary.total.to_i
             %td{:valign => 'top'}
               %table
                 - @salary_deduction.each do |salary|
                   %tr
                     %td= salary.head_name
-                    %td= salary.total
+                    %td= number_with_precision(salary.total, :precision => 2, :delimiter => ',')
                     - deduction_total = deduction_total + salary.total.to_i
+                %tr
+                  %td PF
+                  %td=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
+                  - deduction_total = deduction_total + @pf_amount.to_i
+                - if @esi_amount > 0
+                  %tr
+                    %td ESI
+                    %td= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
+                    - deduction_total = deduction_total + @esi_amount.to_i
           %tr
             %td
               %table
                 %tr
                   %td Gross Salary
-                  %td= gross_total
+                  %td= number_with_precision(gross_total, :precision => 2, :delimiter => ',')
             %td
               %table
                 %tr
                   %td Total Deductions
-                  %td= deduction_total
+                  %td= number_with_precision(deduction_total, :precision => 2, :delimiter => ',')
           %tr
-            %td
+            %td{:colspan => 2}
               %table
                 %tr
                   %td Net Salary
-                  %td= gross_total-deduction_total
-            %td
+                  %td= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
+

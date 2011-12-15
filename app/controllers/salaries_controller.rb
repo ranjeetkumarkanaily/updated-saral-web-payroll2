@@ -16,6 +16,8 @@ class SalariesController < ApplicationController
     if params[:month_year] && params[:employee_id]
       @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id]
       @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id]
+      @pf_amount = Salary.get_pf_amount params[:month_year], params[:employee_id]
+      @esi_amount = Salary.get_esi_amount params[:month_year], params[:employee_id]
     end
   end
 
