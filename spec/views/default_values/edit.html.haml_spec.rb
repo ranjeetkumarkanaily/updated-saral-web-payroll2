@@ -14,7 +14,7 @@ describe "default_values/edit.html.haml" do
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form", :action => default_values_path(@default_value), :method => "post" do
-      assert_select "input#default_value_type", :name => "default_value[type]"
+      assert_select "input#default_value_default_type", :name => "default_value[default_type]"
       assert_select "input#default_value_value", :name => "default_value[value]"
       assert_select "input#default_value_value_id", :name => "default_value[value_id]"
     end
