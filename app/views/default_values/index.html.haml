@@ -1,0 +1,18 @@
+= link_to 'Home', root_path
+%h1 Listing Default Values
+%table{:width => 500, :cellpadding => 0, :cellspacing => 0, :border => 1}
+  %tr
+    %th Type
+    %th Value
+    %th Value
+    %th{:colspan => 3} Operations
+  - @default_values.each do |default_value|
+    %tr
+      %td= default_value.default_type
+      %td= default_value.value
+      %td= default_value.value_id
+      %td= link_to 'Show', default_value
+      %td= link_to 'Edit', edit_default_value_path(default_value)
+      %td= link_to 'Destroy', default_value, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Default Value', new_default_value_path

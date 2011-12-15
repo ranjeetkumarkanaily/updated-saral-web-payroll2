@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214061206) do
+ActiveRecord::Schema.define(:version => 20111215121207) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(:version => 20111214061206) do
     t.string   "address2"
     t.string   "address3"
     t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "default_values", :force => true do |t|
+    t.string   "default_type"
+    t.string   "value"
+    t.integer  "value_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
