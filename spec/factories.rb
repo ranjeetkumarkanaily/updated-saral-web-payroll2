@@ -18,8 +18,7 @@ FactoryGirl.define do
     salary_type "Earnings"
   end
 
-
-  factory :salary_allotment do
+ factory :salary_allotment do
     employee_id 1
     employee_detail_id 1
     effective_date '2011-02-01'
