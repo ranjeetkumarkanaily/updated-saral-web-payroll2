@@ -20,17 +20,17 @@ class Salary < ActiveRecord::Base
 
   def self.get_pf_amount month_year, employee_id
     month_year = month_year.split('/')
-    condition = " employee_id = " + employee_id + " and salary_head_id = 9 and
+    condition = " employee_id = " + employee_id + " and salary_head_id = 1 and
                   extract(month from effective_date) = " + month_year[0] + " and
                   extract(year from effective_date) = " + month_year[1]
     basic_amount = Salary.select('sum(salary_amount) as salary_amount').where(condition)
 
-    condition = " employee_id = " + employee_id + " and salary_head_id = 10 and
+    condition = " employee_id = " + employee_id + " and salary_head_id = 2 and
                   extract(month from effective_date) = " + month_year[0] + " and
                   extract(year from effective_date) = " + month_year[1]
     da_amount = Salary.select('sum(salary_amount) as salary_amount').where(condition)
 
-    ((basic_amount[0]['salary_amount'] + da_amount[0]['salary_amount'])*0.12).round.to_f
+    @pf_amount = ((basic_amount[0]['salary_amount'] + da_amount[0]['salary_amount'])*0.12).round.to_f
 
   end
 

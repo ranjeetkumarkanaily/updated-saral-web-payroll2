@@ -25,8 +25,6 @@ describe Salary do
     end
 
     it "should get pf amount for the given employee for the respected month" do
-      Salary.delete_all
-      SalaryHead.delete_all
       salary_head =  FactoryGirl.create(:salary_head, :id => 1, :head_name => "BASIC", :short_name => "Basic", :salary_type => "Earnings")
       salary = FactoryGirl.create(:salary, :salary_head => salary_head)
       salary_head =  FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
