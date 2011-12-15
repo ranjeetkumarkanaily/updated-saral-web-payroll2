@@ -17,8 +17,6 @@ class Salary < ActiveRecord::Base
     @sals = Salary.select('head_name, sum(salary_amount) as Total').
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
         where(condition).group('head_name')
-
-
   end
 
   def self.get_pf_amount month_year, employee_id
