@@ -1,0 +1,12 @@
+%p
+  %b Type:
+  = @default_value.default_type
+%p
+  %b Value:
+  = @default_value.value
+%p
+  %b Value:
+  = @default_value.value_id
+= link_to 'Edit', edit_default_value_path(@default_value)
+|
+\#{link_to 'Back', default_values_path}
