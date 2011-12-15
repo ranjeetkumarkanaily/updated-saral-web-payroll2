@@ -67,4 +67,4 @@
                 %tr
                   %td Net Salary
                   %td= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
-
+  = link_to 'Edit Salary', edit_salaries_path(:month_year => params[:month_year], :employee_id => params[:employee_id])

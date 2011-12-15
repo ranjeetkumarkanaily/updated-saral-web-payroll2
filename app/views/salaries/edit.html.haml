@@ -1,1 +1,21 @@
 %h1 Editing Generated Salary
+= form_tag salaries_path, :method => :put do
+  %table
+    %tr
+      %td Salary Heads
+      %td Short Name
+      %td Salary Head Type
+      %td Salary Amount
+    - @salary.each do |sal|
+      = hidden_field_tag "salary[][id]", sal.id
+      = hidden_field_tag "salary[][employee_id]", sal.employee_id
+      = hidden_field_tag "salary[][employee_detail_id]", sal.employee_detail_id
+      = hidden_field_tag "salary[][effective_date]", sal.effective_date
+      = hidden_field_tag "salary[][salary_head_id]", sal.salary_head_id
+      %tr
+        %td= SalaryHead.find(sal.salary_head_id).head_name
+        %td= SalaryHead.find(sal.salary_head_id).short_name
+        %td= SalaryHead.find(sal.salary_head_id).salary_type
+        %td= text_field_tag 'salary[][salary_amount]', sal.salary_amount
+    %tr
+      %td= submit_tag "Update Salary"

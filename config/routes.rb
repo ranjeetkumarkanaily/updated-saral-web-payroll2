@@ -28,7 +28,10 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :sessions
   resources :users
-  resources :salaries
+  resources :salaries, :only => [:index, :create, :new] do
+    get 'edit', :on => :collection
+    put :update, :on => :collection
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
