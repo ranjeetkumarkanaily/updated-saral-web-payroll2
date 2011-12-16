@@ -34,6 +34,7 @@ describe SalariesController do
     end
   end
 
+
   describe "GET index" do
 
     it "get salary earnings for the given employee" do
@@ -48,6 +49,13 @@ describe SalariesController do
       get :index, :month_year => "02/2011", :employee_id => salary.employee_id
       assigns(:salary_earning)
 
+    end
+
+  describe "Update" do
+    it "should update the salary amount" do
+      sal = FactoryGirl.create(:salary)
+      post :update, :id => sal.id, :salary => [sal.attributes.merge(:salary_amount => 1000)]
+      Salary.find_by_id(sal.id)[:salary_amount].should eq(1000)
     end
 
   end

@@ -20,13 +20,11 @@ describe Salary do
       salary = FactoryGirl.create(:salary)
 
       getSalary = Salary.get_salary_on_salary_type salary.salary_head.salary_type, '02/2011', salary.employee_id.to_s
-      getSalary[0].total.should eq("1000.00")
+      getSalary[0].salary_amount.should eq(1000.00)
       getSalary[0].head_name.should eq("Basic")
     end
 
     it "should get pf amount for the given employee for the respected month" do
-      Salary.delete_all
-      SalaryHead.delete_all
       salary_head =  FactoryGirl.create(:salary_head, :id => 1, :head_name => "BASIC", :short_name => "Basic", :salary_type => "Earnings")
       salary = FactoryGirl.create(:salary, :salary_head => salary_head)
       salary_head =  FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
@@ -49,7 +47,7 @@ describe Salary do
 
         salary = FactoryGirl.create(:salary,:salary_amount => 17000)
         getESI = Salary.get_esi_amount "02/2011", salary.employee_id.to_s
-        getESI.should eq(0)
+        getESI.should eq(nil)
 
       end
 

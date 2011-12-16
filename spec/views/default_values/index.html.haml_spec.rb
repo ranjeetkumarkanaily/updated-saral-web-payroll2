@@ -4,12 +4,12 @@ describe "default_values/index.html.haml" do
   before(:each) do
     assign(:default_values, [
       stub_model(DefaultValue,
-        :type => "Type",
+        :default_type => "Type",
         :value => "Value",
         :value_id => 1
       ),
       stub_model(DefaultValue,
-        :type => "Type",
+        :default_type => "Type",
         :value => "Value",
         :value_id => 1
       )

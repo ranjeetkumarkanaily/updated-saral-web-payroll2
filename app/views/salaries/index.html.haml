@@ -32,20 +32,20 @@
                 - @salary_earning.each do |salary|
                   %tr
                     %td= salary.head_name
-                    %td= number_with_precision(salary.total, :precision => 2, :delimiter => ',')
-                    - gross_total =   gross_total + salary.total.to_i
+                    %td= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                    - gross_total =   gross_total + salary.salary_amount.to_i
             %td{:valign => 'top'}
               %table
                 - @salary_deduction.each do |salary|
                   %tr
                     %td= salary.head_name
-                    %td= number_with_precision(salary.total, :precision => 2, :delimiter => ',')
-                    - deduction_total = deduction_total + salary.total.to_i
+                    %td= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                    - deduction_total = deduction_total + salary.salary_amount.to_i
                 %tr
                   %td PF
                   %td=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
                   - deduction_total = deduction_total + @pf_amount.to_i
-                - if @esi_amount > 0
+                - if @esi_amount
                   %tr
                     %td ESI
                     %td= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
@@ -67,4 +67,4 @@
                 %tr
                   %td Net Salary
                   %td= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
-
+  = link_to 'Edit Salary', edit_salaries_path(:month_year => params[:month_year], :employee_id => params[:employee_id])

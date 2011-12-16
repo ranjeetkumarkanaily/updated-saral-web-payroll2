@@ -31,6 +31,17 @@ class SalariesController < ApplicationController
   end
 
   def edit
-
+    month_year = params[:month_year].split('/')
+    employee_id = params[:employee_id]
+    @salary = Salary.where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{employee_id}")
   end
+
+  def update
+    params[:salary].each do |sal|
+      allotSal = Salary.find(sal[:id])
+      allotSal.update_attributes(sal)
+    end
+    redirect_to salaries_path, notice: 'Salary updated successfully'
+  end
+
 end
