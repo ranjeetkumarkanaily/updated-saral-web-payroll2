@@ -34,21 +34,48 @@ describe SalariesController do
     end
   end
 
-
   describe "GET index" do
 
-    it "get salary earnings for the given employee" do
 
+    it "get salary earnings for the given employee" do
       Salary.destroy_all
       SalaryHead.destroy_all
-      salary_head =  FactoryGirl.create(:salary_head, :id => 1, :head_name => "BASIC", :short_name => "Basic", :salary_type => "Earnings")
-      salary = FactoryGirl.create(:salary, :salary_head => salary_head)
-      salary_head =  FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
-      salary_da = FactoryGirl.create(:salary, :salary_head => salary_head )
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
 
-      get :index, :month_year => "02/2011", :employee_id => salary.employee_id
-      assigns(:salary_earning)
+      get :index, :month_year => "02/2011", :employee_id => salary_basic.employee_id
 
+      assigns(:salary_earning)[0].salary_amount.should eq(salary_basic.salary_amount)
+    end
+
+    it "get salary deductions for the given employee" do
+      Salary.destroy_all
+      SalaryHead.destroy_all
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Deductions")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Deductions")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
+
+      get :index, :month_year => "02/2011", :employee_id => salary_basic.employee_id
+
+      assigns(:salary_deduction)[0].salary_amount.should eq(salary_basic.salary_amount)
+    end
+
+
+    it "get pf for the given employee" do
+      Salary.destroy_all
+      SalaryHead.destroy_all
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
+
+      get :index, :month_year => "02/2011", :employee_id => salary_da.employee_id
+
+      pf_amount = ((salary_basic.salary_amount + salary_da.salary_amount) *0.12).round.to_f
+      assigns(:pf_amount).should eq(pf_amount)
     end
 
     describe "Update" do

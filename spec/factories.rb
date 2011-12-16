@@ -28,7 +28,7 @@ FactoryGirl.define do
 
   factory :salary do
     effective_date '2011-02-01'
-    salary_amount 1000
+    salary_amount 1000.00
     employee_id 1
     employee_detail_id 1
     salary_head
