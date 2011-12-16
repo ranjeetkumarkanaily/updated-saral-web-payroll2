@@ -13,7 +13,7 @@ class Salary < ActiveRecord::Base
     condition = "employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
                   extract(month from effective_date) = " + month_year[0] + " and
                   extract(year from effective_date) = " + month_year[1]
-    Salary.select('head_name, sum(salary_amount) as Total').
+    Salary.select('head_name, sum(salary_amount) as salary_amount').
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
         where(condition).group('head_name')
   end
@@ -45,7 +45,7 @@ class Salary < ActiveRecord::Base
     if gross_salary  < 15000
       esi_amount = (gross_salary*0.0175).round.to_f
     else
-      esi_amount = 0
+      esi_amount = nil
     end
 
   end
