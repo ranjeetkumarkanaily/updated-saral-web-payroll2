@@ -51,12 +51,13 @@ describe SalariesController do
 
     end
 
-  describe "Update" do
-    it "should update the salary amount" do
-      sal = FactoryGirl.create(:salary)
-      post :update, :id => sal.id, :salary => [sal.attributes.merge(:salary_amount => 1000)]
-      Salary.find_by_id(sal.id)[:salary_amount].should eq(1000)
-    end
+    describe "Update" do
+      it "should update the salary amount" do
+        sal = FactoryGirl.create(:salary)
+        post :update, :id => sal.id, :salary => [sal.attributes.merge(:salary_amount => 1000)]
+        Salary.find_by_id(sal.id)[:salary_amount].should eq(1000)
+      end
 
+    end
   end
 end
