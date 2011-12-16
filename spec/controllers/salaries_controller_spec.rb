@@ -33,4 +33,22 @@ describe SalariesController do
       assigns(:salary_allotments).should eq([sal_allot])
     end
   end
+
+  describe "GET index" do
+
+    it "get salary earnings for the given employee" do
+
+      Salary.destroy_all
+      SalaryHead.destroy_all
+      salary_head =  FactoryGirl.create(:salary_head, :id => 1, :head_name => "BASIC", :short_name => "Basic", :salary_type => "Earnings")
+      salary = FactoryGirl.create(:salary, :salary_head => salary_head)
+      salary_head =  FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
+      salary_da = FactoryGirl.create(:salary, :salary_head => salary_head )
+
+      get :index, :month_year => "02/2011", :employee_id => salary.employee_id
+      assigns(:salary_earning)
+
+    end
+
+  end
 end

@@ -20,6 +20,7 @@ class Salary < ActiveRecord::Base
 
   def self.get_pf_amount month_year, employee_id
     month_year = month_year.split('/')
+
     condition = " employee_id = " + employee_id + " and salary_head_id = 1 and
                   extract(month from effective_date) = " + month_year[0] + " and
                   extract(year from effective_date) = " + month_year[1]
