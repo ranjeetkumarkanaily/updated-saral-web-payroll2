@@ -2,11 +2,45 @@
   %b Employee Name:
   = @employee.empname
 %p
+  %b Father's Name:
+  = @employee.father_name
+%p
+  %b Marital Status:
+  = @employee.marital_status
+%p
+  %b Spouse Name:
+  = @employee.spouse_name
+%p
+  %b Gender
+  = @employee.gender
+%p
+  %b Date of Birth:
+  = @employee.date_of_birth
+%p
   %b Date of Joining:
   = @employee.date_of_joining
 %p
   %b Date of Leaving:
   = @employee.date_of_leaving
+%p
+  %b Residence No
+  = @employee.present_res_no
+%p
+  %b Name of the Residence:
+  = @employee.present_res_name
+%p
+  %b Street:
+  = @employee.present_street
+%p
+  %b Locality:
+  = @employee.present_locality
+%p
+  %b City:
+  = @employee.present_city
+%p
+  %b State:
+  = @employee.present_state_id
+
 = link_to 'Edit', edit_employee_path(@employee)
 |
 \#{link_to 'Back', employees_path}

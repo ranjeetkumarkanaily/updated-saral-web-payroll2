@@ -49,7 +49,8 @@
     = f.text_field :present_city
   .field
     = f.label :present_state_id
-    = f.text_field :present_state_id
+    = f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] },
+                                                            @employee.present_state_id), {:prompt => 'Select a State'}
   -#.field
   -#  = f.label :perm_sameas_present, "Is Permanent address same as Present Address"
   -#  = f.check_box :perm_sameas_present
