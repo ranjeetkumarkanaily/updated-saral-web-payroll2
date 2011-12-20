@@ -55,9 +55,10 @@ describe SalariesController do
       SalaryHead.destroy_all
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Deductions")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Deductions")
+      salaryHead3 = FactoryGirl.create(:salary_head, :id => 3, :head_name => "HRA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
-
+      salary_hra = FactoryGirl.create(:salary, :salary_head => salaryHead3)
       get :index, :month_year => "02/2011", :employee_id => salary_basic.employee_id
 
       assigns(:salary_deduction)[0].salary_amount.should eq(salary_basic.salary_amount)
