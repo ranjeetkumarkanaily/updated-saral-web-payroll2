@@ -38,8 +38,6 @@ describe SalariesController do
 
 
     it "get salary earnings for the given employee" do
-      Salary.destroy_all
-      SalaryHead.destroy_all
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
@@ -51,8 +49,6 @@ describe SalariesController do
     end
 
     it "get salary deductions for the given employee" do
-      Salary.destroy_all
-      SalaryHead.destroy_all
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Deductions")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Deductions")
       salaryHead3 = FactoryGirl.create(:salary_head, :id => 3, :head_name => "HRA", :salary_type => "Earnings")
@@ -66,8 +62,6 @@ describe SalariesController do
 
 
     it "get pf for the given employee" do
-      Salary.destroy_all
-      SalaryHead.destroy_all
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)

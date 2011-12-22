@@ -31,6 +31,7 @@ group :development, :test do
   gem 'rb-inotify'
   gem 'libnotify'
   gem 'simplecov'
+  gem 'database_cleaner'
 end
 
 gem "foreigner"

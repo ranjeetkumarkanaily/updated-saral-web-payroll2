@@ -6,10 +6,6 @@ describe Salary do
   it { should belong_to(:employee_detail)}
 
   describe "Salary Calculation" do
-    before(:each) do
-      Salary.delete_all
-      SalaryHead.delete_all
-    end
 
     it "should return true (salary is generated for given employee for given month)" do
       salary = FactoryGirl.create(:salary)
@@ -18,7 +14,6 @@ describe Salary do
 
     it "should get salary on basis of salary type" do
       salary = FactoryGirl.create(:salary)
-
       getSalary = Salary.get_salary_on_salary_type salary.salary_head.salary_type, '02/2011', salary.employee_id.to_s
       getSalary[0].salary_amount.should eq(1000.00)
       getSalary[0].head_name.should eq("Basic")
@@ -36,7 +31,6 @@ describe Salary do
     describe "get esi amount" do
 
       it "should get esi amount if gross salary is less or equal to 15000" do
-
         salary = FactoryGirl.create(:salary)
         getESI = Salary.get_esi_amount "02/2011", salary.employee_id.to_s
         getESI.should eq(18.00)
@@ -44,7 +38,6 @@ describe Salary do
       end
 
       it "should get 0 esi amount if gross salary is more than 15000" do
-
         salary = FactoryGirl.create(:salary,:salary_amount => 17000)
         getESI = Salary.get_esi_amount "02/2011", salary.employee_id.to_s
         getESI.should eq(nil)

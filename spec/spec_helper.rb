@@ -36,6 +36,23 @@ Spork.prefork do
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+
+    # for database cleaner -- start --
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :truncation, {:except => %w[salary_heads]}
+      DatabaseCleaner.clean_with(:truncation)
+    end
+
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      #DatabaseCleaner.clean
+    end
+
+    # for database cleaner -- end --
+
   end
 end
 
