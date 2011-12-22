@@ -8,20 +8,23 @@
         - @employee.errors.full_messages.each do |msg|
           %li= msg
   .field
+    = f.label :refno, "Employee Ref No"
+    = f.text_field :refno
+  .field
     = f.label :empname, "Name of the Employee"
     = f.text_field :empname
     &nbsp
     = f.label :father_name
     = f.text_field :father_name
+    &nbsp
+    = f.label :gender
+    = f.select("gender", options_for_select(["Male", "Female"],params[:gender]))
   .field
     = f.label :marital_status
-    = f.text_field :marital_status
+    = f.select("marital_status", options_for_select(["Married", "Single", "Divorced" ],params[:marital_status]))
     &nbsp
     = f.label :spouse_name
     = f.text_field :spouse_name
-  .field
-    = f.label :gender
-    = f.text_field :gender
   .field
     = f.label :date_of_birth
     = f.date_select :date_of_birth,:include_blank => true,  :start_year => 1920, :end_year => 2010

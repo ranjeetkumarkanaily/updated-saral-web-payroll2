@@ -18,6 +18,7 @@ class EmployeeDetailsController < ApplicationController
   # GET /employee_details/1
   # GET /employee_deta  ils/1.json
   def show
+    @paramempid = params[:param2]
     @employee_detail = EmployeeDetail.find(params[:id])
 
     respond_to do |format|

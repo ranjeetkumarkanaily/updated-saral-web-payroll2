@@ -9,9 +9,12 @@ describe EmployeesController do
 
   def valid_attributes
     {
-        :empname => "simpleEmployee",
-        :date_of_joining => "2009-10-31",
-        :date_of_leaving => "2010-11-30",
+    :empname => "GaneshL",
+    :date_of_joining => "2009-10-31",
+    :date_of_leaving => "2010-11-30",
+    :present_state_id => "1",
+    :refno => "A1",
+    :email => "ganny@gnaa.com"
     }
   end
 

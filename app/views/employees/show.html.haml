@@ -1,4 +1,7 @@
 %p
+  %b Employee Ref No:
+  = @employee.refno
+%p
   %b Employee Name:
   = @employee.empname
 %p
@@ -40,6 +43,12 @@
 %p
   %b State:
   = @employee.present_state_id
+%p
+  %b Email:
+  = @employee.email
+%p
+  %b Mobile:
+  = @employee.mobile
 
 = link_to 'Edit', edit_employee_path(@employee)
 |

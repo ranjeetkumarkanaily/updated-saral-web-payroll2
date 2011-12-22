@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111215121207) do
+ActiveRecord::Schema.define(:version => 20111220084909) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20111215121207) do
     t.boolean  "perm_sameas_present"
     t.string   "email"
     t.string   "mobile"
+    t.string   "refno"
   end
 
   create_table "lops", :force => true do |t|
