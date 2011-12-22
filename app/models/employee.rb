@@ -4,7 +4,7 @@ class Employee < ActiveRecord::Base
 
   has_many :employee_details, :dependent => :destroy
 
-  belongs_to :state, :foreign_key => :present_state_id
+  belongs_to :present_state, :class_name => "State"
 
   validates :empname, :presence => true,
                     :length   => {:maximum => 100}
