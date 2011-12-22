@@ -85,7 +85,15 @@ describe SalariesController do
         post :update, :id => sal.id, :salary => [sal.attributes.merge(:salary_amount => 1000)]
         Salary.find_by_id(sal.id)[:salary_amount].should eq(1000)
       end
-
     end
+
+    describe "GET edit" do
+    it "assigns the requested Salary as @salary" do
+      salary = FactoryGirl.create(:salary)
+      get :edit, :month_year => "02/2011", :employee_id => 1
+      assigns(:salary).should eq([salary])
+    end
+  end
+
   end
 end
