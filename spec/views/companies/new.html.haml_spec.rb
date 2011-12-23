@@ -15,6 +15,7 @@ describe "companies/new.html.haml" do
       assert_select "form", :action => companies_path, :method => "post" do
         assert_select "input#company_companyname", :name => "company[companyname]"
         assert_select "input#company_responsible_person", :name => "company[responsible_person]"
+        #assert_select ""
     end
   end
 end

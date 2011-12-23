@@ -1,5 +1,9 @@
 =======  Welcome to Saral Web Payroll ========
 
+To upload Company Logo
+    1. run the command $sudo apt-get install imagemagick libmagick9-dev
+    2. $bundle update
+
 To populate rails application with initial data
 
     1. Create the file /lib/tasks/bootstrap.rake

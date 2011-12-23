@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220084909) do
+ActiveRecord::Schema.define(:version => 20111223070223) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(:version => 20111220084909) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "pt"
+    t.boolean  "tds"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
   end
 
   create_table "default_values", :force => true do |t|

@@ -19,11 +19,6 @@
     = f.label :dateofestablishment, "Date of Establishment"
     %br/
     = f.date_select :dateofestablishment, :start_year => 1980, :end_year => 2012
-  -#.field
-  -#  = f.label :pf, "PF"
-  -#  = f.check_box :pf
-  -#  = f.label :esi, "ESI"
-  -#  = f.check_box :esi
   .field
     = f.label :phonenumber1, "Phone Number 1"
     %br/
@@ -53,5 +48,17 @@
     %br/
     = f.text_field :website
     %br/
+  .field
+    = f.label :pf, "PF"
+    = f.check_box :pf
+    = f.label :pt, "PT"
+    = f.check_box :pt
+    = f.label :esi, "ESI"
+    = f.check_box :esi
+    = f.label :tds, "TDS"
+    = f.check_box :tds
+  .field
+    = f.label :photo, "Upload Company logo"
+    = f.file_field :photo
   .actions
     = f.submit

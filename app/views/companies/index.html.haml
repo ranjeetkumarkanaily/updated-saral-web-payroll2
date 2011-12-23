@@ -5,15 +5,6 @@
     %h3= "Name : " + @company.companyname
     %h4= "Responsible Person : " + @company.responsible_person
     %h4= "Date of Establishment : " + @company.dateofestablishment.to_s
-    -#%p
-    -#%b
-    -#    PF Applicability :
-    -#    = @company.pf == true ? "Yes" : "No"
-    -#%p
-    -#%b
-    -#    ESI Applicability :
-    -#    = @company.esi == true ? "Yes" : "No"
-
     %h4= "Phone Number 1 : " + @company.phonenumber1
     %h4= "Phone Number 2 : " + @company.phonenumber2
     %h4= "Address 1 : " + @company.address
@@ -21,9 +12,26 @@
     %h4= "Address 3 : " + @company.address3
     %h4= "Email : " + @company.email
     %h4= "Website : " + @company.website
+    %p
+        %b
+            PF Applicability :
+            = @company.pf == true ? "Yes" : "No"
+        %p
+        %b
+            PT Applicability :
+            = @company.pt == true ? "Yes" : "No"
+        %p
+        %b
+            ESI Applicability :
+            = @company.esi == true ? "Yes" : "No"
+        %p
+        %b
+            TDS Applicability :
+            = @company.tds == true ? "Yes" : "No"
+    %p
+        %h4= image_tag(@company.photo.url(:logo))
 
     =link_to 'Edit', edit_company_path(@company.id)
-
 - else
     %br/
     %br/

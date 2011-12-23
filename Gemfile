@@ -39,8 +39,6 @@ gem 'ruby_parser'
 gem 'hpricot'
 gem "haml"
 gem 'jquery-rails'
-
-gem 'paperclip'
 gem 'fileutils'
 gem 'prawn'
 gem 'prawn-core'
@@ -49,6 +47,8 @@ gem 'prawnto'
 gem 'currency-in-words'
 gem "pdfkit" , "= 0.5.0"
 gem "wkhtmltopdf"
+gem "paperclip","~>2.4"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
