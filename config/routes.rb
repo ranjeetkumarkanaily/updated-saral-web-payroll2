@@ -5,7 +5,11 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :employee_details
 
-  resources :employees
+  resources :employees do
+    get "upload",  :on => :collection
+    post "upload_parse_validate",  :on => :collection
+    post "save", :on => :collection
+  end
   resources :companies
 
   resources :salary_group_details

@@ -7,6 +7,7 @@ describe LopsController do
 
   it "should redirects new lop path" do
     my_file = fixture_file_upload("spec/factories/Upload.csv")
+
     class << my_file
       attr_reader :tempfile
     end
@@ -29,5 +30,4 @@ describe LopsController do
   #    }.to change(Lop, :count).by(0)
   #  end
   #end
-
 end

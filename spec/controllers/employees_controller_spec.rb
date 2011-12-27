@@ -145,4 +145,18 @@ describe EmployeesController do
     end
   end
 
+  #describe "Excel File Upload, Parse and Save" do
+  #  describe "save_parse_validate" do
+  #    my_file = fixture_file_upload("#{::Rails.root.to_s}/spec/factories/Employee_Test.xls")
+  #    post :upload_parse_validate, :excel_file => my_file
+  #    response.should be_success
+  #  end
+  #
+  #  describe "save" do
+  #    assign(params[:employees], [
+  #    stub_model(Employee,
+  #      :empname => "Empname"
+  #    )])
+  #  end
+  #end
 end
