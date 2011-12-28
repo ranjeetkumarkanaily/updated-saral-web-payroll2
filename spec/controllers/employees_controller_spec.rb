@@ -18,6 +18,21 @@ describe EmployeesController do
     }
   end
 
+  describe "Excel File Upload, Parse and Save" do
+    describe "save_parse_validate" do
+      excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should be_success
+    end
+
+    #describe "save" do
+    #  assign(params[:employees], [
+    #  stub_model(Employee,
+    #    :empname => "Empname"
+    #  )])
+    #end
+  end
+
   describe "GET index" do
     it "assigns all employees as @employees" do
       employee = Employee.create! valid_attributes
@@ -144,19 +159,4 @@ describe EmployeesController do
       response.should redirect_to(employees_url)
     end
   end
-
-  #describe "Excel File Upload, Parse and Save" do
-  #  describe "save_parse_validate" do
-  #    my_file = fixture_file_upload("#{::Rails.root.to_s}/spec/factories/Employee_Test.xls")
-  #    post :upload_parse_validate, :excel_file => my_file
-  #    response.should be_success
-  #  end
-  #
-  #  describe "save" do
-  #    assign(params[:employees], [
-  #    stub_model(Employee,
-  #      :empname => "Empname"
-  #    )])
-  #  end
-  #end
 end

@@ -5,3 +5,6 @@ tmp/
 .sass-cache/
 .idea/
 coverage/
+public/excel_upload_files/*
+public/system/photos/*
+public/uploads/*
