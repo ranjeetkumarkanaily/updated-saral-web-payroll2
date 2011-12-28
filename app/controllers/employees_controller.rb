@@ -116,7 +116,7 @@ class EmployeesController < ApplicationController
       e.present_city = row[13]
       e.present_state = State.find_by_state_name(row[14])
       e.email = row[15]
-      e.mobile = row[16]
+      e.mobile = row[16].to_s
 
       if e.valid?
         @employees << e
