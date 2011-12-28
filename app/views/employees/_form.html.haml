@@ -7,6 +7,7 @@
       %ul
         - @employee.errors.full_messages.each do |msg|
           %li= msg
+
   .field
     = f.label :refno, "Employee Ref No"
     = f.text_field :refno
