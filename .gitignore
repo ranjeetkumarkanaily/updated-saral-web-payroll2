@@ -6,4 +6,5 @@ tmp/
 .idea/
 coverage/
 public/system/photos/*
+public/excel_uploaded_files/*
 !.gitignore
