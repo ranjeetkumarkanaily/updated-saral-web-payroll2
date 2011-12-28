@@ -18,10 +18,10 @@
     = f.text_field :father_name
     &nbsp
     = f.label :gender
-    = f.select("gender", options_for_select(["Male", "Female"],params[:gender]))
+    = f.select :gender, options_for_select(["Male", "Female"],@employee.gender), {:prompt => 'Select a gender'}
   .field
     = f.label :marital_status
-    = f.select("marital_status", options_for_select(["Married", "Single", "Divorced" ],params[:marital_status]))
+    = f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],@employee.marital_status), {:prompt => 'Select marital status'}
     &nbsp
     = f.label :spouse_name
     = f.text_field :spouse_name
