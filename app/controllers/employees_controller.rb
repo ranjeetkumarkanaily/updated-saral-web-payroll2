@@ -114,7 +114,7 @@ class EmployeesController < ApplicationController
       e.present_street = row[11]
       e.present_locality = row[12]
       e.present_city = row[13]
-      e.present_state_id = row[14]
+      e.present_state = State.find_by_state_name(row[14])
       e.email = row[15]
       e.mobile = row[16]
 

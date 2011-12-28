@@ -48,7 +48,7 @@
         %td= employee.present_street
         %td= employee.present_locality
         %td= employee.present_city
-        %td= employee.present_state_id
+        %td= employee.present_state.state_name
         %td= employee.email
         %td= employee.mobile
         %input{:name => "employees[][refno]", :value => employee.refno, :type => "hidden"}
@@ -65,7 +65,7 @@
         %input{:name => "employees[][present_street]", :value => employee.present_street, :type => "hidden"}
         %input{:name => "employees[][present_locality]", :value => employee.present_locality, :type => "hidden"}
         %input{:name => "employees[][present_city]", :value => employee.present_city, :type => "hidden"}
-        %input{:name => "employees[][present_state_id]", :value => employee.present_state_id, :type => "hidden"}
+        %input{:name => "employees[][present_state_id]", :value => employee.present_state.id, :type => "hidden"}
         %input{:name => "employees[][email]", :value => employee.email, :type => "hidden"}
         %input{:name => "employees[][mobile]", :value => employee.mobile, :type => "hidden"}
   - if @errors.empty?
