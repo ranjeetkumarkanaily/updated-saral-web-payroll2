@@ -19,18 +19,18 @@ describe EmployeesController do
   end
 
   describe "Excel File Upload, Parse and Save" do
-    describe "save_parse_validate" do
+    it "save_parse_validate" do
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success
     end
 
-    #describe "save" do
-    #  assign(params[:employees], [
-    #  stub_model(Employee,
-    #    :empname => "Empname"
-    #  )])
-    #end
+    it "save" do
+      assign(params[:employees], [
+      stub_model(Employee,
+        :empname => "Empname"
+      )])
+    end
   end
 
   describe "GET index" do
