@@ -4,6 +4,7 @@ describe Employee do
   before(:each) do
   @attr = {
     :empname => "GaneshL",
+    :date_of_birth => "1985-1-1",
     :date_of_joining => "2009-10-31",
     :date_of_leaving => "2010-11-30",
     :present_state_id => "1",
@@ -81,4 +82,12 @@ describe Employee do
       wrongdoj_employee.should_not be_valid
     end
   end
+
+  describe "dateofbirth" do
+    it "should be before dateofjoining" do
+      wrongdob_employee = Employee.new(@attr.merge(:date_of_birth => "2009-11-01"))
+      wrongdob_employee.should_not be_valid
+    end
+  end
+
 end

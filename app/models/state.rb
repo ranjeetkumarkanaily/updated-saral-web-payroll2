@@ -1,3 +1,6 @@
 class State < ActiveRecord::Base
-  has_many :employees#, :foreign_key => 'present_state_id'
+  has_many :employees
+
+  validates :state_name,   :presence   => true,
+                    :uniqueness => { :case_sensitive => false }
 end
