@@ -71,7 +71,7 @@ describe Employee do
     emp_with_duplicate_email.should_not be_valid
   end
 
-  it "should require a state" do
+  it "requires a state" do
     no_state_employee = Employee.new(@attr.merge(:present_state_id => ""))
     no_state_employee.should_not be_valid
   end
