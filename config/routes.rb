@@ -1,4 +1,6 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+  resources :month_years
+
   resources :default_values
 
   resources :states
