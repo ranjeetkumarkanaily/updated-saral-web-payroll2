@@ -32,6 +32,7 @@ group :development, :test do
   gem 'libnotify'
   gem 'simplecov'
   gem 'database_cleaner'
+  gem 'cucumber-rails'
 end
 
 gem "foreigner"

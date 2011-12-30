@@ -48,4 +48,6 @@ FactoryGirl.define do
     salary_group_id 1
     allotted_gross 5000
   end
+
+
 end
