@@ -52,11 +52,8 @@ FactoryGirl.define do
     allotted_gross 5000
   end
 
-<<<<<<< HEAD
-
-=======
   factory :state do
     state_name "XYZ"
   end
->>>>>>> 7fa937a42835d4175936d00a2f044b23ca77316a
+
 end

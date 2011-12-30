@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111230110748) do
+ActiveRecord::Schema.define(:version => 20111230115747) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -147,6 +147,17 @@ ActiveRecord::Schema.define(:version => 20111230110748) do
     t.string   "head_name"
     t.string   "short_name"
     t.string   "salary_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "salary_totals", :force => true do |t|
+    t.integer  "employee_id"
+    t.integer  "month_year_id"
+    t.decimal  "alloted_gross", :precision => 8, :scale => 2
+    t.decimal  "earned",        :precision => 8, :scale => 2
+    t.decimal  "deducted",      :precision => 8, :scale => 2
+    t.decimal  "net_salary",    :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
