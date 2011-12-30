@@ -6,7 +6,9 @@ describe StatesController do
   end
 
   def valid_attributes
-    {}
+    {
+    :state_name => "TN"
+    }
   end
 
   describe "GET index" do

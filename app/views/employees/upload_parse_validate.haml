@@ -1,0 +1,72 @@
+=link_to 'Home', root_url
+|
+=link_to 'Bulk upload', upload_employees_path
+- unless @errors.empty?
+  %h1 Failure
+  %ul
+    - @errors.each do |error|
+      %li
+        Problems in line number #{error[0]}:
+        - error[1].full_messages.each do |msg|
+          %p
+            = msg
+- else
+  %h1 Success
+= form_tag save_employees_path do
+  %table{:cellpadding => 0, :cellspacing => 0, :border => 1}
+    %tr
+      %th Ref No
+      %th Employee Name
+      %th Father's Name
+      %th Marital Status
+      %th Spouse Name
+      %th Gender
+      %th Date of Birth
+      %th Date of Joining
+      %th Date of Leaving
+      %th Residence No
+      %th Name of the Residence
+      %th Street
+      %th Locality
+      %th City
+      %th State
+      %th Email
+      %th Mobile
+    - @employees.each do |employee|
+      %tr
+        %td= employee.refno
+        %td= employee.empname
+        %td= employee.father_name
+        %td= employee.marital_status
+        %td= employee.spouse_name
+        %td= employee.gender
+        %td= employee.date_of_birth
+        %td= employee.date_of_joining
+        %td= employee.date_of_leaving
+        %td= employee.present_res_no
+        %td= employee.present_res_name
+        %td= employee.present_street
+        %td= employee.present_locality
+        %td= employee.present_city
+        %td= employee.present_state.state_name
+        %td= employee.email
+        %td= employee.mobile
+        %input{:name => "employees[][refno]", :value => employee.refno, :type => "hidden"}
+        %input{:name => "employees[][empname]", :value => employee.empname, :type => "hidden"}
+        %input{:name => "employees[][father_name]", :value => employee.father_name, :type => "hidden"}
+        %input{:name => "employees[][marital_status]", :value => employee.marital_status, :type => "hidden"}
+        %input{:name => "employees[][spouse_name]", :value => employee.spouse_name, :type => "hidden"}
+        %input{:name => "employees[][gender]", :value => employee.gender, :type => "hidden"}
+        %input{:name => "employees[][date_of_birth]", :value => employee.date_of_birth, :type => "hidden"}
+        %input{:name => "employees[][date_of_joining]", :value => employee.date_of_joining, :type => "hidden"}
+        %input{:name => "employees[][date_of_leaving]", :value => employee.date_of_leaving, :type => "hidden"}
+        %input{:name => "employees[][present_res_no]", :value => employee.present_res_no, :type => "hidden"}
+        %input{:name => "employees[][present_res_name]", :value => employee.present_res_name, :type => "hidden"}
+        %input{:name => "employees[][present_street]", :value => employee.present_street, :type => "hidden"}
+        %input{:name => "employees[][present_locality]", :value => employee.present_locality, :type => "hidden"}
+        %input{:name => "employees[][present_city]", :value => employee.present_city, :type => "hidden"}
+        %input{:name => "employees[][present_state_id]", :value => employee.present_state.id, :type => "hidden"}
+        %input{:name => "employees[][email]", :value => employee.email, :type => "hidden"}
+        %input{:name => "employees[][mobile]", :value => employee.mobile, :type => "hidden"}
+  - if @errors.empty?
+    = submit_tag "Save Employees"

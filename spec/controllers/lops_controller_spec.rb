@@ -29,5 +29,4 @@ describe LopsController do
   #    }.to change(Lop, :count).by(0)
   #  end
   #end
-
 end

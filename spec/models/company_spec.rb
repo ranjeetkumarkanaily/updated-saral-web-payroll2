@@ -39,5 +39,7 @@ describe Company do
     #  invalid_website = Company.new(:website => "123")
     #  invalid_website.should_not be_valid
     #end
+
+    it { should have_attached_file(:photo) }
   end
 end

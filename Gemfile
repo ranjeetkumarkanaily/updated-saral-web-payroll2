@@ -49,6 +49,9 @@ gem 'currency-in-words'
 gem "pdfkit" , "= 0.5.0"
 gem "wkhtmltopdf"
 gem "paperclip","~>2.4"
+gem "carrierwave"
+gem "mini_magick"
+gem "spreadsheet"
 
 # Use unicorn as the web server
 # gem 'unicorn'

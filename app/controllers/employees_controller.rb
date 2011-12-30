@@ -80,4 +80,58 @@ class EmployeesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  # Upload excel sheet for bulk insertion employee
+  def upload
+
+  end
+
+  # save , parse and validate the excel file
+  def upload_parse_validate
+    test_file = params[:excel_file]
+    file = FileUploader.new
+    file.store!(test_file)
+    book = Spreadsheet.open "#{file.store_path}"
+    sheet1 = book.worksheet 0
+    @employees = []
+    @errors = Hash.new
+    @counter = 0
+    sheet1.each 1 do |row|
+      @counter+=1
+
+      e = Employee.new
+      e.refno = row[0]
+      e.empname = row[1]
+      e.father_name = row[2]
+      e.marital_status = row[3]
+      e.spouse_name = row[4]
+      e.gender = row[5]
+      e.date_of_birth = row[6]
+      e.date_of_joining = row[7]
+      e.date_of_leaving = row[8]
+      e.present_res_no = row[9]
+      e.present_res_name = row[10]
+      e.present_street = row[11]
+      e.present_locality = row[12]
+      e.present_city = row[13]
+      e.present_state = State.find_by_state_name(row[14])
+      e.email = row[15]
+      e.mobile = row[16].to_s
+
+      if e.valid?
+        @employees << e
+      else
+        @errors["#{@counter+1}"] = e.errors
+      end
+
+    end
+    file.remove!
+  end
+
+  def save
+    params[:employees].each do |employee|
+      Employee.create(employee)
+    end
+    redirect_to employees_path
+  end
 end
