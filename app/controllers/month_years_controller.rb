@@ -5,7 +5,7 @@ class MonthYearsController < ApplicationController
     @month_years = MonthYear.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index.html.haml
       format.json { render json: @month_years }
     end
   end
