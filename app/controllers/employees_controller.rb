@@ -123,7 +123,6 @@ class EmployeesController < ApplicationController
       else
         @errors["#{@counter+1}"] = e.errors
       end
-
     end
     file.remove!
   end

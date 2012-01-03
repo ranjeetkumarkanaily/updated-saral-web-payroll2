@@ -4,6 +4,8 @@ class Employee < ActiveRecord::Base
 
   has_many :employee_details, :dependent => :destroy
 
+  has_many :leave_details, :dependent => :destroy
+
   belongs_to :present_state, :class_name => "State"
 
   validates :empname, :presence => true,
@@ -23,6 +25,8 @@ class Employee < ActiveRecord::Base
   validate :doj_before_dol
 
   validate :dob_before_doj
+
+
 
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then

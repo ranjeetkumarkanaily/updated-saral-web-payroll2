@@ -55,4 +55,9 @@ FactoryGirl.define do
   factory :state do
     state_name "XYZ"
   end
+
+  factory :leave_detail do
+    employee
+    leave_date '2011-01-01'
+  end
 end

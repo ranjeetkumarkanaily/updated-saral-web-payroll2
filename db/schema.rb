@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223070223) do
+ActiveRecord::Schema.define(:version => 20111231085709) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(:version => 20111223070223) do
     t.string   "mobile"
     t.string   "refno"
   end
+
+  create_table "leave_details", :force => true do |t|
+    t.integer  "employee_id"
+    t.date     "leave_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "leave_details", ["employee_id"], :name => "index_leave_details_on_employee_id"
 
   create_table "lops", :force => true do |t|
     t.integer  "employee_id"
