@@ -3,6 +3,7 @@ class Employee < ActiveRecord::Base
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   has_many :employee_details, :dependent => :destroy
+  has_many :salary_totals, :dependent => :destroy
 
   has_many :leave_details, :dependent => :destroy
 

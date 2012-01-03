@@ -11,6 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 20111231085709) do
 
   create_table "companies", :force => true do |t|
@@ -98,6 +99,16 @@ ActiveRecord::Schema.define(:version => 20111231085709) do
     t.datetime "updated_at"
   end
 
+  create_table "month_years", :force => true do |t|
+    t.integer  "month_year"
+    t.integer  "number_of_days"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.string   "month_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "salaries", :force => true do |t|
     t.date     "effective_date"
     t.decimal  "salary_amount",      :precision => 8, :scale => 2
@@ -146,6 +157,17 @@ ActiveRecord::Schema.define(:version => 20111231085709) do
     t.string   "head_name"
     t.string   "short_name"
     t.string   "salary_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "salary_totals", :force => true do |t|
+    t.integer  "employee_id"
+    t.integer  "month_year_id"
+    t.decimal  "alloted_gross", :precision => 8, :scale => 2
+    t.decimal  "earned",        :precision => 8, :scale => 2
+    t.decimal  "deducted",      :precision => 8, :scale => 2
+    t.decimal  "net_salary",    :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end

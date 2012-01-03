@@ -60,4 +60,5 @@ FactoryGirl.define do
     employee
     leave_date '2011-01-01'
   end
+
 end
