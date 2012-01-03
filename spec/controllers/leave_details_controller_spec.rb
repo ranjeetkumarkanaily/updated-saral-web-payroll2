@@ -17,18 +17,17 @@ describe LeaveDetailsController do
 
   describe "Excel File Upload, Parse and Save" do
     it "save_parse_validate" do
-      DatabaseCleaner.clean
-      FactoryGirl.create(:leave_detail)
+      FactoryGirl.create(:leave_detail, :leave_date => '2011-01-02')
       excel_file = fixture_file_upload("spec/factories/Leave_Details.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success
     end
 
     it "gives error" do
+      FactoryGirl.create(:leave_detail)
       excel_file = fixture_file_upload("spec/factories/Leave_Details.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success
-      DatabaseCleaner.clean
     end
 
 
