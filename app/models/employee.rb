@@ -3,6 +3,9 @@ class Employee < ActiveRecord::Base
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   has_many :employee_details, :dependent => :destroy
+  has_many :salary_totals, :dependent => :destroy
+
+  has_many :leave_details, :dependent => :destroy
 
   belongs_to :present_state, :class_name => "State"
 
@@ -23,6 +26,8 @@ class Employee < ActiveRecord::Base
   validate :doj_before_dol
 
   validate :dob_before_doj
+
+
 
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then

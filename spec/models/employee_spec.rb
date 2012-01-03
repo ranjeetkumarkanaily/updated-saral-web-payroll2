@@ -13,6 +13,8 @@ describe Employee do
   }
   end
 
+  it { should have_many(:leave_details)}
+
   it "should require a name" do
     no_name_employee = Employee.new(@attr.merge(:empname => ""))
     no_name_employee.should_not be_valid

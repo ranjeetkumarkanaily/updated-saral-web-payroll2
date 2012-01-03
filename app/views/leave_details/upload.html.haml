@@ -1,0 +1,7 @@
+= link_to 'Home', root_url
+%h1 Choose Upload file
+= form_tag('/leave_details/upload_parse_validate', :multipart => true)
+%p
+  = file_field_tag 'excel_file'
+%p
+  = submit_tag "Process this file"

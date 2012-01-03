@@ -1,5 +1,8 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+  resources :salary_totals
+
   resources :month_years
+
 
   resources :default_values
 
@@ -12,6 +15,13 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     post "upload_parse_validate",  :on => :collection
     post "save", :on => :collection
   end
+
+  resources :leave_details, :only => [:index] do
+    get 'upload', :on => :collection
+    post 'upload_parse_validate', :on => :collection
+    post 'save', :on => :collection
+  end
+
   resources :companies
 
   resources :salary_group_details
