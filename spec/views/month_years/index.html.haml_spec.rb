@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "month_years/index.html.erb" do
+describe "month_years/index.html.haml" do
   before(:each) do
     assign(:month_years, [
       stub_model(MonthYear,

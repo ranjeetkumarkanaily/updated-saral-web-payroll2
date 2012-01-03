@@ -1,0 +1,20 @@
+= link_to 'Home', root_url
+%h1 Listing month_years
+%table
+  %tr
+    %th Month Year
+    %th Number of days
+    %th From date
+    %th To date
+    %th Month name
+    %th
+  - @month_years.each do |month_year|
+    %tr
+      %td= month_year.month_year
+      %td= month_year.number_of_days
+      %td= month_year.from_date
+      %td= month_year.to_date
+      %td= month_year.month_name
+      %td= link_to 'Destroy', month_year, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Month year', new_month_year_path

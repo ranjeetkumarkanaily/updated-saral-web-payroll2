@@ -6,7 +6,6 @@ class CreateMonthYears < ActiveRecord::Migration
       t.date :from_date
       t.date :to_date
       t.string :month_name
-
       t.timestamps
     end
   end
