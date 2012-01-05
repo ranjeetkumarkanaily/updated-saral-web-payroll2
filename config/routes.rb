@@ -1,8 +1,6 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
   resources :salary_totals
 
-  resources :month_years
-
 
   resources :default_values
 
