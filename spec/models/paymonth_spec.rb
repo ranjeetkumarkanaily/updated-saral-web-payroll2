@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Paymonth do
   before(:each) do
     @attr = {
-        :month_year => 24144,
+        :month_year => 24133,
         :number_of_days => 31,
-        :from_date => "2011-12-01",
-        :to_date => "2011-12-31",
-        :month_name => "Dec/2011"
+        :from_date => "2011-01-01",
+        :to_date => "2011-01-31",
+        :month_name => "Jan/2011"
     }
   end
 
@@ -48,7 +48,7 @@ describe Paymonth do
   describe "find_days_in_month" do
     it "should find days for the given month" do
       paymonth = Paymonth.new(@attr)
-      number_days = Paymonth.find_days_in_month 2011, 12
+      number_days = Paymonth.find_days_in_month 2011, 01
       number_days.should eq(paymonth.number_of_days)
     end
   end
@@ -56,21 +56,39 @@ describe Paymonth do
   describe "find_last_day_of_the_month" do
     it "should find last day of the given month" do
       paymonth = Paymonth.new(@attr)
-      to_date = Paymonth.find_last_day_of_the_month 2011, 12
+      to_date = Paymonth.find_last_day_of_the_month 2011, 01
       to_date.should eq(paymonth.to_date)
     end
   end
 
-  describe "find_month_number" do
+  describe "find_month_details_to_save" do
     it "should find month number for the given month name" do
-      months = %w[jan feb mar apr may jun jul aug sep oct nov dec]
-      month_number_counter = 1
-     months.each do |month|
-       month_number = Paymonth.find_month_number month
-       month_number.should eq(month_number_counter)
-       month_number_counter = month_number_counter+1
-     end
+      paymonth = Paymonth.new(@attr)
+      details_to_save = Paymonth.find_month_details_to_save "Jan/2011"
+      details_to_save.should eq([paymonth.month_year,paymonth.number_of_days,paymonth.from_date,paymonth.to_date,paymonth.month_name])
+    end
+  end
 
+  describe "proceed_to_save" do
+    it "should return true if valid month entered" do
+      paymonth = Paymonth.new(@attr)
+      res = Paymonth.proceed_to_save paymonth.month_name
+      res.should eq(true)
+    end
+
+    it "should return false if invalid month entered" do
+      paymonth = Paymonth.create!(@attr)
+      res = Paymonth.proceed_to_save "nov/2011"
+      res.should eq(false)
+    end
+
+  end
+
+  describe "find_month_year" do
+    it "should find month year for the given month n year string" do
+      paymonth = Paymonth.new(@attr)
+       month_year = Paymonth.find_month_year paymonth.month_name
+      month_year.should eq(['Jan',2011])
     end
   end
 
