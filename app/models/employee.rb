@@ -42,4 +42,9 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  def self.search(search)
+    search_condition = "%" + search + "%"
+    find(:all, :conditions => ['refno LIKE ? OR empname LIKE ? OR email LIKE ?', search_condition, search_condition, search_condition])
+  end
+
 end

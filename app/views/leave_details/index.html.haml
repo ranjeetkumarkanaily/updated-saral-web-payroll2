@@ -1,14 +1,26 @@
-=link_to 'Home', root_url
-|
-=link_to 'Excel upload', upload_leave_details_path
-%h1 Listing Leaves
-%table{:cellpadding => 0, :cellspacing => 0, :border => 1}
-  %tr
-    %th Employee Id
-    %th Employee Name
-    %th Leave date
-  - @leave_details.each do |leave|
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing Leaves
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td= leave.employee_id
-      %td= Employee.find(leave.employee_id).empname
-      %td= leave.leave_date
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Employee ID
+            %td.table_grid_header Employee Name
+            %td.table_grid_header Leave Date
+          - @leave_details.each do |leave|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= leave.employee_id
+              %td.table_grid_td= Employee.find(leave.employee_id).empname
+              %td.table_grid_td= leave.leave_date
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @leave_details
+          = will_paginate @leave_details, :container => false
+    %tr
+      %td &nbsp;

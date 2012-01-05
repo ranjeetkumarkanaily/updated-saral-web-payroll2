@@ -7,13 +7,21 @@
       %ul
         - @salary_group.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :salary_group_name
-    %br/
-    = f.text_field :salary_group_name
-  .field
-    = f.label :based_on_gross
-    %br/
-    = f.check_box :based_on_gross
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td
+              %table
+                %tr
+                  %td{:width=>180} Salary Group Name:&nbsp;
+                  %td= f.text_field :salary_group_name, :size => '22'
+                %tr
+                  %td Based on Gross:&nbsp;
+                  %td= f.check_box :based_on_gross
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
+

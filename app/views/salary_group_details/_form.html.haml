@@ -3,32 +3,38 @@
     #error_explanation
       %h2
         = pluralize(@salary_group_detail.errors.count, "error")
-        prohibited this salary_group_detail from being saved:
+        prohibited this salary_head from being saved:
       %ul
         - @salary_group_detail.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :salary_group_id
-    %br/
-    = f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|ss| [ ss.salary_group_name, ss.id ] },
-    @salary_group_detail.salary_group_id), {:prompt => 'Select Structure'}
-  .field
-    = f.label :salary_head
-    %br/
-    = f.collection_select :salary_head_id, SalaryHead.find(:all), :id, :head_name, :prompt => "Select Salary Head"
-  .field
-    = f.label "Calculation Type"
-    %br/
-    = f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month"],@salary_group_detail.calc_type),
-    {:prompt => 'Select Type'}
-  .field
-    = f.label :calculation
-    %br/
-    = f.text_area :calculation, :rows => 3, :cols => 30
-  .field
-    = f.label :based_on
-    %br/
-    = f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],
-    @salary_group_detail.based_on), {:prompt => 'Select'}
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Salary Group:&nbsp;
+                  %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|ss| [ ss.salary_group_name, ss.id ] },@salary_group_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+                %tr
+                  %td{:width=>130} Salary Head:&nbsp;
+                  %td= f.collection_select :salary_head_id, SalaryHead.all, :id, :head_name, :prompt => "Select Salary Head"
+                %tr
+                  %td{:width=>130} Based On:&nbsp;
+                  %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],        @salary_group_detail.based_on), {:prompt => 'Select'}
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Calculation Type:&nbsp;
+                  %td= f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month"],@salary_group_detail.calc_type),  {:prompt => 'Select Type'}
+                  %tr
+                    %td{:width=>130} Calculation:&nbsp;
+                    %td= f.text_area :calculation, :rows => 3, :cols => 30
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit

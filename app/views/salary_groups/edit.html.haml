@@ -1,5 +1,7 @@
-%h1 Editing Salary Group
-= render 'form'
-= link_to 'Show', @salary_group
-|
-\#{link_to 'Back', salary_groups_path}
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Editing Salary Group
+    = link_to image_tag('/assets/show.png',:title => "Show Salary Group"), @salary_group
+  = render 'form'

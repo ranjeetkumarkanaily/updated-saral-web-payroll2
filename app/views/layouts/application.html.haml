@@ -1,15 +1,62 @@
 !!!
 %html
   %head
-    %title Saral Web Payroll
+    %title #{Company.first.companyname} Web Payroll
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    %script{:src => "/assets/dropdowntabs.js?body=1", :type => "text/javascript"}
   %body
+    #header
+      #header_left
+        %h1= Company.first.companyname
+      #header_right
+        = image_tag(Company.first.photo.url(:logo))
     - if @_current_user
-      %div{:style => "float:right;"}
-        = link_to "Logout", logout_path
-    #container
-      - flash.each do |name, msg|
-        = content_tag :div, msg, :id => "flash_#{name}"
-    = yield
+      #bluemenu.bluetabs
+        %ul
+          %li
+            %a{:href => root_path} Home
+          %li
+            %a{:href => companies_path, :rel => "dropmenu1_b"} Company
+          %li
+            %a{:href => states_path, :rel => "dropmenu2_b"} Master
+          %li
+            %a{:href => leave_details_path} Leave
+          %li
+            %a{:href => salary_groups_path, :rel => "dropmenu4_b"} Salary
+          %li
+            %a{:href => root_path, :rel => "dropmenu5_b"} Reports
+          %li
+            %a{:href => logout_path} Logout
+      / 1st drop down menu
+      #dropmenu1_b.dropmenudiv_b
+        %a{:href => companies_path} PT
+        %a{:href => companies_path} PF/ESI
+      #dropmenu2_b.dropmenudiv_b
+        %a{:href => paymonths_path} Pay Months
+        %a{:href => states_path} States
+        %a{:href => employees_path} Employees
+      #dropmenu4_b.dropmenudiv_b
+        %a{:href => salary_groups_path} Salary Group
+        %a{:href => salary_heads_path} Salary Head
+        %a{:href => salary_group_details_path} Salary Group Configuration
+        %a{:href => salary_allotments_path} Salary Allotment
+        %a{:href => new_salary_path} Salary Editor
+        %a{:href => salaries_path} Generate Salary
+      #dropmenu5_b.dropmenudiv_b
+        %a{:href => report_employees_path} Employee Master Report
+      :javascript
+        //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
+        tabdropdown.init("bluemenu")
+    -##container
+    -#  - flash.each do |name, msg|
+    -#    = content_tag :div, msg, :id => "flash_#{name}"
+    - if @_current_user
+      #main_content
+        = yield
+    - else
+      #main_content_index
+        = yield
+    #footer
+      %p Copyright &copy; #{Time.now.year}, Relyon Softech Limited, All rights reserved.

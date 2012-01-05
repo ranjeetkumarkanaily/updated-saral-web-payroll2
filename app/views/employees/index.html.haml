@@ -1,50 +1,39 @@
-=link_to 'Home', root_url
-|
-=link_to 'Excel upload', upload_employees_path
-%h1 Listing Employees
-%table{:cellpadding => 0, :cellspacing => 0, :border => 1}
-  %tr
-    %th Ref No
-    %th Employee Name
-    %th Father's Name
-    %th Marital Status
-    %th Spouse Name
-    %th Gender
-    %th Date of Birth
-    %th Date of Joining
-    %th Date of Leaving
-    %th Residence No
-    %th Name of the Residence
-    %th Street
-    %th Locality
-    %th City
-    %th State
-    %th Email
-    %th Mobile
-    %th{:colspan => 3} Operations
-    %th Details
-  - @employees.each do |employee|
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing Employees
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td= employee.refno
-      %td= employee.empname
-      %td= employee.father_name
-      %td= employee.marital_status
-      %td= employee.spouse_name
-      %td= employee.gender
-      %td= employee.date_of_birth
-      %td= employee.date_of_joining
-      %td= employee.date_of_leaving
-      %td= employee.present_res_no
-      %td= employee.present_res_name
-      %td= employee.present_street
-      %td= employee.present_locality
-      %td= employee.present_city
-      %td= employee.present_state.state_name
-      %td= employee.email
-      %td= employee.mobile
-      %td= link_to 'Show', employee
-      %td= link_to 'Edit', edit_employee_path(employee)
-      %td= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete
-      %td= link_to 'Details', employee_details_path(:param1=>employee.id)
-%br/
-= link_to 'New Employee', new_employee_path
+      %td &nbsp;
+    %tr
+      %td.std_td
+        = render 'search'
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Ref No
+            %td.table_grid_header Employee Name
+            %td.table_grid_header Gender
+            %td.table_grid_header DOJ
+            %td.table_grid_header Email
+            %td.table_grid_header{:colspan => 4} Operations
+          - @employees.each do |employee|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= employee.refno
+              %td.table_grid_td= employee.empname
+              %td.table_grid_td= employee.gender
+              %td.table_grid_td= employee.date_of_joining
+              %td.table_grid_td= employee.email
+              %td.table_grid_td= link_to image_tag('/assets/show.png',:title => "Show Employee"), employee
+              %td.table_grid_td= link_to image_tag('/assets/edit.png',:title => "Edit Employee"), edit_employee_path(employee)
+              %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Destroy Employee"), employee, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_td= link_to image_tag('/assets/details.png',:title => "View Employee's Details"), employee_details_path(:param1=>employee.id)
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @employees
+          = will_paginate @employees, :container => false
+    %tr
+      %td &nbsp;
+

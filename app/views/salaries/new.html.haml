@@ -1,43 +1,51 @@
-=link_to 'Home', root_url
-%h1 Salary Editor
-= form_tag new_salary_path, :method => :get do
-  %table
+#left_content
+  = render 'left'
+#right_content
+  %h1 Salary Editor
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td{:width => "100px"} Employee
-      %td{:width => "100px"}
-        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname', params[:employee_id]), :prompt => "Select Employee")
-    %tr
-      %td{:width => "100px"} Month/Year
-      %td{:width => "100px"}
-        = select_tag("month_year", options_for_select([['Jan/2011', '01/2011'],['Feb/2011', '02/2011'],['Mar/2011', '03/2011'],['Apr/2011', '04/2011'],['May/2011', '05/2011'],['Jun/2011', '06/2011'],['Jul/2011', '07/2011'],['Aug/2011', '08/2011'],['Sep/2011', '09/2011'],['Oct/2011', '10/2011']],params[:month_year]), :prompt => "Select Month Year")
-    %tr
-      %td
-        = submit_tag("Get Salary")
-    %tr
-      %td &nbsp;
-- if params[:month_year] && params[:employee_id]
-  = form_tag salaries_path , :method => :post do
-    %table
-      %tr
-        %td Salary Heads
-        %td Short Name
-        %td Salary Head Type
-        -#%td Salary Effective From
-        %td Salary Allotment
-      - if @salary_allotments
-        - @salary_allotments.each do |sal_allot|
-          = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
-          = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
-          = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
-          = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
-          %tr
-            %td= SalaryHead.find(sal_allot.salary_head_id).head_name
-            %td= SalaryHead.find(sal_allot.salary_head_id).short_name
-            %td= SalaryHead.find(sal_allot.salary_head_id).salary_type
-            -#%td= sal_allot.effective_date
-            %td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
-        %tr
-          %td= submit_tag "Save Salary"
-      - else
-        %tr
-          %td{:style => "color:#FF0000"} Salary already Generated
+      %td.std_td
+        = form_tag new_salary_path, :method => :get do
+          %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+            %tr
+              %td &nbsp;
+            %tr
+              %td{:width => "100px"} Employee
+              %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.all,'id','empname', params[:employee_id]),:prompt => 'Select Employee'
+            %tr
+              %td{:width => "100px"} Month/Year
+              %td{:width => "100px"}
+                = select_tag("month_year", options_for_select([['Jan/2011', '01/2011'],['Feb/2011', '02/2011'],['Mar/2011', '03/2011'],['Apr/2011', '04/2011'],['May/2011', '05/2011'],['Jun/2011', '06/2011'],['Jul/2011', '07/2011'],['Aug/2011', '08/2011'],['Sep/2011', '09/2011'],['Oct/2011', '10/2011']],params[:month_year]), :prompt => "Select Month Year")
+            %tr
+              %td
+                = submit_tag("Get Salary")
+            %tr
+              %td
+                &nbsp;
+        - if params[:month_year] && params[:employee_id]
+          = form_tag salaries_path, :method => :put do
+            %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+              %tr
+                %td.table_grid_header Salary Heads
+                %td.table_grid_header Short Name
+                %td.table_grid_header Salary Head Type
+                %td.table_grid_header Salary Allotment
+              - if @salary_allotments
+                - @salary_allotments.each do |sal_allot|
+                  = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
+                  = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
+                  = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
+                  = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
+                  %tr
+                    %td.table_grid_td= SalaryHead.find(sal_allot.salary_head_id).head_name
+                    %td.table_grid_td= SalaryHead.find(sal_allot.salary_head_id).short_name
+                    %td.table_grid_td= SalaryHead.find(sal_allot.salary_head_id).salary_type
+                    %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
+                %tr
+                  %td
+                    &nbsp;
+                %tr
+                  %td= submit_tag "Save Salary"
+              - else
+                %tr
+                  %td.table_grid_td{:style => "color:#FF0000",:colspan=>4} Salary already Generated for selected month !!!

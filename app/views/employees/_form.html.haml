@@ -7,83 +7,92 @@
       %ul
         - @employee.errors.full_messages.each do |msg|
           %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Ref No:&nbsp;
+                  %td= f.text_field :refno, :size => '22'
+                %tr
+                  %td Father Name:&nbsp;
+                  %td= f.text_field :father_name, :size => '22'
+                %tr
+                  %td Marital Status:&nbsp;
+                  %td= f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],@employee.marital_status), {:prompt => 'Select Marital Status'}
+                %tr
+                  %td Date of Birth:&nbsp;
+                  %td= f.date_select :date_of_birth,:include_blank => true,  :start_year => 1920, :end_year => 2010
+                %tr
+                  %td Date of Leaving:&nbsp;
+                  %td= f.date_select :date_of_leaving, :include_blank => true,  :start_year => 2000, :end_year => 2014
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Employee Name:&nbsp;
+                  %td= f.text_field :empname, :size => '22'
+                %tr
+                  %td Gender:&nbsp;
+                  %td= f.select :gender, options_for_select(["Male", "Female"],@employee.gender), {:prompt => 'Select Gender'}
+                %tr
+                  %td Spouse Name:&nbsp;
+                  %td= f.text_field :spouse_name, :size => '22'
+                %tr
+                  %td Date of Joining:&nbsp;
+                  %td= f.date_select :date_of_joining, :include_blank => true,  :start_year => 2000, :end_year => 2014
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:colspan=>2,:class=>'form_title'} Present Address
+                %tr
+                  %td{:width=>130} Residence No.:&nbsp;
+                  %td= f.text_field :present_res_no, :size => '22'
+                %tr
+                  %td{:width=>130} Street:&nbsp;
+                  %td= f.text_field :present_street, :size => '22'
+                %tr
+                  %td{:width=>130} City:&nbsp;
+                  %td= f.text_field :present_city, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td &nbsp
+                %tr
+                  %td{:width=>130} Residence Name.:&nbsp;
+                  %td= f.text_field :present_res_name, :size => '22'
+                %tr
+                  %td{:width=>130} Locality:&nbsp;
+                  %td= f.text_field :present_locality, :size => '22'
+                %tr
+                  %td{:width=>130} State:&nbsp;
+                  %td= f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] },
+                                                            @employee.present_state_id), {:prompt => 'Select State'}
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:colspan=>2,:class=>'form_title'} Contact Information
+                %tr
+                  %td{:width=>130} Email:&nbsp;
+                  %td= f.text_field :email, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td &nbsp
+                %tr
+                  %td{:width=>130} Mobile Number:&nbsp;
+                  %td= f.text_field :mobile, :size => '22'
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
 
-  .field
-    = f.label :refno, "Employee Ref No"
-    = f.text_field :refno
-  .field
-    = f.label :empname, "Name of the Employee"
-    = f.text_field :empname
-    &nbsp
-    = f.label :father_name
-    = f.text_field :father_name
-    &nbsp
-    = f.label :gender
-    = f.select :gender, options_for_select(["Male", "Female"],@employee.gender), {:prompt => 'Select a gender'}
-  .field
-    = f.label :marital_status
-    = f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],@employee.marital_status), {:prompt => 'Select marital status'}
-    &nbsp
-    = f.label :spouse_name
-    = f.text_field :spouse_name
-  .field
-    = f.label :date_of_birth
-    = f.date_select :date_of_birth,:include_blank => true,  :start_year => 1920, :end_year => 2010
-    &nbsp
-    = f.label :date_of_joining
-    = f.date_select :date_of_joining,  :start_year => 2000, :end_year => 2014
-    &nbsp
-    = f.label :date_of_leaving
-    = f.date_select :date_of_leaving, :include_blank => true,  :start_year => 2000, :end_year => 2014
-  %h2 Present Address
-  .field
-    = f.label :present_res_no, "Present Residence No."
-    = f.text_field :present_res_no
-  .field
-    = f.label :present_res_name, "Present Residence Name"
-    = f.text_field :present_res_name
-  .field
-    = f.label :present_street
-    = f.text_field :present_street
-  .field
-    = f.label :present_locality
-    = f.text_field :present_locality
-  .field
-    = f.label :present_city
-    = f.text_field :present_city
-  .field
-    = f.label :present_state_id
-    = f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] },
-                                                            @employee.present_state_id), {:prompt => 'Select a State'}
-  -#.field
-  -#  = f.label :perm_sameas_present, "Is Permanent address same as Present Address"
-  -#  = f.check_box :perm_sameas_present
-  -#%h2 Permanent Address
-  -#.field
-  -#  = f.label :perm_res_no, "Permanent Residence No"
-  -#  = f.text_field :perm_res_no
-  -#.field
-  -#  = f.label :perm_res_name, "Permanent Residence Name."
-  -#  = f.text_field :perm_res_name
-  -#.field
-  -#  = f.label :perm_street
-  -#  = f.text_field :perm_street
-  -#.field
-  -#  = f.label :perm_locality
-  -#  = f.text_field :perm_locality
-  -#.field
-  -#  = f.label :perm_city
-  -#  = f.text_field :perm_city
-  -#.field
-  -#  = f.label :perm_state_id
-  -#  = f.text_field :perm_state_id
-  .field
-    = f.label :email
-    = f.text_field :email
-    &nbsp
-    = f.label :mobile
-    = f.text_field :mobile
-  .actions
-    = f.submit
 
 

@@ -7,9 +7,17 @@
       %ul
         - @state.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :state_name
-    %br/
-    = f.text_field :state_name
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td State Name:&nbsp;
+                  %td= f.text_field :state_name, :size => '22'
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit

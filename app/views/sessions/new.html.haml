@@ -1,12 +1,13 @@
-%h1 Log in
-%p
-= form_tag sessions_path do
+#login
+  %h1 Sign In
   %p
-    = label_tag :username, "Username"
-    %br/
-    = text_field_tag :username, params[:username]
-  %p
-    = label_tag :password
-    %br/
-    = password_field_tag :password
-  %p= submit_tag "Log in"
+  = form_tag sessions_path do
+    %table
+      %tr
+        %td{:class => 'td_left'}= label_tag :username, "Username"
+        %td= text_field_tag :username, params[:username]
+      %tr
+        %td{:class => 'td_left'}= label_tag :password
+        %td= password_field_tag :password
+      %tr
+        %td{:colspan => 2, :align => "right"}= submit_tag "Sign In"

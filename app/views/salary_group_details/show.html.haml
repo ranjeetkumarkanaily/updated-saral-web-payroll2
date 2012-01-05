@@ -1,18 +1,50 @@
-%p
-  %b Salary Group:
-  = @salary_group_detail.salary_group.salary_group_name
-%p
-  %b Salary Head:
-  = @salary_group_detail.salary_head.head_name
-%p
-  %b Calculation Type:
-  = @salary_group_detail.calc_type
-%p
-  %b Calculation:
-  = @salary_group_detail.calculation
-%p
-  %b Based on:
-  = @salary_group_detail.based_on
-= link_to 'Edit', edit_salary_group_detail_path(@salary_group_detail)
-|
-\#{link_to 'Back', salary_group_details_path}
+#left_content
+  = render 'left'
+#right_content
+  %h1{:style=>"width:350px;"}
+    Showing Salary Group Configuration
+    = link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(@salary_group_detail)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Salary Group:&nbsp;
+                  %td= @salary_group_detail.salary_group.salary_group_name
+                %tr
+                  %td{:width=>130} Salary Head:&nbsp;
+                  %td= @salary_group_detail.salary_head.head_name
+                %tr
+                  %td{:width=>130} Based On:&nbsp;
+                  %td= @salary_group_detail.based_on
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Calculation Type:&nbsp;
+                  %td= @salary_group_detail.calc_type
+                %tr
+                  %td{:width=>130} Calculation:&nbsp;
+                  %td= @salary_group_detail.calculation
+
+
+-#%p
+-#  %b Salary Group:
+-#  = @salary_group_detail.salary_group.salary_group_name
+-#%p
+-#  %b Salary Head:
+-#  = @salary_group_detail.salary_head.head_name
+-#%p
+-#  %b Calculation Type:
+-#  = @salary_group_detail.calc_type
+-#%p
+-#  %b Calculation:
+-#  = @salary_group_detail.calculation
+-#%p
+-#  %b Based on:
+-#  = @salary_group_detail.based_on
+-#= link_to 'Edit', edit_salary_group_detail_path(@salary_group_detail)
+-#|
+-#\#{link_to 'Back', salary_group_details_path}

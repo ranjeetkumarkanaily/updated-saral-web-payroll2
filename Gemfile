@@ -52,6 +52,7 @@ gem "paperclip","~>2.4"
 gem "carrierwave"
 gem "mini_magick"
 gem "spreadsheet"
+gem 'will_paginate'
 
 # Use unicorn as the web server
 # gem 'unicorn'

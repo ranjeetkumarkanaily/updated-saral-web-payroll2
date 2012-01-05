@@ -1,8 +1,14 @@
 class EmployeesController < ApplicationController
   # GET /employees
   # GET /employees.json
+  require 'will_paginate/array'
+
   def index
-    @employees = Employee.all
+    if params[:search]
+      @employees = Employee.search(params[:search]).paginate(:page => params[:page], :per_page => 10)
+    else
+      @employees = Employee.paginate(:page => params[:page], :per_page => 10)
+    end
 
     respond_to do |format|
       format.html # index.html.haml
@@ -132,5 +138,9 @@ class EmployeesController < ApplicationController
       Employee.create(employee)
     end
     redirect_to employees_path
+  end
+
+  def report
+
   end
 end

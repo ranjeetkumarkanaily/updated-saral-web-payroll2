@@ -73,7 +73,7 @@ describe EmployeeDetailsController do
 
       it "redirects to the created employee_detail" do
         post :create, :employee_detail => valid_attributes
-        response.should redirect_to(EmployeeDetail.last)
+        response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id]))
       end
     end
 
@@ -115,7 +115,7 @@ describe EmployeeDetailsController do
       it "redirects to the employee_detail" do
         employee_detail = EmployeeDetail.create! valid_attributes
         put :update, :id => employee_detail.id, :employee_detail => valid_attributes
-        response.should redirect_to(employee_detail)
+        response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id]))
       end
     end
 

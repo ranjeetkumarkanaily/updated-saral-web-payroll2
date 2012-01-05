@@ -3,29 +3,25 @@
     #error_explanation
       %h2
         = pluralize(@paymonth.errors.count, "error")
-        prohibited this paymonth from being saved:
+        prohibited this state from being saved:
       %ul
         - @paymonth.errors.full_messages.each do |msg|
           %li= msg
-  -#.field
-  -#  = f.label :month_year
-  -#  %br/
-  -#  = f.number_field :month_year
-  -#.field
-  -#  = f.label :number_of_days
-  -#  %br/
-  -#  = f.number_field :number_of_days
-  -#.field
-  -#  = f.label :from_date
-  -#  %br/
-  -#  = f.date_select :from_date
-  -#.field
-  -#  = f.label :to_date
-  -#  %br/
-  -#  = f.date_select :to_date
-  .field
-    = f.label :month_name
-    %br/
-    = f.text_field :month_name
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td Month Name:&nbsp;
+                  %td
+                    = f.text_field :month_name, :size => '22'
+                %tr
+                  %td &nbsp;
+                  %td{:class => 'msg'} (e.g. "Jan/2012")
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
