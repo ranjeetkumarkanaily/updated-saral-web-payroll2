@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "month_years/show.html.haml" do
+describe "paymonths/show.html.haml" do
   before(:each) do
-    @month_year = assign(:month_year, stub_model(MonthYear,
+    @paymonth = assign(:paymonth, stub_model(Paymonth,
       :month_year => 1,
       :number_of_days => 1,
       :month_name => "Month Name"

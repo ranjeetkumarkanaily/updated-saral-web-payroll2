@@ -1,4 +1,6 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+  resources :paymonths
+
   resources :salary_totals
 
 

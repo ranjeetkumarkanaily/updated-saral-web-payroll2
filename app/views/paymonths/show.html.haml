@@ -1,0 +1,18 @@
+%p#notice= notice
+%p
+  %b Month year:
+  = @paymonth.month_year
+%p
+  %b Number of days:
+  = @paymonth.number_of_days
+%p
+  %b From date:
+  = @paymonth.from_date
+%p
+  %b To date:
+  = @paymonth.to_date
+%p
+  %b Month name:
+  = @paymonth.month_name
+
+\#{link_to 'Back', paymonths_path}
