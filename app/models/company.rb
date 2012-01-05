@@ -15,7 +15,7 @@ class Company < ActiveRecord::Base
 
   validates :dateofestablishment, :presence => true
 
-  has_attached_file :photo, :styles => { :logo => ["100x50", :png]}
+  has_attached_file :photo, :styles => { :logo => ["100x35", :png]}
 
   #validates :website, :format => /^(((h|H?)(t|T?)(t|T?)(p|P?)(s|S?))\://)?(www.|[a-zA-Z0-9].)[a-zA-Z0-9\-\.]+\.[a-zA-Z]*$/
 
