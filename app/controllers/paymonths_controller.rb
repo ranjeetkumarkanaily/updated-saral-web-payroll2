@@ -1,6 +1,7 @@
 class PaymonthsController < ApplicationController
+
   def index
-    @paymonths = Paymonth.all
+    @paymonths = Paymonth.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

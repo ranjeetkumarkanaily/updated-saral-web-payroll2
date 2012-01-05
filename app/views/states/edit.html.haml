@@ -1,5 +1,7 @@
-%h1 Editing State
-= render 'form'
-= link_to 'Show', @state
-|
-\#{link_to 'Back', states_path}
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Editing State
+    = link_to image_tag('/assets/show.png',:title => "Show State"), @state
+  = render 'form'

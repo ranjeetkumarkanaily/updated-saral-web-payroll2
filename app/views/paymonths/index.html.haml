@@ -1,23 +1,33 @@
-=link_to 'Home', root_url
-%h1 Listing paymonths
-%table
-  %tr
-    %th Month year
-    %th Number of days
-    %th From date
-    %th To date
-    %th Month name
-    %th
-    %th
-    %th
-  - @paymonths.each do |paymonth|
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing Pay Months
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td= paymonth.month_year
-      %td= paymonth.number_of_days
-      %td= paymonth.from_date
-      %td= paymonth.to_date
-      %td= paymonth.month_name
-      %td= link_to 'Show', paymonth
-      %td= link_to 'Destroy', paymonth, confirm: 'Are you sure?', method: :delete
-%br/
-= link_to 'New Paymonth', new_paymonth_path
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>600, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Month Year
+            %td.table_grid_header Number of Days
+            %td.table_grid_header From Date
+            %td.table_grid_header To Date
+            %td.table_grid_header Month Name
+            %td.table_grid_header{:colspan =>2} Operations
+          - @paymonths.each do |paymonth|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= paymonth.month_year
+              %td.table_grid_td= paymonth.number_of_days
+              %td.table_grid_td= paymonth.from_date
+              %td.table_grid_td= paymonth.to_date
+              %td.table_grid_td= paymonth.month_name
+              %td.table_grid_td= link_to image_tag('/assets/show.png',:title => "Show Pay Month"), paymonth
+              %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Destroy Pay Month"), paymonth, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @paymonths
+          = will_paginate @paymonths, :container => false
+    %tr
+      %td &nbsp;

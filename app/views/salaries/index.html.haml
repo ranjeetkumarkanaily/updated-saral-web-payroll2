@@ -1,70 +1,77 @@
-=link_to 'Home', root_url
-%h1 Employee-wise Salary Details
-= form_tag salaries_path, :method => :get do
-  %table{:cellpadding => "0", :cellspacing => "0", :width => "30%"}
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Employee-wise Salary Details
+    = link_to image_tag('/assets/edit.png',:title => "Edit Salary"), edit_salaries_path(:month_year => params[:month_year], :employee_id => params[:employee_id])
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td{:width => "100px"} Employee
-      %td{:width => "100px"}
-        = select_tag("employee_id", options_from_collection_for_select(Employee.all, 'id', 'empname',params[:employee_id]), :prompt => "Select Employee")
-    %tr
-      %td{:width => "100px"} Month/Year
-      %td{:width => "100px"}
-        = select_tag("month_year", options_for_select([['Jan/2011', '01/2011'],['Feb/2011', '02/2011'],['Mar/2011', '03/2011'],['Apr/2011', '04/2011'],['May/2011', '05/2011'],['Jun/2011', '06/2011'],['Jul/2011', '07/2011'],['Aug/2011', '08/2011'],['Sep/2011', '09/2011'],['Oct/2011', '10/2011']],params[:month_year]), :prompt => "Select Month Year")
-    %tr
-      %td
-        = submit_tag("Generate Salary")
-    %tr
-      %td
-        &nbsp;
-- if (params[:month_year] and params[:employee_id])
-- gross_total = 0
-- deduction_total = 0
-  %table{:border => 0}
-    %tr
-      %td
-        %table{:border => 1}
-          %tr
-            %td Earnings
-            %td Deduction
-          %tr
-            %td
-              %table
-                - @salary_earning.each do |salary|
+      %td.std_td
+        = form_tag salaries_path, :method => :get do
+          %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+            %tr
+              %td &nbsp;
+            %tr
+              %td{:width => "100px"} Employee
+              %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.all,'id','empname', params[:employee_id]),:prompt => 'Select Employee'
+            %tr
+              %td{:width => "100px"} Month/Year
+              %td{:width => "100px"}
+                = select_tag("month_year", options_for_select([['Jan/2011', '01/2011'],['Feb/2011', '02/2011'],['Mar/2011', '03/2011'],['Apr/2011', '04/2011'],['May/2011', '05/2011'],['Jun/2011', '06/2011'],['Jul/2011', '07/2011'],['Aug/2011', '08/2011'],['Sep/2011', '09/2011'],['Oct/2011', '10/2011']],params[:month_year]), :prompt => "Select Month Year")
+            %tr
+              %td
+                = submit_tag("Generate Salary")
+            %tr
+              %td
+                &nbsp;
+        - if params[:month_year] && params[:employee_id]
+          - gross_total = 0
+          - deduction_total = 0
+          %table.table_grid{:width=>540, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td.table_grid_header Earnings
+              %td.table_grid_header Deduction
+            %tr
+              %td.std_td{:style=>"width:270px;"}
+                %table
+                  - @salary_earning.each do |salary|
+                    %tr
+                      %td{:width=>170}= salary.head_name
+                      %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                      - gross_total =   gross_total + salary.salary_amount.to_i
+              %td.std_td{:valign => 'top',:style=>"width:270px;"}
+                %table
+                  - @salary_deduction.each do |salary|
+                    %tr
+                      %td{:width=>170}= salary.head_name
+                      %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                      - deduction_total = deduction_total + salary.salary_amount.to_i
                   %tr
-                    %td= salary.head_name
-                    %td= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
-                    - gross_total =   gross_total + salary.salary_amount.to_i
-            %td{:valign => 'top'}
-              %table
-                - @salary_deduction.each do |salary|
+                    %td{:width=>170} PF
+                    %td{:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
+                    - deduction_total = deduction_total + @pf_amount.to_i
+                  - if @esi_amount
+                    %tr
+                      %td ESI
+                      %td{:style=>"text-align:right;"}= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
+                      - deduction_total = deduction_total + @esi_amount.to_i
+            %tr
+              %td.std_td{:style=>"width:270px;"}
+                %table
                   %tr
-                    %td= salary.head_name
-                    %td= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
-                    - deduction_total = deduction_total + salary.salary_amount.to_i
-                %tr
-                  %td PF
-                  %td=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
-                  - deduction_total = deduction_total + @pf_amount.to_i
-                - if @esi_amount
+                    %td{:width=>170,:class=>"bold_txt"}Gross Salary
+                    %td{:style=>"text-align:right;"}= number_with_precision(gross_total, :precision => 2, :delimiter => ',')
+              %td.std_td{:valign => 'top',:style=>"width:270px;"}
+                %table
                   %tr
-                    %td ESI
-                    %td= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
-                    - deduction_total = deduction_total + @esi_amount.to_i
-          %tr
-            %td
-              %table
-                %tr
-                  %td Gross Salary
-                  %td= number_with_precision(gross_total, :precision => 2, :delimiter => ',')
-            %td
-              %table
-                %tr
-                  %td Total Deductions
-                  %td= number_with_precision(deduction_total, :precision => 2, :delimiter => ',')
-          %tr
-            %td{:colspan => 2}
-              %table
-                %tr
-                  %td Net Salary
-                  %td= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
-  = link_to 'Edit Salary', edit_salaries_path(:month_year => params[:month_year], :employee_id => params[:employee_id])
+                    %td{:width=>170,:class=>"bold_txt"}Total Deductions
+                    %td{:style=>"text-align:right;"}= number_with_precision(deduction_total, :precision => 2, :delimiter => ',')
+          %table.table_grid{:width=>540, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td{:colspan=>2}
+                %hr
+            %tr
+              %td.std_td{:class=>"bold_txt"} Net Salary
+              %td{:class=>"bold_txt"}= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
+            %tr
+              %td &nbsp;

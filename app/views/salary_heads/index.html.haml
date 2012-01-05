@@ -1,22 +1,35 @@
-=link_to 'Home', root_url
-%h1 Listing Salary Heads
-%table{:width => 600, :cellpadding => 0, :cellspacing => 0, :border => 1}
-  %tr
-    %th Head Name
-    %th Short Name
-    %th Salary Type
-    %th{:colspan => 3} Operations
-  - @salary_heads.each do |salary_head|
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing Salary Heads
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td= salary_head.head_name
-      %td= salary_head.short_name
-      %td= salary_head.salary_type
-      %td= link_to 'Show', salary_head
-      - if salary_head.id <= 3
-        %td{:colspan => 2}= link_to 'Edit', edit_salary_head_path(salary_head)
-      - else
-        %td= link_to 'Edit', edit_salary_head_path(salary_head)
-      - if salary_head.id > 3
-        %td= link_to 'Destroy', salary_head, confirm: 'Are you sure?', method: :delete
-%br/
-= link_to 'New Salary Head', new_salary_head_path
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>600, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Head Name
+            %td.table_grid_header Short Name
+            %td.table_grid_header Salary Type
+            %td.table_grid_header{:colspan => 3} Operations
+          - @salary_heads.each do |salary_head|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= salary_head.head_name
+              %td.table_grid_td= salary_head.short_name
+              %td.table_grid_td= salary_head.salary_type
+              %td.table_grid_td= link_to image_tag('/assets/show.png',:title => "Show Salary Head"), salary_head
+              - if salary_head.id <= 3
+                %td.table_grid_td{:colspan => 2}= link_to image_tag('/assets/edit.png',:title => "Edit Salary Head"), edit_salary_head_path(salary_head)
+              - else
+                %td.table_grid_td= link_to image_tag('/assets/edit.png',:title => "Edit Salary Head"), edit_salary_head_path(salary_head)
+              - if salary_head.id > 3
+                %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Destroy Salary Head"), salary_head, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @salary_heads
+          = will_paginate @salary_heads, :container => false
+    %tr
+      %td &nbsp;
+

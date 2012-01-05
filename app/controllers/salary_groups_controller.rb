@@ -2,7 +2,7 @@ class SalaryGroupsController < ApplicationController
   # GET /salary_groups
   # GET /salary_groups.json
   def index
-    @salary_groups = SalaryGroup.all(:order => 'id ASC')
+    @salary_groups = SalaryGroup.paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.haml

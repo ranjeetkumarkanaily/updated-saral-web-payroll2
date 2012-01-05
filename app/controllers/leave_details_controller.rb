@@ -4,7 +4,7 @@ class LeaveDetailsController < ApplicationController
   end
 
   def index
-    @leave_details = LeaveDetail.all
+    @leave_details = LeaveDetail.paginate(:page => params[:page], :per_page => 10)
   end
 
   def upload_parse_validate

@@ -1,38 +1,65 @@
-= link_to 'Home', root_url
+#left_content
+    = render 'left'
+#right_content
+    - if @company
+        %h1
+            Company Details
+            = link_to image_tag('/assets/edit.png',:title => "Edit Company"), edit_company_path(@company.id)
+        %table.std_table{:cellpadding=>0,:cellspacing=>0}
+            %tr
+                %td
+                    %table
+                        %tr
+                            %td.std_td
+                                %table
+                                    %tr
+                                        %td Name:&nbsp;
+                                        %td= @company.companyname
+                                    %tr
+                                        %td Estd. Date:&nbsp;
+                                        %td= @company.dateofestablishment.to_s
+                                    %tr
+                                        %td Address:&nbsp;
+                                        %td= @company.address + ", " + @company.address2 + ", " + @company.address3
+                                    %tr
+                                        %td Website:&nbsp;
+                                        %td= @company.website
+                                    %tr
+                                        %td &nbsp;
+                                    %tr
+                                        %td PF Applicability:&nbsp;
+                                        %td= @company.pf == true ? "Yes" : "No"
+                                    %tr
+                                        %td ESI Applicability:&nbsp;
+                                        %td= @company.esi == true ? "Yes" : "No"
+                                    %tr
+                                        %td &nbsp;
+                                    %tr
+                                        %td Company Logo:&nbsp;
+                                        %td= image_tag(@company.photo.url(:logo))
+                            %td.std_td
+                                %table
+                                    %tr
+                                        %td Resp. Person:&nbsp;
+                                        %td= @company.responsible_person
+                                    %tr
+                                        %td Phone Number:&nbsp;
+                                        %td= @company.phonenumber1 + ", " + @company.phonenumber2
+                                    %tr
+                                        %td Email:&nbsp;
+                                        %td= @company.email
+                                    %tr
+                                        %td &nbsp;
+                                    %tr
+                                        %td &nbsp;
+                                    %tr
+                                        %td PT Applicability:&nbsp;
+                                        %td= @company.pt == true ? "Yes" : "No"
+                                    %tr
+                                        %td TDS Applicability:&nbsp;
+                                        %td= @company.tds == true ? "Yes" : "No"
 
-- if @company
-    %h1 Company Details
-    %h3= "Name : " + @company.companyname
-    %h4= "Responsible Person : " + @company.responsible_person
-    %h4= "Date of Establishment : " + @company.dateofestablishment.to_s
-    %h4= "Phone Number 1 : " + @company.phonenumber1
-    %h4= "Phone Number 2 : " + @company.phonenumber2
-    %h4= "Address 1 : " + @company.address
-    %h4= "Address 2 : " + @company.address2
-    %h4= "Address 3 : " + @company.address3
-    %h4= "Email : " + @company.email
-    %h4= "Website : " + @company.website
-    %p
-        %b
-            PF Applicability :
-            = @company.pf == true ? "Yes" : "No"
-        %p
-        %b
-            PT Applicability :
-            = @company.pt == true ? "Yes" : "No"
-        %p
-        %b
-            ESI Applicability :
-            = @company.esi == true ? "Yes" : "No"
-        %p
-        %b
-            TDS Applicability :
-            = @company.tds == true ? "Yes" : "No"
-    %p
-        %h4= image_tag(@company.photo.url(:logo))
-
-    =link_to 'Edit', edit_company_path(@company.id)
-- else
-    %br/
-    %br/
-    = link_to 'Create a new Company', new_company_path
+    - else
+        %br/
+        %br/
+        = link_to 'Create a new Company', new_company_path

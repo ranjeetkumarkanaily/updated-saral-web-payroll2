@@ -1,22 +1,54 @@
-=link_to 'Home', root_url
-%h1 Listing Employee Details
-%table{:cellpadding => 0, :cellspacing => 0, :border => 1}
-  %tr
-    %th Employee
-    %th Effective Date
-    %th Salary Group
-    %th Allotted Gross
-    %th{:colspan => 2} Operations
-  - @employee_details.each do |employee_detail|
+#left_content
+  = render 'left'
+#right_content
+  %h1{:style=>"width:400px;"} Listing Employee Details for #{Employee.find_by_id(@paramempid).empname}
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td= employee_detail.employee.empname
-      %td= employee_detail.effective_date
-      %td= employee_detail.salary_group.salary_group_name
-      %td= employee_detail.allotted_gross
-      %td= link_to 'Show', employee_detail
-      -#%td= link_to 'Edit', edit_employee_detail_path(employee_detail)
-      %td= link_to 'Destroy', employee_detail, confirm: 'Are you sure?', method: :delete
-%br/
-= link_to 'Employees', employees_path
-%br/
-= link_to 'Add a new detail to the employee', new_employee_detail_path(:param2 => @paramempid)
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>557, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Employee Name
+            %td.table_grid_header Effective Date
+            %td.table_grid_header Salary Group
+            %td.table_grid_header Allotted Gross
+            %td.table_grid_header{:colspan => 2} Operations
+          - @employee_details.each do |employee_detail|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= employee_detail.employee.empname
+              %td.table_grid_td= employee_detail.effective_date
+              %td.table_grid_td= employee_detail.salary_group.salary_group_name
+              %td.table_grid_td= employee_detail.allotted_gross
+              %td.table_grid_td= link_to image_tag('/assets/edit.png',:title => "Edit Employee Details"), edit_employee_detail_path(employee_detail,:param1=>@paramempid)
+              %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Destroy Employee Details"), employee_detail, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @employee_details
+          = will_paginate @employee_details, :container => false
+    %tr
+      %td &nbsp;
+
+-#=link_to 'Home', root_url
+-#%h1 Listing Employee Details
+-#%table{:cellpadding => 0, :cellspacing => 0, :border => 1}
+-#  %tr
+-#    %th Employee
+-#    %th Effective Date
+-#    %th Salary Group
+-#    %th Allotted Gross
+-#    %th{:colspan => 2} Operations
+-#  - @employee_details.each do |employee_detail|
+-#    %tr
+-#      %td= employee_detail.employee.empname
+-#      %td= employee_detail.effective_date
+-#      %td= employee_detail.salary_group.salary_group_name
+-#      %td= employee_detail.allotted_gross
+-#      %td= link_to 'Show', employee_detail
+-#      -#%td= link_to 'Edit', edit_employee_detail_path(employee_detail)
+-#      %td= link_to 'Destroy', employee_detail, confirm: 'Are you sure?', method: :delete
+-#%br/
+-#= link_to 'Employees', employees_path
+-#%br/
+-#= link_to 'Add a new detail to the employee', new_employee_detail_path(:param2 => @paramempid)

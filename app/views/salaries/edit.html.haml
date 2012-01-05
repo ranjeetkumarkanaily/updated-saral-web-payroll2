@@ -1,21 +1,32 @@
-%h1 Editing Generated Salary
-= form_tag salaries_path, :method => :put do
-  %table
+#left_content
+  = render 'left'
+#right_content
+  %h1 Editing Generated Salary
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td Salary Heads
-      %td Short Name
-      %td Salary Head Type
-      %td Salary Amount
-    - @salary.each do |sal|
-      = hidden_field_tag "salary[][id]", sal.id
-      = hidden_field_tag "salary[][employee_id]", sal.employee_id
-      = hidden_field_tag "salary[][employee_detail_id]", sal.employee_detail_id
-      = hidden_field_tag "salary[][effective_date]", sal.effective_date
-      = hidden_field_tag "salary[][salary_head_id]", sal.salary_head_id
-      %tr
-        %td= SalaryHead.find(sal.salary_head_id).head_name
-        %td= SalaryHead.find(sal.salary_head_id).short_name
-        %td= SalaryHead.find(sal.salary_head_id).salary_type
-        %td= text_field_tag 'salary[][salary_amount]', sal.salary_amount
+      %td &nbsp;
     %tr
-      %td= submit_tag "Update Salary"
+      %td.std_td
+        = form_tag salaries_path, :method => :put do
+          %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td.table_grid_header Salary Heads
+              %td.table_grid_header Short Name
+              %td.table_grid_header Salary Head Type
+              %td.table_grid_header Salary Amount
+            - @salary.each do |sal|
+              = hidden_field_tag "salary[][id]", sal.id
+              = hidden_field_tag "salary[][employee_id]", sal.employee_id
+              = hidden_field_tag "salary[][employee_detail_id]", sal.employee_detail_id
+              = hidden_field_tag "salary[][effective_date]", sal.effective_date
+              = hidden_field_tag "salary[][salary_head_id]", sal.salary_head_id
+              %tr
+                %td.table_grid_td= SalaryHead.find(sal.salary_head_id).head_name
+                %td.table_grid_td= SalaryHead.find(sal.salary_head_id).short_name
+                %td.table_grid_td= SalaryHead.find(sal.salary_head_id).salary_type
+                %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal.salary_amount
+            %tr
+              %td
+                &nbsp;
+            %tr
+              %td= submit_tag "Update Salary"
