@@ -1,0 +1,31 @@
+= form_for(@paymonth) do |f|
+  - if @paymonth.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@paymonth.errors.count, "error")
+        prohibited this paymonth from being saved:
+      %ul
+        - @paymonth.errors.full_messages.each do |msg|
+          %li= msg
+  -#.field
+  -#  = f.label :month_year
+  -#  %br/
+  -#  = f.number_field :month_year
+  -#.field
+  -#  = f.label :number_of_days
+  -#  %br/
+  -#  = f.number_field :number_of_days
+  -#.field
+  -#  = f.label :from_date
+  -#  %br/
+  -#  = f.date_select :from_date
+  -#.field
+  -#  = f.label :to_date
+  -#  %br/
+  -#  = f.date_select :to_date
+  .field
+    = f.label :month_name
+    %br/
+    = f.text_field :month_name
+  .actions
+    = f.submit

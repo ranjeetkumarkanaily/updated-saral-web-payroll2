@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111231085709) do
+ActiveRecord::Schema.define(:version => 20120104045249) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -99,6 +99,16 @@ ActiveRecord::Schema.define(:version => 20111231085709) do
   end
 
   create_table "month_years", :force => true do |t|
+    t.integer  "month_year"
+    t.integer  "number_of_days"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.string   "month_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "paymonths", :force => true do |t|
     t.integer  "month_year"
     t.integer  "number_of_days"
     t.date     "from_date"

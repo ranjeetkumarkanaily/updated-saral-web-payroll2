@@ -1,0 +1,23 @@
+=link_to 'Home', root_url
+%h1 Listing paymonths
+%table
+  %tr
+    %th Month year
+    %th Number of days
+    %th From date
+    %th To date
+    %th Month name
+    %th
+    %th
+    %th
+  - @paymonths.each do |paymonth|
+    %tr
+      %td= paymonth.month_year
+      %td= paymonth.number_of_days
+      %td= paymonth.from_date
+      %td= paymonth.to_date
+      %td= paymonth.month_name
+      %td= link_to 'Show', paymonth
+      %td= link_to 'Destroy', paymonth, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Paymonth', new_paymonth_path
