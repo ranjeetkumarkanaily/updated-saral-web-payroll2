@@ -7,7 +7,7 @@ describe Paymonth do
         :number_of_days => 31,
         :from_date => "2011-01-01",
         :to_date => "2011-01-31",
-        :month_name => "Jan/2011"
+        :month_name => "jan/2011"
     }
   end
 
@@ -64,7 +64,7 @@ describe Paymonth do
   describe "find_month_details_to_save" do
     it "should find month number for the given month name" do
       paymonth = Paymonth.new(@attr)
-      details_to_save = Paymonth.find_month_details_to_save "Jan/2011"
+      details_to_save = Paymonth.find_month_details_to_save "jan/2011"
       details_to_save.should eq([paymonth.month_year,paymonth.number_of_days,paymonth.from_date,paymonth.to_date,paymonth.month_name])
     end
   end
@@ -100,7 +100,7 @@ describe Paymonth do
     it "should find month year for the given month n year string" do
       paymonth = Paymonth.new(@attr)
        month_year = Paymonth.find_month_year paymonth.month_name
-      month_year.should eq(['Jan',2011])
+      month_year.should eq(['jan',2011])
     end
   end
 
