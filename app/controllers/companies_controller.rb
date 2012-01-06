@@ -5,7 +5,8 @@ class CompaniesController < ApplicationController
   end
 
   def new
-    @company = Company.new
+    @company = Comp
+    any.new
   end
 
   def edit

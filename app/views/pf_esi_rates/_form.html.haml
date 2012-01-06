@@ -7,30 +7,40 @@
       %ul
         - @pfesirate.errors.full_messages.each do |msg|
           %li= msg
-  -#.field
-  -#  = f.label :month_year, "Month Year"
-  -#  %br/
-  -#  = f.text_field :month_year
-  .field
-    = f.label :pf_rate, "EPF(A) Rate"
-    %br/
-    = f.text_field :pf_rate
-  .field
-    = f.label :pf_cutoff, "Pf Cutoff"
-    %br/
-    = f.text_field :pf_cutoff
-    -#= f.date_select :dateofestablishment, :start_year => 1980, :end_year => 2012
-  .field
-    = f.label :esi_employee_rate, "ESI Employee Contribution Rate"
-    %br/
-    = f.text_field :esi_employee_rate
-  .field
-    = f.label :esi_employer_rate, "ESI Employer Contribution Rate"
-    %br/
-    = f.text_field :esi_employer_rate
-  .field
-    =f.label :esi_cutoff, "ESI Cutoff"
-    %br
-    = f.text_field :esi_cutoff
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table
+          %tr
+            %td{:width=>160} Month Year
+            %td= select_tag "pf_esi_rate[paymonth_id]", options_from_collection_for_select(Paymonth.all,'id','month_year', params[:month_year]),:prompt => 'Select Month Year'
+
+    %tr
+      %td.std_td
+        %table
+          %tr
+            %td{:colspan=>2,:class=>'form_title'} Provident Fund
+          %tr
+            %td{:width=>130} EPF(A) Rate (%) :&nbsp;
+            %td= f.text_field :pf_rate, :size => '22'
+          %tr
+            %td{:width=>130} Cutoff :&nbsp;
+            %td= f.text_field :pf_cutoff, :size => '22'
+      %td.std_td
+        %table
+          %tr
+            %td{:colspan=>2,:class=>'form_title'} Employee State Information
+          %tr
+            %td{:width=>130} Employee (%) : &nbsp;
+            %td= f.text_field :esi_employee_rate, :size => '22'
+          %tr
+            %td{:width=>130} Employer (%) : &nbsp;
+            %td= f.text_field :esi_employer_rate, :size => '22'
+          %tr
+            %td{:width=>130} Cutoff : &nbsp;
+            %td= f.text_field :esi_cutoff, :size => '22'
+
+    %tr
+      %td &nbsp;
+    %tr
+      %td.table_grid_td{:colspan=>2}= f.submit

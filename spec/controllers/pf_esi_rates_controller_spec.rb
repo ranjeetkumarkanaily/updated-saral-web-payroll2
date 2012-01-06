@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe PfEsiRatesController do
 
+  before :each do
+    controller.stub(:logged_in?).and_return(true)
+  end
+
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'
