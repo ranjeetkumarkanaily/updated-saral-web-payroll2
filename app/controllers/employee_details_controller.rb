@@ -1,12 +1,14 @@
 class EmployeeDetailsController < ApplicationController
   # GET /employee_details
   # GET /employee_details.json
+  require 'will_paginate/array'
+
   def index
     @paramempid = params[:param1]
     if @paramempid
-    @employee_details = EmployeeDetail.where(:employee_id=>@paramempid)
+    @employee_details = EmployeeDetail.where(:employee_id=>@paramempid).paginate(:page => params[:page], :per_page => 10)
     else
-    @employee_details = EmployeeDetail.all
+    @employee_details = EmployeeDetail.paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|
@@ -30,7 +32,7 @@ class EmployeeDetailsController < ApplicationController
   # GET /employee_details/new
   # GET /employee_details/new.json
   def new
-    @paramempid = params[:param2]
+    @paramempid = params[:param1]
     @employee_detail = EmployeeDetail.new()
 
     respond_to do |format|
@@ -41,6 +43,7 @@ class EmployeeDetailsController < ApplicationController
 
   # GET /employee_details/1/edit
   def edit
+    @paramempid = params[:param1]
     @employee_detail = EmployeeDetail.find(params[:id])
   end
 
@@ -55,7 +58,7 @@ class EmployeeDetailsController < ApplicationController
         SalaryGroupDetail.all(:conditions => [ "salary_group_id = ?", sal_gr_id]).each do |sgd|
         SalaryAllotment.create!(:employee_id => @employee_detail.employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_allotment =>0)
         end
-        format.html { redirect_to @employee_detail, notice: 'Employee detail was successfully created.' }
+        format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully created.' }
         format.json { render json: @employee_detail, status: :created, location: @employee_detail }
       else
         format.html { render action: "new" }
@@ -68,10 +71,10 @@ class EmployeeDetailsController < ApplicationController
   # PUT /employee_details/1.json
   def update
     @employee_detail = EmployeeDetail.find(params[:id])
-
+    puts params[:employee_detail]['employee_id']
     respond_to do |format|
       if @employee_detail.update_attributes(params[:employee_detail])
-        format.html { redirect_to @employee_detail, notice: 'Employee detail was successfully updated.' }
+        format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

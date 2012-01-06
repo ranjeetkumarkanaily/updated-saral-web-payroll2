@@ -46,6 +46,12 @@ describe EmployeesController do
       get :index
       assigns(:employees).should eq([employee])
     end
+
+    it "search all employee for entered keyword" do
+      employee = Employee.create! valid_attributes
+      get :index, :search => 'Gan'
+      assigns(:employees).should eq([employee])
+    end
   end
 
   describe "GET show" do

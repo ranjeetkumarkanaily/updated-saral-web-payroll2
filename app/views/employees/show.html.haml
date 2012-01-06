@@ -1,56 +1,84 @@
-%p
-  %b Employee Ref No:
-  = @employee.refno
-%p
-  %b Employee Name:
-  = @employee.empname
-%p
-  %b Father's Name:
-  = @employee.father_name
-%p
-  %b Marital Status:
-  = @employee.marital_status
-%p
-  %b Spouse Name:
-  = @employee.spouse_name
-%p
-  %b Gender
-  = @employee.gender
-%p
-  %b Date of Birth:
-  = @employee.date_of_birth
-%p
-  %b Date of Joining:
-  = @employee.date_of_joining
-%p
-  %b Date of Leaving:
-  = @employee.date_of_leaving
-%p
-  %b Residence No
-  = @employee.present_res_no
-%p
-  %b Name of the Residence:
-  = @employee.present_res_name
-%p
-  %b Street:
-  = @employee.present_street
-%p
-  %b Locality:
-  = @employee.present_locality
-%p
-  %b City:
-  = @employee.present_city
-%p
-  %b State:
-  = @employee.present_state_id
-%p
-  %b Email:
-  = @employee.email
-%p
-  %b Mobile:
-  = @employee.mobile
-
-= link_to 'Edit', edit_employee_path(@employee)
-|
-\#{link_to 'Back', employees_path}
-
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Showing Employee
+    = link_to image_tag('/assets/edit.png',:title => "Edit Employee"), edit_employee_path(@employee)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Ref No:&nbsp;
+                  %td= @employee.refno
+                %tr
+                  %td Father Name:&nbsp;
+                  %td= @employee.father_name
+                %tr
+                  %td Marital Status:&nbsp;
+                  %td= @employee.marital_status
+                %tr
+                  %td Date of Birth:&nbsp;
+                  %td= @employee.date_of_birth
+                %tr
+                  %td Date of Leaving:&nbsp;
+                  %td= @employee.date_of_leaving
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Employee Name:&nbsp;
+                  %td= @employee.empname
+                %tr
+                  %td Gender:&nbsp;
+                  %td= @employee.gender
+                %tr
+                  %td Spouse Name:&nbsp;
+                  %td= @employee.spouse_name
+                %tr
+                  %td Date of Joining:&nbsp;
+                  %td= @employee.date_of_joining
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:colspan=>2,:class=>'form_title'} Present Address
+                %tr
+                  %td{:width=>130} Residence No.:&nbsp;
+                  %td= @employee.present_res_no
+                %tr
+                  %td{:width=>130} Street:&nbsp;
+                  %td= @employee.present_street
+                %tr
+                  %td{:width=>130} City:&nbsp;
+                  %td= @employee.present_city
+            %td.std_td
+              %table
+                %tr
+                  %td &nbsp
+                %tr
+                  %td{:width=>130} Residence Name.:&nbsp;
+                  %td= @employee.present_res_name
+                %tr
+                  %td{:width=>130} Locality:&nbsp;
+                  %td= @employee.present_locality
+                %tr
+                  %td{:width=>130} State:&nbsp;
+                  %td= @employee.present_state.state_name
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:colspan=>2,:class=>'form_title'} Contact Information
+                %tr
+                  %td{:width=>130} Email:&nbsp;
+                  %td= @employee.email
+            %td.std_td
+              %table
+                %tr
+                  %td &nbsp
+                %tr
+                  %td{:width=>130} Mobile Number:&nbsp;
+                  %td= @employee.mobile

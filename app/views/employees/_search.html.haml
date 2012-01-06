@@ -1,0 +1,5 @@
+= form_tag employees_path, :method => :get do
+  = text_field_tag :search, params[:search], :id => 'search_field'
+  = submit_tag "Search", :name => nil
+  = button_to_function "Clear","document.getElementById('search_field').value=''"
+

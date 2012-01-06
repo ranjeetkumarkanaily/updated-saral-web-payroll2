@@ -1,7 +1,16 @@
-%p
-  %b State Name:
-  = @state.state_name
-= link_to 'Edit', edit_state_path(@state)
-|
-\#{link_to 'Back', states_path}
-
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Showing State
+    = link_to image_tag('/assets/edit.png',:title => "Edit State"), edit_state_path(@state)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td State Name:&nbsp;
+                  %td= @state.state_name

@@ -88,7 +88,7 @@ describe PaymonthsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      xit "updates the requested paymonth" do
+      it "updates the requested paymonth" do
         paymonth = Paymonth.create! valid_attributes
         # Assuming there are no other paymonths in the database, this
         # specifies that the Paymonth created on the previous line
@@ -98,13 +98,13 @@ describe PaymonthsController do
         put :update, :id => paymonth.id, :paymonth => {'these' => 'params'}
       end
 
-      xit "assigns the requested paymonth as @paymonth" do
+      it "assigns the requested paymonth as @paymonth" do
         paymonth = Paymonth.create! valid_attributes
         put :update, :id => paymonth.id, "paymonth"=>{"month_name"=>"feb/2011"}
         assigns(:paymonth).should eq(paymonth)
       end
 
-      xit "redirects to the paymonth" do
+      it "redirects to the paymonth" do
         paymonth = Paymonth.create! valid_attributes
         put :update, :id => paymonth.id, "paymonth"=>{"month_name"=>"feb/2011"}
         response.should redirect_to(paymonth)

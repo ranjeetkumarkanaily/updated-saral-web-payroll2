@@ -3,26 +3,29 @@
     #error_explanation
       %h2
         = pluralize(@employee_detail.errors.count, "error")
-        prohibited this employee_detail from being saved:
+        prohibited this salary_group from being saved:
       %ul
         - @employee_detail.errors.full_messages.each do |msg|
           %li= msg
-
-  .field
-    = f.hidden_field :employee_id, :value => @paramempid
-
-  .field
-    = f.label :effective_date
-    %br/
-    = f.date_select :effective_date
-  .field
-    = f.label :salary_group_id
-    %br/
-    = f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },
-                                                            @employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
-  .field
-    = f.label :allotted_gross
-    %br/
-    = f.text_field :allotted_gross
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td
+              %table
+                %tr
+                  %td{:width=>180} Effective Date:&nbsp;
+                  %td
+                    = f.date_select :effective_date
+                    = f.hidden_field :employee_id, :value => @paramempid
+                %tr
+                  %td Salary Group:&nbsp;
+                  %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+                %tr
+                  %td Allotted Gross:&nbsp;
+                  %td= f.text_field :allotted_gross
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit

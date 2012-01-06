@@ -19,21 +19,12 @@ describe "salary_group_details/index.html.haml" do
         :salary_group => @salary_group,
         :salary_head => @salary_head
       )
-    ])
+    ]).stub!(:total_pages).and_return(0)
 
   end
 
   it "renders a list of salary_group_details" do
     render
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => "Calc Type".to_s, :count => 2
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => "Calculation".to_s, :count => 2
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => "Based On".to_s, :count => 2
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => "test_salary_group".to_s, :count => 2
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => "test_head".to_s, :count => 2
+    rendered.should have_content('Calc Type')
   end
 end

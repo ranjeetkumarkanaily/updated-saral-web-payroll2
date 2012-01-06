@@ -1,6 +1,7 @@
 class PaymonthsController < ApplicationController
+
   def index
-    @paymonths = Paymonth.all
+    @paymonths = Paymonth.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -16,25 +17,28 @@ class PaymonthsController < ApplicationController
   end
 
   def create
-    tmp_month_year = params[:paymonth]
-    month_year =  tmp_month_year[:month_name]
-    month_string = month_year[0,3]
-    year = month_year[4,7].to_i
-    month = Paymonth.find_month_number month_string
-    number_of_days = Paymonth.find_days_in_month year,month
-    from_date = Date.new(year,month,01)
-    to_date = Paymonth.find_last_day_of_the_month year,month
-    month_year_digit = ((year*12)+month)
-    month_name = month_string+'/'+year.to_s
-    @paymonth = Paymonth.new(:month_year => month_year_digit,:number_of_days => number_of_days,:from_date => from_date,:to_date => to_date,:month_name => month_name)
 
-    respond_to do |format|
-      if @paymonth.save
-        format.html { redirect_to @paymonth, notice: 'Paymonth was successfully created.' }
-        format.json { render json: @paymonth, status: :created, location: @paymonth }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @paymonth.errors, status: :unprocessable_entity }
+    tmp_month_year = params[:paymonth]
+    tmp_month_year = tmp_month_year[:month_name]
+    res =  Paymonth.proceed_to_save tmp_month_year
+
+    if res
+      params_to_save = Paymonth.find_month_details_to_save tmp_month_year
+      @paymonth = Paymonth.new(:month_year => params_to_save[0],:number_of_days => params_to_save[1],:from_date => params_to_save[2],:to_date => params_to_save[3],:month_name => params_to_save[4])
+      respond_to do |format|
+        if @paymonth.save
+          format.html { redirect_to @paymonth, notice: 'Paymonth was successfully created.' }
+          format.json { render json: @paymonth, status: :created, location: @paymonth }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @paymonth.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @paymonth = Paymonth.new
+      @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be created. Next Month to be created is jan/2012")
+      respond_to do |format|
+        format.html { render action: "new"}
       end
     end
   end
@@ -56,19 +60,17 @@ class PaymonthsController < ApplicationController
   def destroy
     first_paymonth = Paymonth.first
     last_paymonth = Paymonth.last
-
     @paymonth = Paymonth.find(params[:id])
-
 
     if( @paymonth.id == first_paymonth.id or @paymonth.id == last_paymonth.id )
       @paymonth.destroy
       respond_to do |format|
-        format.html { redirect_to paymonths_url }
+        format.html { redirect_to paymonths_url, notice: 'Paymonth was successfully Deleted.'  }
         format.json { head :ok }
       end
     else
       respond_to do |format|
-        format.html { render action: "index", notice: 'Paymonth can not be delete.' }
+        format.html { redirect_to paymonths_url, notice: 'Paymonth can not be delete.' }
       end
     end
 

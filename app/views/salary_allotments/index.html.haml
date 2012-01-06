@@ -1,30 +1,40 @@
-=link_to 'Home', root_url
-%h1 Salary Allotment Employee-wise
-= form_tag salary_allotments_path, :method => :get do
-  %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+#left_content
+  = render 'left'
+#right_content
+  %h1 Salary Allotment Employee-wise
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td{:width => "100px"}
-        Employee
-      %td{:width => "100px"}= select_tag "employee_id", options_from_collection_for_select(Employee.all,'id','empname', params[:employee_id]),:prompt => 'Select Employee'
-      %td
-        = submit_tag("Submit")
-    %tr
-      %td
-        &nbsp;
-- if params[:employee_id]
-  = form_tag salary_allotments_path, :method => :put do
-    %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
-      %tr
-        %td Salary Heads
-        %td Short Name
-        %td Salary Head Type
-        %td Salary Allotment
-      - @allotSal.each do |allotSal|
-        = hidden_field_tag "salAllotment[][id]", allotSal.id
-        %tr
-          %td= allotSal.salaryHead
-          %td= allotSal.shortName
-          %td= allotSal.salaryHeadType
-          %td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
-      %tr
-        %td= submit_tag "Allot Salary"
+      %td.std_td
+        = form_tag salary_allotments_path, :method => :get do
+          %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
+            %tr
+              %td &nbsp;
+            %tr
+              %td{:width => "100px"}
+                Employee
+              %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.all,'id','empname', params[:employee_id]),:prompt => 'Select Employee'
+              %td
+                = submit_tag("Submit")
+            %tr
+              %td
+                &nbsp;
+        - if params[:employee_id]
+          = form_tag salary_allotments_path, :method => :put do
+            %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+              %tr
+                %td.table_grid_header Salary Heads
+                %td.table_grid_header Short Name
+                %td.table_grid_header Salary Head Type
+                %td.table_grid_header Salary Allotment
+              - @allotSal.each do |allotSal|
+                = hidden_field_tag "salAllotment[][id]", allotSal.id
+                %tr
+                  %td.table_grid_td= allotSal.salaryHead
+                  %td.table_grid_td= allotSal.shortName
+                  %td.table_grid_td= allotSal.salaryHeadType
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
+              %tr
+                %td
+                  &nbsp;
+              %tr
+                %td= submit_tag "Allot Salary"

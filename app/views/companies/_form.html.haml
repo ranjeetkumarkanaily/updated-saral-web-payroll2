@@ -7,58 +7,71 @@
       %ul
         - @company.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :companyname, "Name of the Company"
-    %br/
-    = f.text_field :companyname
-  .field
-    = f.label :responsible_person, "Responsible Person"
-    %br/
-    = f.text_field :responsible_person
-  .field
-    = f.label :dateofestablishment, "Date of Establishment"
-    %br/
-    = f.date_select :dateofestablishment, :start_year => 1980, :end_year => 2012
-  .field
-    = f.label :phonenumber1, "Phone Number 1"
-    %br/
-    = f.text_field :phonenumber1
-  .field
-    = f.label :phonenumber2, "Phone Number 2"
-    %br/
-    = f.text_field :phonenumber2
-  .field
-    = f.label :address, "Address 1"
-    %br/
-    = f.text_field :address
-  .field
-    = f.label :address2, "Address 2"
-    %br/
-    = f.text_field :address2
-  .field
-    = f.label :address3, "Address 3"
-    %br/
-    = f.text_field :address3
-  .field
-    = f.label :email, "Email"
-    %br/
-    = f.text_field :email
-  .field
-    = f.label :website, "Website"
-    %br/
-    = f.text_field :website
-    %br/
-  .field
-    = f.label :pf, "PF"
-    = f.check_box :pf
-    = f.label :pt, "PT"
-    = f.check_box :pt
-    = f.label :esi, "ESI"
-    = f.check_box :esi
-    = f.label :tds, "TDS"
-    = f.check_box :tds
-  .field
-    = f.label :photo, "Upload Company logo"
-    = f.file_field :photo
-  .actions
-    = f.submit
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Name:&nbsp;
+                  %td= f.text_field :companyname, :size => '22'
+                %tr
+                  %td Estd. Date:&nbsp;
+                  %td= f.date_select :dateofestablishment, :start_year => 1980, :end_year => 2012
+                %tr
+                  %td Address Line 1:&nbsp;
+                  %td= f.text_field :address, :size => '22'
+                %tr
+                  %td Address Line 2:&nbsp;
+                  %td= f.text_field :address2, :size => '22'
+                %tr
+                  %td Address Line 3:&nbsp;
+                  %td= f.text_field :address3, :size => '22'
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td PF Applicability:&nbsp;
+                  %td= f.check_box :pf
+                %tr
+                  %td ESI Applicability:&nbsp;
+                  %td= f.check_box :esi
+                %tr
+                  %td &nbsp;
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Resp. Person:&nbsp;
+                  %td= f.text_field :responsible_person, :size => '22'
+                %tr
+                  %td Phone Number 1:&nbsp;
+                  %td= f.text_field :phonenumber1, :size => '22'
+                %tr
+                  %td Phone Number 2:&nbsp;
+                  %td= f.text_field :phonenumber2, :size => '22'
+                %tr
+                  %td Email:&nbsp;
+                  %td= f.text_field :email, :size => '22'
+                %tr
+                  %td Website:&nbsp;
+                  %td= f.text_field :website, :size => '22'
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td PT Applicability:&nbsp;
+                  %td= f.check_box :pt
+                %tr
+                  %td TDS Applicability:&nbsp;
+                  %td= f.check_box :tds
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td Company Logo:&nbsp;
+                  %td= f.file_field :photo
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
+
