@@ -83,6 +83,14 @@ describe PaymonthsController do
         post :create, "paymonth"=>{"month_name"=>"feb/2011"}
         response.should render_template("new")
       end
+
+      it "re-renders the 'new' template if month is mis spelled" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Paymonth.any_instance.stub(:save).and_return(false)
+        post :create, "paymonth"=>{"month_name"=>"fab/2011"}
+        response.should render_template("new")
+      end
+
     end
   end
 
@@ -143,6 +151,16 @@ describe PaymonthsController do
       delete :destroy, :id => paymonth.id
       response.should redirect_to(paymonths_url)
     end
+
+    it "redirects to the paymonths list is except first or last month is try to destroy" do
+      paymonth_jan = Paymonth.create! valid_attributes.merge(:month_name => "jan/2011")
+      paymonth_feb = Paymonth.create! valid_attributes.merge(:month_name => "feb/2011")
+      paymonth_mar = Paymonth.create! valid_attributes.merge(:month_name => "mar/2011")
+      paymonth = Paymonth.create! valid_attributes
+      delete :destroy, :id => paymonth_feb.id
+      response.should redirect_to(paymonths_url)
+    end
+
   end
 
 end

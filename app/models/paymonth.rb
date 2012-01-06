@@ -8,7 +8,7 @@ class Paymonth < ActiveRecord::Base
             :uniqueness => { :case_sensitive => false }
 
   def self.find_days_in_month year, month
-    (Date.new(year, 12, 31) << (12-month)).day
+    (Date.new(year,12,31) << (12-month)).day
   end
 
   def self.find_last_day_of_the_month year, month
@@ -41,9 +41,8 @@ class Paymonth < ActiveRecord::Base
         last_month_year = find_month_year last_month.month_name
         last_month_string =  last_month_year[0]
         last_saved_month =  ABBR_MONTHNAMES.index(last_month_string.downcase) + 1
-        next_month_number = last_saved_month == 11 ? 0 : last_saved_month
+        next_month_number = last_saved_month == 12 ? 0 : last_saved_month
         next_month_string =   ABBR_MONTHNAMES[next_month_number]
-
         res = false if  next_month_string != param_month_string
       end
     else

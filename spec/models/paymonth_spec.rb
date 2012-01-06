@@ -82,6 +82,12 @@ describe Paymonth do
       res.should eq(false)
     end
 
+    it "should return false if month is mis spelled" do
+      paymonth = Paymonth.create!(@attr)
+      res = Paymonth.proceed_to_save "nav/2011"
+      res.should eq(false)
+    end
+
   end
 
   describe "find_month_year" do

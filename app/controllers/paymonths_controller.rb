@@ -70,6 +70,7 @@ class PaymonthsController < ApplicationController
       end
     else
       respond_to do |format|
+        @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be deleted.")
         format.html { redirect_to paymonths_url, notice: 'Paymonth can not be delete.' }
       end
     end
