@@ -1,0 +1,36 @@
+= form_for(@pfesirate) do |f|
+  - if @pfesirate.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@pfesirate.errors.count, "error")
+        prohibited this company from being saved:
+      %ul
+        - @pfesirate.errors.full_messages.each do |msg|
+          %li= msg
+  -#.field
+  -#  = f.label :month_year, "Month Year"
+  -#  %br/
+  -#  = f.text_field :month_year
+  .field
+    = f.label :pf_rate, "EPF(A) Rate"
+    %br/
+    = f.text_field :pf_rate
+  .field
+    = f.label :pf_cutoff, "Pf Cutoff"
+    %br/
+    = f.text_field :pf_cutoff
+    -#= f.date_select :dateofestablishment, :start_year => 1980, :end_year => 2012
+  .field
+    = f.label :esi_employee_rate, "ESI Employee Contribution Rate"
+    %br/
+    = f.text_field :esi_employee_rate
+  .field
+    = f.label :esi_employer_rate, "ESI Employer Contribution Rate"
+    %br/
+    = f.text_field :esi_employer_rate
+  .field
+    =f.label :esi_cutoff, "ESI Cutoff"
+    %br
+    = f.text_field :esi_cutoff
+  .actions
+    = f.submit

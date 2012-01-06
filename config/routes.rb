@@ -1,4 +1,7 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+
+  resources :pf_esi_rates
+
   resources :paymonths
 
   resources :salary_totals
