@@ -73,19 +73,25 @@ describe Paymonth do
     it "should return true if valid month entered" do
       paymonth = Paymonth.new(@attr)
       res = Paymonth.proceed_to_save paymonth.month_name
-      res.should eq(true)
+      res.should eq([true,nil])
     end
 
     it "should return false if invalid month entered" do
       paymonth = Paymonth.create!(@attr)
       res = Paymonth.proceed_to_save "nov/2011"
-      res.should eq(false)
+      res.should eq([false, "feb/2011"])
     end
 
     it "should return false if month is mis spelled" do
       paymonth = Paymonth.create!(@attr)
       res = Paymonth.proceed_to_save "nav/2011"
-      res.should eq(false)
+      res.should eq([false, nil])
+    end
+
+    it "should return true if month entered is jan/2012 and last saved month is dec" do
+      paymonth = Paymonth.create! @attr.merge(:month_name => "dec/2011")
+      res = Paymonth.proceed_to_save "jan/2012"
+      res.should eq([true, "jan/2012"])
     end
 
   end
