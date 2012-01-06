@@ -22,7 +22,7 @@ class PaymonthsController < ApplicationController
     tmp_month_year = tmp_month_year[:month_name]
     res =  Paymonth.proceed_to_save tmp_month_year
 
-    if res
+    if res[0]
       params_to_save = Paymonth.find_month_details_to_save tmp_month_year
       @paymonth = Paymonth.new(:month_year => params_to_save[0],:number_of_days => params_to_save[1],:from_date => params_to_save[2],:to_date => params_to_save[3],:month_name => params_to_save[4])
       respond_to do |format|
@@ -36,7 +36,8 @@ class PaymonthsController < ApplicationController
       end
     else
       @paymonth = Paymonth.new
-      @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be created. Next Month to be created is jan/2012")
+      @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be created. Next Month to be created is #{res[1]}")
+
       respond_to do |format|
         format.html { render action: "new"}
       end
@@ -70,6 +71,7 @@ class PaymonthsController < ApplicationController
       end
     else
       respond_to do |format|
+        @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be deleted.")
         format.html { redirect_to paymonths_url, notice: 'Paymonth can not be delete.' }
       end
     end

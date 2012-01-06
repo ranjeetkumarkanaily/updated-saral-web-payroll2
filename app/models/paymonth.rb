@@ -9,9 +9,8 @@ class Paymonth < ActiveRecord::Base
   validates :month_name,   :presence   => true,
             :format     => { :with => regex_for_date },
             :uniqueness => { :case_sensitive => false }
-
   def self.find_days_in_month year, month
-    (Date.new(year, 12, 31) << (12-month)).day
+    (Date.new(year,12,31) << (12-month)).day
   end
 
   def self.find_last_day_of_the_month year, month
@@ -37,23 +36,32 @@ class Paymonth < ActiveRecord::Base
     res = true
     param_month_year =  find_month_year paymonth
     param_month_string = param_month_year[0]
+    param_year =  param_month_year[1]
     chk = ABBR_MONTHNAMES.index(param_month_string.downcase)
     if chk != nil
       if Paymonth.count > 0
         last_month = Paymonth.last
         last_month_year = find_month_year last_month.month_name
         last_month_string =  last_month_year[0]
+        last_year = last_month_year[1].to_i
         last_saved_month =  ABBR_MONTHNAMES.index(last_month_string.downcase) + 1
-        next_month_number = last_saved_month == 11 ? 0 : last_saved_month
-        next_month_string =   ABBR_MONTHNAMES[next_month_number]
+        if last_saved_month == 12
+          next_month_number = 0
+          next_year = last_year + 1
+        else
+          next_month_number = last_saved_month
+          next_year = last_year
+        end
 
-        res = false if  next_month_string != param_month_string
+        next_month_string =   ABBR_MONTHNAMES[next_month_number]
+        res = false if  next_month_string != param_month_string or next_year != param_year
+      next_month_year = next_month_string + '/' + next_year.to_s
       end
     else
       res = false
     end
 
-    res
+    [res,next_month_year]
   end
 
   def self.find_month_year paymonth
