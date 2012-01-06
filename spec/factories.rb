@@ -64,6 +64,7 @@ FactoryGirl.define do
     leave_date '2011-01-01'
   end
 
+
   factory :department do
     department 'WDO'
   end
@@ -76,6 +77,20 @@ FactoryGirl.define do
     grade 'First'
   end
 
+  factory :paymonth do
+    month_year 24144
+    number_of_days 31
+    from_date "2011-12-01"
+    to_date "2011-12-31"
+    month_name  "Dec/2011"
+  end
 
-
+  factory :pf_esi_rate do
+    paymonth
+    pf_rate 12.03
+    pf_cutoff 1522
+    esi_employee_rate 12.03
+    esi_employer_rate 6.03
+    esi_cutoff 1500
+  end
 end

@@ -11,6 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 20120106124054) do
 
   create_table "companies", :force => true do |t|
@@ -135,6 +136,19 @@ ActiveRecord::Schema.define(:version => 20120106124054) do
     t.date     "from_date"
     t.date     "to_date"
     t.string   "month_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "paymonths", ["month_year"], :name => "index_paymonths_on_month_year"
+
+  create_table "pf_esi_rates", :force => true do |t|
+    t.integer  "paymonth_id"
+    t.decimal  "pf_rate",           :precision => 8, :scale => 2
+    t.decimal  "pf_cutoff",         :precision => 8, :scale => 2
+    t.decimal  "esi_employee_rate", :precision => 8, :scale => 2
+    t.decimal  "esi_employer_rate", :precision => 8, :scale => 2
+    t.decimal  "esi_cutoff",        :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
