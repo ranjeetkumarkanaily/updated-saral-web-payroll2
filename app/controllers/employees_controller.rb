@@ -7,7 +7,7 @@ class EmployeesController < ApplicationController
     if params[:search]
       @employees = Employee.search(params[:search]).paginate(:page => params[:page], :per_page => 10)
     else
-      @employees = Employee.paginate(:page => params[:page], :per_page => 10)
+      @employees = Employee.all(:order => 'id ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|

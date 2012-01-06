@@ -41,7 +41,6 @@ describe Salary do
         salary = FactoryGirl.create(:salary,:salary_amount => 17000)
         getESI = Salary.get_esi_amount "02/2011", salary.employee_id.to_s
         getESI.should eq(nil)
-
       end
 
     end

@@ -7,6 +7,10 @@ class Employee < ActiveRecord::Base
 
   has_many :leave_details, :dependent => :destroy
 
+  belongs_to :designation
+  belongs_to :department
+  belongs_to :grade
+
   belongs_to :present_state, :class_name => "State"
 
   validates :empname, :presence => true,
@@ -26,6 +30,10 @@ class Employee < ActiveRecord::Base
   validate :doj_before_dol
 
   validate :dob_before_doj
+
+  validates_presence_of :designation
+  validates_presence_of :department
+  validates_presence_of :grade
 
 
 

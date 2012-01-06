@@ -7,6 +7,9 @@ FactoryGirl.define do
     empname "XYZ"
     date_of_joining "2011-02-01"
     date_of_leaving ""
+    department
+    designation
+    grade
   end
 
   factory :lop do
@@ -60,5 +63,19 @@ FactoryGirl.define do
     employee
     leave_date '2011-01-01'
   end
+
+  factory :department do
+    department 'WDO'
+  end
+
+  factory :designation do
+    designation 'Manager'
+  end
+
+  factory :grade do
+    grade 'First'
+  end
+
+
 
 end

@@ -1,4 +1,10 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+  resources :grades
+
+  resources :departments
+
+  resources :designations
+
   resources :paymonths
 
   resources :salary_totals

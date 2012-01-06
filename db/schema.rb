@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104045249) do
+ActiveRecord::Schema.define(:version => 20120106124054) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(:version => 20120104045249) do
     t.string   "default_type"
     t.string   "value"
     t.integer  "value_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "departments", :force => true do |t|
+    t.string   "department"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "designations", :force => true do |t|
+    t.string   "designation"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,6 +91,15 @@ ActiveRecord::Schema.define(:version => 20120104045249) do
     t.string   "email"
     t.string   "mobile"
     t.string   "refno"
+    t.integer  "designation_id"
+    t.integer  "department_id"
+    t.integer  "grade_id"
+  end
+
+  create_table "grades", :force => true do |t|
+    t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "leave_details", :force => true do |t|
@@ -193,5 +214,9 @@ ActiveRecord::Schema.define(:version => 20120104045249) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
+  add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
+  add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
 
 end

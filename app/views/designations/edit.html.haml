@@ -1,0 +1,7 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Editing Designation
+    = link_to image_tag('/assets/show.png',:title => "Show Designation"), @designation
+  = render 'form'

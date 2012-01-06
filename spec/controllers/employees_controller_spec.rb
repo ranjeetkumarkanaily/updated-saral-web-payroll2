@@ -9,12 +9,15 @@ describe EmployeesController do
 
   def valid_attributes
     {
-    :empname => "GaneshL",
-    :date_of_joining => "2009-10-31",
-    :date_of_leaving => "2010-11-30",
-    :present_state_id => "1",
-    :refno => "A1",
-    :email => "ganny@gnaa.com"
+      :empname => "GaneshL",
+      :date_of_joining => "2009-10-31",
+      :date_of_leaving => "2010-11-30",
+      :present_state_id => "1",
+      :refno => "A1",
+      :email => "ganny@gnaa.com",
+      :designation_id => '1',
+      :department_id => '1',
+      :grade_id => '1',
     }
   end
 
@@ -32,7 +35,6 @@ describe EmployeesController do
       response.should be_success
     end
 
-
     it "save" do
       employees = Factory.build(:employee)
       post :save, :employees => [employees]
@@ -41,22 +43,23 @@ describe EmployeesController do
   end
 
   describe "GET index" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
     it "assigns all employees as @employees" do
-      employee = Employee.create! valid_attributes
       get :index
-      assigns(:employees).should eq([employee])
+      assigns(:employees).should eq([@employee])
     end
 
     it "search all employee for entered keyword" do
-      employee = Employee.create! valid_attributes
-      get :index, :search => 'Gan'
-      assigns(:employees).should eq([employee])
+      get :index, :search => 'XYZ'
+      assigns(:employees).should eq([@employee])
     end
   end
 
   describe "GET show" do
     it "assigns the requested employee as @employee" do
-      employee = Employee.create! valid_attributes
+      employee = FactoryGirl.create(:employee)
       get :show, :id => employee.id
       assigns(:employee).should eq(employee)
     end
@@ -71,7 +74,7 @@ describe EmployeesController do
 
   describe "GET edit" do
     it "assigns the requested employee as @employee" do
-      employee = Employee.create! valid_attributes
+      employee = FactoryGirl.create(:employee)
       get :edit, :id => employee.id
       assigns(:employee).should eq(employee)
     end
@@ -79,20 +82,25 @@ describe EmployeesController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Employee" do
+      before :each do
+        @employee = FactoryGirl.build(:employee)
+      end
+      it "Count should be increases by one" do
         expect {
-          post :create, :employee => valid_attributes
+          post :create, :employee => @employee.attributes
         }.to change(Employee, :count).by(1)
       end
 
+
+
       it "assigns a newly created employee as @employee" do
-        post :create, :employee => valid_attributes
+        post :create, :employee => @employee.attributes
         assigns(:employee).should be_a(Employee)
         assigns(:employee).should be_persisted
       end
 
       it "redirects to the created employee" do
-        post :create, :employee => valid_attributes
+        post :create, :employee => @employee.attributes
         response.should redirect_to(Employee.last)
       end
     end
@@ -116,32 +124,28 @@ describe EmployeesController do
 
   describe "PUT update" do
     describe "with valid params" do
+      before :each do
+        @employee = FactoryGirl.create(:employee)
+      end
       it "updates the requested employee" do
-        employee = Employee.create! valid_attributes
-        # Assuming there are no other employees in the database, this
-        # specifies that the Employee created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         Employee.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => employee.id, :employee => {'these' => 'params'}
+        put :update, :id => @employee.id, :employee => {'these' => 'params'}
       end
 
       it "assigns the requested employee as @employee" do
-        employee = Employee.create! valid_attributes
-        put :update, :id => employee.id, :employee => valid_attributes
-        assigns(:employee).should eq(employee)
+        put :update, :id => @employee.id, :employee => @employee.attributes
+        assigns(:employee).should eq(@employee)
       end
 
       it "redirects to the employee" do
-        employee = Employee.create! valid_attributes
-        put :update, :id => employee.id, :employee => valid_attributes
-        response.should redirect_to(employee)
+        put :update, :id => @employee.id, :employee => @employee.attributes
+        response.should redirect_to(@employee)
       end
     end
 
     describe "with invalid params" do
       it "assigns the employee as @employee" do
-        employee = Employee.create! valid_attributes
+        employee = FactoryGirl.create(:employee)
         # Trigger the behavior that occurs when invalid params are submitted
         Employee.any_instance.stub(:save).and_return(false)
         put :update, :id => employee.id, :employee => {}
@@ -149,7 +153,7 @@ describe EmployeesController do
       end
 
       it "re-renders the 'edit' template" do
-        employee = Employee.create! valid_attributes
+        employee = FactoryGirl.create(:employee)
         # Trigger the behavior that occurs when invalid params are submitted
         Employee.any_instance.stub(:save).and_return(false)
         put :update, :id => employee.id, :employee => {}
@@ -160,14 +164,14 @@ describe EmployeesController do
 
   describe "DELETE destroy" do
     it "destroys the requested employee" do
-      employee = Employee.create! valid_attributes
+      employee = FactoryGirl.create(:employee)
       expect {
         delete :destroy, :id => employee.id
       }.to change(Employee, :count).by(-1)
     end
 
     it "redirects to the employees list" do
-      employee = Employee.create! valid_attributes
+      employee = FactoryGirl.create(:employee)
       delete :destroy, :id => employee.id
       response.should redirect_to(employees_url)
     end

@@ -2,18 +2,31 @@ require 'spec_helper'
 
 describe Employee do
   before(:each) do
-  @attr = {
-    :empname => "GaneshL",
-    :date_of_birth => "1985-1-1",
-    :date_of_joining => "2009-10-31",
-    :date_of_leaving => "2010-11-30",
-    :present_state_id => "1",
-    :refno => "A1",
-    :email => "gane@gane.com"
-  }
+
+    @dept = FactoryGirl.create(:department)
+    @desig = FactoryGirl.create(:designation)
+    @grd = FactoryGirl.create(:grade)
+    @attr = {
+      :empname => "GaneshL",
+      :date_of_birth => "1985-1-1",
+      :date_of_joining => "2009-10-31",
+      :date_of_leaving => "2010-11-30",
+      :present_state_id => "1",
+      :refno => "A1",
+      :email => "gane@gane.com",
+      :designation_id => @desig.id,
+      :department_id => @dept.id,
+      :grade_id => @grd.id
+    }
   end
 
   it { should have_many(:leave_details)}
+
+  it { should belong_to(:designation)}
+
+  it { should belong_to(:department)}
+
+  it { should belong_to(:grade)}
 
   it "should require a name" do
     no_name_employee = Employee.new(@attr.merge(:empname => ""))
@@ -76,6 +89,21 @@ describe Employee do
   it "requires a state" do
     no_state_employee = Employee.new(@attr.merge(:present_state_id => ""))
     no_state_employee.should_not be_valid
+  end
+
+  it "requires a designation" do
+    no_designation_employee = Employee.new(@attr.merge(:designation_id => ""))
+    no_designation_employee.should_not be_valid
+  end
+
+  it "requires a department" do
+    no_department_employee = Employee.new(@attr.merge(:department_id => ""))
+    no_department_employee.should_not be_valid
+  end
+
+  it "requires a grade" do
+    no_grade_employee = Employee.new(@attr.merge(:grade_id => ""))
+    no_grade_employee.should_not be_valid
   end
 
   describe "dateofjoining" do
