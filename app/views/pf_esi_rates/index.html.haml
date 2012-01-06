@@ -14,14 +14,14 @@
                         %tr
                             %td
                             &nbsp;
-                - if params[:month_year]
+                - if params[:month_year] && @pfesirate
                     %table.table_grid{:width=>600, :cellpadding => 0, :cellspacing => 3}
                         %tr
                             %td.table_grid_header PF Rate
                             %td.table_grid_header PF Cutoff
                             %td.table_grid_header ESI Employee Rate
-                            %td.table_grid_header EST Employer Rate
-                            %td.table_grid_header EST Cutoff
+                            %td.table_grid_header ESI Employer Rate
+                            %td.table_grid_header ESI Cutoff
                             %td.table_grid_header Operations
                         %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                             %td.table_grid_td{:align => "right"}= @pfesirate.pf_rate
