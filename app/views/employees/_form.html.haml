@@ -87,6 +87,24 @@
                   %td{:width=>130} Mobile Number:&nbsp;
                   %td= f.text_field :mobile, :size => '22'
           %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:colspan=>2,:class=>'form_title'} Classification
+                %tr
+                  %td{:width=>130} Designation:&nbsp;
+                  %td= f.select :designation_id, options_for_select(Designation.all(:order => 'id ASC').collect {|desig| [ desig.designation, desig.id ] }, @employee.designation_id), {:prompt => 'Select Designation'}
+                %tr
+                  %td{:width=>130} Grade:&nbsp;
+                  %td= f.select :grade_id, options_for_select(Grade.all(:order => 'id ASC').collect {|grd| [ grd.grade, grd.id ] }, @employee.grade_id), {:prompt => 'Select Grade'}
+            %td.std_td
+              %table
+                %tr
+                  %td &nbsp
+                %tr
+                  %td{:width=>130} Department:&nbsp;
+                  %td= f.select :department_id, options_for_select(Department.all(:order => 'id ASC').collect {|dept| [ dept.department, dept.id ] }, @employee.department_id), {:prompt => 'Select Department'}
+          %tr
             %td.std_td{:colspan=>2}
               %table
                 %tr

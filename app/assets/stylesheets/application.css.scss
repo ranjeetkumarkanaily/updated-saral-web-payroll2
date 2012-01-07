@@ -31,6 +31,10 @@ body {
     }
 }
 
+#flash_notice {
+  color: #e9322d;
+}
+
 a {
   color : #054A87;
   text-decoration: none;
@@ -278,6 +282,12 @@ width: 100%;
 .table_grid_td {
     padding-left: 7px;
     padding-right: 7px;
+}
+
+.table_grid_icon {
+  text-align:  center;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 .msg {

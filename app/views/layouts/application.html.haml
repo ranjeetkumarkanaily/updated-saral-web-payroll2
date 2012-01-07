@@ -32,10 +32,13 @@
       / 1st drop down menu
       #dropmenu1_b.dropmenudiv_b
         %a{:href => companies_path} PT
-        %a{:href => companies_path} PF/ESI
+        %a{:href => pf_esi_rates_path} PF/ESI
       #dropmenu2_b.dropmenudiv_b
         %a{:href => paymonths_path} Pay Months
         %a{:href => states_path} States
+        %a{:href => designations_path} Designations
+        %a{:href => departments_path} Departments
+        %a{:href => grades_path} Grades
         %a{:href => employees_path} Employees
       #dropmenu4_b.dropmenudiv_b
         %a{:href => salary_groups_path} Salary Group
@@ -49,9 +52,6 @@
       :javascript
         //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
         tabdropdown.init("bluemenu")
-    -##container
-    -#  - flash.each do |name, msg|
-    -#    = content_tag :div, msg, :id => "flash_#{name}"
     - if @_current_user
       #main_content
         = yield

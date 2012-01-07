@@ -1,0 +1,23 @@
+= form_for(@grade) do |f|
+  - if @grade.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@grade.errors.count, "error")
+        prohibited this state from being saved:
+      %ul
+        - @grade.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td Grade:&nbsp;
+                  %td= f.text_field :grade, :size => '22'
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit

@@ -1,0 +1,29 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Listing Designations
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header{:width=> 360} Designation
+            %td.table_grid_header{:colspan =>3} Operations
+          - @designations.each do |desig|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= desig.designation
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Designation"), edit_designation_path(desig)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Designation"), desig, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @designations
+          = will_paginate @designations, :container => false
+    %tr
+      %td &nbsp;

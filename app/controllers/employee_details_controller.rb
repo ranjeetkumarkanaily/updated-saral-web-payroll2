@@ -71,7 +71,6 @@ class EmployeeDetailsController < ApplicationController
   # PUT /employee_details/1.json
   def update
     @employee_detail = EmployeeDetail.find(params[:id])
-    puts params[:employee_detail]['employee_id']
     respond_to do |format|
       if @employee_detail.update_attributes(params[:employee_detail])
         format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully updated.' }
