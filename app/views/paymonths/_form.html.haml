@@ -3,7 +3,7 @@
     #error_explanation
       %h2
         = pluralize(@paymonth.errors.count, "error")
-        prohibited this state from being saved:
+        prohibited this Pay Month from being saved:
       %ul
         - @paymonth.errors.full_messages.each do |msg|
           %li= msg

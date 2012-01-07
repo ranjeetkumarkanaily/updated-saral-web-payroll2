@@ -3,7 +3,7 @@
     #error_explanation
       %h2
         = pluralize(@grade.errors.count, "error")
-        prohibited this state from being saved:
+        prohibited this grade from being saved:
       %ul
         - @grade.errors.full_messages.each do |msg|
           %li= msg

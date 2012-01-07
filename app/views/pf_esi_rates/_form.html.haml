@@ -3,7 +3,7 @@
     #error_explanation
       %h2
         = pluralize(@pfesirate.errors.count, "error")
-        prohibited this company from being saved:
+        prohibited this PF/ESI rate from being saved:
       %ul
         - @pfesirate.errors.full_messages.each do |msg|
           %li= msg

@@ -45,27 +45,12 @@ describe Paymonth do
     duplicate_month_name.should_not be_valid
   end
 
-  describe "find_days_in_month" do
-    it "should find days for the given month" do
-      paymonth = Paymonth.new(@attr)
-      number_days = Paymonth.find_days_in_month 2011, 01
-      number_days.should eq(paymonth.number_of_days)
-    end
-  end
-
-  describe "find_last_day_of_the_month" do
-    it "should find last day of the given month" do
-      paymonth = Paymonth.new(@attr)
-      to_date = Paymonth.find_last_day_of_the_month 2011, 01
-      to_date.should eq(paymonth.to_date)
-    end
-  end
-
   describe "find_month_details_to_save" do
-    it "should find month number for the given month name" do
+    it "should find details for the given month name to save" do
       paymonth = Paymonth.new(@attr)
+      paymonth_date=Date.strptime(paymonth.month_name,"%b/%Y")
       details_to_save = Paymonth.find_month_details_to_save "jan/2011"
-      details_to_save.should eq([paymonth.month_year,paymonth.number_of_days,paymonth.from_date,paymonth.to_date,paymonth.month_name])
+      details_to_save.should eq([paymonth.month_year,paymonth.number_of_days,paymonth_date.beginning_of_month.strftime("%Y-%m-%d"),paymonth_date.end_of_month.strftime("%Y-%m-%d"),paymonth.month_name])
     end
   end
 
@@ -79,29 +64,16 @@ describe Paymonth do
     it "should return false if invalid month entered" do
       paymonth = Paymonth.create!(@attr)
       res = Paymonth.proceed_to_save "nov/2011"
-      res.should eq([false, "feb/2011"])
-    end
-
-    it "should return false if month is mis spelled" do
-      paymonth = Paymonth.create!(@attr)
-      res = Paymonth.proceed_to_save "nav/2011"
-      res.should eq([false, nil])
+      res.should eq([false, "Feb/2011"])
     end
 
     it "should return true if month entered is jan/2012 and last saved month is dec" do
       paymonth = Paymonth.create! @attr.merge(:month_name => "dec/2011")
       res = Paymonth.proceed_to_save "jan/2012"
-      res.should eq([true, "jan/2012"])
+      res.should eq([true, "Jan/2012"])
     end
 
   end
 
-  describe "find_month_year" do
-    it "should find month year for the given month n year string" do
-      paymonth = Paymonth.new(@attr)
-       month_year = Paymonth.find_month_year paymonth.month_name
-      month_year.should eq(['jan',2011])
-    end
-  end
 
 end
