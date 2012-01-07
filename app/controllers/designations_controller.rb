@@ -44,7 +44,7 @@ class DesignationsController < ApplicationController
 
     respond_to do |format|
       if @designation.save
-        format.html { redirect_to @designation, notice: 'Designation was successfully created.' }
+        format.html { redirect_to designations_url, notice: 'Designation was successfully created.' }
         format.json { render json: @designation, status: :created, location: @designation }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class DesignationsController < ApplicationController
 
     respond_to do |format|
       if @designation.update_attributes(params[:designation])
-        format.html { redirect_to @designation, notice: 'Designation was successfully updated.' }
+        format.html { redirect_to designations_url, notice: 'Designation was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -72,12 +72,20 @@ class DesignationsController < ApplicationController
   # DELETE /designations/1
   # DELETE /designations/1.json
   def destroy
-    @designation = Designation.find(params[:id])
-    @designation.destroy
+    chk_designation_exist_in_employee = Employee.find_all_by_designation_id(params[:id])
+    if chk_designation_exist_in_employee.count > 0
+      respond_to do |format|
+        format.html { redirect_to designations_url, notice: 'Designation is already assigned to employee.' }
+        format.json { head :ok }
+      end
+    else
+      @designation = Designation.find(params[:id])
+      @designation.destroy
 
-    respond_to do |format|
-      format.html { redirect_to designations_url }
-      format.json { head :ok }
+      respond_to do |format|
+        format.html { redirect_to designations_url, notice: 'Designation was successfully deleted.' }
+        format.json { head :ok }
+      end
     end
   end
 end

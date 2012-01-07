@@ -52,14 +52,14 @@
       :javascript
         //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
         tabdropdown.init("bluemenu")
-    -##container
-    -#  - flash.each do |name, msg|
-    -#    = content_tag :div, msg, :id => "flash_#{name}"
     - if @_current_user
       #main_content
         = yield
     - else
       #main_content_index
+        #container
+          - flash.each do |name, msg|
+            = content_tag :div, msg, :id => "flash_#{name}"
         = yield
     #footer
       %p Copyright &copy; #{Time.now.year}, Relyon Softech Limited, All rights reserved.
