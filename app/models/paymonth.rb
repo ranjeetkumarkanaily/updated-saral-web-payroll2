@@ -12,7 +12,7 @@ class Paymonth < ActiveRecord::Base
     date_var = Date.strptime paymonth, "%b/%Y"
     number_of_days = Time.days_in_month date_var.month,date_var.year
     month_year_digit = ((date_var.year*12)+date_var.month)
-    return [month_year_digit,number_of_days,date_var.beginning_of_month.strftime("%d-%m-%Y"),date_var.end_of_month.strftime("%d-%m-%Y"),paymonth]
+    return [month_year_digit,number_of_days,date_var.beginning_of_month.strftime("%Y-%m-%d"),date_var.end_of_month.strftime("%Y-%m-%d"),paymonth]
   end
 
   def self.proceed_to_save paymonth
@@ -25,4 +25,5 @@ class Paymonth < ActiveRecord::Base
     end
     [result,next_paymonth]
   end
+
 end

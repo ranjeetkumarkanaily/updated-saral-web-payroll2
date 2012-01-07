@@ -65,7 +65,7 @@ describe PaymonthsController do
 
       it "redirects to the created paymonth" do
         post :create, "paymonth"=>{"month_name"=>"feb/2011"}
-        response.should redirect_to(Paymonth.last)
+        response.should redirect_to(paymonths_url)
       end
     end
 
@@ -81,6 +81,14 @@ describe PaymonthsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Paymonth.any_instance.stub(:save).and_return(false)
         post :create, "paymonth"=>{"month_name"=>"feb/2011"}
+        response.should render_template("new")
+      end
+
+      it "re-renders the 'new' template if entered month is not in sequence" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        Paymonth.any_instance.stub(:save).and_return(false)
+        Paymonth.create! valid_attributes.merge(:month_name => "jan/2011")
+        post :create, "paymonth"=>{"month_name"=>"Mar/2011"}
         response.should render_template("new")
       end
 
@@ -115,7 +123,7 @@ describe PaymonthsController do
       it "redirects to the paymonth" do
         paymonth = Paymonth.create! valid_attributes
         put :update, :id => paymonth.id, "paymonth"=>{"month_name"=>"feb/2011"}
-        response.should redirect_to(paymonth)
+        response.should redirect_to(paymonths_url)
       end
     end
 
