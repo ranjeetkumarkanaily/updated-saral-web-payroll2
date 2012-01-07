@@ -58,7 +58,7 @@ describe StatesController do
 
       it "redirects to the created state" do
         post :create, :state => valid_attributes
-        response.should redirect_to(State.last)
+        response.should redirect_to(states_url)
       end
     end
 
@@ -100,7 +100,7 @@ describe StatesController do
       it "redirects to the state" do
         state = State.create! valid_attributes
         put :update, :id => state.id, :state => valid_attributes
-        response.should redirect_to(state)
+        response.should redirect_to(states_url)
       end
     end
 

@@ -44,7 +44,7 @@ class GradesController < ApplicationController
 
     respond_to do |format|
       if @grade.save
-        format.html { redirect_to @grade, notice: 'Grade was successfully created.' }
+        format.html { redirect_to grades_url, notice: 'Grade was successfully created.' }
         format.json { render json: @grade, status: :created, location: @grade }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class GradesController < ApplicationController
 
     respond_to do |format|
       if @grade.update_attributes(params[:grade])
-        format.html { redirect_to @grade, notice: 'Grade was successfully updated.' }
+        format.html { redirect_to grades_url, notice: 'Grade was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -72,12 +72,20 @@ class GradesController < ApplicationController
   # DELETE /grades/1
   # DELETE /grades/1.json
   def destroy
-    @grade = Grade.find(params[:id])
-    @grade.destroy
+    chk_grade_exist_in_employee = Employee.find_all_by_grade_id(params[:id])
+    if chk_grade_exist_in_employee.count > 0
+      respond_to do |format|
+        format.html { redirect_to grades_url, notice: 'Grade is already assigned to employee.' }
+        format.json { head :ok }
+      end
+    else
+      @grade = Grade.find(params[:id])
+      @grade.destroy
 
-    respond_to do |format|
-      format.html { redirect_to grades_url }
-      format.json { head :ok }
+      respond_to do |format|
+        format.html { redirect_to grades_url, notice: 'Grade was successfully deleted.' }
+        format.json { head :ok }
+      end
     end
   end
 end

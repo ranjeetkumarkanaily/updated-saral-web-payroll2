@@ -59,7 +59,7 @@ describe DepartmentsController do
 
       it "redirects to the created department" do
         post :create, {:department => valid_attributes}
-        response.should redirect_to(Department.last)
+        response.should redirect_to(departments_url)
       end
     end
 
@@ -101,7 +101,7 @@ describe DepartmentsController do
       it "redirects to the department" do
         department = Department.create! valid_attributes
         put :update, {:id => department.to_param, :department => valid_attributes}
-        response.should redirect_to(department)
+        response.should redirect_to(departments_url)
       end
     end
 
@@ -125,8 +125,16 @@ describe DepartmentsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested department" do
-      department = Department.create! valid_attributes
+    it "does not destroys the requested department" do
+      employee = FactoryGirl.create(:employee)
+      expect {
+        delete :destroy, {:id => employee.department.to_param}
+      }.to change(Department, :count).by(0)
+    end
+
+    it "destroy the requested department" do
+      employee = FactoryGirl.create(:employee)
+      department = FactoryGirl.create(:department , department: "STO")
       expect {
         delete :destroy, {:id => department.to_param}
       }.to change(Department, :count).by(-1)

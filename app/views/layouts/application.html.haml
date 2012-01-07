@@ -52,9 +52,6 @@
       :javascript
         //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
         tabdropdown.init("bluemenu")
-    -##container
-    -#  - flash.each do |name, msg|
-    -#    = content_tag :div, msg, :id => "flash_#{name}"
     - if @_current_user
       #main_content
         = yield

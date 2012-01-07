@@ -59,7 +59,7 @@ describe DesignationsController do
 
       it "redirects to the created designation" do
         post :create, {:designation => valid_attributes}
-        response.should redirect_to(Designation.last)
+        response.should redirect_to(designations_url)
       end
     end
 
@@ -101,7 +101,7 @@ describe DesignationsController do
       it "redirects to the designation" do
         designation = Designation.create! valid_attributes
         put :update, {:id => designation.to_param, :designation => valid_attributes}
-        response.should redirect_to(designation)
+        response.should redirect_to(designations_url)
       end
     end
 
@@ -125,8 +125,16 @@ describe DesignationsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested designation" do
-      designation = Designation.create! valid_attributes
+    it "does not destroys the requested designation" do
+      employee = FactoryGirl.create(:employee)
+      expect {
+        delete :destroy, {:id => employee.designation.to_param}
+      }.to change(Designation, :count).by(0)
+    end
+
+    it "destroy the requested designation" do
+      employee = FactoryGirl.create(:employee)
+      designation = FactoryGirl.create(:designation , designation: "Tester")
       expect {
         delete :destroy, {:id => designation.to_param}
       }.to change(Designation, :count).by(-1)
