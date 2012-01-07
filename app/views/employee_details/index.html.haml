@@ -20,8 +20,8 @@
               %td.table_grid_td= employee_detail.effective_date
               %td.table_grid_td= employee_detail.salary_group.salary_group_name
               %td.table_grid_td= employee_detail.allotted_gross
-              %td.table_grid_td= link_to image_tag('/assets/edit.png',:title => "Edit Employee Details"), edit_employee_detail_path(employee_detail,:param1=>@paramempid)
-              %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Destroy Employee Details"), employee_detail, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Employee Details"), edit_employee_detail_path(employee_detail,:param1=>@paramempid)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Employee Details"), employee_detail, confirm: 'Are you sure?', method: :delete
         %br/
         .digg_pagination
           .page_info
@@ -29,26 +29,3 @@
           = will_paginate @employee_details, :container => false
     %tr
       %td &nbsp;
-
--#=link_to 'Home', root_url
--#%h1 Listing Employee Details
--#%table{:cellpadding => 0, :cellspacing => 0, :border => 1}
--#  %tr
--#    %th Employee
--#    %th Effective Date
--#    %th Salary Group
--#    %th Allotted Gross
--#    %th{:colspan => 2} Operations
--#  - @employee_details.each do |employee_detail|
--#    %tr
--#      %td= employee_detail.employee.empname
--#      %td= employee_detail.effective_date
--#      %td= employee_detail.salary_group.salary_group_name
--#      %td= employee_detail.allotted_gross
--#      %td= link_to 'Show', employee_detail
--#      -#%td= link_to 'Edit', edit_employee_detail_path(employee_detail)
--#      %td= link_to 'Destroy', employee_detail, confirm: 'Are you sure?', method: :delete
--#%br/
--#= link_to 'Employees', employees_path
--#%br/
--#= link_to 'Add a new detail to the employee', new_employee_detail_path(:param2 => @paramempid)

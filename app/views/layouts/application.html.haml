@@ -57,9 +57,6 @@
         = yield
     - else
       #main_content_index
-        #container
-          - flash.each do |name, msg|
-            = content_tag :div, msg, :id => "flash_#{name}"
         = yield
     #footer
       %p Copyright &copy; #{Time.now.year}, Relyon Softech Limited, All rights reserved.
