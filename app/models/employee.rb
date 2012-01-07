@@ -31,9 +31,9 @@ class Employee < ActiveRecord::Base
 
   validate :dob_before_doj
 
-  #validates_presence_of :designation
-  #validates_presence_of :department
-  #validates_presence_of :grade
+  validates_presence_of :designation
+  validates_presence_of :department
+  validates_presence_of :grade
 
 
 

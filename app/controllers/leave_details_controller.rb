@@ -22,9 +22,6 @@ class LeaveDetailsController < ApplicationController
       l = LeaveDetail.new
       l.employee_id = row[0]
       l.leave_date = row[1]
-      puts l.valid?
-      puts l.employee_id
-      puts Employee.first.id
       if l.valid?
         @leaves << l
       else

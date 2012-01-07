@@ -22,11 +22,18 @@ describe EmployeesController do
   end
 
   describe "Excel File Upload, Parse and Save" do
-    it "save_parse_validate" do
+
+    before :each do
       FactoryGirl.create(:state)
+      FactoryGirl.create(:department)
+      FactoryGirl.create(:designation)
+      FactoryGirl.create(:grade)
+    end
+
+    it "save_parse_validate" do
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
-      response.should be_success
+      response.should redirect_to(employees_path)
     end
 
     it "gives error" do
@@ -35,11 +42,6 @@ describe EmployeesController do
       response.should be_success
     end
 
-    it "save" do
-      employees = Factory.build(:employee, :id => "")
-      post :save, :employees => [employees]
-      response.should redirect_to(employees_path)
-    end
   end
 
   describe "GET index" do

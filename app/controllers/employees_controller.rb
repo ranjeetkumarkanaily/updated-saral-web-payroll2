@@ -123,10 +123,15 @@ class EmployeesController < ApplicationController
       e.present_state = State.find_by_state_name(row[14])
       e.email = row[15]
       e.mobile = row[16].to_s
+      e.designation_id = Designation.find_by_designation(row[17])
+      e.department_id = Department.find_by_department(row[18])
+      e.grade_id = Grade.find_by_grade(row[19])
 
-      puts e.refno
+      puts Designation.find_by_designation(row[17]).inspect
+      puts Department.find_by_department(row[18]).inspect
+      puts Grade.find_by_grade(row[19]).inspect
       puts e.valid?
-      puts Employee.first.refno
+      puts e.errors.full_messages
 
       if e.valid?
         @employees << e
@@ -134,17 +139,24 @@ class EmployeesController < ApplicationController
         @errors["#{@counter+1}"] = e.errors
       end
     end
-    file.remove!
-  end
 
-  def save
-    params[:employees].each do |employee|
-      Employee.create(employee)
+    if @errors.empty?
+      save_employee @employees
+      redirect_to employees_path
     end
-    redirect_to employees_path
+
+    file.remove!
   end
 
   def report
 
   end
+
+  private
+    def save_employee employees
+      employees.each do |employee|
+        employee.save
+      end
+    end
+
 end
