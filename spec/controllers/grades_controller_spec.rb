@@ -59,7 +59,7 @@ describe GradesController do
 
       it "redirects to the created grade" do
         post :create, {:grade => valid_attributes}
-        response.should redirect_to(Grade.last)
+        response.should redirect_to(grades_url)
       end
     end
 
@@ -101,7 +101,7 @@ describe GradesController do
       it "redirects to the grade" do
         grade = Grade.create! valid_attributes
         put :update, {:id => grade.to_param, :grade => valid_attributes}
-        response.should redirect_to(grade)
+        response.should redirect_to(grades_url)
       end
     end
 
@@ -125,8 +125,16 @@ describe GradesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested grade" do
-      grade = Grade.create! valid_attributes
+    it "does not destroys the requested grade" do
+      employee = FactoryGirl.create(:employee)
+      expect {
+        delete :destroy, {:id => employee.grade.to_param}
+      }.to change(Grade, :count).by(0)
+    end
+
+    it "destroy the requested grade" do
+      employee = FactoryGirl.create(:employee)
+      grade = FactoryGirl.create(:grade , grade: "Assistant")
       expect {
         delete :destroy, {:id => grade.to_param}
       }.to change(Grade, :count).by(-1)

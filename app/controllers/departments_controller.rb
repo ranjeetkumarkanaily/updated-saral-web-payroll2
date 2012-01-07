@@ -44,7 +44,7 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to @department, notice: 'Department was successfully created.' }
+        format.html { redirect_to departments_url, notice: 'Department was successfully created.' }
         format.json { render json: @department, status: :created, location: @department }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.update_attributes(params[:department])
-        format.html { redirect_to @department, notice: 'Department was successfully updated.' }
+        format.html { redirect_to departments_url, notice: 'Department was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -72,12 +72,20 @@ class DepartmentsController < ApplicationController
   # DELETE /departments/1
   # DELETE /departments/1.json
   def destroy
-    @department = Department.find(params[:id])
-    @department.destroy
+    chk_department_exist_in_employee = Employee.find_all_by_department_id(params[:id])
+    if chk_department_exist_in_employee.count > 0
+      respond_to do |format|
+        format.html { redirect_to departments_url, notice: 'Department is already assigned to employee.' }
+        format.json { head :ok }
+      end
+    else
+      @department = Department.find(params[:id])
+      @department.destroy
 
-    respond_to do |format|
-      format.html { redirect_to departments_url }
-      format.json { head :ok }
+      respond_to do |format|
+        format.html { redirect_to departments_url, notice: 'Department was successfully deleted.' }
+        format.json { head :ok }
+      end
     end
   end
 end
