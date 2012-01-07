@@ -3,7 +3,7 @@
     #error_explanation
       %h2
         = pluralize(@employee_detail.errors.count, "error")
-        prohibited this salary_group from being saved:
+        prohibited this employee_details from being saved:
       %ul
         - @employee_detail.errors.full_messages.each do |msg|
           %li= msg

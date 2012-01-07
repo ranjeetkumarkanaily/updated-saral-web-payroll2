@@ -3,7 +3,7 @@
     #error_explanation
       %h2
         = pluralize(@department.errors.count, "error")
-        prohibited this state from being saved:
+        prohibited this department from being saved:
       %ul
         - @department.errors.full_messages.each do |msg|
           %li= msg
