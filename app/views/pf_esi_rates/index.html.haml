@@ -1,33 +1,25 @@
 #left_content
-    = render 'left'
+  = render 'left'
 #right_content
-    %h1 PF ESI Rate Details
-    %table.std_table{:cellpadding=>0,:cellspacing=>0}
-        %tr
-            %td.std_td
-                = form_tag pf_esi_rates_path, :method => :get do
-                    %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
-                        %tr
-                            %td{:width => "200px"}= select_tag "month_year", options_from_collection_for_select(Paymonth.all,'id','month_year', params[:month_year]),:prompt => 'Select Month Year'
-                            %td
-                                = submit_tag("Show Rates")
-                        %tr
-                            %td
-                            &nbsp;
-                - if params[:month_year] && @pfesirate
-                    %table.table_grid{:width=>600, :cellpadding => 0, :cellspacing => 3}
-                        %tr
-                            %td.table_grid_header PF Rate
-                            %td.table_grid_header PF Cutoff
-                            %td.table_grid_header ESI Employee Rate
-                            %td.table_grid_header ESI Employer Rate
-                            %td.table_grid_header ESI Cutoff
-                            %td.table_grid_header Operations
-                        %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-                            %td.table_grid_td{:align => "right"}= @pfesirate.pf_rate
-                            %td.table_grid_td{:align => "right"}= @pfesirate.pf_cutoff
-                            %td.table_grid_td{:align => "right"}= @pfesirate.esi_employee_rate
-                            %td.table_grid_td{:align => "right"}= @pfesirate.esi_employer_rate
-                            %td.table_grid_td{:align => "right"}= @pfesirate.esi_cutoff
-                            %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit Rates"), edit_pf_esi_rate_path(@pfesirate)
-
+  %h1 PF ESI Rate Details
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>700, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Month Year
+            %td.table_grid_header PF Rate (%)
+            %td.table_grid_header PF Cutoff
+            %td.table_grid_header ESI Employee Rate (%)
+            %td.table_grid_header ESI Employer Rate (%)
+            %td.table_grid_header ESI Cutoff
+            %td.table_grid_header Operations
+          - @pfesirate.each do |pf_esi_rate|
+            %tr
+              %td.table_grid_td{:align => "center"}= pf_esi_rate.paymonth.month_name
+              %td.table_grid_td{:align => "right"}= pf_esi_rate.pf_rate
+              %td.table_grid_td{:align => "right"}= pf_esi_rate.pf_cutoff
+              %td.table_grid_td{:align => "right"}= pf_esi_rate.esi_employee_rate
+              %td.table_grid_td{:align => "right"}= pf_esi_rate.esi_employer_rate
+              %td.table_grid_td{:align => "right"}= pf_esi_rate.esi_cutoff
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit Rates"), edit_pf_esi_rate_path(pf_esi_rate)

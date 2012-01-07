@@ -1,8 +1,9 @@
 class PfEsiRatesController < ApplicationController
   def index
-    if params[:month_year]
-      @pfesirate = PfEsiRate.find_by_paymonth_id(params[:month_year])
-    end
+    #if params[:month_year]
+    #  @pfesirate = PfEsiRate.find_by_paymonth_id(params[:month_year])
+    #end
+    @pfesirate = PfEsiRate.all
   end
 
   def new

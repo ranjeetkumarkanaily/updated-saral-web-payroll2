@@ -36,7 +36,7 @@ describe EmployeesController do
     end
 
     it "save" do
-      employees = Factory.build(:employee)
+      employees = Factory.build(:employee, :id => "")
       post :save, :employees => [employees]
       response.should redirect_to(employees_path)
     end

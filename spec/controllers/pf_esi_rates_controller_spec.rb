@@ -21,7 +21,7 @@ describe PfEsiRatesController do
     it "returns http success" do
       pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
       get :index, :month_year => pf_esi_rate.paymonth.id
-      assigns(:pfesirate).should eq(pf_esi_rate)
+      assigns(:pfesirate).should eq([pf_esi_rate])
       response.should be_success
     end
   end

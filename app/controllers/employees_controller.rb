@@ -124,6 +124,10 @@ class EmployeesController < ApplicationController
       e.email = row[15]
       e.mobile = row[16].to_s
 
+      puts e.refno
+      puts e.valid?
+      puts Employee.first.refno
+
       if e.valid?
         @employees << e
       else

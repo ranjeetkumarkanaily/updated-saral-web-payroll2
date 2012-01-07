@@ -1,6 +1,7 @@
 # By using the symbol ':employee', we get Factory Girl to simulate the Employee model.
 FactoryGirl.define do
   factory :employee do
+    id 1
     refno 1001
     email "test@test.com"
     present_state_id "1"

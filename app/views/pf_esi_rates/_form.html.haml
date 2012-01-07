@@ -13,8 +13,10 @@
         %table
           %tr
             %td{:width=>160} Month Year
-            %td= select_tag "pf_esi_rate[paymonth_id]", options_from_collection_for_select(Paymonth.all,'id','month_year', params[:month_year]),:prompt => 'Select Month Year'
-
+            - if params[:id]
+              %td= @pfesirate.paymonth.month_name
+            - else
+              %td= select_tag "pf_esi_rate[paymonth_id]", options_from_collection_for_select(Paymonth.all,'id','month_name', params[:month_year]),:prompt => 'Select Month Year'
     %tr
       %td.std_td
         %table
@@ -39,8 +41,8 @@
           %tr
             %td{:width=>130} Cutoff : &nbsp;
             %td= f.text_field :esi_cutoff, :size => '22'
-
     %tr
-      %td &nbsp;
-    %tr
-      %td.table_grid_td{:colspan=>2}= f.submit
+      %td.std_td
+        %table
+          %tr
+            %td= f.submit("Save PF ESI Rate")
