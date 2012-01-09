@@ -16,7 +16,7 @@
             - if params[:id]
               %td= @pfesirate.paymonth.month_name
             - else
-              %td= select_tag "pf_esi_rate[paymonth_id]", options_from_collection_for_select(Paymonth.all,'id','month_name', params[:month_year]),:prompt => 'Select Month Year'
+              %td= select_tag "pf_esi_rate[paymonth_id]", options_from_collection_for_select(Paymonth.order('id ASC'),'id','month_name', params[:month_year]),:prompt => 'Select Month Year'
     %tr
       %td.std_td
         %table

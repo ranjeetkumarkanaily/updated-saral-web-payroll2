@@ -5,9 +5,9 @@ class EmployeesController < ApplicationController
 
   def index
     if params[:search]
-      @employees = Employee.search(params[:search]).paginate(:page => params[:page], :per_page => 10)
+      @employees = Employee.order('id ASC').search(params[:search]).paginate(:page => params[:page], :per_page => 10)
     else
-      @employees = Employee.all(:order => 'id ASC').paginate(:page => params[:page], :per_page => 10)
+      @employees = Employee.order('id ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|

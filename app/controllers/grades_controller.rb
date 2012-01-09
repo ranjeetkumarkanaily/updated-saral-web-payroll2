@@ -2,7 +2,7 @@ class GradesController < ApplicationController
   # GET /grades
   # GET /grades.json
   def index
-    @grades = Grade.paginate(:page => params[:page], :per_page => 10)
+    @grades = Grade.order('id ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.haml

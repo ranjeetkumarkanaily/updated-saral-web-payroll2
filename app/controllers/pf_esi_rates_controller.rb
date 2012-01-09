@@ -3,7 +3,7 @@ class PfEsiRatesController < ApplicationController
     #if params[:month_year]
     #  @pfesirate = PfEsiRate.find_by_paymonth_id(params[:month_year])
     #end
-    @pfesirate = PfEsiRate.all
+    @pfesirate = PfEsiRate.order('id ASC').paginate(:page => params[:page], :per_page => 10)
   end
 
   def new

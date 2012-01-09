@@ -204,6 +204,7 @@ width: 100%;
 .std_td {
     width:370px;
     padding-left: 10px;
+    padding-right: 10px;
     vertical-align: top;
 }
 
@@ -305,13 +306,14 @@ form {
   margin-bottom: 18px;
 }
 fieldset {
-  margin-bottom: 18px;
-  padding-top: 18px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border:1px solid #f1eee9;
 }
 fieldset legend {
   display: block;
-  padding-left: 150px;
-  font-size: 19.5px;
+  padding: 0 5px 0 5px;
+  font-size: 15px;
   line-height: 1;
   color: #404040;
   *padding: 0 0 5px 145px;

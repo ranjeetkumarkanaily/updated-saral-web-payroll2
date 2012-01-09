@@ -5,7 +5,9 @@
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td.std_td
-        %table.table_grid{:width=>700, :cellpadding => 0, :cellspacing => 3}
+        %table.table_grid{:width=>750, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td &nbsp;
           %tr
             %td.table_grid_header Month Year
             %td.table_grid_header PF Rate (%)
@@ -15,7 +17,7 @@
             %td.table_grid_header ESI Cutoff
             %td.table_grid_header Operations
           - @pfesirate.each do |pf_esi_rate|
-            %tr
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td{:align => "center"}= pf_esi_rate.paymonth.month_name
               %td.table_grid_td{:align => "right"}= pf_esi_rate.pf_rate
               %td.table_grid_td{:align => "right"}= pf_esi_rate.pf_cutoff
@@ -23,3 +25,10 @@
               %td.table_grid_td{:align => "right"}= pf_esi_rate.esi_employer_rate
               %td.table_grid_td{:align => "right"}= pf_esi_rate.esi_cutoff
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit Rates"), edit_pf_esi_rate_path(pf_esi_rate)
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @pfesirate
+          = will_paginate @pfesirate, :container => false
+    %tr
+      %td &nbsp;
