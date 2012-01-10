@@ -62,6 +62,6 @@ class Salary < ActiveRecord::Base
   end
 
   def self.find_employees_leave from_date, to_date, employee_id
-    LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date} 'and '#{to_date}'" )
+   LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" )
   end
 end

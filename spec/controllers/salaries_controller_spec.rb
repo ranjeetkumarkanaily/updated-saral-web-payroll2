@@ -6,7 +6,6 @@ describe SalariesController do
 
   describe "POST create" do
     describe "Creation of new Salary" do
-      salary = FactoryGirl.build(:salary)
       it "Count should be increases by one" do
         expect {
           post :create, :salary => [salary.attributes]
