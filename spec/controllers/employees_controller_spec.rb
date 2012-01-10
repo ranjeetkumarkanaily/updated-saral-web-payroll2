@@ -24,10 +24,10 @@ describe EmployeesController do
   describe "Excel File Upload, Parse and Save" do
 
     before :each do
-      FactoryGirl.create(:state)
-      FactoryGirl.create(:department)
-      FactoryGirl.create(:designation)
-      FactoryGirl.create(:grade)
+      @state = FactoryGirl.create(:state)
+      @dept = FactoryGirl.create(:department)
+      @desig = FactoryGirl.create(:designation)
+      @grade = FactoryGirl.create(:grade)
     end
 
     it "save_parse_validate" do
@@ -37,6 +37,7 @@ describe EmployeesController do
     end
 
     it "gives error" do
+      FactoryGirl.create(:employee, :refno => 1003, :department => @dept, :designation => @desig, :grade => @grade)
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success

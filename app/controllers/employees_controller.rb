@@ -123,15 +123,9 @@ class EmployeesController < ApplicationController
       e.present_state = State.find_by_state_name(row[14])
       e.email = row[15]
       e.mobile = row[16].to_s
-      e.designation_id = Designation.find_by_designation(row[17])
-      e.department_id = Department.find_by_department(row[18])
-      e.grade_id = Grade.find_by_grade(row[19])
-
-      #puts Designation.find_by_designation(row[17]).inspect
-      #puts Department.find_by_department(row[18]).inspect
-      #puts Grade.find_by_grade(row[19]).inspect
-      #puts e.valid?
-      #puts e.errors.full_messages
+      e.designation = Designation.find_by_designation(row[17])
+      e.department = Department.find_by_department(row[18])
+      e.grade = Grade.find_by_grade(row[19])
 
       if e.valid?
         @employees << e
