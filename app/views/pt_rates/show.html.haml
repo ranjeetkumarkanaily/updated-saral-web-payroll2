@@ -1,0 +1,30 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Showing PT Rates
+    = link_to image_tag('/assets/edit.png',:title => "Edit PT Rate"), edit_pt_rate_path(@pt_rate)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} PT Group Name :&nbsp;
+                  %td= @pt_rate.PtGroup.name
+                %tr
+                  %td{:width=>160} Effective Month
+                  %td= @pt_rate.paymonth.month_name
+                %tr
+                  %td{:width=>130} PT :&nbsp;
+                  %td= @pt_rate.pt
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>160} Minimum Salary Range :&nbsp;
+                  %td= @pt_rate.min_sal_range
+                %tr
+                  %td{:width=>160} Maximum Salary Range :&nbsp;
+                  %td= @pt_rate.max_sal_range

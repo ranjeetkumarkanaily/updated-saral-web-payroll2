@@ -94,4 +94,13 @@ FactoryGirl.define do
     esi_employer_rate 6.03
     esi_cutoff 1500
   end
+
+  factory :pt_group do
+    name "Group"
+    certificate_no "123456"
+    pto_circle_no "123456"
+    address "Bangalore"
+    return_period "Monthly"
+    state_id 1
+  end
 end
