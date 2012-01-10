@@ -86,6 +86,8 @@ FactoryGirl.define do
     month_name  "Dec/2011"
   end
 
+
+
   factory :pf_esi_rate do
     paymonth
     pf_rate 12.03
