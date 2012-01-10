@@ -50,6 +50,7 @@ describe SalariesController do
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
       pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+      pt_rate = FactoryGirl.create(:pt_rate)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
@@ -64,6 +65,7 @@ describe SalariesController do
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
       salary_hra = FactoryGirl.create(:salary, :salary_head => salaryHead3)
       pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+      pt_rate = FactoryGirl.create(:pt_rate)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
@@ -77,6 +79,7 @@ describe SalariesController do
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :salary_amount=>500.00)
       pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_da.employee_id
 

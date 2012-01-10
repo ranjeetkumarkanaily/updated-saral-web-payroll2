@@ -103,4 +103,12 @@ FactoryGirl.define do
     return_period "Monthly"
     state_id 1
   end
+
+  factory :pt_rate do
+    PtGroup_id 1
+    paymonth_id 1
+    min_sal_range 2000.0
+    max_sal_range 5000.0
+    pt 100.0
+  end
 end

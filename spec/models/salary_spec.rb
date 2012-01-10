@@ -72,6 +72,13 @@ describe Salary do
       end
     end
 
+    describe "get pt amount" do
+
+      it "should give pt amount within range amount" do
+
+      end
+    end
+
   end
 
 end
