@@ -1,0 +1,7 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    New PT Rate
+    = link_to image_tag('/assets/show.png',:title => "Show PT Rate"), @pt_rate
+  = render "form"

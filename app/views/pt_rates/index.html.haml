@@ -1,0 +1,34 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing PT Rates
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>700, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td &nbsp;
+          %tr
+            %td.table_grid_header PT Group Name
+            %td.table_grid_header Effective Month
+            %td.table_grid_header Minimum Salary Range
+            %td.table_grid_header Maximum Salary Range
+            %td.table_grid_header PT
+            %td.table_grid_header{:colspan => 3} Operations
+          - @pt_rates.each do |pt_rate|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td{:align => "center"}= pt_rate.PtGroup.name
+              %td.table_grid_td{:align => "right"}= pt_rate.paymonth.month_name
+              %td.table_grid_td{:align => "right"}= pt_rate.min_sal_range
+              %td.table_grid_td{:align => "right"}= pt_rate.max_sal_range
+              %td.table_grid_td{:align => "right"}= pt_rate.pt
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show PT Rate"), pt_rate
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit PT Rate"), edit_pt_rate_path(pt_rate)
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete PT Rate"), pt_rate, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @pt_rates
+          = will_paginate @pt_rates, :container => false
+    %tr
+      %td &nbsp;
