@@ -28,8 +28,7 @@ class SalariesController < ApplicationController
       leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,params[:salary][0]['employee_id']
       leave_count = leave_count[0]['leave_count'].to_i
       no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
-      #no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
-      no_of_day_in_selected_month = 28
+      no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
       no_of_present_days = no_of_day_in_selected_month - leave_count
 
       params[:salary].each do |sal|

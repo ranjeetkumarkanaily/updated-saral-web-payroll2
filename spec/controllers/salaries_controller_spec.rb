@@ -6,19 +6,21 @@ describe SalariesController do
 
   describe "POST create" do
     describe "Creation of new Salary" do
-      leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
-      pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
+      before :each do
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
+        pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
 
-      salary = FactoryGirl.build(:salary)
+        @salary = FactoryGirl.build(:salary)
+      end
 
       it "Count should be increases by one" do
         expect {
-          post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
+          post :create, :salary => [@salary.attributes],:month_year=>'Feb/2011'
         }.to change(Salary, :count).by(1)
       end
 
       it "redirects to salary index path" do
-        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
+        post :create, :salary => [@salary.attributes],:month_year=>'Feb/2011'
         response.should redirect_to salaries_path
       end
     end
