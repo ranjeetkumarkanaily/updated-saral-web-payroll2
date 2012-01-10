@@ -68,6 +68,8 @@
             %td.std_td{:colspan=>2}
               %table
                 %tr
+                  %td{:colspan=>2}= image_tag(@company.photo.url(:logo))
+                %tr
                   %td Company Logo:&nbsp;
                   %td= f.file_field :photo
                 %tr
