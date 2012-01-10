@@ -6,14 +6,19 @@ describe SalariesController do
 
   describe "POST create" do
     describe "Creation of new Salary" do
+      leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
+      pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
+      salary = FactoryGirl.build(:salary)
+
+
       it "Count should be increases by one" do
         expect {
-          post :create, :salary => [salary.attributes]
+          post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
         }.to change(Salary, :count).by(1)
       end
 
       it "redirects to salary index path" do
-        post :create, :salary => [salary.attributes]
+        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
         response.should redirect_to salaries_path
       end
     end
@@ -22,13 +27,13 @@ describe SalariesController do
   describe "GET new" do
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
       sal_allot = FactoryGirl.create(:salary_allotment)
-      get :new, :month_year => "02/2011", :employee_id => sal_allot.employee_id
+      get :new, :month_year => "Feb/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
 
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
       sal_allot = FactoryGirl.create(:salary_allotment)
-      get :new, :month_year => "03/2011", :employee_id => sal_allot.employee_id
+      get :new, :month_year => "Mar/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
   end
@@ -41,8 +46,9 @@ describe SalariesController do
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
+      pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
 
-      get :index, :month_year => "02/2011", :employee_id => salary_basic.employee_id
+      get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
       assigns(:salary_earning)[0].salary_amount.should eq(salary_basic.salary_amount)
     end
@@ -54,7 +60,9 @@ describe SalariesController do
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
       salary_hra = FactoryGirl.create(:salary, :salary_head => salaryHead3)
-      get :index, :month_year => "02/2011", :employee_id => salary_basic.employee_id
+      pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+
+      get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
       assigns(:salary_deduction)[0].salary_amount.should eq(salary_basic.salary_amount)
     end
@@ -64,11 +72,13 @@ describe SalariesController do
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
-      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :salary_amount=>500.00)
+      pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
 
-      get :index, :month_year => "02/2011", :employee_id => salary_da.employee_id
+      get :index, :month_year => "Feb/2011", :employee_id => salary_da.employee_id
 
-      pf_amount = ((salary_basic.salary_amount + salary_da.salary_amount) *0.12).round.to_f
+      pf_amount = ((salary_basic.salary_amount + salary_da.salary_amount) * pf_esi_rate.pf_rate/100).round.to_f
+
       assigns(:pf_amount).should eq(pf_amount)
     end
 
@@ -83,7 +93,7 @@ describe SalariesController do
     describe "GET edit" do
     it "assigns the requested Salary as @salary" do
       salary = FactoryGirl.create(:salary)
-      get :edit, :month_year => "02/2011", :employee_id => 1
+      get :edit, :month_year => "Feb/2011", :employee_id => 1
       assigns(:salary).should eq([salary])
     end
   end

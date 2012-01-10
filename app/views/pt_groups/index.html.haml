@@ -1,0 +1,36 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing PT Groups
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>700, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td &nbsp;
+          %tr
+            %td.table_grid_header PT Group Name
+            %td.table_grid_header State
+            %td.table_grid_header Certificate No
+            %td.table_grid_header PTO Circle No
+            %td.table_grid_header Address
+            %td.table_grid_header Return period
+            %td.table_grid_header{:colspan => 3} Operations
+          - @pt_groups.each do |pt_group|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td{:align => "center"}= pt_group.name
+              %td.table_grid_td{:align => "right"}= pt_group.state.state_name
+              %td.table_grid_td{:align => "right"}= pt_group.certificate_no
+              %td.table_grid_td{:align => "right"}= pt_group.pto_circle_no
+              %td.table_grid_td{:align => "right"}= pt_group.address
+              %td.table_grid_td{:align => "right"}= pt_group.return_period
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show PT Group"), pt_group
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit PT Group"), edit_pt_group_path(pt_group)
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete PT Group"), pt_group, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @pt_groups
+          = will_paginate @pt_groups, :container => false
+    %tr
+      %td &nbsp;

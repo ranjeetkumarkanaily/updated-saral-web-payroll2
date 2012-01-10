@@ -11,7 +11,7 @@
       #header_left
         %h1= Company.first.companyname
       #header_right
-        = image_tag(Company.first.photo.url(:logo))
+        = image_tag(Company.first.photo.url(:logo), :id => "logo")
     - if @_current_user
       #bluemenu.bluetabs
         %ul
@@ -31,7 +31,7 @@
             %a{:href => logout_path} Logout
       / 1st drop down menu
       #dropmenu1_b.dropmenudiv_b
-        %a{:href => companies_path} PT
+        %a{:href => pt_groups_path} PT
         %a{:href => pf_esi_rates_path} PF/ESI
       #dropmenu2_b.dropmenudiv_b
         %a{:href => paymonths_path} Pay Months
