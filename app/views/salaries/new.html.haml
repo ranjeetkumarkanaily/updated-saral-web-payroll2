@@ -15,7 +15,7 @@
             %tr
               %td{:width => "100px"} Month/Year
               %td{:width => "100px"}
-                = select_tag "month_year", options_from_collection_for_select(Paymonth.order('id ASC'),'id','month_name', params[:month_year]),:prompt => 'Select Month Year'
+                = select_tag "month_year", options_from_collection_for_select(Paymonth.order('id ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Month Year'
             %tr
               %td
                 = submit_tag("Get Salary")
@@ -23,8 +23,9 @@
               %td
                 &nbsp;
         - if params[:month_year] && params[:employee_id]
-          = form_tag salaries_path, :method => :put do
+          = form_tag salaries_path, :method => :post do
             %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+              = hidden_field_tag "month_year", params[:month_year]
               %tr
                 %td.table_grid_header Salary Heads
                 %td.table_grid_header Short Name

@@ -15,8 +15,8 @@ class SalaryAllotment < ActiveRecord::Base
   end
 
   def self.get_allotted_salaries month_year, employee_id
-    month_year = month_year.split('/')
-    SalaryAllotment.where("extract(month from effective_date) = #{month_year[0]} and extract(year from effective_date) = #{month_year[1]} AND employee_id = #{employee_id}")
+    month_year = Date.strptime month_year, '%b/%Y'
+    SalaryAllotment.where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id}")
   end
 
   def self.get_allotted_salaries_for_max_effective_date month_year, employee_id
