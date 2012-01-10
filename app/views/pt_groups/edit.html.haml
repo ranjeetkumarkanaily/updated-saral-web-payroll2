@@ -1,0 +1,7 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Editing PT Group
+    = link_to image_tag('/assets/show.png',:title => "Show PT Group"), @pt_group
+  = render "form"

@@ -1,0 +1,47 @@
+= form_for(@pt_group) do |f|
+  - if @pt_group.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@pt_group.errors.count, "error")
+        prohibited this pt_group from being saved:
+      %ul
+        - @pt_group.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} PT Group Name :&nbsp;
+                  %td= f.text_field :name, :size => '22'
+                %tr
+                  %td{:width=>160} State
+                  - if params[:id]
+                    %td= @pt_group.state.state_name
+                  - else
+                    %td= select_tag "pt_group[state_id]", options_from_collection_for_select(State.order('id ASC'),'id','state_name', params[:id]),:prompt => 'Select State'
+                %tr
+                  %td{:width=>130} Address :&nbsp;
+                  %td= f.text_field :address, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Certificate No :&nbsp;
+                  %td= f.text_field :certificate_no, :size => '22'
+                %tr
+                  %td{:width=>130} PTO Circle No :&nbsp;
+                  %td= f.text_field :pto_circle_no, :size => '22'
+                %tr
+                  %td{:width=>130} Return Period :&nbsp;
+                  -#%td= f.text_field :return_period, :size => '22'
+                  %td= f.select :return_period, options_for_select(["Monthly", "Half Yearly", "Yearly"],@pt_group.return_period), {:prompt => 'Select Return Period' }
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td= f.submit("Save PT Group")

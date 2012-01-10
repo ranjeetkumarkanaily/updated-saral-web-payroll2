@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120106124054) do
+ActiveRecord::Schema.define(:version => 20120109100545) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -151,6 +151,19 @@ ActiveRecord::Schema.define(:version => 20120106124054) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "pt_groups", :force => true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.string   "certificate_no"
+    t.string   "pto_circle_no"
+    t.string   "address"
+    t.string   "return_period"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pt_groups", ["state_id"], :name => "index_pt_groups_on_state_id"
 
   create_table "salaries", :force => true do |t|
     t.date     "effective_date"
