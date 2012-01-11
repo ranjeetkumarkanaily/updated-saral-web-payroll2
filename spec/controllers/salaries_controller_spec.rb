@@ -6,9 +6,10 @@ describe SalariesController do
 
   describe "POST create" do
     describe "Creation of new Salary" do
+
       before :each do
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
-        pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
+        pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2012-02-01",:to_date => "2012-02-28",:month_name => "Feb/2012")
 
         @salary = FactoryGirl.build(:salary)
       end
@@ -83,7 +84,7 @@ describe SalariesController do
 
       assigns(:pf_amount).should eq(pf_amount)
     end
-
+  end
     describe "Update" do
       it "should update the salary amount" do
         sal = FactoryGirl.create(:salary)
@@ -100,5 +101,5 @@ describe SalariesController do
     end
   end
 
-  end
+
 end

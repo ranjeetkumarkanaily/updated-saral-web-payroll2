@@ -63,7 +63,9 @@ class Salary < ActiveRecord::Base
   def self.get_pt_amount month_year, employee_id
     gross_salary = get_gross_salary month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
+
     pt_amount = PtRate.select('pt').joins('inner join paymonths on pt_rates.paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} between min_sal_range and max_sal_range")
+
 
     if pt_amount.count > 0
       get_pt = pt_amount[0]['pt']
@@ -71,9 +73,10 @@ class Salary < ActiveRecord::Base
       get_pt = PtRate.select('pt').joins('inner join paymonths on paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} >= min_sal_range").order('pt_rates.id DESC LIMIT 1')
       get_pt = get_pt[0]['pt']
     end
+
   end
 
   def self.find_employees_leave from_date, to_date, employee_id
-    LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date} 'and '#{to_date}'" )
+   LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" )
   end
 end

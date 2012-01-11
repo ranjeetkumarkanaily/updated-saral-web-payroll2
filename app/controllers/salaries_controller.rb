@@ -18,6 +18,7 @@ class SalariesController < ApplicationController
       @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id]
       @pf_amount = Salary.get_pf_amount params[:month_year], params[:employee_id]
       @esi_amount = Salary.get_esi_amount params[:month_year], params[:employee_id]
+
       @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
     end
   end
@@ -25,7 +26,6 @@ class SalariesController < ApplicationController
   def create
     if(params[:salary])
       month_year = Date.strptime params[:month_year], '%b/%Y'
-
       leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,params[:salary][0]['employee_id']
       leave_count = leave_count[0]['leave_count'].to_i
       no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
