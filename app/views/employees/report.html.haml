@@ -8,27 +8,28 @@
     %tr
       %td.std_td
         = form_tag report_employees_path, :method => :get do
+          = hidden_field_tag "format", "pdf"
           %fieldset
             %legend Search By
             %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
               %tr
                 %td{:width => "100px"} Designation
-                %td{:width => "200px"}= select_tag "designation_id", options_from_collection_for_select(Designation.order('id ASC'),'id','designation', params[:designation_id]),:prompt => 'Select Designation'
+                %td{:width => "200px"}= select_tag "report[designation_id]", options_from_collection_for_select(Designation.order('id ASC'),'id','designation', params[:designation_id]),:prompt => 'Select Designation'
                 %td{:width => "100px"} Department
-                %td{:width => "200px"}= select_tag "department_id", options_from_collection_for_select(Department.order('id ASC'),'id','department', params[:department_id]),:prompt => 'Select Department'
+                %td{:width => "200px"}= select_tag "report[department_id]", options_from_collection_for_select(Department.order('id ASC'),'id','department', params[:department_id]),:prompt => 'Select Department'
               %tr
                 %td{:width => "100px"} Grade
-                %td{:width => "200px"}= select_tag "grade_id", options_from_collection_for_select(Grade.order('id ASC'),'id','grade', params[:grade_id]),:prompt => 'Select Grade'
+                %td{:width => "200px"}= select_tag "report[grade_id]", options_from_collection_for_select(Grade.order('id ASC'),'id','grade', params[:grade_id]),:prompt => 'Select Grade'
           %fieldset
             %legend Report Type
             %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
               %tr
                 %td{:width => "100px"} Date of Joining
-                %td= radio_button_tag :report_type, 'Date of Joining'
+                %td= radio_button_tag :report_type, 'date_of_joining'
                 %td{:width => "100px"} Date of Leaving
-                %td= radio_button_tag :report_type, 'Date of Leaving'
+                %td= radio_button_tag :report_type, 'date_of_leaving'
                 %td{:width => "100px"} Date of Birth
-                %td= radio_button_tag :report_type, 'Date of Birth'
+                %td= radio_button_tag :report_type, 'date_of_birth'
               %tr
                 %td{:width => "100px"} Contact Details
                 %td= radio_button_tag :report_type, 'Contact'

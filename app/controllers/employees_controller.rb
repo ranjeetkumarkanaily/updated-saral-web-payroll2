@@ -143,7 +143,36 @@ class EmployeesController < ApplicationController
   end
 
   def report
+    if params[:report_type]
+      @company = Company.first
+      @report_type = params[:report_type]
 
+      if params[:report][:designation_id] != ""
+        condition = " designation_id = #{params[:report][:designation_id]}"
+      end
+
+      if params[:report][:department_id] != ""
+        condition += " and " if condition.length > 0
+        condition += " department_id = #{params[:report][:department_id]}"
+      end
+
+      if params[:report][:grade_id] != ""
+        condition += " and " if condition.length > 0
+        condition += " grade_id = #{params[:report][:grade_id]}"
+      end
+
+      if @report_type != "Contact"
+        @employees = Employee.select("refno,empname,#{@report_type}").where(condition)
+      else
+        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").where(condition)
+      end
+
+      respond_to do |format|
+        format.html # new.html.haml
+        format.json { render json: @employee }
+        format.pdf
+      end
+    end
   end
 
   private
