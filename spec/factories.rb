@@ -106,8 +106,8 @@ FactoryGirl.define do
 
   factory :pt_rate do
     PtGroup_id 1
-    paymonth_id 1
-    min_sal_range 500.0
+    paymonth
+    min_sal_range 0.0
     max_sal_range 5000.0
     pt 100.0
   end
