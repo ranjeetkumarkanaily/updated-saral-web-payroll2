@@ -41,15 +41,17 @@ describe SalariesController do
   end
 
   describe "GET index" do
-
+    before :each do
+      @pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+      paymonth = FactoryGirl.create(:paymonth, :month_year =>24133, :number_of_days => 31, :from_date =>"2011-01-01",:to_date => "2011-01-31", :month_name => "Jan/2011")
+      pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
+    end
 
     it "get salary earnings for the given employee" do
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
-      pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-      pt_rate = FactoryGirl.create(:pt_rate)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
@@ -63,8 +65,6 @@ describe SalariesController do
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
       salary_hra = FactoryGirl.create(:salary, :salary_head => salaryHead3)
-      pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-      pt_rate = FactoryGirl.create(:pt_rate)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
@@ -77,12 +77,9 @@ describe SalariesController do
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :salary_amount=>500.00)
-      pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-
-
       get :index, :month_year => "Feb/2011", :employee_id => salary_da.employee_id
 
-      pf_amount = ((salary_basic.salary_amount + salary_da.salary_amount) * pf_esi_rate.pf_rate/100).round.to_f
+      pf_amount = ((salary_basic.salary_amount + salary_da.salary_amount) * @pf_esi_rate.pf_rate/100).round.to_f
 
       assigns(:pf_amount).should eq(pf_amount)
     end

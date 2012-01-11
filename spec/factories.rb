@@ -79,11 +79,11 @@ FactoryGirl.define do
   end
 
   factory :paymonth do
-    month_year 24144
+    month_year 24132
     number_of_days 31
-    from_date "2011-12-01"
-    to_date "2011-12-31"
-    month_name  "Dec/2011"
+    from_date "2010-12-01"
+    to_date "2010-12-31"
+    month_name  "Dec/2010"
   end
 
   factory :pf_esi_rate do
