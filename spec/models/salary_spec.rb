@@ -74,8 +74,11 @@ describe Salary do
 
     describe "get pt amount" do
 
-      it "should give pt amount within range amount" do
-
+      it "should give pt amount within range defined" do
+        salary = FactoryGirl.create(:salary)
+        pt_rate = FactoryGirl.create(:pt_rate)
+        get_pt = Salary.get_pt_amount "Feb/2012", salary.employee_id.to_s
+        get_pt.should eq(100.00)
       end
     end
 
