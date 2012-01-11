@@ -79,11 +79,11 @@ FactoryGirl.define do
   end
 
   factory :paymonth do
-    month_year 24144
+    month_year 24132
     number_of_days 31
-    from_date "2011-12-01"
-    to_date "2011-12-31"
-    month_name  "Dec/2011"
+    from_date "2010-12-01"
+    to_date "2010-12-31"
+    month_name  "Dec/2010"
   end
 
   factory :pf_esi_rate do
@@ -102,6 +102,14 @@ FactoryGirl.define do
     address "Bangalore"
     return_period "Monthly"
     state_id 1
+  end
+
+  factory :pt_rate do
+    PtGroup_id 1
+    paymonth
+    min_sal_range 0.0
+    max_sal_range 5000.0
+    pt 100.0
   end
 
 end

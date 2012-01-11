@@ -3,13 +3,14 @@ require 'spec_helper'
 describe PtRatesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
+
   end
 
   def valid_attributes
     {
         :PtGroup_id => 1,
         :paymonth_id => 1,
-        :min_sal_range => 1200,
+        :min_sal_range => 5001,
         :max_sal_range => 12000,
         :pt => 1500
     }
@@ -24,6 +25,7 @@ describe PtRatesController do
 
   describe "GET index" do
     it "assigns all pt_rates as @pt_rates" do
+      #FactoryGirl.create(:pt_rate)
       pt_rate = PtRate.create! valid_attributes
       get :index, {}, valid_session
       assigns(:pt_rates).should eq([pt_rate])
@@ -113,6 +115,7 @@ describe PtRatesController do
         put :update, {:id => pt_rate.to_param, :pt_rate => valid_attributes}, valid_session
         response.should redirect_to(pt_rate)
       end
+
     end
 
     describe "with invalid params" do

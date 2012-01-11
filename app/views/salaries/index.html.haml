@@ -48,6 +48,10 @@
                       %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + salary.salary_amount.to_f
                   %tr
+                    %td{:width=>170} PT
+                    %td{:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
+                    - deduction_total = deduction_total + @pt_amount.to_f
+                  %tr
                     %td{:width=>170} PF
                     %td{:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
                     - deduction_total = deduction_total + @pf_amount.to_f
@@ -56,6 +60,7 @@
                       %td ESI
                       %td{:style=>"text-align:right;"}= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + @esi_amount.to_f
+
             %tr
               %td.std_td{:style=>"width:270px;"}
                 %table
