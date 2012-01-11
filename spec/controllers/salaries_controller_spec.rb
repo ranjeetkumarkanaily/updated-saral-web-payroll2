@@ -9,7 +9,7 @@ describe SalariesController do
 
       before :each do
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
-        pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
+        pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2012-02-01",:to_date => "2012-02-28",:month_name => "Feb/2012")
 
         @salary = FactoryGirl.build(:salary)
       end
@@ -51,7 +51,6 @@ describe SalariesController do
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
       pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
       pt_rate = FactoryGirl.create(:pt_rate)
-
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
       assigns(:salary_earning)[0].salary_amount.should eq(salary_basic.salary_amount)
@@ -87,7 +86,7 @@ describe SalariesController do
 
       assigns(:pf_amount).should eq(pf_amount)
     end
-
+  end
     describe "Update" do
       it "should update the salary amount" do
         sal = FactoryGirl.create(:salary)
@@ -104,5 +103,5 @@ describe SalariesController do
     end
   end
 
-  end
+
 end
