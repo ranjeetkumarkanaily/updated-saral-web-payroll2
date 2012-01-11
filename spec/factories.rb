@@ -103,4 +103,5 @@ FactoryGirl.define do
     return_period "Monthly"
     state_id 1
   end
+
 end
