@@ -49,7 +49,7 @@ Spork.prefork do
     end
 
     config.after(:each) do
-      DatabaseCleaner.clean
+      #DatabaseCleaner.clean
     end
 
     # for database cleaner -- end --
