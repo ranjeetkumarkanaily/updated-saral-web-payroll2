@@ -1,5 +1,5 @@
 #right_content
-  %h1{:style=>"width:600px;"} "Welcome to #{Company.first.companyname if Company.first.companyname?} Payroll System"
+  %h1{:style=>"width:600px;"} "Welcome to #{Company.first.companyname if Company.exists?} Payroll System"
 
 
 
