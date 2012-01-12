@@ -24,6 +24,10 @@
             %legend Report Type
             %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
               %tr
+                %td{:colspan=>6}
+                  - flash.each do |name, msg|
+                    = content_tag :div, msg, :id => "flash_#{name}"
+              %tr
                 %td{:width => "100px"} Date of Joining
                 %td= radio_button_tag :report_type, 'date_of_joining'
                 %td{:width => "100px"} Date of Leaving

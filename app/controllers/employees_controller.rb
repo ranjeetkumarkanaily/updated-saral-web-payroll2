@@ -147,24 +147,27 @@ class EmployeesController < ApplicationController
       @company = Company.first
       @report_type = params[:report_type]
 
-      if params[:report][:designation_id] != ""
+
+      if params[:report][:designation_id] != "" && params[:report][:designation_id] != nil
         condition = " designation_id = #{params[:report][:designation_id]}"
       end
 
-      if params[:report][:department_id] != ""
+      if params[:report][:department_id] != "" && params[:report][:department_id] != nil
         condition += " and " if condition.length > 0
         condition += " department_id = #{params[:report][:department_id]}"
       end
 
-      if params[:report][:grade_id] != ""
+      if params[:report][:grade_id] != "" && params[:report][:grade_id] != nil
         condition += " and " if condition.length > 0
         condition += " grade_id = #{params[:report][:grade_id]}"
       end
 
+
+
       if @report_type != "Contact"
-        @employees = Employee.select("refno,empname,#{@report_type}").where(condition)
+        @employees = Employee.select("refno,empname,#{@report_type}").where(condition).order('id ASC')
       else
-        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").where(condition)
+        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").where(condition).order('id ASC')
       end
 
       respond_to do |format|
