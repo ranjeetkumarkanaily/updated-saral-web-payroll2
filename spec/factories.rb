@@ -111,4 +111,5 @@ FactoryGirl.define do
     max_sal_range 5000.0
     pt 100.0
   end
+
 end
