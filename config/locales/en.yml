@@ -3,3 +3,14 @@
 
 en:
   hello: "Hello world"
+
+  number:
+    currency_in_words:
+      currencies:
+        rupee:
+          unit:
+            one: 'rupee'
+            many: 'rupees'
+          decimal:
+            one: 'paisa'
+            many: 'paise'

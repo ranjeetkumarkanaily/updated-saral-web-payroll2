@@ -53,6 +53,7 @@ gem "carrierwave"
 gem "mini_magick"
 gem "spreadsheet"
 gem 'will_paginate'
+gem 'wicked_pdf'
 
 # Use unicorn as the web server
 # gem 'unicorn'

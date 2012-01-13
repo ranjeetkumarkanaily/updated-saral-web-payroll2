@@ -16,9 +16,9 @@
               %td{:width => "100px"} Employee
               %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.order('id ASC'),'id','empname', params[:employee_id]),:prompt => 'Select Employee'
             %tr
-              %td{:width => "100px"} Month/Year
+              %td{:width => "100px"} Pay Months
               %td{:width => "100px"}
-                = select_tag "month_year", options_from_collection_for_select(Paymonth.order('id ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Month Year'
+                = select_tag "month_year", options_from_collection_for_select(Paymonth.order('id ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
             %tr
               %td
                 = submit_tag("Generate Salary")
@@ -65,7 +65,7 @@
               %td.std_td{:style=>"width:270px;"}
                 %table
                   %tr
-                    %td{:width=>170,:class=>"bold_txt"}Gross Salary
+                    %td{:width=>170,:class=>"bold_txt"}Total Earnings
                     %td{:style=>"text-align:right;"}= number_with_precision(gross_total, :precision => 2, :delimiter => ',')
               %td.std_td{:valign => 'top',:style=>"width:270px;"}
                 %table
@@ -79,5 +79,8 @@
             %tr
               %td.std_td{:class=>"bold_txt"} Net Salary
               %td{:class=>"bold_txt"}= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
+          %table.table_grid{:width=>740, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td{:align=>'right'}= link_to 'Generate Payslip', salaries_path(:month_year => params[:month_year],:employee_id => params[:employee_id], :format => "pdf")
             %tr
               %td &nbsp;
