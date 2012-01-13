@@ -5,6 +5,7 @@ class PtRate < ActiveRecord::Base
   validates_presence_of :PtGroup_id, :paymonth_id
   before_validation :populate_max_sal_range
   before_destroy :update_rows
+
   private
 
     def update_rows
@@ -30,11 +31,11 @@ class PtRate < ActiveRecord::Base
     end
 
     def previous_row
-      PtRate.where("id < ?", self.id).order("id DESC").first
+      PtRate.where("id < ? and paymonth_id = ?", self.id, self.paymonth_id).order("id DESC").first
     end
 
     def next_row
-      PtRate.where("id > ?", self.id).first
+      PtRate.where("id > ? and paymonth_id = ?", self.id, self.paymonth_id).first
     end
 
 end
