@@ -13,7 +13,7 @@ class Salary < ActiveRecord::Base
     condition = "employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year}"
-    Salary.select('head_name, sum(salary_amount) as salary_amount').
+    Salary.select('salary_heads.id, head_name, sum(salary_amount) as salary_amount').
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
         where(condition).group('salary_heads.id').order('salary_heads.id ASC')
   end
