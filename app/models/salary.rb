@@ -15,7 +15,7 @@ class Salary < ActiveRecord::Base
                   extract(year from effective_date) = #{month_year.year}"
     Salary.select('head_name, sum(salary_amount) as salary_amount').
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
-        where(condition).group('head_name')
+        where(condition).group('salary_heads.id').order('salary_heads.id ASC')
   end
 
   def self.get_pf_amount month_year, employee_id
