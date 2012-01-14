@@ -19,7 +19,7 @@
                   %td= f.text_field :head_name, :size => '22'
                 %tr
                   %td{:width=>130} Salary Type:&nbsp;
-                  %td= f.text_field :salary_type, :size => '22'
+                  %td= f.select :salary_type, options_for_select(["Earnings", "Deductions"],@salary_head.salary_type), {:prompt => 'Select Salary Type'}
             %td.std_td
               %table
                 %tr
