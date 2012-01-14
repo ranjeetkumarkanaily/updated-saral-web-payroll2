@@ -13,6 +13,7 @@ class Salary < ActiveRecord::Base
     condition = "employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year}"
+
     Salary.select('salary_head_id, sum(salary_amount) as salary_amount').
         joins('inner join salary_heads on salary_head_id = salary_heads.id ').
         where(condition).group('salary_head_id').order('salary_head_id ASC')
@@ -65,7 +66,6 @@ class Salary < ActiveRecord::Base
     month_year = Date.strptime month_year, '%b/%Y'
 
     pt_amount = PtRate.select('pt').joins('inner join paymonths on pt_rates.paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} between min_sal_range and max_sal_range")
-
 
     if pt_amount.count > 0
       get_pt = pt_amount[0]['pt']
