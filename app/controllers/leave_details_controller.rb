@@ -20,7 +20,7 @@ class LeaveDetailsController < ApplicationController
       @counter+=1
 
       l = LeaveDetail.new
-      l.employee_id = row[0]
+      l.employee_id = Employee.find_by_refno("#{row[0]}").id
       l.leave_date = row[1]
 
       if l.valid?
