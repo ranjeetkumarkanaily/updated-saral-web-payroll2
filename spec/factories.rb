@@ -25,6 +25,11 @@ FactoryGirl.define do
     salary_type "Earnings"
   end
 
+  factory :salary_group do
+    salary_group_name "Manager"
+    based_on_gross false
+  end
+
  factory :salary_allotment do
     employee_id 1
     employee_detail_id 1

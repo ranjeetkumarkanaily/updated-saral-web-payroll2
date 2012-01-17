@@ -1,7 +1,7 @@
 #left_content
   = render 'left'
 #right_content
-  %h1 Listing Salary Group Configuration
+  %h1{:style=>"width:500px;"} Listing Salary Group Configuration for #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;
@@ -9,7 +9,10 @@
       %td.std_td
         %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
           %tr
-            %td.table_grid_header Salary Group
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
             %td.table_grid_header Salary Head
             %td.table_grid_header Calculation Type
             %td.table_grid_header Calculation
@@ -17,14 +20,12 @@
             %td.table_grid_header{:colspan => 3} Operations
           - @salary_group_details.each do |salary_group_detail|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= salary_group_detail.salary_group.salary_group_name
               %td.table_grid_td= salary_group_detail.salary_head.head_name
               %td.table_grid_td= salary_group_detail.calc_type
               %td.table_grid_td= salary_group_detail.calculation
               %td.table_grid_td= salary_group_detail.based_on
-              %td.table_grid_td= link_to image_tag('/assets/show.png',:title => "Show Salary Group Configuration"), salary_group_detail
-              %td.table_grid_td= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(salary_group_detail)
-              %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Delete Salary Group Configuration"), salary_group_detail, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(salary_group_detail,:param1=>@param_sal_grp_id)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Delete Salary Group Configuration"), salary_group_detail, confirm: 'Are you sure?', method: :delete
 
         %br/
         .digg_pagination
