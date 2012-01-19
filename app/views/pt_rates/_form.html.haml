@@ -1,4 +1,4 @@
-= form_for(@pt_rate) do |f|
+= form_for @pt_rate, :html => {:name => "pt_rate"}  do |f|
   - if @pt_rate.errors.any?
     #error_explanation
       %h2
@@ -56,4 +56,5 @@
           %tr
             %td &nbsp;
           %tr
-            %td{:colspan=>2}= f.submit
+            %td{:colspan=>2}= f.submit "Save"
+            -#, :onclick => 'return Test_Alert();'

@@ -4,7 +4,12 @@ class PtRate < ActiveRecord::Base
 
   validates_presence_of :PtGroup_id, :paymonth_id
   before_validation :populate_max_sal_range
+  after_validation :check_previous_range
   before_destroy :update_rows
+
+  after_create :update_previous_row
+  after_update :update_previous_row
+
 
   private
 
@@ -18,24 +23,51 @@ class PtRate < ActiveRecord::Base
       end
     end
 
-    def populate_max_sal_range
-      self.max_sal_range = 0
-      row = PtRate.find(:last, :conditions => {:paymonth_id => self.paymonth_id})
+    def check_previous_range
+      if self.id
+        row = previous_row
+      else
+        row = PtRate.find(:last, :conditions => {:paymonth_id => self.paymonth_id})
+      end
+
       if row
-        if self.min_sal_range > row.min_sal_range.to_f
-          row.update_attribute(:max_sal_range , (self.min_sal_range - 0.01))
+        if self.min_sal_range < row.min_sal_range.to_f
+          self.errors.add(:salary, " range is already exists.")
+        else
+          if next_row
+            self.max_sal_range = next_row.min_sal_range - 0.01
+          end
+
+        end
+      end
+    end
+
+    def update_previous_row
+      if previous_row
+        if self.min_sal_range > previous_row.min_sal_range.to_f
+          previous_row.update_attribute(:max_sal_range , (self.min_sal_range - 0.01))
         else
           self.errors.add(:salary, " range is already exists.")
         end
       end
     end
 
+    def update_self_max_range
+      if next_row
+        self.max_sal_range = next_row.min_sal_range - 0.01
+      end
+    end
+
+    def populate_max_sal_range
+      self.max_sal_range = 0
+    end
+
     def previous_row
-      PtRate.where("id < ? and paymonth_id = ?", self.id, self.paymonth_id).order("id DESC").first
+      PtRate.where("created_at < ? and paymonth_id = ?", self.created_at, self.paymonth_id).order("created_at DESC").first
     end
 
     def next_row
-      PtRate.where("id > ? and paymonth_id = ?", self.id, self.paymonth_id).first
+      PtRate.where("created_at > ? and paymonth_id = ?", self.created_at, self.paymonth_id).order("created_at").first
     end
 
 end

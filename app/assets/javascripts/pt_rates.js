@@ -1,5 +1,9 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+function Test_Alert()
+{
+    alert("kanaily");
+    var min = document.forms["pt_rate"]["pt_rate[min_sal_range]"].value;
+
+    return false;
+}
 
 
