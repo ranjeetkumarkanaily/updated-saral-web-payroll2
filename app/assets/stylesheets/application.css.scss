@@ -834,6 +834,87 @@ textarea[readonly] {
 
 /* End Of Code */
 
+/* For Tabbing */
+.tabberlive .tabbertabhide {
+ display:none;
+}
+
+.tabber {
+}
+.tabberlive {
+ margin-top:1em;
+}
+
+
+ul.tabbernav
+{
+ margin:0;
+ padding: 3px 0;
+ border-bottom: 1px solid #778;
+ font:12px Verdana, sans-serif;
+}
+
+ul.tabbernav li
+{
+ list-style: none;
+ margin: 0;
+ display: inline;
+}
+
+ul.tabbernav li a
+{
+ padding: 3px 0.5em;
+ margin-left: 3px;
+ border: 1px solid #778;
+ border-bottom: none;
+ background: #94BCD3;
+ text-decoration: none;
+}
+
+ul.tabbernav li a:link { color: #000; }
+ul.tabbernav li a:visited { color: #667; }
+
+ul.tabbernav li a:hover
+{
+ color: #000;
+ background: #D8D8D8;
+ border-color: #227;
+}
+
+ul.tabbernav li.tabberactive a
+{
+ background-color: #fff;
+ border-bottom: 1px solid #fff;
+}
+
+ul.tabbernav li.tabberactive a:hover
+{
+ color: #000;
+ background: white;
+ border-bottom: 1px solid white;
+}
+
+.tabberlive .tabbertab {
+ padding:5px;
+ border-top:0;
+}
+.tabberlive .tabbertab h2 {
+ display:none;
+}
+.tabberlive .tabbertab h3 {
+ display:none;
+}
+
+.tabberlive#tab1 {
+}
+.tabberlive#tab2 {
+}
+.tabberlive#tab2 .tabbertab {
+ height:200px;
+ overflow:auto;
+}
+/* End of Code */
+
 
 #footer {
     float:left;

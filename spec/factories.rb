@@ -62,7 +62,7 @@ FactoryGirl.define do
   end
 
   factory :state do
-    state_name "XYZ"
+    state_name "Karnataka"
   end
 
   factory :leave_detail do
@@ -76,7 +76,7 @@ FactoryGirl.define do
   end
 
   factory :designation do
-    designation 'Manager'
+    designation 'Developer'
   end
 
   factory :grade do

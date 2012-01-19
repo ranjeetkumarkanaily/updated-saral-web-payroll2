@@ -1,14 +1,17 @@
 class SalaryAllotmentsController < ApplicationController
 
   def index
-    if params[:employee_id]
-      @allotSal = SalaryAllotment.where("employee_id = #{params[:employee_id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{params[:employee_id]})").order('salary_head_id ASC')
-      respond_to do |format|
-        format.html # index.html.haml
-        format.json { render json: @allotSal }
-        format.pdf { render :layout => false }
-      end
+    @need_to_allot_Sal = SalaryAllotment.get_employee_with_salary_not_allotted.paginate(:page => params[:page], :per_page => 10)
+    @already_allot_Sal = SalaryAllotment.get_employee_with_salary_allotted.paginate(:page => params[:page], :per_page => 10)
+    respond_to do |format|
+      format.html # index.html.haml
+      format.json { render json: @allotSal }
+      format.pdf { render :layout => false }
     end
+  end
+
+  def edit
+    @allotSal = SalaryAllotment.where("employee_id = #{params[:id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{params[:id]})").order('salary_head_id ASC')
   end
 
   def update

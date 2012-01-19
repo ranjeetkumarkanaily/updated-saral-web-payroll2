@@ -30,7 +30,6 @@ class SalaryGroupDetailsController < ApplicationController
   # GET /salary_group_details/new.json
   def new
     @param_sal_grp_id = params[:param1]
-    puts params
     @salary_group_detail = SalaryGroupDetail.new
 
     respond_to do |format|

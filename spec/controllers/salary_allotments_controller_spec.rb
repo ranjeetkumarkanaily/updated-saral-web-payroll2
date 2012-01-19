@@ -6,10 +6,26 @@ describe SalaryAllotmentsController do
   end
 
   describe "Index" do
-    it "gets salary allotment index page" do
-      salAllot = FactoryGirl.create(:salary_allotment)
-      get :index, :employee_id => salAllot.employee_id
-      assigns(:allotSal).should eq([salAllot])
+    it "gets employee whose salary is not allotted" do
+      employee = FactoryGirl.create(:employee)
+      need_to_allot_Sal = FactoryGirl.create(:salary_allotment,:salary_allotment=>0,:employee_id=>employee.id)
+      get :index
+      assigns(:need_to_allot_Sal).should be_true
+    end
+
+    it "gets employee whose salary is allotted" do
+      employee = FactoryGirl.create(:employee)
+      already_allot_Sal = FactoryGirl.create(:salary_allotment,:employee_id=>employee.id)
+      get :index
+      assigns(:already_allot_Sal).should be_true
+    end
+  end
+
+  describe "Edit" do
+    it "assigns the requested employee for salary allotment" do
+      salary_allotment = FactoryGirl.create(:salary_allotment)
+      get :edit, :id => salary_allotment.employee_id
+      assigns(:allotSal).should eq([salary_allotment])
     end
   end
 

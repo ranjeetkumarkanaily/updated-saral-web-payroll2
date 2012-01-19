@@ -2,29 +2,25 @@ require 'spec_helper'
 
 describe "salary_allotments/index.html.haml" do
 
-  it "render form to select employee" do
+  it "render index page" do
+    employee = FactoryGirl.create(:employee)
+    assign(:need_to_allot_Sal,[stub_model(Employee,
+                                          :id => employee.id,
+                                          :empname => employee.empname,
+                                          :refno => employee.refno,
+                                          :department_id => employee.department.id,
+                                          :designation_id => employee.designation.id)]).stub!(:total_pages).and_return(0)
+
+    assign(:already_allot_Sal,[stub_model(Employee,
+                                          :id => employee.id,
+                                          :empname => employee.empname,
+                                          :refno => employee.refno,
+                                          :department_id => employee.department.id,
+                                          :designation_id => employee.designation.id)]).stub!(:total_pages).and_return(0)
+
     render
-    assert_select "form", :action => "/salary_allotments", :method => "get" do
-      assert_select "select#employee_id", :name => "employee_id"
-    end
+    rendered.should have_content(employee.empname)
   end
 
-  describe "Allotted Salary" do
-    it "render form contains salary heads for selected employee" do
-      salAllot = FactoryGirl.create(:salary_allotment)
-      view.stub!(:params).and_return :employee_id => salAllot.employee_id
-
-      assign(:allotSal, [stub_model(SalaryAllotment,
-                                        :employee_id => salAllot.employee_id,
-                                        :employee_detail_id => salAllot.employee_detail_id,
-                                        :effective_date => salAllot.effective_date,
-                                        :salary_head_id => salAllot.salary_head_id,
-                                        :salary_allotment => salAllot.salary_allotment)])
-
-      render
-      rendered.should have_selector("form input[@value='#{salAllot.salary_allotment}']")
-
-    end
-  end
 
 end

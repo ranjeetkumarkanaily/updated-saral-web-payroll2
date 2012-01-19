@@ -1,0 +1,31 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1{:style=>"width:500px"} Salary Allotment for #{Employee.find(params[:id]).empname}
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        &nbsp;
+    %tr
+      %td.std_td
+        = form_tag salary_allotments_path, :method => :put do
+          %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td.table_grid_header Salary Heads
+              %td.table_grid_header Short Name
+              %td.table_grid_header Salary Head Type
+              %td.table_grid_header Salary Allotment
+            - @allotSal.each do |allotSal|
+              = hidden_field_tag "salAllotment[][id]", allotSal.id
+              %tr
+                %td.table_grid_td= allotSal.salaryHead
+                %td.table_grid_td= allotSal.shortName
+                %td.table_grid_td= allotSal.salaryHeadType
+                %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
+            %tr
+              %td
+                &nbsp;
+            %tr
+              %td
+                = submit_tag "Save"
+                = button_to_function "Back","window.location.href='#{salary_allotments_path}'"

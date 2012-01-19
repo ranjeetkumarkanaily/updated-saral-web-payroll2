@@ -15,7 +15,13 @@ describe SalaryGroupDetailsController do
   end
 
   describe "GET index" do
-    it "assigns all salary_group_details as @salary_group_details" do
+    it "assigns all employee_details as @salary_group_details" do
+      salary_group_detail = SalaryGroupDetail.create! valid_attributes
+      get :index
+      assigns(:salary_group_details).should eq([salary_group_detail])
+    end
+
+    it "assigns all salary_group_details of specific as @salary_group_details" do
       salary_group_detail = SalaryGroupDetail.create! valid_attributes
       get :index, :param1 => 1
       assigns(:salary_group_details).should eq([salary_group_detail])
