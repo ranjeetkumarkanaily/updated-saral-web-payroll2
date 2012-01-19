@@ -2,7 +2,7 @@ class PtGroupsController < ApplicationController
   # GET /pt_groups
   # GET /pt_groups.json
   def index
-    @pt_groups = PtGroup.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @pt_groups = PtGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.haml

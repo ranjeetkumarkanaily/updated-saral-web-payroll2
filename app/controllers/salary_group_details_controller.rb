@@ -4,9 +4,9 @@ class SalaryGroupDetailsController < ApplicationController
   def index
     @param_sal_grp_id = params[:param1]
     if @param_sal_grp_id
-      @salary_group_details = SalaryGroupDetail.where(:salary_group_id=>@param_sal_grp_id).order('id ASC').paginate(:page => params[:page], :per_page => 10)
+      @salary_group_details = SalaryGroupDetail.where(:salary_group_id=>@param_sal_grp_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     else
-      @salary_group_details = SalaryGroupDetail.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+      @salary_group_details = SalaryGroupDetail.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|

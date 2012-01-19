@@ -6,9 +6,9 @@ class EmployeeDetailsController < ApplicationController
   def index
     @paramempid = params[:param1]
     if @paramempid
-    @employee_details = EmployeeDetail.where(:employee_id=>@paramempid).order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @employee_details = EmployeeDetail.where(:employee_id=>@paramempid).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     else
-    @employee_details = EmployeeDetail.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @employee_details = EmployeeDetail.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|
