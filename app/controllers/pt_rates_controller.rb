@@ -53,21 +53,21 @@ class PtRatesController < ApplicationController
     end
   end
 
-  # PUT /pt_rates/1
-  # PUT /pt_rates/1.json
-  #def update
-  #  @pt_rate = PtRate.find(params[:id])
-  #
-  #  respond_to do |format|
-  #    if @pt_rate.update_attributes(params[:pt_rate])
-  #      format.html { redirect_to @pt_rate, notice: 'Pt rate was successfully updated.' }
-  #      format.json { head :ok }
-  #    else
-  #      format.html { render action: "edit" }
-  #      format.json { render json: @pt_rate.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  #end
+  #PUT /pt_rates/1
+  #PUT /pt_rates/1.json
+  def update
+    @pt_rate = PtRate.find(params[:id])
+
+    respond_to do |format|
+      if @pt_rate.update_attributes(params[:pt_rate])
+        format.html { redirect_to @pt_rate, notice: 'Pt rate was successfully updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @pt_rate.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # DELETE /pt_rates/1
   # DELETE /pt_rates/1.json
