@@ -14,13 +14,13 @@ class PtRate < ActiveRecord::Base
   private
 
     def update_rows
-      if self.id == PtRate.first.id
-        PtRate.first.delete
-      elsif self.id == PtRate.last.id
-        previous_row.update_attribute(:max_sal_range , 0)
-      else
-        previous_row.update_attribute(:max_sal_range, (next_row.min_sal_range - 0.01))
-      end
+      #if self.id == PtRate.first.id
+      #  PtRate.first.delete
+      #elsif self.id == PtRate.last.id
+      #  previous_row.update_attribute(:max_sal_range , 0)
+      #else
+      #  previous_row.update_attribute(:max_sal_range, (next_row.min_sal_range - 0.01))
+      #end
     end
 
     def check_previous_range
