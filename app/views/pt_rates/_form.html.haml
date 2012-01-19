@@ -38,9 +38,9 @@
                 %tr
                   %td{:width => 160} Minimum :&nbsp
                   %td= f.text_field :min_sal_range, :size => '22'
-                %tr
-                  %td{:width=>130} PT:&nbsp;
-                  %td= f.text_field :pt, :size => '22'
+                -#%tr
+                -#  %td{:width=>130} PT:&nbsp;
+                -#  %td= f.text_field :pt, :size => '22'
             %td.std_td
               %table
                 %tr
@@ -48,8 +48,10 @@
                     &nbsp;
                 %tr
                   %td
-                    %td{:width => 160} Maximum :&nbsp
-                    %td= f.text_field :max_sal_range, :size => '22', :readonly => "readonly"
+                    %td{:width=>130} PT:&nbsp;
+                    %td= f.text_field :pt, :size => '22'
+                    -#%td{:width => 160} Maximum :&nbsp
+                    -#%td= f.text_field :max_sal_range, :size => '22', :readonly => "readonly"
     %tr
       %td.std_td{:colspan=>2}
         %table
