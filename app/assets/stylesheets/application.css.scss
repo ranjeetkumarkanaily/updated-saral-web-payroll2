@@ -31,6 +31,13 @@ body {
     }
 }
 
+#clock {
+  float:right;
+  font-weight: normal;
+  padding-right: 10px;
+  padding-top: -1px;
+}
+
 #flash_notice {
   color: #e9322d;
 }
