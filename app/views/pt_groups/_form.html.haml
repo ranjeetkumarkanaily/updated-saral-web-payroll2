@@ -22,7 +22,7 @@
                   - if params[:id]
                     %td= @pt_group.state.state_name
                   - else
-                    %td= select_tag "pt_group[state_id]", options_from_collection_for_select(State.order('id ASC'),'id','state_name', params[:id]),:prompt => 'Select State'
+                    %td= select_tag "pt_group[state_id]", options_from_collection_for_select(State.order('created_at ASC'),'id','state_name', params[:id]),:prompt => 'Select State'
                 %tr
                   %td{:width=>130} Address :&nbsp;
                   %td= f.text_field :address, :size => '22'

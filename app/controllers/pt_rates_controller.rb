@@ -2,7 +2,7 @@ class PtRatesController < ApplicationController
   # GET /pt_rates
   # GET /pt_rates.json
   def index
-    @pt_rates = PtRate.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @pt_rates = PtRate.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.haml

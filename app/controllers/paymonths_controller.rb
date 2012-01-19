@@ -1,7 +1,7 @@
 class PaymonthsController < ApplicationController
 
   def index
-    @paymonths = Paymonth.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @paymonths = Paymonth.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
