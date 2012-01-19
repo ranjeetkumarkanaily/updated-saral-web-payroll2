@@ -70,7 +70,7 @@ class Salary < ActiveRecord::Base
     if pt_amount.count > 0
       get_pt = pt_amount[0]['pt']
     else
-      get_pt = PtRate.select('pt').joins('inner join paymonths on paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} >= min_sal_range").order('pt_rates.id DESC LIMIT 1')
+      get_pt = PtRate.select('pt').joins('inner join paymonths on paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} >= min_sal_range").order('pt_rates.created_at DESC LIMIT 1')
       get_pt = get_pt[0]['pt']
     end
 
