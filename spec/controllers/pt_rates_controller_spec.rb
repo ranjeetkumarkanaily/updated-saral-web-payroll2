@@ -73,12 +73,6 @@ describe PtRatesController do
         post :create, {:pt_rate => valid_attributes}, valid_session
         response.should redirect_to(PtRate.last)
       end
-
-      it "updates the previous max sal range" do
-        pt_rate = FactoryGirl.create(:pt_rate)
-        pt_rate1 = FactoryGirl.create(:pt_rate, :min_sal_range => 4000, :paymonth_id => pt_rate.paymonth_id)
-        PtRate.find(pt_rate.id).max_sal_range.should eq(pt_rate1.min_sal_range - 0.01)
-      end
     end
 
     describe "with invalid params" do

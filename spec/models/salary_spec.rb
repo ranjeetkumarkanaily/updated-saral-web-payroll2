@@ -87,6 +87,14 @@ describe Salary do
         get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
         get_pt.should eq(250.0)
       end
+
+      it "should give pt amount outside the range defined" do
+        salary = FactoryGirl.create(:salary,:salary_amount => 6000)
+        pt_rate = FactoryGirl.create(:pt_rate,:min_sal_range => 7000.0)
+        get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
+        get_pt.should eq(nil)
+      end
+
     end
 
   end

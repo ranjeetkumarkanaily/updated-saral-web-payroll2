@@ -19,7 +19,6 @@ describe "pt_rates/new" do
       assert_select "select#pt_rate_PtGroup_id", :name => "pt_rate[PtGroup_id]"
       assert_select "select#pt_rate_paymonth_id", :name => "pt_rate[paymonth_id]"
       assert_select "input#pt_rate_min_sal_range", :name => "pt_rate[min_sal_range]"
-      assert_select "input#pt_rate_max_sal_range", :name => "pt_rate[max_sal_range]"
       assert_select "input#pt_rate_pt", :name => "pt_rate[pt]"
     end
   end

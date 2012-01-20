@@ -20,7 +20,6 @@
               %td.table_grid_td{:align => "center"}= pt_rate.PtGroup.name
               %td.table_grid_td{:align => "right"}= pt_rate.paymonth.month_name
               %td.table_grid_td{:align => "right"}= pt_rate.min_sal_range
-              -#%td.table_grid_td{:align => "right"}= pt_rate.max_sal_range == nil ? "Max. Sal." : pt_rate.max_sal_range
               %td.table_grid_td{:align => "right"}= pt_rate.get_max_sal_range == nil ? "Max. Sal." : pt_rate.get_max_sal_range
               %td.table_grid_td{:align => "right"}= pt_rate.pt
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show PT Rate"), pt_rate
