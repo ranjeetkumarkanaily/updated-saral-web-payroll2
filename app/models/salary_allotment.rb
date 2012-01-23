@@ -15,11 +15,11 @@ class SalaryAllotment < ActiveRecord::Base
   end
 
   def self.get_employee_with_salary_not_allotted
-     Employee.select("employees.id,refno,empname,department_id,designation_id,date_of_joining").joins("INNER JOIN salary_allotments s ON employees.id = s.employee_id").where("s.salary_allotment = 0").group("employees.id")
+     Employee.select("employees.id,refno,empname,department_id,designation_id,date_of_joining").joins("INNER JOIN salary_allotments s ON employees.id = s.employee_id").where("s.salary_allotment = 0").group("employees.id,refno")
   end
 
   def self.get_employee_with_salary_allotted
-    Employee.select("employees.id,refno,empname,department_id,designation_id,date_of_joining").joins("INNER JOIN salary_allotments s ON employees.id = s.employee_id").where("s.salary_allotment > 0").group("employees.id")
+    Employee.select("employees.id,refno,empname,department_id,designation_id,date_of_joining").joins("INNER JOIN salary_allotments s ON employees.id = s.employee_id").where("s.salary_allotment > 0").group("employees.id,refno")
   end
 
   def self.get_allotted_salaries month_year, employee_id
