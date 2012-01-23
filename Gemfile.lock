@@ -101,7 +101,6 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     json (1.6.4)
-    libnotify (0.7.1)
     mail (2.3.0)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -155,8 +154,6 @@ GEM
       thor (~> 0.14.6)
     rake (0.9.2.2)
     rb-fsevent (0.4.3.1)
-    rb-inotify (0.8.8)
-      ffi (>= 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
     rmagick (2.13.1)
@@ -240,7 +237,6 @@ DEPENDENCIES
   hirb
   hpricot
   jquery-rails
-  libnotify
   mini_magick
   paperclip (~> 2.4)
   pdfkit (= 0.5.0)
@@ -251,7 +247,6 @@ DEPENDENCIES
   prawnto
   rails (= 3.1.1)
   rb-fsevent
-  rb-inotify
   rspec-rails
   ruby_parser
   sass-rails (~> 3.1.0)

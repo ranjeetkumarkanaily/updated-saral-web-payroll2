@@ -25,6 +25,11 @@ FactoryGirl.define do
     salary_type "Earnings"
   end
 
+  factory :salary_group do
+    salary_group_name "Manager"
+    based_on_gross false
+  end
+
  factory :salary_allotment do
     employee_id 1
     employee_detail_id 1
@@ -57,7 +62,7 @@ FactoryGirl.define do
   end
 
   factory :state do
-    state_name "XYZ"
+    state_name "Karnataka"
   end
 
   factory :leave_detail do
@@ -71,7 +76,7 @@ FactoryGirl.define do
   end
 
   factory :designation do
-    designation 'Manager'
+    designation 'Developer'
   end
 
   factory :grade do

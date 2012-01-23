@@ -14,11 +14,11 @@
               %td &nbsp;
             %tr
               %td{:width => "100px"} Employee
-              %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.order('id ASC'),'id','empname', params[:employee_id]),:prompt => 'Select Employee'
+              %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.order('created_at ASC'),'id','empname', params[:employee_id]),:prompt => 'Select Employee'
             %tr
               %td{:width => "100px"} Pay Months
               %td{:width => "100px"}
-                = select_tag "month_year", options_from_collection_for_select(Paymonth.order('id ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
+                = select_tag "month_year", options_from_collection_for_select(Paymonth.order('created_at ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
             %tr
               %td
                 = submit_tag("Generate Salary")
@@ -47,10 +47,11 @@
                       %td{:width=>170}= salary.salary_head.head_name
                       %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + salary.salary_amount.to_f
-                  %tr
-                    %td{:width=>170} PT
-                    %td{:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
-                    - deduction_total = deduction_total + @pt_amount.to_f
+                  - if @pt_amount
+                    %tr
+                      %td{:width=>170} PT
+                      %td{:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
+                      - deduction_total = deduction_total + @pt_amount.to_f
                   %tr
                     %td{:width=>170} PF
                     %td{:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')

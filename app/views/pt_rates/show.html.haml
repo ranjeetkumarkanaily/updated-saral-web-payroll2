@@ -3,7 +3,7 @@
 #right_content
   %h1
     Showing PT Rates
-    -#= link_to image_tag('/assets/edit.png',:title => "Edit PT Rate"), edit_pt_rate_path(@pt_rate)
+    = link_to image_tag('/assets/edit.png',:title => "Edit PT Rate"), edit_pt_rate_path(@pt_rate)
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
@@ -27,4 +27,4 @@
                   %td= @pt_rate.min_sal_range
                 %tr
                   %td{:width=>160} Maximum Salary Range :&nbsp;
-                  %td= @pt_rate.max_sal_range
+                  %td= @pt_rate.get_max_sal_range == nil ? "Max. Sal." : pt_rate.get_max_sal_range

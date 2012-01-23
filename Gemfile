@@ -28,12 +28,13 @@ group :development, :test do
   gem 'guard-spork'
   gem 'guard-rspec'
   gem 'guard-bundler'
-  gem 'rb-inotify'
-  gem 'libnotify'
+  #gem 'rb-inotify'
+  #gem 'libnotify'
   gem 'simplecov'
   gem 'database_cleaner'
-  gem 'cucumber-rails'
 end
+
+gem 'cucumber-rails', :group => :test
 
 gem "foreigner"
 gem 'ruby_parser'

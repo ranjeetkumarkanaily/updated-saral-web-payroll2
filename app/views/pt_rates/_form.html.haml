@@ -1,4 +1,4 @@
-= form_for(@pt_rate) do |f|
+= form_for @pt_rate, :html => {:name => "pt_rate"}  do |f|
   - if @pt_rate.errors.any?
     #error_explanation
       %h2
@@ -19,7 +19,7 @@
                   - if params[:id]
                     %td= @pt_rate.PtGroup.name
                   - else
-                    %td= select_tag "pt_rate[PtGroup_id]", options_from_collection_for_select(PtGroup.order('id ASC'),'id','name', params[:id]),:prompt => 'Select PT Group'
+                    %td= select_tag "pt_rate[PtGroup_id]", options_from_collection_for_select(PtGroup.order('created_at ASC'),'id','name', params[:id]),:prompt => 'Select PT Group'
             %td.std_td
               %table
                 %tr
@@ -28,7 +28,7 @@
                   - if params[:id]
                     %td= @pt_rate.paymonth.month_name
                   - else
-                    %td= select_tag "pt_rate[paymonth_id]", options_from_collection_for_select(Paymonth.order('id ASC'),'id','month_name', params[:id]),:prompt => 'Select Effective Month'
+                    %td= select_tag "pt_rate[paymonth_id]", options_from_collection_for_select(Paymonth.order('created_at DESC'),'id','month_name', params[:id])
         %table
           %tr
             %td.std_td
@@ -38,9 +38,6 @@
                 %tr
                   %td{:width => 160} Minimum :&nbsp
                   %td= f.text_field :min_sal_range, :size => '22'
-                %tr
-                  %td{:width=>130} PT:&nbsp;
-                  %td= f.text_field :pt, :size => '22'
             %td.std_td
               %table
                 %tr
@@ -48,12 +45,12 @@
                     &nbsp;
                 %tr
                   %td
-                    %td{:width => 160} Maximum :&nbsp
-                    %td= f.text_field :max_sal_range, :size => '22', :readonly => "readonly"
+                    %td{:width=>130} PT:&nbsp;
+                    %td= f.text_field :pt, :size => '22'
     %tr
       %td.std_td{:colspan=>2}
         %table
           %tr
             %td &nbsp;
           %tr
-            %td{:colspan=>2}= f.submit
+            %td{:colspan=>2}= f.submit "Save"

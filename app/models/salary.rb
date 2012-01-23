@@ -65,13 +65,12 @@ class Salary < ActiveRecord::Base
     gross_salary = get_gross_salary month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
 
-    pt_amount = PtRate.select('pt').joins('inner join paymonths on pt_rates.paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} between min_sal_range and max_sal_range")
+    pt_amount = PtRate.select('pt').joins('inner join paymonths on pt_rates.paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
 
     if pt_amount.count > 0
       get_pt = pt_amount[0]['pt']
     else
-      get_pt = PtRate.select('pt').joins('inner join paymonths on paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and #{gross_salary.to_i} >= min_sal_range").order('pt_rates.id DESC LIMIT 1')
-      get_pt = get_pt[0]['pt']
+      get_pt = nil
     end
 
   end
