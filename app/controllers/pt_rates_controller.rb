@@ -2,7 +2,7 @@ class PtRatesController < ApplicationController
   # GET /pt_rates
   # GET /pt_rates.json
   def index
-    @pt_rates = PtRate.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+    @pt_rates = PtRate.order('min_sal_range ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.haml
@@ -53,8 +53,8 @@ class PtRatesController < ApplicationController
     end
   end
 
-  # PUT /pt_rates/1
-  # PUT /pt_rates/1.json
+  #PUT /pt_rates/1
+  #PUT /pt_rates/1.json
   def update
     @pt_rate = PtRate.find(params[:id])
 

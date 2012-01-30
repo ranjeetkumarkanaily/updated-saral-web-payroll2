@@ -44,15 +44,16 @@ describe SalariesController do
   describe "GET index" do
     before :each do
       @pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-      paymonth = FactoryGirl.create(:paymonth, :month_year =>24133, :number_of_days => 31, :from_date =>"2011-01-01",:to_date => "2011-01-31", :month_name => "Jan/2011")
+      paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 31, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
       pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
+      @employee = FactoryGirl.create(:employee)
     end
 
     it "get salary earnings for the given employee" do
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
-      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
-      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => @employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => @employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
@@ -85,6 +86,8 @@ describe SalariesController do
 
       assigns(:pf_amount).should eq(pf_amount)
     end
+
+    it ""
   end
     describe "Update" do
       it "should update the salary amount" do

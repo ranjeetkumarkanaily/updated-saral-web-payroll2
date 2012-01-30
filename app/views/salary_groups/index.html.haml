@@ -11,14 +11,15 @@
           %tr
             %td.table_grid_header Salary Group Name
             %td.table_grid_header Based on Gross
-            %td.table_grid_header{:colspan => 3} Operations
+            %td.table_grid_header{:colspan => 4} Operations
           - @salary_groups.each do |salary_group|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= salary_group.salary_group_name
               %td.table_grid_td= salary_group.based_on_gross
-              %td.table_grid_td= link_to image_tag('/assets/show.png',:title => "Show Salary Group"), salary_group
-              %td.table_grid_td= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group"), edit_salary_group_path(salary_group)
-              %td.table_grid_td= link_to image_tag('/assets/delete.png',:title => "Destroy Salary Group"), salary_group, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Salary Group"), salary_group
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group"), edit_salary_group_path(salary_group)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Salary Group"), salary_group, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/settings.png',:title => "Salary Group Configuration"), salary_group_details_path(:param1=>salary_group.id)
         %br/
         .digg_pagination
           .page_info

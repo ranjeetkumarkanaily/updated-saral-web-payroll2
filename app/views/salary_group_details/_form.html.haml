@@ -1,22 +1,16 @@
 = form_for(@salary_group_detail) do |f|
-  - if @salary_group_detail.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@salary_group_detail.errors.count, "error")
-        prohibited this salary_head from being saved:
-      %ul
-        - @salary_group_detail.errors.full_messages.each do |msg|
-          %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
         %table
           %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
             %td.std_td
               %table
-                %tr
-                  %td{:width=>130} Salary Group:&nbsp;
-                  %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|ss| [ ss.salary_group_name, ss.id ] },@salary_group_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+                = f.hidden_field :salary_group_id, :value => @param_sal_grp_id
                 %tr
                   %td{:width=>130} Salary Head:&nbsp;
                   %td= f.collection_select :salary_head_id, SalaryHead.all, :id, :head_name, :prompt => "Select Salary Head"

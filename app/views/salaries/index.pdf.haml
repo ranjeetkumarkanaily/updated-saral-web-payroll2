@@ -99,20 +99,21 @@
                   %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
                     - @salary_earning.each do |salary|
                       %tr
-                        %td{:width=>198,:class=>"table_text_left td_bdr_r"}= salary.head_name
+                        %td{:width=>198,:class=>"table_text_left td_bdr_r"}= salary.salary_head.head_name
                         %td{:width=>200,:class=>"table_text_right td_bdr_r",:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
                         - gross_total =   gross_total + salary.salary_amount.to_f
                 %td{:colspan=>2,:valign => 'top'}
                   %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
                     - @salary_deduction.each do |salary|
                       %tr
-                        %td{:width=>200,:class=>"table_text_left td_bdr_r"}= salary.head_name
+                        %td{:width=>200,:class=>"table_text_left td_bdr_r"}= salary.salary_head.head_name
                         %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
                         - deduction_total = deduction_total + salary.salary_amount.to_f
-                    %tr
-                      %td{:width=>200,:class=>"table_text_left td_bdr_r"} PT
-                      %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
-                      - deduction_total = deduction_total + @pt_amount.to_f
+                    - if @pt_amount
+                      %tr
+                        %td{:width=>200,:class=>"table_text_left td_bdr_r"} PT
+                        %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
+                        - deduction_total = deduction_total + @pt_amount.to_f
                     %tr
                       %td{:width=>200,:class=>"table_text_left td_bdr_r"} PF
                       %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')

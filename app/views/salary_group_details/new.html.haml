@@ -1,5 +1,5 @@
 #left_content
   = render 'left'
 #right_content
-  %h1 New Salary Group Configuration
+  %h1{:style=>"width:500px;"} New Salary Group Configuration for #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}
   = render 'form'

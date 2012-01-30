@@ -7,13 +7,23 @@ describe SalaryGroupDetailsController do
   end
 
   def valid_attributes
-    {}
+    {:calc_type => "Lumpsum",
+     :calculation => "",
+     :based_on => "Present Days",
+     :salary_group_id => "1",
+     :salary_head_id=>"1"}
   end
 
   describe "GET index" do
-    it "assigns all salary_group_details as @salary_group_details" do
+    it "assigns all employee_details as @salary_group_details" do
       salary_group_detail = SalaryGroupDetail.create! valid_attributes
       get :index
+      assigns(:salary_group_details).should eq([salary_group_detail])
+    end
+
+    it "assigns all salary_group_details of specific as @salary_group_details" do
+      salary_group_detail = SalaryGroupDetail.create! valid_attributes
+      get :index, :param1 => 1
       assigns(:salary_group_details).should eq([salary_group_detail])
     end
   end
@@ -57,7 +67,7 @@ describe SalaryGroupDetailsController do
 
       it "redirects to the created salary_group_detail" do
         post :create, :salary_group_detail => valid_attributes
-        response.should redirect_to(SalaryGroupDetail.last)
+        response.should redirect_to(salary_group_details_path(:param1 => valid_attributes[:salary_group_id]))
       end
     end
 
@@ -72,8 +82,8 @@ describe SalaryGroupDetailsController do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         SalaryGroupDetail.any_instance.stub(:save).and_return(false)
-        post :create, :salary_group_detail => {}
-        response.should render_template("new")
+        post :create, :salary_group_detail => valid_attributes
+        response.should redirect_to(new_salary_group_detail_path(:param1 => valid_attributes[:salary_group_id]))
       end
     end
   end
@@ -99,7 +109,7 @@ describe SalaryGroupDetailsController do
       it "redirects to the salary_group_detail" do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
         put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
-        response.should redirect_to(salary_group_detail)
+        response.should redirect_to(salary_group_details_path(:param1 => valid_attributes[:salary_group_id]))
       end
     end
 
@@ -133,7 +143,7 @@ describe SalaryGroupDetailsController do
     it "redirects to the salary_group_details list" do
       salary_group_detail = SalaryGroupDetail.create! valid_attributes
       delete :destroy, :id => salary_group_detail.id
-      response.should redirect_to(salary_group_details_url)
+      response.should redirect_to(salary_group_details_path)
     end
   end
 

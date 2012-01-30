@@ -37,7 +37,7 @@ describe EmployeesController do
     end
 
     it "gives error" do
-      FactoryGirl.create(:employee, :refno => 1003, :department => @dept, :designation => @desig, :grade => @grade)
+      FactoryGirl.create(:employee, :refno => 1004, :department => @dept, :designation => @desig, :grade => @grade)
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success

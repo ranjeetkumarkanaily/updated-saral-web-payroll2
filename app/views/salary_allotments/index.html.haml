@@ -5,36 +5,52 @@
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td.std_td
-        = form_tag salary_allotments_path, :method => :get do
-          %table{:cellpadding => "0", :cellspacing => "0", :width => "100%"}
-            %tr
-              %td &nbsp;
-            %tr
-              %td{:width => "100px"}
-                Employee
-              %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.order('id ASC'),'id','empname', params[:employee_id]),:prompt => 'Select Employee'
-              %td
-                = submit_tag("Submit")
-            %tr
-              %td
-                &nbsp;
-        - if params[:employee_id]
-          = form_tag salary_allotments_path, :method => :put do
-            %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
-              %tr
-                %td.table_grid_header Salary Heads
-                %td.table_grid_header Short Name
-                %td.table_grid_header Salary Head Type
-                %td.table_grid_header Salary Allotment
-              - @allotSal.each do |allotSal|
-                = hidden_field_tag "salAllotment[][id]", allotSal.id
+        .tabber
+          .tabbertab
+            %h2 Listing Employee (Salary not Allotted)
+            %div
+              %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
                 %tr
-                  %td.table_grid_td= allotSal.salaryHead
-                  %td.table_grid_td= allotSal.shortName
-                  %td.table_grid_td= allotSal.salaryHeadType
-                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
-              %tr
-                %td
-                  &nbsp;
-              %tr
-                %td= submit_tag "Allot Salary"
+                  %td.table_grid_header Ref No
+                  %td.table_grid_header Employee Name
+                  %td.table_grid_header DOJ
+                  %td.table_grid_header Designation
+                  %td.table_grid_header Department
+                  %td.table_grid_header Operation
+                - @need_to_allot_Sal.each do |not_allot_sal|
+                  %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                    %td.table_grid_td= not_allot_sal.refno
+                    %td.table_grid_td= not_allot_sal.empname
+                    %td.table_grid_td= not_allot_sal.date_of_joining
+                    %td.table_grid_td= Department.find(not_allot_sal.department_id).department
+                    %td.table_grid_td= Designation.find(not_allot_sal.designation_id).designation
+                    %td.table_grid_icon= link_to "Allot Salary", edit_salary_allotment_path(not_allot_sal.id)
+            .digg_pagination
+              .page_info
+                = page_entries_info @need_to_allot_Sal
+              = will_paginate @need_to_allot_Sal, :container => false
+          .tabbertab
+            %h2 Listing Employee (Salary Allotted)
+            %div
+              %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+                %tr
+                  %td.table_grid_header Ref No
+                  %td.table_grid_header Employee Name
+                  %td.table_grid_header DOJ
+                  %td.table_grid_header Department
+                  %td.table_grid_header Designation
+                  %td.table_grid_header Operation
+                - @already_allot_Sal.each do |allotted_sal|
+                  %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                    %td.table_grid_td= allotted_sal.refno
+                    %td.table_grid_td= allotted_sal.empname
+                    %td.table_grid_td= allotted_sal.date_of_joining
+                    %td.table_grid_td= Department.find(allotted_sal.department_id).department
+                    %td.table_grid_td= Designation.find(allotted_sal.designation_id).designation
+                    %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Allotted Salary"), edit_salary_allotment_path(allotted_sal.id)
+            .digg_pagination
+              .page_info
+                = page_entries_info @already_allot_Sal
+              = will_paginate @already_allot_Sal, :container => false
+
+

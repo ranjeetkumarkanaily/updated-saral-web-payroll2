@@ -21,7 +21,7 @@
                     = f.hidden_field :employee_id, :value => @paramempid
                 %tr
                   %td Salary Group:&nbsp;
-                  %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'id ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+                  %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'created_at ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
                 %tr
                   %td Allotted Gross:&nbsp;
                   %td= f.text_field :allotted_gross

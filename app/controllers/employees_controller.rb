@@ -5,9 +5,9 @@ class EmployeesController < ApplicationController
 
   def index
     if params[:search]
-      @employees = Employee.order('id ASC').search(params[:search]).paginate(:page => params[:page], :per_page => 10)
+      @employees = Employee.order('created_at ASC').search(params[:search]).paginate(:page => params[:page], :per_page => 10)
     else
-      @employees = Employee.order('id ASC').paginate(:page => params[:page], :per_page => 10)
+      @employees = Employee.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|
@@ -163,10 +163,10 @@ class EmployeesController < ApplicationController
       end
 
       if @report_type != "Contact"
-        (condition)? condition += condition + " and #{@report_type} IS NOT NULL" : condition = "#{@report_type} IS NOT NULL"
-        @employees = Employee.select("refno,empname,#{@report_type}").where(condition).order('id ASC')
+        (condition)? condition = condition + " and #{@report_type} IS NOT NULL" : condition = "#{@report_type} IS NOT NULL"
+        @employees = Employee.select("refno,empname,#{@report_type}").where(condition).order('created_at ASC')
       else
-        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").where(condition).order('id ASC')
+        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").where(condition).order('created_at ASC')
       end
 
       respond_to do |format|

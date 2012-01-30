@@ -4,13 +4,6 @@ namespace :bootstrap do
     User.create( :username => 'admin', :password => 'default' )
   end
 
-  desc "Add Default Values"
-  task :default_value => :environment do
-    DefaultValue.create( :default_type => 'Salary Head', :value => 'Basic', :value_id => 1 )
-    DefaultValue.create( :default_type => 'Salary Head', :value => 'DA', :value_id => 2 )
-    DefaultValue.create( :default_type => 'Salary Head', :value => 'HRA', :value_id => 3 )
-  end
-
   desc "Add Default Salary Heads"
   task :salary_head => :environment do
     SalaryHead.create( :head_name => 'Basic', :short_name => 'BASIC', :salary_type => "Earnings" )
@@ -18,8 +11,41 @@ namespace :bootstrap do
     SalaryHead.create( :head_name => 'HRA', :short_name => 'HRA', :salary_type => "Earnings" )
   end
 
+  desc "Add States"
+  task :state => :environment do
+    State.create( :state_name => 'Andhra Pradesh')
+    State.create( :state_name => 'Arunachal Pradesh')
+    State.create( :state_name => 'Assam')
+    State.create( :state_name => 'Bihar')
+    State.create( :state_name => 'Chhattisgarh')
+    State.create( :state_name => 'Delhi')
+    State.create( :state_name => 'Goa')
+    State.create( :state_name => 'Gujarat')
+    State.create( :state_name => 'Haryana')
+    State.create( :state_name => 'Himachal Pradesh')
+    State.create( :state_name => 'Jammu and Kashmir')
+    State.create( :state_name => 'Jharkhand')
+    State.create( :state_name => 'Karnataka')
+    State.create( :state_name => 'Kerala')
+    State.create( :state_name => 'Madhya Pradesh')
+    State.create( :state_name => 'Maharastra')
+    State.create( :state_name => 'Manipur')
+    State.create( :state_name => 'Meghalaya')
+    State.create( :state_name => 'Mizoram')
+    State.create( :state_name => 'Nagaland')
+    State.create( :state_name => 'Orrisa')
+    State.create( :state_name => 'Panjab')
+    State.create( :state_name => 'Pondicherry')
+    State.create( :state_name => 'Rajasthan')
+    State.create( :state_name => 'Sikkim')
+    State.create( :state_name => 'Tamil Nadu')
+    State.create( :state_name => 'Tripura')
+    State.create( :state_name => 'Uttaranchal')
+    State.create( :state_name => 'Uttar Pradesh')
+  end
+
 
 
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :default_value, :salary_head]
+  task :all => [:default_user, :salary_head, :state]
 end

@@ -5,7 +5,6 @@
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
-    %script{:src => "/assets/dropdowntabs.js?body=1", :type => "text/javascript"}
   %body
     #header
       #header_left
@@ -26,11 +25,18 @@
           %li
             %a{:href => leave_details_path} Leave
           %li
-            %a{:href => salary_groups_path, :rel => "dropmenu4_b"} Salary
+            %a{:href => salary_heads_path, :rel => "dropmenu4_b"} Salary
           %li
             %a{:href => report_employees_path, :rel => "dropmenu5_b"} Reports
           %li
+            %a{:href => "/doc/UserManual.html",:target=>"_blank"}Help
+          %li
             %a{:href => logout_path} Logout
+          -##clock
+          -#  :javascript
+          -#    //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
+          -#    new imageclock.display()
+
       / 1st drop down menu
       #dropmenu1_b.dropmenudiv_b
         %a{:href => paymonths_path} Pay Months
@@ -44,9 +50,9 @@
       #dropmenu3_b.dropmenudiv_b
         %a{:href => employees_path} Employees
       #dropmenu4_b.dropmenudiv_b
-        %a{:href => salary_groups_path} Salary Group
         %a{:href => salary_heads_path} Salary Head
-        %a{:href => salary_group_details_path} Salary Group Configuration
+        %a{:href => salary_groups_path} Salary Group
+        -#%a{:href => salary_group_details_path} Salary Group Configuration
         %a{:href => salary_allotments_path} Salary Allotment
         %a{:href => new_salary_path} Salary Editor
         %a{:href => salaries_path} Generate Salary

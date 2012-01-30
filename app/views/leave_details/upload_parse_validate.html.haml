@@ -13,17 +13,26 @@
   - else
     %h1 Success
   = form_tag save_leave_details_path do
-    %table{:cellpadding => 0, :cellspacing => 0, :border => 1}
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
       %tr
-        %th Employee Id
-        %th Employee Name
-        %th Leave Date
-      - @leaves.each do |leave|
-        %tr
-          %td= leave.employee_id
-          %td= Employee.find(leave.employee_id).empname
-          %td= leave.leave_date
-          %input{:name => "leave_details[][employee_id]", :value => leave.employee_id, :type => "hidden"}
-          %input{:name => "leave_details[][leave_date]", :value => leave.leave_date, :type => "hidden"}
-    - if @errors.empty?
-      = submit_tag "Save Leaves"
+        %td &nbsp;
+      %tr
+        %td.std_td
+          %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td.table_grid_header Ref. No.
+              %td.table_grid_header Employee Name
+              %td.table_grid_header Leave Date
+            - @leaves.each do |leave|
+              %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                %td.table_grid_td= Employee.find(leave.employee_id).refno
+                %td.table_grid_td= Employee.find(leave.employee_id).empname
+                %td.table_grid_td= leave.leave_date
+                %input{:name => "leave_details[][employee_id]", :value => leave.employee_id, :type => "hidden"}
+                %input{:name => "leave_details[][leave_date]", :value => leave.leave_date, :type => "hidden"}
+            %tr
+              %td &nbsp;
+            %tr
+              %td
+                - if @errors.empty?
+                  = submit_tag "Save Leaves"
