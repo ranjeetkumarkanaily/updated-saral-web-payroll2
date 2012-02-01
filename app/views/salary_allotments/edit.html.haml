@@ -21,7 +21,14 @@
                 %td.table_grid_td= allotSal.salaryHead
                 %td.table_grid_td= allotSal.shortName
                 %td.table_grid_td= allotSal.salaryHeadType
-                %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
+                -if allotSal.salary_group_detail.calc_type == "Formula"
+                  - values = {:GROSS => allotSal.employee_detail.allotted_gross}
+                  - f = allotSal.generation_formula
+                  - calc_value = Evaluator.formula f,values
+
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]',calc_value,:readonly=>"readonly"
+                -else
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
             %tr
               %td
                 &nbsp;

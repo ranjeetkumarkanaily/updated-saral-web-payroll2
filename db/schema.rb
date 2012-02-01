@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120110053508) do
+ActiveRecord::Schema.define(:version => 20120123154548) do
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -119,6 +119,16 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
     t.datetime "updated_at"
   end
 
+  create_table "month_years", :force => true do |t|
+    t.integer  "month_year"
+    t.integer  "number_of_days"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.string   "month_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "paymonths", :force => true do |t|
     t.integer  "month_year"
     t.integer  "number_of_days"
@@ -187,9 +197,10 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
     t.integer  "employee_detail_id"
     t.date     "effective_date"
     t.integer  "salary_head_id"
-    t.decimal  "salary_allotment",   :precision => 8, :scale => 2
+    t.decimal  "salary_allotment",       :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salary_group_detail_id"
   end
 
   create_table "salary_group_details", :force => true do |t|
@@ -247,5 +258,7 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
   add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
   add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
+
+  add_foreign_key "salary_allotments", "salary_group_details", :name => "salary_allotments_salary_group_detail_id_fk"
 
 end

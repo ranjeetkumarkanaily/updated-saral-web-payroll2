@@ -36,6 +36,7 @@ FactoryGirl.define do
     effective_date '2011-02-01'
     salary_head
     salary_allotment 1000.00
+    salary_group_detail_id 1
   end
 
   factory :salary do

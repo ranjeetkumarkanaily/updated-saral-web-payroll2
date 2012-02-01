@@ -35,6 +35,8 @@ class Employee < ActiveRecord::Base
   validates_presence_of :department
   validates_presence_of :grade
 
+  has_many :salary_allotments
+
 
 
   def dob_before_doj
@@ -53,6 +55,14 @@ class Employee < ActiveRecord::Base
   def self.search(search)
     search_condition = "%" + search + "%"
     find(:all, :conditions => ['refno LIKE ? OR empname LIKE ? OR email LIKE ?', search_condition, search_condition, search_condition])
+  end
+
+  def self.employee_with_salary_not_allotted
+    Employee.joins(:salary_allotments).where("salary_allotment = 0").group('employees.id')
+  end
+
+  def self.employee_with_salary_allotted
+    Employee.joins(:salary_allotments).where("salary_allotment > 0").group('employees.id')
   end
 
 end

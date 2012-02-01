@@ -56,7 +56,7 @@ class EmployeeDetailsController < ApplicationController
       if @employee_detail.save
         sal_gr_id = @employee_detail.salary_group_id
         SalaryGroupDetail.all(:conditions => [ "salary_group_id = ?", sal_gr_id]).each do |sgd|
-        SalaryAllotment.create!(:employee_id => @employee_detail.employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_allotment =>0)
+        SalaryAllotment.create!(:employee_id => @employee_detail.employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
         end
         format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully created.' }
         format.json { render json: @employee_detail, status: :created, location: @employee_detail }
