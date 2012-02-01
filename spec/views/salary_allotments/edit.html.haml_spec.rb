@@ -18,7 +18,8 @@ describe "salary_allotments/edit.html.haml" do
 
     render
     rendered.should have_selector("form input[@value='#{salAllot.salary_allotment}']")
-
   end
+
+
 
 end

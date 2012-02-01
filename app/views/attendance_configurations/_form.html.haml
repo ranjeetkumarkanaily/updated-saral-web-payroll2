@@ -1,0 +1,50 @@
+= form_for(@attendance_configuration) do |f|
+  - if @attendance_configuration.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@attendance_configuration.errors.count, "error")
+        prohibited this Attendance Configuration from being saved:
+      %ul
+        - @attendance_configuration.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Attendance:&nbsp;
+                  %td= f.text_field :attendance, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Short Name:&nbsp;
+                  %td= f.text_field :short_name, :size => '22'
+          %tr
+            %td.std_td{:colspan=>"2"}
+              %table
+                %tr
+                  %td{:width=>200} Salary Calendar Days (NWD):&nbsp;
+                  %td.std_td
+                    %table{:width=>"540"}
+                      %tr
+                        %td= f.radio_button :salary_calendar_days, 'Actual Days / Month'
+                        %td{:width => "280px"} Actual Days / Month
+                        %td= f.radio_button :salary_calendar_days, 'Only Working Days'
+                        %td{:width => "280px"} Only Working Days
+                      %tr
+                        %td= f.radio_button :salary_calendar_days, 'Only Working Days + Weekly Holiday'
+                        %td Only Working Days + Weekly Holiday
+                        %td= f.radio_button :salary_calendar_days, 'Only Working Days + Holiday'
+                        %td Only Working Days + Holiday
+
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
+
