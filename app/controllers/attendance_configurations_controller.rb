@@ -2,7 +2,8 @@ class AttendanceConfigurationsController < ApplicationController
   # GET /attendance_configurations
   # GET /attendance_configurations.json
   def index
-    @attendance_configurations = AttendanceConfiguration.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
+    @attendance_configurations = AttendanceConfiguration.where('id>1').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
+
 
     respond_to do |format|
       format.html # index.html.haml

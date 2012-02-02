@@ -7,4 +7,6 @@ class AttendanceConfiguration < ActiveRecord::Base
             :length => {:minimum => 1, :maximum => 10}
 
   validates :salary_calendar_days,   :presence   => true
+
+  has_many :holidays
 end

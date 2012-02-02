@@ -24,5 +24,7 @@ describe AttendanceConfiguration do
     no_salary_calendar_days.should_not be_valid
   end
 
+  it { should have_many(:holidays)}
+
 
 end

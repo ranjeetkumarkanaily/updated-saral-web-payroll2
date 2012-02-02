@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201095008) do
+ActiveRecord::Schema.define(:version => 20120202050611) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -106,6 +106,15 @@ ActiveRecord::Schema.define(:version => 20120201095008) do
 
   create_table "grades", :force => true do |t|
     t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "holidays", :force => true do |t|
+    t.integer  "attendance_configuration_id"
+    t.date     "holiday_date"
+    t.string   "description"
+    t.boolean  "national_holiday"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -266,6 +275,8 @@ ActiveRecord::Schema.define(:version => 20120201095008) do
   add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
   add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
+
+  add_foreign_key "holidays", "attendance_configurations", :name => "holidays_attendance_configuration_id_fk"
 
   add_foreign_key "salary_allotments", "salary_group_details", :name => "salary_allotments_salary_group_detail_id_fk"
 

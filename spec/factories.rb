@@ -118,4 +118,11 @@ FactoryGirl.define do
     pt 100.0
   end
 
+  factory :attendance_configuration do
+    id 2
+    attendance "Karnataka"
+    short_name "KARNATAKA"
+    salary_calendar_days "Actual Days / Month"
+  end
+
 end

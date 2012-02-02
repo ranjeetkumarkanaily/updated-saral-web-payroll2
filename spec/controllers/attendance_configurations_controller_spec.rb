@@ -16,7 +16,7 @@ describe AttendanceConfigurationsController do
 
   describe "GET index" do
     it "assigns all attendance_configurations as @attendance_configurations" do
-      attendance_configuration = AttendanceConfiguration.create! valid_attributes
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
       get :index
       assigns(:attendance_configurations).should eq([attendance_configuration])
     end
