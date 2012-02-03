@@ -44,8 +44,13 @@ namespace :bootstrap do
     State.create( :state_name => 'Uttar Pradesh')
   end
 
+  desc "Add Default Attendance Configuration"
+  task :attendance_configuration => :environment do
+    AttendanceConfiguration.create( :attendance => '<Master List>', :short_name => 'MASTER', :salary_calendar_days => "Actual Day / Month" )
+  end
+
 
 
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :salary_head, :state]
+  task :all => [:default_user, :salary_head, :state, :attendance_configuration]
 end

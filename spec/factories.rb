@@ -118,4 +118,30 @@ FactoryGirl.define do
     pt 100.0
   end
 
+
+  factory :classification_heading do
+    classification_heading_name "Department"
+    display_order 1
+  end
+
+  factory :classification do
+    classification_heading_id 1
+    classification_name "WDO"
+  end
+
+  factory :attendance_configuration do
+    id 2
+    attendance "Karnataka"
+    short_name "KARNATAKA"
+    salary_calendar_days "Actual Days / Month"
+  end
+
+  factory :holiday do
+    attendance_configuration
+    holiday_date "2012-01-26"
+    description "Republic Day"
+    national_holiday true
+
+  end
+
 end

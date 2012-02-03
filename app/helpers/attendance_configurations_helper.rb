@@ -1,0 +1,2 @@
+module AttendanceConfigurationsHelper
+end
