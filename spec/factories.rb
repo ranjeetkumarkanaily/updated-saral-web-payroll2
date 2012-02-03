@@ -125,4 +125,11 @@ FactoryGirl.define do
     salary_calendar_days "Actual Days / Month"
   end
 
+  factory :holiday do
+    attendance_configuration
+    holiday_date "2012-01-26"
+    description "Republic Day"
+    national_holiday true
+  end
+
 end

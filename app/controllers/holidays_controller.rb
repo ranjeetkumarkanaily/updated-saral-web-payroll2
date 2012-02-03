@@ -5,9 +5,9 @@ class HolidaysController < ApplicationController
 
   def index
     if params[:attendance_configuration]
-      @holidays = Holiday.order('created_at ASC').search(params[:attendance_configuration]).paginate(:page => params[:page], :per_page => 10)
+      @holidays = Holiday.order('holiday_date ASC').search(params[:attendance_configuration]).paginate(:page => params[:page], :per_page => 10)
     else
-      @holidays = Holiday.where('attendance_configuration_id = 1').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
+      @holidays = Holiday.where('attendance_configuration_id = 1').order('holiday_date ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|
@@ -47,14 +47,22 @@ class HolidaysController < ApplicationController
   # POST /holidays.json
   def create
     @holiday = Holiday.new(params[:holiday])
-
-    respond_to do |format|
-      if @holiday.save
-        format.html { redirect_to @holiday, notice: 'Holiday was successfully created.' }
-        format.json { render json: @holiday, status: :created, location: @holiday }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @holiday.errors, status: :unprocessable_entity }
+    chk_existing_holiday = Holiday.existing_holiday @holiday
+    if chk_existing_holiday.count > 0
+      @holiday = Holiday.new
+      @holiday.errors.add(:holiday, " already assigned for selected date and selected Attendance Head")
+      respond_to do |format|
+        format.html { render action: "new"}
+      end
+    else
+      respond_to do |format|
+        if @holiday.save
+          format.html { redirect_to @holiday, notice: 'Holiday was successfully created.' }
+          format.json { render json: @holiday, status: :created, location: @holiday }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @holiday.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

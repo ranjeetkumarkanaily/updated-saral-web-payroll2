@@ -88,6 +88,15 @@ describe HolidaysController do
         response.should render_template("new")
       end
     end
+
+    describe "does not create a new Holiday" do
+      it "should not create Holiday if Holiday already exists" do
+        holiday = Holiday.create! valid_attributes
+        expect {
+          post :create, {:holiday => valid_attributes}
+        }.to change(Holiday, :count).by(0)
+      end
+    end
   end
 
   describe "PUT update" do
