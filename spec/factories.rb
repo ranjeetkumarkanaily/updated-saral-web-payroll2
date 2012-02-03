@@ -117,4 +117,14 @@ FactoryGirl.define do
     pt 100.0
   end
 
+  factory :classification_heading do
+    classification_heading_name "Department"
+    display_order 1
+  end
+
+  factory :classification do
+    classification_heading_id 1
+    classification_name "WDO"
+  end
+
 end

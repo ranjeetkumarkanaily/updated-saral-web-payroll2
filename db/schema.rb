@@ -11,7 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120110053508) do
+ActiveRecord::Schema.define(:version => 20120201123338) do
+
+  create_table "classification_details", :force => true do |t|
+    t.integer  "classification_id"
+    t.string   "classification_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "classification_headings", :force => true do |t|
+    t.string   "classification_heading_name"
+    t.integer  "display_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "classifications", :force => true do |t|
+    t.integer  "classification_heading_id"
+    t.string   "classification_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"

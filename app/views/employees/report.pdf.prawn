@@ -11,7 +11,6 @@ if @report_type != "Contact"
     if @employees.count > 0
         employees = []
         i=0
-
         @employees.each do |emp|
             employee = [
                         "#{i=i+1}",

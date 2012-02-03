@@ -1,4 +1,8 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+  resources :classifications
+
+  resources :classification_headings
+
   resources :pt_rates
 
   resources :pt_groups
