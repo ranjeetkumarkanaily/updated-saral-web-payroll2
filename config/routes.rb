@@ -2,6 +2,8 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :esi_groups
 
+  resources :pf_groups
+
   resources :classifications
 
   resources :classification_headings

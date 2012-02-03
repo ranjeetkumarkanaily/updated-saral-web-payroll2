@@ -1,0 +1,40 @@
+= form_for(@pf_group) do |f|
+  - if @pf_group.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@pf_group.errors.count, "error")
+        prohibited this PF Group from being saved:
+      %ul
+        - @pf_group.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} PF Group:&nbsp;
+                  %td= f.text_field :pf_group, :size => '22'
+                %tr
+                  %td{:width=>130} DB File Code:&nbsp;
+                  %td= f.text_field :db_file_code, :size => '22'
+                %tr
+                  %td{:width=>130} Address:&nbsp;
+                  %td= f.text_field :address, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} PF Number:&nbsp;
+                  %td= f.text_field :pf_number, :size => '22'
+                %tr
+                  %td{:width=>130} Extension:&nbsp;
+                  %td= f.number_field :extension
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
