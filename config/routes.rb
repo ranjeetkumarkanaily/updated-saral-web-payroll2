@@ -1,7 +1,12 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
+
   resources :classifications
 
   resources :classification_headings
+
+  resources :holidays
+
+  resources :attendance_configurations
 
   resources :pt_rates
 

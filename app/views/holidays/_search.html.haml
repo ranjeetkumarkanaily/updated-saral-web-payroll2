@@ -1,0 +1,6 @@
+= form_tag holidays_path, :method => :get do
+  %table
+    %tr
+      %td{:width=>120} Attendance
+      %td{:width=>220}= select_tag :attendance_configuration, options_for_select(AttendanceConfiguration.all(:order => 'created_at ASC').collect {|ac| [ ac.attendance, ac.id ] }, params[:attendance_configuration])
+      %td= submit_tag "Get List", :name => nil

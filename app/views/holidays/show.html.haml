@@ -1,0 +1,55 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Showing Holiday
+    = link_to image_tag('/assets/edit.png',:title => "Edit Holiday"), edit_holiday_path(@holiday)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Attendance:&nbsp;
+                  %td= @holiday.attendance_configuration.attendance
+                %tr
+                  %td{:width=>130} Description:&nbsp;
+                  %td= @holiday.description
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Date:&nbsp;
+                  %td= @holiday.holiday_date
+                %tr
+                  %td{:width=>130} National Holiday:&nbsp;
+                  %td= @holiday.national_holiday
+          %tr
+            %td &nbsp;
+
+-#<p id="notice"><%= notice %></p>
+-#
+-#<p>
+-#  <b>Attendance configuration:</b>
+-#  <%= @holiday.attendance_configuration_id %>
+-#</p>
+-#
+-#<p>
+-#  <b>Holiday date:</b>
+-#  <%= @holiday.holiday_date %>
+-#</p>
+-#
+-#<p>
+-#  <b>Description:</b>
+-#  <%= @holiday.description %>
+-#</p>
+-#
+-#<p>
+-#  <b>National holiday:</b>
+-#  <%= @holiday.national_holiday %>
+-#</p>
+-#
+-#
+-#<%= link_to 'Edit', edit_holiday_path(@holiday) %> |
+-#<%= link_to 'Back', holidays_path %>

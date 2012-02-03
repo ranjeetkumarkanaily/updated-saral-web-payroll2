@@ -1,0 +1,32 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Listing Classification Headings
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header{:width=> 360} Classification Headings
+            %td.table_grid_header{:width=> 360} Display order
+            %td.table_grid_header{:colspan =>3} Operations
+          - @classification_headings.each do |classification_heading|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= classification_heading.classification_heading_name
+              %td.table_grid_td= classification_heading.display_order
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Classification Heading"), edit_classification_heading_path(classification_heading)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Classification Heading"), classification_heading, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "Details"), classifications_path(:params1 => classification_heading.id)
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @classification_headings
+          = will_paginate @classification_headings, :container => false
+    %tr
+      %td &nbsp;

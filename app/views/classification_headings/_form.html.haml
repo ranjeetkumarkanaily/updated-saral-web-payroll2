@@ -1,0 +1,27 @@
+= form_for(@classification_heading) do |f|
+  - if @classification_heading.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@classification_heading.errors.count, "error")
+        prohibited this classification_heading from being saved:
+      %ul
+        - @classification_heading.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td classification Heading:&nbsp;
+                  %td= f.text_field :classification_heading_name, :size => '22'
+                %tr
+                  %td Display order:&nbsp;
+                  %td= f.text_field :display_order, :size => '22'
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
+

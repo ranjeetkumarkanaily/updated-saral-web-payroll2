@@ -1,0 +1,29 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Listing classifications for #{ClassificationHeading.find(@paramclassification_id).classification_heading_name}
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header{:width=> 360} Classification name
+            %td.table_grid_header{:colspan =>3} Operations
+          - @classifications.each do |classification|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= classification.classification_name
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Classification"), edit_classification_path(classification,:params1 => @paramclassification_id)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Classification"), classification, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @classifications
+          = will_paginate @classifications, :container => false
+    %tr
+      %td &nbsp;

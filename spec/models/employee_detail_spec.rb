@@ -14,4 +14,6 @@ describe EmployeeDetail do
     duplicate_emp_detail = EmployeeDetail.new(:employee_id => 1, :effective_date => "2009-10-31", :salary_group_id =>2, :allotted_gross=>6000)
     duplicate_emp_detail.should_not be_valid
   end
+
+
 end
