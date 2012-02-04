@@ -1,0 +1,32 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing ESI Groups
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td &nbsp;
+          %tr
+            %td.table_grid_header ESI Group Name
+            %td.table_grid_header Address
+            %td.table_grid_header ESI No
+            %td.table_grid_header ESI Local Office
+            %td.table_grid_header{:colspan => 3} Operations
+          - @esi_groups.each do |esi_group|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= esi_group.esi_group_name
+              %td.table_grid_td= esi_group.address
+              %td.table_grid_td{:align => "right"}= esi_group.esi_no
+              %td.table_grid_td= esi_group.esi_local_office
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show ESI Group"), esi_group
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit ESI Group"), edit_esi_group_path(esi_group)
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete ESI Group"), esi_group, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @esi_groups
+          = will_paginate @esi_groups, :container => false
+    %tr
+      %td &nbsp;
