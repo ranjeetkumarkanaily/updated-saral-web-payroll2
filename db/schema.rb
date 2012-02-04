@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120203091729) do
+
+ActiveRecord::Schema.define(:version => 20120203104107) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -192,6 +193,14 @@ ActiveRecord::Schema.define(:version => 20120203091729) do
     t.datetime "updated_at"
   end
 
+  create_table "pf_group_rates", :force => true do |t|
+    t.integer  "pf_group_id"
+    t.integer  "paymonth_id"
+    t.float    "account_number_21"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pf_groups", :force => true do |t|
     t.string   "pf_group"
     t.string   "pf_number"
@@ -310,6 +319,9 @@ ActiveRecord::Schema.define(:version => 20120203091729) do
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
 
   add_foreign_key "holidays", "attendance_configurations", :name => "holidays_attendance_configuration_id_fk"
+
+  add_foreign_key "pf_group_rates", "paymonths", :name => "pf_group_rates_paymonth_id_fk"
+  add_foreign_key "pf_group_rates", "pf_groups", :name => "pf_group_rates_pf_group_id_fk"
 
   add_foreign_key "salary_allotments", "salary_group_details", :name => "salary_allotments_salary_group_detail_id_fk"
 
