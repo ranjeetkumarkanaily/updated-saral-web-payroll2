@@ -144,4 +144,12 @@ FactoryGirl.define do
 
   end
 
+  factory :pf_group do
+    pf_group "Kar"
+    pf_number "ka1201"
+    db_file_code "10210"
+    extension 1
+    address "bangalore"
+  end
+
 end

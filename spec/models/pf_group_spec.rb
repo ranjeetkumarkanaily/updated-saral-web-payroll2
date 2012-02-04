@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe PfGroup do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should have_many(:pf_group_rates)}
 end

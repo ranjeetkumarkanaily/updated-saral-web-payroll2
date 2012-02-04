@@ -1,4 +1,6 @@
 class PfGroup < ActiveRecord::Base
+  has_many :pf_group_rates, :dependent => :destroy
+
   validates :pf_group,   :presence   => true,
             :uniqueness => { :case_sensitive => false }
 
