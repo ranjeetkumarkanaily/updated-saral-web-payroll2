@@ -9,8 +9,7 @@ describe SalariesController do
 
       before :each do
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
-        pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
-
+        @pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
         @salary = FactoryGirl.build(:salary)
       end
 
@@ -29,13 +28,15 @@ describe SalariesController do
 
   describe "GET new" do
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
-      sal_allot = FactoryGirl.create(:salary_allotment)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id)
       get :new, :month_year => "Feb/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
 
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
-      sal_allot = FactoryGirl.create(:salary_allotment)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id)
       get :new, :month_year => "Mar/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
@@ -87,7 +88,15 @@ describe SalariesController do
       assigns(:pf_amount).should eq(pf_amount)
     end
 
-    it ""
+    it "generates pdf output" do
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => @employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => @employee.id)
+
+      get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id, :format => "pdf"
+      response.should render_template('salaries/index.pdf')
+    end
   end
     describe "Update" do
       it "should update the salary amount" do

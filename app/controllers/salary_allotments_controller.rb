@@ -1,8 +1,8 @@
 class SalaryAllotmentsController < ApplicationController
 
   def index
-    @need_to_allot_Sal = SalaryAllotment.get_employee_with_salary_not_allotted.paginate(:page => params[:page], :per_page => 10)
-    @already_allot_Sal = SalaryAllotment.get_employee_with_salary_allotted.paginate(:page => params[:page], :per_page => 10)
+    @need_to_allot_Sal = Employee.employee_with_salary_not_allotted.paginate(:page => params[:page], :per_page => 10)
+    @already_allot_Sal = Employee.employee_with_salary_allotted.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @allotSal }
@@ -11,7 +11,7 @@ class SalaryAllotmentsController < ApplicationController
   end
 
   def edit
-    @allotSal = SalaryAllotment.where("employee_id = #{params[:id]} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{params[:id]})").order('salary_head_id ASC')
+    @allotSal = SalaryAllotment.row_for_salary_allotment params[:id]
   end
 
   def update

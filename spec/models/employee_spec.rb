@@ -22,6 +22,8 @@ describe Employee do
 
   it { should have_many(:leave_details)}
 
+  it { should have_many(:salary_allotments)}
+
   it { should belong_to(:designation)}
 
   it { should belong_to(:department)}
@@ -118,6 +120,19 @@ describe Employee do
       wrongdob_employee = Employee.new(@attr.merge(:date_of_birth => "2009-11-01"))
       wrongdob_employee.should_not be_valid
     end
+  end
+
+
+  it "should return employee whose salary is not allotted" do
+    salary_group_detail = FactoryGirl.create(:salary_group_detail)
+    sal_allot = FactoryGirl.create(:salary_allotment,:salary_allotment=>0, :salary_group_detail_id => salary_group_detail.id)
+    Employee.employee_with_salary_not_allotted.should be_true
+  end
+
+  it "should return employee whose salary is allotted" do
+    salary_group_detail = FactoryGirl.create(:salary_group_detail)
+    sal_allot = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => salary_group_detail.id)
+    Employee.employee_with_salary_allotted.should be_true
   end
 
 end

@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120110053508) do
+
+ActiveRecord::Schema.define(:version => 20120203104107) do
+
+  create_table "attendance_configurations", :force => true do |t|
+    t.string   "attendance"
+    t.string   "short_name"
+    t.string   "salary_calendar_days"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "classification_headings", :force => true do |t|
+    t.string   "classification_heading_name"
+    t.integer  "display_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "classifications", :force => true do |t|
+    t.integer  "classification_heading_id"
+    t.string   "classification_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "companyname"
@@ -96,8 +119,26 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
     t.integer  "grade_id"
   end
 
+  create_table "esi_groups", :force => true do |t|
+    t.string   "esi_group_name"
+    t.string   "address"
+    t.string   "esi_no"
+    t.string   "esi_local_office"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "grades", :force => true do |t|
     t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "holidays", :force => true do |t|
+    t.integer  "attendance_configuration_id"
+    t.date     "holiday_date"
+    t.string   "description"
+    t.boolean  "national_holiday"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,6 +156,16 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
     t.integer  "employee_id"
     t.string   "month_year"
     t.float    "lop"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "month_years", :force => true do |t|
+    t.integer  "month_year"
+    t.integer  "number_of_days"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.string   "month_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -138,6 +189,24 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
     t.decimal  "esi_employee_rate", :precision => 8, :scale => 2
     t.decimal  "esi_employer_rate", :precision => 8, :scale => 2
     t.decimal  "esi_cutoff",        :precision => 8, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pf_group_rates", :force => true do |t|
+    t.integer  "pf_group_id"
+    t.integer  "paymonth_id"
+    t.float    "account_number_21"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pf_groups", :force => true do |t|
+    t.string   "pf_group"
+    t.string   "pf_number"
+    t.string   "db_file_code"
+    t.integer  "extension"
+    t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -187,9 +256,10 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
     t.integer  "employee_detail_id"
     t.date     "effective_date"
     t.integer  "salary_head_id"
-    t.decimal  "salary_allotment",   :precision => 8, :scale => 2
+    t.decimal  "salary_allotment",       :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "salary_group_detail_id"
   end
 
   create_table "salary_group_details", :force => true do |t|
@@ -247,5 +317,12 @@ ActiveRecord::Schema.define(:version => 20120110053508) do
   add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
   add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
+
+  add_foreign_key "holidays", "attendance_configurations", :name => "holidays_attendance_configuration_id_fk"
+
+  add_foreign_key "pf_group_rates", "paymonths", :name => "pf_group_rates_paymonth_id_fk"
+  add_foreign_key "pf_group_rates", "pf_groups", :name => "pf_group_rates_pf_group_id_fk"
+
+  add_foreign_key "salary_allotments", "salary_group_details", :name => "salary_allotments_salary_group_detail_id_fk"
 
 end

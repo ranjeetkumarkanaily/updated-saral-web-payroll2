@@ -1,7 +1,6 @@
 pdf = Prawn::Document.new(
   :page_size => 'A4',
   :page_layout => :portrait)
-
 pdf.text "#{@company.companyname}",:style => :bold
 pdf.move_up 12
 pdf.text "Generated on: #{Time.now.strftime('%d/%b/%Y %I:%M:%S %p')}",:style=> :bold, :align => :right
@@ -12,7 +11,6 @@ if @report_type != "Contact"
     if @employees.count > 0
         employees = []
         i=0
-
         @employees.each do |emp|
             employee = [
                         "#{i=i+1}",
@@ -68,6 +66,7 @@ else
            pdf.horizontal_rule
         end
         pdf.bounding_box [360, y_position], :width => 200, :height => 100 do
+
             pdf.transparent(0.0) { pdf.stroke_bounds }
             pdf.text "Email : #{employee.email}",:align => :left, :leading => 3
             pdf.text "Mobile : #{employee.mobile}",:align => :left, :leading => 3
@@ -78,4 +77,5 @@ else
         pdf.draw_text "Page #{(i+1)} of #{pdf.page_count}", :at => [470, 0]
     end
 end
+
 

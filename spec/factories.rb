@@ -36,6 +36,7 @@ FactoryGirl.define do
     effective_date '2011-02-01'
     salary_head
     salary_allotment 1000.00
+    salary_group_detail_id 1
   end
 
   factory :salary do
@@ -115,6 +116,40 @@ FactoryGirl.define do
     min_sal_range 0.0
     max_sal_range 5000.0
     pt 100.0
+  end
+
+
+  factory :classification_heading do
+    classification_heading_name "Department"
+    display_order 1
+  end
+
+  factory :classification do
+    classification_heading_id 1
+    classification_name "WDO"
+  end
+
+  factory :attendance_configuration do
+    id 2
+    attendance "Karnataka"
+    short_name "KARNATAKA"
+    salary_calendar_days "Actual Days / Month"
+  end
+
+  factory :holiday do
+    attendance_configuration
+    holiday_date "2012-01-26"
+    description "Republic Day"
+    national_holiday true
+
+  end
+
+  factory :pf_group do
+    pf_group "Kar"
+    pf_number "ka1201"
+    db_file_code "10210"
+    extension 1
+    address "bangalore"
   end
 
 end

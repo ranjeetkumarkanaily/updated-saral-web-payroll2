@@ -1,0 +1,5 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 New Classification for #{ClassificationHeading.find(@paramclassification_id).classification_heading_name}
+  = render 'form'

@@ -1,0 +1,34 @@
+= form_for(@pf_group_rate) do |f|
+  - if @pf_group_rate.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@pf_group_rate.errors.count, "error")
+        prohibited this PF Group Rate from being saved:
+      %ul
+        - @pf_group_rate.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td PF Group:&nbsp;
+                  %td
+                    = f.select :pf_group_id, options_for_select(PfGroup.all(:order => 'created_at ASC').collect {|pf| [ pf.pf_group, pf.id ] }, @pf_group_rate.pf_group_id)
+                %tr
+                  %td Pay Month:&nbsp;
+                  %td
+                    = f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ] }, @pf_group_rate.paymonth_id)
+                %tr
+                  %td Account No. 21(%) :&nbsp;
+                  %td
+                    = f.text_field :account_number_21, :size => '22'
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
+
+

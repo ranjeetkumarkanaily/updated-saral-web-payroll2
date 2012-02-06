@@ -1,0 +1,34 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Listing Attendance Configurations
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header Attendance
+            %td.table_grid_header Short Name
+            %td.table_grid_header Salary Calendar Days(NWD)
+            %td.table_grid_header{:colspan =>3} Operations
+          - @attendance_configurations.each do |attendance_configuration|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= attendance_configuration.attendance
+              %td.table_grid_td= attendance_configuration.short_name
+              %td.table_grid_td= attendance_configuration.salary_calendar_days
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Configuration"), edit_attendance_configuration_path(attendance_configuration)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Configuration"), attendance_configuration, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @attendance_configurations
+          = will_paginate @attendance_configurations, :container => false
+    %tr
+      %td &nbsp;
+

@@ -15,7 +15,7 @@ class Salary < ActiveRecord::Base
                   extract(year from effective_date) = #{month_year.year}"
 
     Salary.select('salary_head_id, sum(salary_amount) as salary_amount').
-        joins('inner join salary_heads on salary_head_id = salary_heads.id ').
+        joins(:salary_head).
         where(condition).group('salary_head_id').order('salary_head_id ASC')
   end
 
@@ -46,7 +46,7 @@ class Salary < ActiveRecord::Base
     condition = " employee_id = " + employee_id + " and salary_type = 'Earnings' and
                     extract(month from effective_date) = #{month_year.month} and
                     extract(year from effective_date) = #{month_year.year}"
-    gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins('inner join salary_heads on salary_head_id = salary_heads.id ').where(condition)
+    gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins(:salary_head).where(condition)
     gross_salary = gross_salary[0]['salary_amount']
   end
 
@@ -65,7 +65,7 @@ class Salary < ActiveRecord::Base
     gross_salary = get_gross_salary month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
 
-    pt_amount = PtRate.select('pt').joins('inner join paymonths on pt_rates.paymonth_id = paymonths.id').where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
+    pt_amount = PtRate.select('pt').joins(:paymonth).where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
 
     if pt_amount.count > 0
       get_pt = pt_amount[0]['pt']

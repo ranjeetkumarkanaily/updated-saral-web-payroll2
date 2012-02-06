@@ -1,0 +1,2 @@
+module ClassificationHeadingsHelper
+end
