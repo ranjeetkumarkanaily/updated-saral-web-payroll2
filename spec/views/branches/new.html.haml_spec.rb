@@ -11,6 +11,7 @@ describe "branches/new" do
       :responsible_person => "MyString",
       :address => "MyString",
       :pf_group_id => @pf_group.id,
+      :esi_applicable => true,
       :esi_group_id => @esi_group.id,
       :pt_group_id => @pt_group.id
     ).as_new_record)
@@ -25,6 +26,7 @@ describe "branches/new" do
       assert_select "input#branch_responsible_person", :name => "branch[responsible_person]"
       assert_select "input#branch_address", :name => "branch[address]"
       assert_select "select#branch_pf_group_id", :name => "branch[pf_group_id]"
+      assert_select "input#branch_esi_applicable", :name => "branch[esi_applicable]"
       assert_select "select#branch_esi_group_id", :name => "branch[esi_group_id]"
       assert_select "select#branch_pt_group_id", :name => "branch[pt_group_id]"
     end
