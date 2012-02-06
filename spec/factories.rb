@@ -152,4 +152,11 @@ FactoryGirl.define do
     address "bangalore"
   end
 
+  factory :esi_group do
+    esi_group_name "Karnataka"
+    address "12 Street"
+    esi_no "3432VD"
+    esi_local_office "Bangalore"
+  end
+
 end
