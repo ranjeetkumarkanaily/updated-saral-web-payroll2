@@ -10,6 +10,7 @@ describe "branches/show" do
       :branch_name => "Branch Name",
       :responsible_person => "Responsible Person",
       :address => "Address",
+      :esi_applicable => true,
       :pf_group_id => @pf_group.id,
       :esi_group_id => @esi_group.id,
       :pt_group_id => @pt_group.id

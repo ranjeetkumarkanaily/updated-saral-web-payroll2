@@ -12,6 +12,7 @@ describe "branches/index" do
         :responsible_person => "Responsible Person",
         :address => "Address",
         :pf_group_id => @pf_group.id,
+        :esi_applicable => true,
         :esi_group_id => @esi_group.id,
         :pt_group_id => @pt_group.id
       ),
@@ -20,6 +21,7 @@ describe "branches/index" do
         :responsible_person => "Responsible Person",
         :address => "Address",
         :pf_group_id => @pf_group.id,
+        :esi_applicable => true,
         :esi_group_id => @esi_group.id,
         :pt_group_id => @pt_group.id
       )

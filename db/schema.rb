@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206122036) do
+ActiveRecord::Schema.define(:version => 20120206150058) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20120206122036) do
     t.integer  "pt_group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "esi_applicable"
   end
 
   add_index "branches", ["esi_group_id"], :name => "index_branches_on_esi_group_id"

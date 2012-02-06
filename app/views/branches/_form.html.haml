@@ -1,3 +1,8 @@
+%script{:language => "JavaScript"}
+  function enable(enableIt)
+  {
+  document.getElementById('branch_esi_group_id').disabled = !enableIt;
+  }
 = form_for(@branch) do |f|
   - if @branch.errors.any?
     #error_explanation
@@ -24,8 +29,11 @@
                   %td{:width=>130} PF Group:&nbsp;
                   %td= f.select :pf_group_id, options_for_select(PfGroup.all(:order => 'created_at ASC').collect {|pf| [ pf.pf_group, pf.id ] }, @branch.pf_group_id),:prompt => 'Select PF Group'
                 %tr
+                  %td{:width=>130} ESI Applicable:&nbsp;
+                  %td= f.check_box :esi_applicable,:onclick=>"enable(this.checked)"
+                %tr
                   %td{:width=>130} ESI Group:&nbsp;
-                  %td= f.select :esi_group_id, options_for_select(EsiGroup.all(:order => 'created_at ASC').collect {|esi| [ esi.esi_group_name, esi.id ] }, @branch.esi_group_id),:prompt => 'Select ESI Group'
+                  %td= f.select :esi_group_id, options_for_select(EsiGroup.all(:order => 'created_at ASC').collect {|esi| [ esi.esi_group_name, esi.id ] }, @branch.esi_group_id),{:prompt => 'Select ESI Group'},:disabled=>true
             %td.std_td
               %table
                 %tr
