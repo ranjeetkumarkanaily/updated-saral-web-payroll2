@@ -5,7 +5,7 @@ describe "pt_rates/show" do
     ptGroup = FactoryGirl.create(:pt_group, :name=> "Group 12")
     monthYear = FactoryGirl.create(:paymonth, :month_name=>"Jan/2012")
     @pt_rate = assign(:pt_rate, stub_model(PtRate,
-    :PtGroup => ptGroup,
+    :pt_group => ptGroup,
       :paymonth => monthYear,
       :min_sal_range => "9.99",
       :max_sal_range => "9.99",

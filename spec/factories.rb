@@ -111,7 +111,7 @@ FactoryGirl.define do
   end
 
   factory :pt_rate do
-    PtGroup_id 1
+    pt_group
     paymonth
     min_sal_range 0.0
     max_sal_range 5000.0
@@ -150,6 +150,13 @@ FactoryGirl.define do
     db_file_code "10210"
     extension 1
     address "bangalore"
+  end
+
+  factory :esi_group do
+    esi_group_name "Karnataka"
+    address "12 Street"
+    esi_no "3432VD"
+    esi_local_office "Bangalore"
   end
 
 end
