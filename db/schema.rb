@@ -11,8 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20120203104107) do
+ActiveRecord::Schema.define(:version => 20120207094010) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -189,6 +188,13 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
     t.float    "account_number_21"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "pension_fund"
+    t.float    "epf"
+    t.float    "account_number_02"
+    t.float    "account_number_22"
+    t.string   "round_off"
+    t.boolean  "restrict_employer_share"
+    t.boolean  "restrict_employer_share_to_employer_share"
   end
 
   create_table "pf_groups", :force => true do |t|
