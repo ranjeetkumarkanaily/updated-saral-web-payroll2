@@ -1,0 +1,36 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Listing Branches
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header Branch
+            %td.table_grid_header Responsible Person
+            %td.table_grid_header Address
+            %td.table_grid_header ESI Applicable
+            %td.table_grid_header{:colspan =>3} Operations
+          - @branches.each do |branch|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= branch.branch_name
+              %td.table_grid_td= branch.responsible_person
+              %td.table_grid_td= branch.address
+              %td.table_grid_td= branch.esi_applicable
+              %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Branch"), branch
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch"), edit_branch_path(branch)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch"), branch, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @branches
+          = will_paginate @branches, :container => false
+    %tr
+      %td &nbsp;

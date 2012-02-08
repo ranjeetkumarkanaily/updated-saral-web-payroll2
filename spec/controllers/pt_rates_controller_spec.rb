@@ -3,12 +3,12 @@ require 'spec_helper'
 describe PtRatesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
-
+    @pt_group = FactoryGirl.create(:pt_group)
   end
 
   def valid_attributes
     {
-        :PtGroup_id => 1,
+        :pt_group_id => @pt_group.id,
         :paymonth_id => 1,
         :min_sal_range => 15000,
         :pt => 1500
@@ -153,8 +153,8 @@ describe PtRatesController do
     end
 
     it "destroy the request and updates previous request max sal range to 0" do
-      pt_rate = FactoryGirl.create(:pt_rate)
-      pt_rate1 = FactoryGirl.build(:pt_rate, :min_sal_range => 4000, :paymonth_id => pt_rate.paymonth_id)
+      pt_rate = FactoryGirl.create(:pt_rate, :pt_group_id => @pt_group.id)
+      pt_rate1 = FactoryGirl.build(:pt_rate, :min_sal_range => 4000, :paymonth_id => pt_rate.paymonth_id, :pt_group_id => pt_rate.pt_group_id)
       #puts pt_rate.max_sal_range
       #delete :destroy, {:id => pt_rate1.to_param}, valid_session
       #puts pt_rate.max_sal_range

@@ -19,7 +19,7 @@
                   - if params[:id]
                     %td= @pt_rate.PtGroup.name
                   - else
-                    %td= select_tag "pt_rate[PtGroup_id]", options_from_collection_for_select(PtGroup.order('created_at ASC'),'id','name', params[:id]),:prompt => 'Select PT Group'
+                    %td= select_tag "pt_rate[pt_group_id]", options_from_collection_for_select(PtGroup.order('created_at ASC'),'id','name', params[:id]),:prompt => 'Select PT Group'
             %td.std_td
               %table
                 %tr

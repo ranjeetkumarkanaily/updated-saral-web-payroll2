@@ -8,5 +8,5 @@ class AttendanceConfiguration < ActiveRecord::Base
 
   validates :salary_calendar_days,   :presence   => true
 
-  has_many :holidays
+  has_many :holidays, :dependent => :destroy
 end

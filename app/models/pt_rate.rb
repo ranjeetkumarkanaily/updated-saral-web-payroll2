@@ -1,8 +1,8 @@
 class PtRate < ActiveRecord::Base
-  belongs_to :PtGroup
+  belongs_to :pt_group
   belongs_to :paymonth
 
-  validates_presence_of :PtGroup_id, :paymonth_id
+  validates_presence_of :pt_group_id, :paymonth_id
   validates :min_sal_range, :uniqueness => true
 
   def get_max_sal_range
