@@ -175,6 +175,16 @@ ActiveRecord::Schema.define(:version => 20120206150058) do
     t.datetime "updated_at"
   end
 
+  create_table "month_years", :force => true do |t|
+    t.integer  "month_year"
+    t.integer  "number_of_days"
+    t.date     "from_date"
+    t.date     "to_date"
+    t.string   "month_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "paymonths", :force => true do |t|
     t.integer  "month_year"
     t.integer  "number_of_days"
@@ -230,13 +240,13 @@ ActiveRecord::Schema.define(:version => 20120206150058) do
   add_index "pt_groups", ["state_id"], :name => "index_pt_groups_on_state_id"
 
   create_table "pt_rates", :force => true do |t|
+    t.integer  "pt_group_id"
     t.integer  "paymonth_id"
     t.decimal  "min_sal_range"
     t.decimal  "max_sal_range"
     t.decimal  "pt"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "pt_group_id"
   end
 
   add_index "pt_rates", ["paymonth_id"], :name => "index_pt_rates_on_paymonth_id"
