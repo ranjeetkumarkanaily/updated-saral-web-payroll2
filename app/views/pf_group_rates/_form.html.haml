@@ -19,13 +19,27 @@
                   %td
                     = f.select :pf_group_id, options_for_select(PfGroup.all(:order => 'created_at ASC').collect {|pf| [ pf.pf_group, pf.id ] }, @pf_group_rate.pf_group_id)
                 %tr
-                  %td Pay Month:&nbsp;
+                  %td Account Number 02(%):&nbsp;
                   %td
-                    = f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ] }, @pf_group_rate.paymonth_id)
+                    = f.text_field :account_number_02, :size => '22'
                 %tr
                   %td Account No. 21(%) :&nbsp;
                   %td
                     = f.text_field :account_number_21, :size => '22'
+                %tr
+                  %td Account Number 22(%):&nbsp;
+                  %td
+                    = f.text_field :account_number_22, :size => '22'
+                %tr
+                  %td Restrict Employer Share:&nbsp;
+                  %td
+                    = f.check_box :restrict_employer_share
+            %td.std_td
+              %table
+                %tr
+                  %td Pay Month:&nbsp;
+                  %td
+                    = f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ] }, @pf_group_rate.paymonth_id)
                 %tr
                   %td Pension Fund :&nbsp;
                   %td
@@ -35,23 +49,12 @@
                   %td
                     = f.text_field :epf, :size => '22'
                 %tr
-                  %td Account Number 02(%):&nbsp;
-                  %td
-                    = f.text_field :account_number_02, :size => '22'
-                %tr
-                  %td Account Number 22(%):&nbsp;
-                  %td
-                    = f.text_field :account_number_22, :size => '22'
-                %tr
                   %td Round off:&nbsp;
                   %td
                     = f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
+
                 %tr
-                  %td Restrict Employer Share:&nbsp;
-                  %td
-                    = f.check_box :restrict_employer_share
-                %tr
-                  %td Restrict Employer Share to Employer Share:&nbsp;
+                  %td Restrict Employee Share to Employer Share:&nbsp;
                   %td
                     = f.check_box :restrict_employer_share_to_employer_share
                 %tr

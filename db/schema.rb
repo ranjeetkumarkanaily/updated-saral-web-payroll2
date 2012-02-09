@@ -231,7 +231,7 @@ ActiveRecord::Schema.define(:version => 20120208092014) do
     t.float    "account_number_22"
     t.string   "round_off"
     t.boolean  "restrict_employer_share"
-    t.boolean  "restrict_employer_share_to_employer_share"
+    t.boolean  "restrict_employee_share_to_employer_share"
   end
 
   create_table "pf_groups", :force => true do |t|
