@@ -1,6 +1,10 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
 
+  resources :esi_group_rates
+
+  resources :branches
+
   resources :pf_group_rates
 
   resources :esi_groups

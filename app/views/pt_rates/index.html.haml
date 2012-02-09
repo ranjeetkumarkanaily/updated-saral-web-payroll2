@@ -17,7 +17,7 @@
             %td.table_grid_header{:colspan => 3} Operations
           - @pt_rates.each do |pt_rate|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td{:align => "center"}= pt_rate.PtGroup.name
+              %td.table_grid_td{:align => "center"}= pt_rate.pt_group.name
               %td.table_grid_td{:align => "right"}= pt_rate.paymonth.month_name
               %td.table_grid_td{:align => "right"}= pt_rate.min_sal_range
               %td.table_grid_td{:align => "right"}= pt_rate.get_max_sal_range == nil ? "Max. Sal." : pt_rate.get_max_sal_range

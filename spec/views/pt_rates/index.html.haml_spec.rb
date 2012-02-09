@@ -6,14 +6,14 @@ describe "pt_rates/index" do
     monthYear = FactoryGirl.create(:paymonth)
     assign(:pt_rates, [
     stub_model(PtRate,
-      :PtGroup => ptGroup,
+      :pt_group => ptGroup,
       :paymonth => monthYear,
       :min_sal_range => "9.99",
       :max_sal_range => "9.99",
         :pt => "9.99"
       ),
       stub_model(PtRate,
-        :PtGroup => ptGroup,
+        :pt_group => ptGroup,
         :paymonth => monthYear,
         :min_sal_range => "9.99",
         :max_sal_range => "9.99",

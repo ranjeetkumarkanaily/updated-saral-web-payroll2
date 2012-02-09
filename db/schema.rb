@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120203104107) do
+ActiveRecord::Schema.define(:version => 20120208092014) do
+
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -20,6 +21,22 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "branches", :force => true do |t|
+    t.string   "branch_name"
+    t.string   "responsible_person"
+    t.string   "address"
+    t.integer  "pf_group_id"
+    t.integer  "esi_group_id"
+    t.integer  "pt_group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "esi_applicable"
+  end
+
+  add_index "branches", ["esi_group_id"], :name => "index_branches_on_esi_group_id"
+  add_index "branches", ["pf_group_id"], :name => "index_branches_on_pf_group_id"
+  add_index "branches", ["pt_group_id"], :name => "index_branches_on_pt_group_id"
 
   create_table "classification_headings", :force => true do |t|
     t.string   "classification_heading_name"
@@ -118,6 +135,17 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
     t.integer  "grade_id"
   end
 
+  create_table "esi_group_rates", :force => true do |t|
+    t.integer  "esi_group_id"
+    t.float    "employee_rate"
+    t.float    "employer_rate"
+    t.float    "cut_off"
+    t.float    "minimum_limit_dailywage"
+    t.string   "round_off"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "esi_groups", :force => true do |t|
     t.string   "esi_group_name"
     t.string   "address"
@@ -188,6 +216,13 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
     t.float    "account_number_21"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "pension_fund"
+    t.float    "epf"
+    t.float    "account_number_02"
+    t.float    "account_number_22"
+    t.string   "round_off"
+    t.boolean  "restrict_employer_share"
+    t.boolean  "restrict_employer_share_to_employer_share"
   end
 
   create_table "pf_groups", :force => true do |t|
@@ -214,7 +249,7 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
   add_index "pt_groups", ["state_id"], :name => "index_pt_groups_on_state_id"
 
   create_table "pt_rates", :force => true do |t|
-    t.integer  "PtGroup_id"
+    t.integer  "pt_group_id"
     t.integer  "paymonth_id"
     t.decimal  "min_sal_range"
     t.decimal  "max_sal_range"
@@ -223,7 +258,6 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
     t.datetime "updated_at"
   end
 
-  add_index "pt_rates", ["PtGroup_id"], :name => "index_pt_rates_on_PtGroup_id"
   add_index "pt_rates", ["paymonth_id"], :name => "index_pt_rates_on_paymonth_id"
 
   create_table "salaries", :force => true do |t|
@@ -303,14 +337,22 @@ ActiveRecord::Schema.define(:version => 20120203104107) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "branches", "esi_groups", :name => "branches_esi_group_id_fk"
+  add_foreign_key "branches", "pf_groups", :name => "branches_pf_group_id_fk"
+  add_foreign_key "branches", "pt_groups", :name => "branches_pt_group_id_fk"
+
   add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
   add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
+
+  add_foreign_key "esi_group_rates", "esi_groups", :name => "esi_group_rates_esi_group_id_fk"
 
   add_foreign_key "holidays", "attendance_configurations", :name => "holidays_attendance_configuration_id_fk"
 
   add_foreign_key "pf_group_rates", "paymonths", :name => "pf_group_rates_paymonth_id_fk"
   add_foreign_key "pf_group_rates", "pf_groups", :name => "pf_group_rates_pf_group_id_fk"
+
+  add_foreign_key "pt_rates", "pt_groups", :name => "pt_rates_pt_group_id_fk"
 
   add_foreign_key "salary_allotments", "salary_group_details", :name => "salary_allotments_salary_group_detail_id_fk"
 
