@@ -26,72 +26,60 @@
 
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td
-        %h4 Employee
+      %td.std_td
+        %h3{:style=>"text-decoration:underline"} For Employee
     %tr
       %td.std_td
         %table
           %tr
-            %td Effective Month:&nbsp;
-            %td
-              = f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ]}, @pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
+            %td{:style=>"width:130px"} Effective Month:&nbsp;
+            %td= f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ]}, @pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
           %tr
             %td EPF :&nbsp;
-            %td
-              = f.text_field :epf, :size => '22',:onchange=>"calculate()"
+            %td= f.text_field :epf, :size => '22',:onchange=>"calculate()"
       %td.std_td
         %table
           %tr
-            %td &nbsp;&nbsp;
-          %tr
-            %td Cutoff :&nbsp;
-            %td
-              = f.text_field :cutoff, :size => '22'
+            %td{:style=>"width:130px"} Cutoff :&nbsp;
+            %td= f.text_field :cutoff, :size => '22'
     %tr
-      %td
-        %h4 Employer
+      %td.std_td
+        %h3{:style=>"text-decoration:underline"} For Employer
     %tr
       %td.std_td
         %table
           %tr
-            %td Account No. 22(%):&nbsp;
+            %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
             %td
               = f.text_field :account_number_22, :size => '22'
               = f.hidden_field :pf_group_id, :value => @param_pf_group_id
           %tr
             %td Account No. 21(%):&nbsp;
-            %td
-              = f.text_field :account_number_21, :size => '22'
+            %td= f.text_field :account_number_21, :size => '22'
           %tr
             %td Account No. 02(%):&nbsp;
-            %td
-              = f.text_field :account_number_02 , :size => '22'
+            %td= f.text_field :account_number_02 , :size => '22'
+      %td.std_td
+        %table
+          %tr
+            %td{:style=>"width:130px"} Pension Fund(%) :&nbsp;
+            %td= f.text_field :pension_fund, :size => '22',:onchange=>"calculate()"
+          %tr
+            %td EPF :&nbsp;
+            %td= f.text_field :employer_epf, :size => '22',:readonly => "readonly"
+          %tr
+            %td Round off:&nbsp;
+            %td= f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
+    %tr
+      %td.std_td{:colspan=>2}
+        %table
           %tr
             %td Restrict Employer Share:&nbsp;
-            %td
-              = f.check_box :restrict_employer_share
+            %td= f.check_box :restrict_employer_share
+          %tr
+            %td Restrict Employee Share to Employer Share:&nbsp;
+            %td= f.check_box :restrict_employee_share_to_employer_share
           %tr
             %td &nbsp;
           %tr
             %td{:colspan=>2}= f.submit
-      %td.std_td
-        %table
-          %tr
-            %td Pension Fund(%) :&nbsp;
-            %td
-              = f.text_field :pension_fund, :size => '22',:onchange=>"calculate()"
-          %tr
-            %td EPF :&nbsp;
-            %td
-              = f.text_field :employer_epf, :size => '22',:readonly => "readonly"
-          %tr
-            %td Round off:&nbsp;
-            %td
-              = f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
-
-          %tr
-            %td Restrict Employee Share to Employer Share:&nbsp;
-            %td
-              = f.check_box :restrict_employee_share_to_employer_share
-          %tr
-            %td &nbsp;

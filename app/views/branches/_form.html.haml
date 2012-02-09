@@ -21,10 +21,10 @@
               %table
                 %tr
                   %td{:width=>130} Branch:&nbsp;
-                  %td= f.text_field :branch_name, :size => '22'
+                  %td= f.text_field :branch_name, :size => '22', :onblur=>"calculate()"
                 %tr
                   %td{:width=>130} Address:&nbsp;
-                  %td= f.text_field :address, :size => '22'
+                  %td= f.text_field :address, :size => '22',:onblur=>"calculate()"
                 %tr
                   %td{:width=>130} PF Group:&nbsp;
                   %td= f.select :pf_group_id, options_for_select(PfGroup.all(:order => 'created_at ASC').collect {|pf| [ pf.pf_group, pf.id ] }, @branch.pf_group_id),:prompt => 'Select PF Group'
