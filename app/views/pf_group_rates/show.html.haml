@@ -6,40 +6,55 @@
     = link_to image_tag('/assets/edit.png',:title => "Edit PF Group Rate"), edit_pf_group_rate_path(@pf_group_rate,:params1 => @param_pf_group_id)
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
-      %td
+      %td.std_td
+        %h3{:style=>"text-decoration:underline"} For Employee
+    %tr
+      %td.std_td
         %table
           %tr
-            %td.std_td
-              %table
-                %tr
-                  %td Account No. 02(%) :&nbsp;
-                  %td= @pf_group_rate.account_number_02
-                %tr
-                  %td Account No. 21(%) :&nbsp;
-                  %td= @pf_group_rate.account_number_21
-                %tr
-                  %td Account No. 22(%) :&nbsp;
-                  %td= @pf_group_rate.account_number_22
-            %td.std_td
-              %table
-                %tr
-                  %td Effective Month :&nbsp;
-                  %td= @pf_group_rate.paymonth.month_name
-                %tr
-                  %td Pension Fund :&nbsp;
-                  %td= @pf_group_rate.pension_fund
-                %tr
-                  %td EPF :&nbsp;
-                  %td= @pf_group_rate.epf
-                %tr
-                  %td Round off :&nbsp;
-                  %td= @pf_group_rate.round_off
+            %td{:style=>"width:130px"} Effective Month:&nbsp;
+            %td= @pf_group_rate.paymonth.month_name
           %tr
-            %td.std_td{:colspan=>2}
-              %table
-                %tr
-                  %td Restrict Employer Share :&nbsp;
-                  %td= @pf_group_rate.restrict_employer_share == true ? "Yes" : "No"
-                %tr
-                  %td Restrict Employee Share to Employer Share :&nbsp;
-                  %td= @pf_group_rate.restrict_employee_share_to_employer_share == true ? "Yes" : "No"
+            %td EPF(%) :&nbsp;
+            %td= @pf_group_rate.epf
+      %td.std_td
+        %table
+          %tr
+            %td{:style=>"width:130px"} Cutoff(%) :&nbsp;
+            %td= @pf_group_rate.cutoff
+    %tr
+      %td.std_td
+        %h3{:style=>"text-decoration:underline"} For Employer
+    %tr
+      %td.std_td
+        %table
+          %tr
+            %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
+            %td
+              = @pf_group_rate.account_number_22
+          %tr
+            %td Account No. 21(%):&nbsp;
+            %td= @pf_group_rate.account_number_21
+          %tr
+            %td Account No. 02(%):&nbsp;
+            %td= @pf_group_rate.account_number_02
+      %td.std_td
+        %table
+          %tr
+            %td{:style=>"width:130px"} Pension Fund(%) :&nbsp;
+            %td= @pf_group_rate.pension_fund
+          %tr
+            %td EPF(%) :&nbsp;
+            %td= @pf_group_rate.employer_epf
+          %tr
+            %td Round off(%):&nbsp;
+            %td= @pf_group_rate.round_off
+    %tr
+      %td.std_td{:colspan=>2}
+        %table
+          %tr
+            %td Restrict Employer Share:&nbsp;
+            %td= @pf_group_rate.restrict_employer_share == true ? "Yes" : "No"
+          %tr
+            %td Restrict Employee Share to Employer Share:&nbsp;
+            %td= @pf_group_rate.restrict_employee_share_to_employer_share == true ? "Yes" : "No"
