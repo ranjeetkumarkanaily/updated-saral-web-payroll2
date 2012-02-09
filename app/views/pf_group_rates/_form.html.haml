@@ -27,8 +27,34 @@
                   %td
                     = f.text_field :account_number_21, :size => '22'
                 %tr
+                  %td Pension Fund :&nbsp;
+                  %td
+                    = f.text_field :pension_fund, :size => '22'
+                %tr
+                  %td EPF :&nbsp;
+                  %td
+                    = f.text_field :epf, :size => '22'
+                %tr
+                  %td Account Number 02(%):&nbsp;
+                  %td
+                    = f.text_field :account_number_02, :size => '22'
+                %tr
+                  %td Account Number 22(%):&nbsp;
+                  %td
+                    = f.text_field :account_number_22, :size => '22'
+                %tr
+                  %td Round off:&nbsp;
+                  %td
+                    = f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
+                %tr
+                  %td Restrict Employer Share:&nbsp;
+                  %td
+                    = f.check_box :restrict_employer_share
+                %tr
+                  %td Restrict Employer Share to Employer Share:&nbsp;
+                  %td
+                    = f.check_box :restrict_employer_share_to_employer_share
+                %tr
                   %td &nbsp;
                 %tr
                   %td{:colspan=>2}= f.submit
-
-

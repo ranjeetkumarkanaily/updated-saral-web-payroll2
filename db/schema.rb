@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206150058) do
+ActiveRecord::Schema.define(:version => 20120208092014) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -134,6 +134,17 @@ ActiveRecord::Schema.define(:version => 20120206150058) do
     t.integer  "grade_id"
   end
 
+  create_table "esi_group_rates", :force => true do |t|
+    t.integer  "esi_group_id"
+    t.float    "employee_rate"
+    t.float    "employer_rate"
+    t.float    "cut_off"
+    t.float    "minimum_limit_dailywage"
+    t.string   "round_off"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "esi_groups", :force => true do |t|
     t.string   "esi_group_name"
     t.string   "address"
@@ -214,6 +225,13 @@ ActiveRecord::Schema.define(:version => 20120206150058) do
     t.float    "account_number_21"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "pension_fund"
+    t.float    "epf"
+    t.float    "account_number_02"
+    t.float    "account_number_22"
+    t.string   "round_off"
+    t.boolean  "restrict_employer_share"
+    t.boolean  "restrict_employer_share_to_employer_share"
   end
 
   create_table "pf_groups", :force => true do |t|
@@ -335,6 +353,8 @@ ActiveRecord::Schema.define(:version => 20120206150058) do
   add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
   add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
+
+  add_foreign_key "esi_group_rates", "esi_groups", :name => "esi_group_rates_esi_group_id_fk"
 
   add_foreign_key "holidays", "attendance_configurations", :name => "holidays_attendance_configuration_id_fk"
 

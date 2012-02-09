@@ -13,7 +13,7 @@
             %td.table_grid_header Address
             %td.table_grid_header ESI No
             %td.table_grid_header ESI Local Office
-            %td.table_grid_header{:colspan => 3} Operations
+            %td.table_grid_header{:colspan => 4} Operations
           - @esi_groups.each do |esi_group|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= esi_group.esi_group_name
@@ -23,6 +23,7 @@
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show ESI Group"), esi_group
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit ESI Group"), edit_esi_group_path(esi_group)
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete ESI Group"), esi_group, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon{:align => "center"}= link_to image_tag('/assets/details.png',:title => "Details"), esi_group_rates_path(:params1 => esi_group.id)
         %br/
         .digg_pagination
           .page_info
