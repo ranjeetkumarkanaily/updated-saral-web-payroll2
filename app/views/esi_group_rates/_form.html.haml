@@ -20,21 +20,22 @@
                     = f.text_field :employee_rate, :size => '22'
                     = f.hidden_field :esi_group_id, :value => @param_esi_group_id
                 %tr
-                  %td Employer Rate(%):&nbsp;
-                  %td
-                    = f.text_field :employer_rate, :size => '22'
-                %tr
                   %td Cut off :&nbsp;
-                  %td
-                    = f.text_field :cut_off, :size => '22'
+                  %td= f.text_field :cut_off, :size => '22'
                 %tr
                   %td Minimum Limit(daily wage) :&nbsp;
-                  %td
-                    = f.text_field :minimum_limit_dailywage, :size => '22'
+                  %td= f.text_field :minimum_limit_dailywage, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td Employer Rate(%):&nbsp;
+                  %td= f.text_field :employer_rate, :size => '22'
                 %tr
                   %td Round off:&nbsp;
-                  %td
-                    = f.select :round_off, options_for_select(['Higher Rupee'], @esi_group_rate.round_off),:prompt => 'Select Round off Group'
+                  %td= f.select :round_off, options_for_select(['Higher Rupee'], @esi_group_rate.round_off),:prompt => 'Select Round off Group'
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
                 %tr
                   %td &nbsp;
                 %tr
