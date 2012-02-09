@@ -1,3 +1,19 @@
+%script{:language => "JavaScript"}
+  function calculate()
+  {
+  val1 = document.getElementById('pf_group_rate_epf').value;
+  val2 = document.getElementById('pf_group_rate_pension_fund').value;
+  if(val1 != '' && val2 != '')
+  {
+  getValue = val1-val2
+  document.getElementById('pf_group_rate_employer_epf').value = getValue.toFixed(2)
+  }
+  }
+  function roundNumber(num, dec)
+  {
+  var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+  return result;
+  }
 = form_for(@pf_group_rate) do |f|
   - if @pf_group_rate.errors.any?
     #error_explanation
@@ -7,59 +23,75 @@
       %ul
         - @pf_group_rate.errors.full_messages.each do |msg|
           %li= msg
+
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
+        %h4 Employee
+    %tr
+      %td.std_td
         %table
           %tr
-            %td.std_td
-              %table
-                %tr
-                  %td PF Group:&nbsp;
-                  %td
-                    = f.select :pf_group_id, options_for_select(PfGroup.all(:order => 'created_at ASC').collect {|pf| [ pf.pf_group, pf.id ] }, @pf_group_rate.pf_group_id),:prompt => 'Select PF Group'
-                %tr
-                  %td Account No. 02(%):&nbsp;
-                  %td
-                    = f.text_field :account_number_02, :size => '22'
-                %tr
-                  %td Account No. 21(%) :&nbsp;
-                  %td
-                    = f.text_field :account_number_21, :size => '22'
-                %tr
-                  %td Account No. 22(%):&nbsp;
-                  %td
-                    = f.text_field :account_number_22, :size => '22'
-            %td.std_td
-              %table
-                %tr
-                  %td Pay Month:&nbsp;
-                  %td
-                    = f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ] }, @pf_group_rate.paymonth_id),:prompt => 'Select Paymonth'
-                %tr
-                  %td Pension Fund :&nbsp;
-                  %td
-                    = f.text_field :pension_fund, :size => '22'
-                %tr
-                  %td EPF :&nbsp;
-                  %td
-                    = f.text_field :epf, :size => '22'
-                %tr
-                  %td Round off:&nbsp;
-                  %td
-                    = f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
+            %td Effective Month:&nbsp;
+            %td
+              = f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at ASC').collect {|pm| [ pm.month_name, pm.id ]}, @pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
           %tr
-            %td.std_td{:colspan=>2}
-              %table
-                %tr
-                  %td Restrict Employer Share:&nbsp;
-                  %td
-                    = f.check_box :restrict_employer_share
-                %tr
-                  %td Restrict Employee Share to Employer Share:&nbsp;
-                  %td
-                    = f.check_box :restrict_employer_share_to_employer_share
-                %tr
-                  %td &nbsp;
-                %tr
-                  %td{:colspan=>2}= f.submit
+            %td EPF :&nbsp;
+            %td
+              = f.text_field :epf, :size => '22',:onchange=>"calculate()"
+      %td.std_td
+        %table
+          %tr
+            %td &nbsp;&nbsp;
+          %tr
+            %td Cutoff :&nbsp;
+            %td
+              = f.text_field :cutoff, :size => '22'
+    %tr
+      %td
+        %h4 Employer
+    %tr
+      %td.std_td
+        %table
+          %tr
+            %td Account No. 22(%):&nbsp;
+            %td
+              = f.text_field :account_number_22, :size => '22'
+              = f.hidden_field :pf_group_id, :value => @param_pf_group_id
+          %tr
+            %td Account No. 21(%):&nbsp;
+            %td
+              = f.text_field :account_number_21, :size => '22'
+          %tr
+            %td Account No. 02(%):&nbsp;
+            %td
+              = f.text_field :account_number_02 , :size => '22'
+          %tr
+            %td Restrict Employer Share:&nbsp;
+            %td
+              = f.check_box :restrict_employer_share
+          %tr
+            %td &nbsp;
+          %tr
+            %td{:colspan=>2}= f.submit
+      %td.std_td
+        %table
+          %tr
+            %td Pension Fund(%) :&nbsp;
+            %td
+              = f.text_field :pension_fund, :size => '22',:onchange=>"calculate()"
+          %tr
+            %td EPF :&nbsp;
+            %td
+              = f.text_field :employer_epf, :size => '22',:readonly => "readonly"
+          %tr
+            %td Round off:&nbsp;
+            %td
+              = f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
+
+          %tr
+            %td Restrict Employee Share to Employer Share:&nbsp;
+            %td
+              = f.check_box :restrict_employee_share_to_employer_share
+          %tr
+            %td &nbsp;

@@ -13,15 +13,14 @@
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
-            %td.table_grid_header PF Group
-            %td.table_grid_header Pay Month
+            %td.table_grid_header Effective Month
             %td.table_grid_header Account Number 21(%)
-            %td.table_grid_header{:colspan =>2} Operations
+            %td.table_grid_header{:colspan =>3} Operations
           - @pf_group_rates.each do |pf_group_rate|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= pf_group_rate.pf_group.pf_group
               %td.table_grid_td= pf_group_rate.paymonth.month_name
               %td= pf_group_rate.account_number_21
+              %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show PF Rate"), pf_group_rate_path(pf_group_rate,:params1 => @param_pf_group_id)
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit PF Group Rate"), edit_pf_group_rate_path(pf_group_rate,:params1 => @param_pf_group_id)
               %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy PF Group Rate"), pf_group_rate, confirm: 'Are you sure?', method: :delete
         %br/

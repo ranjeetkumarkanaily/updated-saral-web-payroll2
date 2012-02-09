@@ -11,8 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208092014) do
-
+ActiveRecord::Schema.define(:version => 20120209065012) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -223,6 +222,8 @@ ActiveRecord::Schema.define(:version => 20120208092014) do
     t.string   "round_off"
     t.boolean  "restrict_employer_share"
     t.boolean  "restrict_employee_share_to_employer_share"
+    t.float    "employer_epf"
+    t.float    "cutoff"
   end
 
   create_table "pf_groups", :force => true do |t|

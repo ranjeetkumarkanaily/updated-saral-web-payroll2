@@ -14,6 +14,7 @@ class PfGroupRatesController < ApplicationController
   # GET /pf_group_rates/1
   # GET /pf_group_rates/1.json
   def show
+    @param_pf_group_id = params[:params1]
     @pf_group_rate = PfGroupRate.find(params[:id])
 
     respond_to do |format|
