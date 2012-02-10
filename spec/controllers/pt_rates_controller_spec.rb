@@ -29,6 +29,12 @@ describe PtRatesController do
       get :index, {}, valid_session
       assigns(:pt_rates).should eq([pt_rate])
     end
+    it "assigns all pt_rates as @pt_rates" do
+      #FactoryGirl.create(:pt_rate)
+      pt_rate = PtRate.create! valid_attributes
+      get :index, {:paymonth_id => pt_rate.paymonth_id, :pt_group_id => pt_rate.pt_group_id}, valid_session
+      assigns(:pt_rates).should eq([pt_rate])
+    end
   end
 
   describe "GET show" do
@@ -71,7 +77,7 @@ describe PtRatesController do
 
       it "redirects to the created pt_rate" do
         post :create, {:pt_rate => valid_attributes}, valid_session
-        response.should redirect_to(PtRate.last)
+        response.should redirect_to(pt_rates_path(:paymonth_id => valid_attributes[:paymonth_id], :pt_group_id => valid_attributes[:pt_group_id]))
       end
     end
 
@@ -113,7 +119,7 @@ describe PtRatesController do
       it "redirects to the pt_rate" do
         pt_rate = PtRate.create! valid_attributes
         put :update, {:id => pt_rate.to_param, :pt_rate => valid_attributes}, valid_session
-        response.should redirect_to(pt_rate)
+        response.should redirect_to(pt_rates_path(:paymonth_id => valid_attributes[:paymonth_id], :pt_group_id => valid_attributes[:pt_group_id]))
         #response.should be_succes
       end
     end

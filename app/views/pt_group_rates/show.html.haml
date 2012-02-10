@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pt group:</b>
+  <%= @pt_group_rate.pt_group %>
+</p>
+
+<p>
+  <b>Paymonth:</b>
+  <%= @pt_group_rate.paymonth %>
+</p>
+
+
+<%= link_to 'Edit', edit_pt_group_rate_path(@pt_group_rate) %> |
+<%= link_to 'Back', pt_group_rates_path %>

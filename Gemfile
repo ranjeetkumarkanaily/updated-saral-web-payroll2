@@ -42,10 +42,11 @@ gem 'hpricot'
 gem "haml"
 gem 'jquery-rails'
 gem 'fileutils'
-gem 'prawn'
-gem 'prawn-core'
-gem 'prawn-layout'
-gem 'prawnto'
+#gem 'prawn'
+#gem 'prawn-core'
+#gem 'prawn-layout'
+#gem 'prawnto'
+gem 'prawn_rails'
 gem 'currency-in-words'
 gem "pdfkit" , "= 0.5.0"
 gem "wkhtmltopdf"

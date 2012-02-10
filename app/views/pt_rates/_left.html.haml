@@ -1,4 +1,7 @@
 %ul
   %li= link_to 'PT Groups', pt_groups_path
-  %li= link_to 'Listing PT Rates', pt_rates_path
-  %li= link_to 'Add New PT Rates', new_pt_rate_path
+  - if params[:pt_group_id]
+    %ul{:style => "margin:0"}
+      %li{:style => 'list-style-image: url("bullet_blue.png")'}= link_to "#{PtGroup.find_by_id(params[:pt_group_id]).name}", pt_group_path(PtGroup.find_by_id(params[:pt_group_id]))
+  %li= link_to 'Listing PT Rates', pt_rates_path(:paymonth_id => params[:paymonth_id], :pt_group_id => params[:pt_group_id])
+  %li= link_to 'Add New PT Rates', new_pt_rate_path(:paymonth_id => params[:paymonth_id], :pt_group_id => params[:pt_group_id])

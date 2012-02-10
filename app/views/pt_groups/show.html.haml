@@ -2,7 +2,9 @@
   = render 'left'
 #right_content
   %h1
-    Showing PT Group
+    Showing
+    =@pt_group.name
+    PT Group
     = link_to image_tag('/assets/edit.png',:title => "Edit PT Group"), edit_pt_group_path(@pt_group)
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -31,3 +33,28 @@
                 %tr
                   %td{:width=>130} Return Period :&nbsp;
                   %td= @pt_group.return_period
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td
+          %table
+            %tr
+              %td.std_td
+                %table
+                  %tr
+                    %td{:width=>130} PT Rate &nbsp;
+                    %td{:width=>130}= link_to "Add New PT Rate ", new_pt_group_rate_path(:pt_group_id => @pt_group.id)
+          %tr
+            %td.std_td
+              %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td.table_grid_header Sl No
+                  %td.table_grid_header Month Year
+                  %td.table_grid_header Slab
+                - sl_no = 0
+                - @pt_group_rates.each do |pt_group_rate|
+                  %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                    %td.table_grid_td= sl_no = sl_no + 1
+                    %td.table_grid_td= pt_group_rate.paymonth.month_name
+                    %td.table_grid_icon= link_to image_tag('/assets/settings.png',:title => "PT Rate Details"), pt_rates_path(:paymonth_id => pt_group_rate.paymonth_id, :pt_group_id => pt_group_rate.pt_group_id)
