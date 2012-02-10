@@ -10,9 +10,19 @@ describe PfGroupRatesController do
   end
 
   def valid_attributes
-    {:pf_group_id => 1,
+    { :pf_group_id => 1,
       :paymonth_id => 1,
-      :account_number_21 => 2}
+      :account_number_21 => 2,
+      :pension_fund => 8,
+      :epf => 5,
+      :account_number_02 => 3,
+      :account_number_22 => 4,
+      :round_off => 'higher rupee',
+      :restrict_employer_share => true,
+      :restrict_employee_share_to_employer_share => true,
+      :employer_epf => 1,
+      :cutoff => 2,
+    }
   end
   
   describe "GET index" do

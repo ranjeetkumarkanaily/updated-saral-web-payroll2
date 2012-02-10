@@ -1,0 +1,5 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 New ESI Group Rate for #{EsiGroup.find(@param_esi_group_id).esi_group_name}
+  = render 'form'

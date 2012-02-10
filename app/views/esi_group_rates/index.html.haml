@@ -1,0 +1,39 @@
+#left_content
+  = render "left"
+#right_content
+  %h1{:style=>"width:450px;"} Listing ESI Group Rates for #{EsiGroup.find(@param_esi_group_id).esi_group_name}
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header ESI Group
+            %td.table_grid_header Employee rate
+            %td.table_grid_header Employer rate
+            %td.table_grid_header Cut off
+            %td.table_grid_header Minimum limit(daily wage)
+            %td.table_grid_header Round off
+            %td.table_grid_header{:colspan =>2} Operations
+          - @esi_group_rates.each do |esi_group_rate|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= esi_group_rate.esi_group_id
+              %td.table_grid_td= esi_group_rate.employee_rate
+              %td.table_grid_td= esi_group_rate.employer_rate
+              %td.table_grid_td= esi_group_rate.cut_off
+              %td.table_grid_td= esi_group_rate.minimum_limit_dailywage
+              %td.table_grid_td= esi_group_rate.round_off
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit ESI Group Rate"), edit_esi_group_rate_path(esi_group_rate,:params1 => @param_esi_group_id)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy ESI Group Rate"), esi_group_rate, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @esi_group_rates
+          = will_paginate @esi_group_rates, :container => false
+    %tr
+      %td &nbsp;

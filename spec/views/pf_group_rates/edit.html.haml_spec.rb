@@ -12,7 +12,7 @@ describe "pf_group_rates/edit" do
   it "renders the edit pf_group_rate form" do
       render
       assert_select "form", :action => pf_group_rates_path(@pf_group_rate), :method => "post" do
-      assert_select "select#pf_group_rate_pf_group_id", :name => "pf_group_rate[pf_group_id]"
+      assert_select "input#pf_group_rate_pf_group_id", :name => "pf_group_rate[pf_group_id]"
       assert_select "select#pf_group_rate_paymonth_id", :name => "pf_group_rate[paymonth_id]"
       assert_select "input#pf_group_rate_account_number_21", :name => "pf_group_rate[account_number_21]"
     end

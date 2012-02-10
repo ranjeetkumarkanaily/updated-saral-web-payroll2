@@ -3,4 +3,5 @@ class EsiGroup < ActiveRecord::Base
   validates_uniqueness_of :esi_group_name
 
   has_many :branches
+  has_many :esi_group_rates,:dependent => :destroy
 end

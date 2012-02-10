@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe "pf_group_rates/show" do
   before(:each) do
+    @paymonth = FactoryGirl.create(:paymonth)
     @pf_group_rate = assign(:pf_group_rate, stub_model(PfGroupRate,
       :pf_group_id => 1,
-      :paymonth_id => 1,
+      :paymonth_id => @paymonth.id,
       :account_number_21 => 1.5
     ))
   end
