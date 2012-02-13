@@ -1,3 +1,7 @@
+:javascript
+  $(document).ready(function(){
+      $('.auto_focus:first').focus();
+  });
 #login
   %h1 Sign In
   %p
@@ -5,7 +9,7 @@
     %table
       %tr
         %td{:class => 'td_left'}= label_tag :username, "Username"
-        %td= text_field_tag :username, params[:username]
+        %td= text_field_tag :username, params[:username], :class=>'auto_focus'
       %tr
         %td{:class => 'td_left'}= label_tag :password
         %td= password_field_tag :password
