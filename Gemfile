@@ -11,8 +11,8 @@ gem 'pg'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "  ~> 3.1.0"
-  gem 'coffee-rails', "~> 3.1.0"
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'uglifier'
 end
 
@@ -23,7 +23,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'hirb'
   gem 'wirble'
-  gem 'spork', ">= 0.9.0.rc9"
+  gem 'spork'
   gem 'rb-fsevent'
   gem 'guard-spork'
   gem 'guard-rspec'
@@ -34,7 +34,10 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
-gem 'cucumber-rails', :group => :test
+group :test do
+  gem 'cucumber-rails', :require => false
+end
+#gem 'cucumber-rails', require: false ,:group => :test
 
 gem "foreigner"
 gem 'ruby_parser'
@@ -45,11 +48,11 @@ gem 'fileutils'
 gem 'prawn'
 gem 'prawn-core'
 gem 'prawn-layout'
-gem 'prawnto'
+gem "prawnto_2", :require => "prawnto"
 gem 'currency-in-words'
-gem "pdfkit" , "= 0.5.0"
+gem "pdfkit"
 gem "wkhtmltopdf"
-gem "paperclip","~>2.4"
+gem "paperclip"
 gem "carrierwave"
 gem "mini_magick"
 gem "spreadsheet"
