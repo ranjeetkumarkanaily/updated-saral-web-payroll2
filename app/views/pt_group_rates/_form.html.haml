@@ -1,0 +1,27 @@
+= form_for(@pt_group_rate) do |f|
+  - if @pt_group_rate.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@pt_group_rate.errors.count, "error")
+        prohibited this pt_group from being saved:
+      %ul
+        - @pt_group_rate.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>160} Effective Month
+                  %td= select_tag "pt_group_rate[paymonth_id]", options_from_collection_for_select(Paymonth.order('created_at ASC'),'id','month_name', params[:id]),:prompt => 'Select Month'
+                  = hidden_field_tag "pt_group_rate[pt_group_id]", params[:pt_group_id]
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td= f.submit("Save PT Group Rates")

@@ -246,6 +246,16 @@ ActiveRecord::Schema.define(:version => 20120209113445) do
     t.datetime "updated_at"
   end
 
+  create_table "pt_group_rates", :force => true do |t|
+    t.integer  "pt_group_id"
+    t.integer  "paymonth_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pt_group_rates", ["paymonth_id"], :name => "index_pt_group_rates_on_paymonth_id"
+  add_index "pt_group_rates", ["pt_group_id"], :name => "index_pt_group_rates_on_pt_group_id"
+
   create_table "pt_groups", :force => true do |t|
     t.string   "name"
     t.integer  "state_id"
@@ -362,6 +372,9 @@ ActiveRecord::Schema.define(:version => 20120209113445) do
 
   add_foreign_key "pf_group_rates", "paymonths", :name => "pf_group_rates_paymonth_id_fk"
   add_foreign_key "pf_group_rates", "pf_groups", :name => "pf_group_rates_pf_group_id_fk"
+
+  add_foreign_key "pt_group_rates", "paymonths", :name => "pt_group_rates_paymonth_id_fk"
+  add_foreign_key "pt_group_rates", "pt_groups", :name => "pt_group_rates_pt_group_id_fk"
 
   add_foreign_key "pt_rates", "pt_groups", :name => "pt_rates_pt_group_id_fk"
 

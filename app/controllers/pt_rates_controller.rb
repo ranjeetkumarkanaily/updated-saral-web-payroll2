@@ -2,8 +2,13 @@ class PtRatesController < ApplicationController
   # GET /pt_rates
   # GET /pt_rates.json
   def index
-    @pt_rates = PtRate.order('min_sal_range ASC').paginate(:page => params[:page], :per_page => 10)
-
+    if params[:paymonth_id] && params[:pt_group_id]
+      @pt_group_id = params[:pt_group_id]
+      @paymonth_id = params[:paymonth_id]
+      @pt_rates = PtRate.where("paymonth_id = #{params[:paymonth_id]} AND pt_group_id = #{params[:pt_group_id]}").order('min_sal_range ASC').paginate(:page => params[:page], :per_page => 10)
+    else
+      @pt_rates = PtRate.order('min_sal_range ASC').paginate(:page => params[:page], :per_page => 10)
+    end
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @pt_rates }
@@ -24,7 +29,7 @@ class PtRatesController < ApplicationController
   # GET /pt_rates/new
   # GET /pt_rates/new.json
   def new
-    @pt_rate = PtRate.new
+    @pt_rate = PtRate.new(:paymonth_id => params[:paymonth_id], :pt_group_id => params[:pt_group_id])
 
     respond_to do |format|
       format.html # new.html.haml
@@ -44,7 +49,8 @@ class PtRatesController < ApplicationController
 
     respond_to do |format|
       if @pt_rate.save
-        format.html { redirect_to @pt_rate, notice: 'Pt rate was successfully created.' }
+
+        format.html { redirect_to pt_rates_path(:paymonth_id =>  @pt_rate.paymonth_id, :pt_group_id => @pt_rate.pt_group_id), notice: 'Pt rate was successfully created.' } #@pt_rate redirect_to pt_group_path(:id => @pt_group_rate.pt_group_id)
         format.json { render json: @pt_rate, status: :created, location: @pt_rate }
       else
         format.html { render action: "new" }
@@ -60,7 +66,7 @@ class PtRatesController < ApplicationController
 
     respond_to do |format|
       if @pt_rate.update_attributes(params[:pt_rate])
-        format.html { redirect_to @pt_rate, notice: 'Pt rate was successfully updated.' }
+        format.html { redirect_to pt_rates_path(:paymonth_id =>  @pt_rate.paymonth_id, :pt_group_id => @pt_rate.pt_group_id), notice: 'Pt rate was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

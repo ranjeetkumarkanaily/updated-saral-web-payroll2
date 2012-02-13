@@ -5,4 +5,6 @@ class PtGroup < ActiveRecord::Base
   has_many :pt_rates
   has_many :branches
 
+  has_many :pt_group_rates
+
 end

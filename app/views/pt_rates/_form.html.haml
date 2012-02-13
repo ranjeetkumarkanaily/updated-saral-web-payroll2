@@ -16,19 +16,15 @@
               %table
                 %tr
                   %td{:width => 160} PT Group
-                  - if params[:id]
-                    %td= @pt_rate.PtGroup.name
-                  - else
-                    %td= select_tag "pt_rate[pt_group_id]", options_from_collection_for_select(PtGroup.order('created_at ASC'),'id','name', params[:id]),:prompt => 'Select PT Group'
+                  %td= @pt_rate.pt_group.name
+                  = hidden_field_tag "pt_rate[pt_group_id]", @pt_rate.pt_group_id
             %td.std_td
               %table
                 %tr
                   %td
                     %td{:width=>160} Effective Month
-                  - if params[:id]
                     %td= @pt_rate.paymonth.month_name
-                  - else
-                    %td= select_tag "pt_rate[paymonth_id]", options_from_collection_for_select(Paymonth.order('created_at DESC'),'id','month_name', params[:id])
+                    = hidden_field_tag "pt_rate[paymonth_id]", @pt_rate.paymonth_id
         %table
           %tr
             %td.std_td

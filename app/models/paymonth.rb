@@ -3,6 +3,7 @@ class Paymonth < ActiveRecord::Base
   has_many :pf_esi_rates, :dependent => :destroy
   has_many :pt_rates, :dependent => :destroy
   has_many :pf_group_rates, :dependent => :destroy
+  has_many :pt_group_rates, :dependent => :destroy
   regex_for_date = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(-|\/|\\)(19|20)\d\d/i
 
   validates :month_name,   :presence   => true,

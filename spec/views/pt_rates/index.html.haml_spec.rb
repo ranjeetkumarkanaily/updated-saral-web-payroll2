@@ -4,6 +4,10 @@ describe "pt_rates/index" do
   before(:each) do
     ptGroup = FactoryGirl.create(:pt_group, :name => "PT Group 10")
     monthYear = FactoryGirl.create(:paymonth)
+    assign(:param_paymonth_id, monthYear.id)
+    assign(:param_pt_group_id, ptGroup.id)
+    assign(:pt_group_id, ptGroup.id)
+    assign(:paymonth_id, monthYear.id)
     assign(:pt_rates, [
     stub_model(PtRate,
       :pt_group => ptGroup,
