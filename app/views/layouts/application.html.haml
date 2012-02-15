@@ -34,16 +34,12 @@
             %a{:href => logout_path} Logout
           -##clock
           -#  :javascript
-          -#    //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
           -#    new imageclock.display()
 
       / 1st drop down menu
       #dropmenu1_b.dropmenudiv_b
         %a{:href => paymonths_path} Pay Months
         %a{:href => states_path} States
-        -#%a{:href => designations_path} Designations
-        -#%a{:href => departments_path} Departments
-        -#%a{:href => grades_path} Grades
         %a{:href => classification_headings_path} Classifications
         %a{:href => attendance_configurations_path} Attendance Configuration
         %a{:href => holidays_path} Holiday Lists
@@ -51,12 +47,12 @@
         %a{:href => pt_groups_path} PT Group
         %a{:href => pf_esi_rates_path} PF/ESI
         %a{:href => branches_path} Branch
+        %a{:href => financial_institutions_path} Financial Institution (Bank)
       #dropmenu3_b.dropmenudiv_b
         %a{:href => employees_path} Employees
       #dropmenu4_b.dropmenudiv_b
         %a{:href => salary_heads_path} Salary Head
         %a{:href => salary_groups_path} Salary Group
-        -#%a{:href => salary_group_details_path} Salary Group Configuration
         %a{:href => salary_allotments_path} Salary Allotment
         %a{:href => new_salary_path} Salary Editor
         %a{:href => salaries_path} Generate Salary

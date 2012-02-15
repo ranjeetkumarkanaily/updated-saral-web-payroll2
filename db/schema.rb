@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120209113445) do
+ActiveRecord::Schema.define(:version => 20120215042312) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -150,6 +150,19 @@ ActiveRecord::Schema.define(:version => 20120209113445) do
     t.string   "address"
     t.string   "esi_no"
     t.string   "esi_local_office"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "financial_institutions", :force => true do |t|
+    t.string   "name"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "address_line3"
+    t.string   "address_line4"
+    t.string   "pincode"
+    t.string   "branch_code"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,30 @@
+#left_content
+  = render "left"
+#right_content
+  %h1{:style=>"width:450px"} Listing Financial Institutions (Banks)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>507, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.table_grid_header{:width=>"300"} Name
+            %td.table_grid_header{:colspan =>3} Operations
+          - @financial_institutions.each do |financial_institution|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= financial_institution.name
+              %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Financial Institution"), financial_institution
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Financial Institution"), edit_financial_institution_path(financial_institution)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Financial Institution"), financial_institution, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @financial_institutions
+          = will_paginate @financial_institutions, :container => false
+    %tr
+      %td &nbsp;

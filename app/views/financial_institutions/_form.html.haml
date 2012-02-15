@@ -1,0 +1,49 @@
+= form_for(@financial_institution) do |f|
+  - if @financial_institution.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@financial_institution.errors.count, "error")
+        prohibited this Financial Institution from being saved:
+      %ul
+        - @financial_institution.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Name:&nbsp;
+                  %td= f.text_field :name, :size => '22'
+                %tr
+                  %td{:width=>130} Address:&nbsp;
+                  %td= f.text_field :address_line1, :size => '22'
+                %tr
+                  %td{:width=>130} &nbsp;
+                  %td= f.text_field :address_line2, :size => '22'
+                %tr
+                  %td{:width=>130} &nbsp;
+                  %td= f.text_field :address_line3, :size => '22'
+                %tr
+                  %td{:width=>130} &nbsp;
+                  %td= f.text_field :address_line4, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Pin Code:&nbsp;
+                  %td= f.text_field :pincode, :size => '22'
+                %tr
+                  %td{:width=>130} Branch/MICR Code:&nbsp;
+                  %td= f.text_field :branch_code, :size => '22'
+                %tr
+                  %td{:width=>130} Email:&nbsp;
+                  %td= f.text_field :email, :size => '22'
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
