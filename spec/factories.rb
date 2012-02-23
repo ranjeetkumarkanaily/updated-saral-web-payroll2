@@ -159,4 +159,16 @@ FactoryGirl.define do
     esi_local_office "Bangalore"
   end
 
+  factory :financial_institution do
+    id 2
+    name "State Bank of India"
+    address_line1 "123 Street"
+    address_line2 "Mahalakshmipuram"
+    address_line3 "West of Chord Road"
+    address_line4 "Bangalore,Karnataka"
+    pincode "560086"
+    branch_code "SBI000434"
+    email "sbi@gmail.com"
+  end
+
 end

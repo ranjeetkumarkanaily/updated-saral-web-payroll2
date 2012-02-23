@@ -2,7 +2,7 @@ class FinancialInstitutionsController < ApplicationController
   # GET /financial_institutions
   # GET /financial_institutions.json
   def index
-    @financial_institutions = FinancialInstitution.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
+    @financial_institutions = FinancialInstitution.where('id>1').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.haml

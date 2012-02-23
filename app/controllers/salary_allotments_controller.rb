@@ -1,8 +1,8 @@
 class SalaryAllotmentsController < ApplicationController
 
   def index
-    @need_to_allot_Sal = Employee.employee_with_salary_not_allotted.paginate(:page => params[:page], :per_page => 10)
-    @already_allot_Sal = Employee.employee_with_salary_allotted.paginate(:page => params[:page], :per_page => 10)
+    @need_to_allot_Sal = Employee.employee_with_salary_not_allotted.order("created_at ASC").paginate(:page => params[:page], :per_page => 10)
+    @already_allot_Sal = Employee.employee_with_salary_allotted.order("created_at ASC").paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @allotSal }

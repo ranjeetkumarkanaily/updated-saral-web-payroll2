@@ -12,7 +12,7 @@ class Salary < ActiveRecord::Base
 
     condition = "employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
                   extract(month from effective_date) = #{month_year.month} and
-                  extract(year from effective_date) = #{month_year.year}"
+                  extract(year from effective_date) = #{month_year.year} and salary_amount != 0"
 
     Salary.select('salary_head_id, sum(salary_amount) as salary_amount').
         joins(:salary_head).
@@ -76,6 +76,6 @@ class Salary < ActiveRecord::Base
   end
 
   def self.find_employees_leave from_date, to_date, employee_id
-   LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" )
+    LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" )
   end
 end

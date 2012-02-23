@@ -49,8 +49,13 @@ namespace :bootstrap do
     AttendanceConfiguration.create( :attendance => '<Master List>', :short_name => 'MASTER', :salary_calendar_days => "Actual Day / Month" )
   end
 
+  desc "Add Default Financial Institution"
+  task :financial_institution => :environment do
+    FinancialInstitution.create( :name => "CASH", :address_line1 => "address", :address_line2 => "address", :address_line3 => "address", :address_line4 => "address", :pincode => 560076, :branch_code => "branch_code", :email => "email" )
+  end
+
 
 
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :salary_head, :state, :attendance_configuration]
+  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution]
 end

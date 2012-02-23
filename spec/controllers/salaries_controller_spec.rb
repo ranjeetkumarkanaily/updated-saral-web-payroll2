@@ -8,19 +8,40 @@ describe SalariesController do
     describe "Creation of new Salary" do
 
       before :each do
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02")
         @pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
-        @salary = FactoryGirl.build(:salary)
+        #@salary = FactoryGirl.build(:salary)
+      end
+
+      it "should give no of present days" do
+        employee = FactoryGirl.create(:employee)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        salary = FactoryGirl.build(:salary,:employee_id => employee.id)
+        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
+        assigns(:no_of_present_days).should eq(27)
+      end
+
+      it "should give no of present days" do
+        employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        salary = FactoryGirl.build(:salary,:employee_id => employee.id)
+        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
+        assigns(:no_of_present_days).should eq(14)
       end
 
       it "Count should be increases by one" do
+        employee = FactoryGirl.create(:employee)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        salary = FactoryGirl.build(:salary,:employee_id => employee.id)
         expect {
-          post :create, :salary => [@salary.attributes],:month_year=>'Feb/2011'
+          post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
         }.to change(Salary, :count).by(1)
       end
 
       it "redirects to salary index path" do
-        post :create, :salary => [@salary.attributes],:month_year=>'Feb/2011'
+        employee = FactoryGirl.create(:employee)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        salary = FactoryGirl.build(:salary,:employee_id => employee.id)
+        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
         response.should redirect_to salaries_path
       end
     end
@@ -28,33 +49,43 @@ describe SalariesController do
 
   describe "GET new" do
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
+      employee = FactoryGirl.create(:employee)
       salary_group_detail = FactoryGirl.create(:salary_group_detail)
-      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id)
       get :new, :month_year => "Feb/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
 
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
+      employee = FactoryGirl.create(:employee)
       salary_group_detail = FactoryGirl.create(:salary_group_detail)
-      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id)
       get :new, :month_year => "Mar/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
+    end
+
+    it "should redirect to new salary page if selected employee is already leave the company" do
+      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-28")
+      salary_group_detail = FactoryGirl.create(:salary_group_detail)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id)
+      get :new, :month_year => "Mar/2011", :employee_id => sal_allot.employee_id
+      response.should redirect_to new_salary_path
     end
   end
 
   describe "GET index" do
     before :each do
       @pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-      paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 31, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
+      paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
       pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
-      @employee = FactoryGirl.create(:employee)
     end
 
     it "get salary earnings for the given employee" do
+      employee = FactoryGirl.create(:employee)
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
-      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => @employee.id)
-      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => @employee.id)
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
@@ -62,6 +93,7 @@ describe SalariesController do
     end
 
     it "get salary deductions for the given employee" do
+      employee = FactoryGirl.create(:employee)
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Deductions")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Deductions")
       salaryHead3 = FactoryGirl.create(:salary_head, :id => 3, :head_name => "HRA", :salary_type => "Earnings")
@@ -76,6 +108,7 @@ describe SalariesController do
 
 
     it "get pf for the given employee" do
+      employee = FactoryGirl.create(:employee)
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
@@ -89,13 +122,36 @@ describe SalariesController do
     end
 
     it "generates pdf output" do
+      employee = FactoryGirl.create(:employee)
       salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
       salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
-      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => @employee.id)
-      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => @employee.id)
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id, :format => "pdf"
       response.should render_template('salaries/index.pdf')
+    end
+
+    it "should give no of present days" do
+      employee = FactoryGirl.create(:employee)
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
+
+      get :index, :month_year => "Feb/2011", :employee_id => employee.id
+      assigns(:no_of_present_days).should eq(28)
+    end
+
+    it "should give no of present days" do
+      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
+
+      get :index, :month_year => "Feb/2011", :employee_id => employee.id
+      assigns(:no_of_present_days).should eq(15)
     end
   end
     describe "Update" do

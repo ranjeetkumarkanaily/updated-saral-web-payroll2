@@ -10,6 +10,10 @@
             %tr
               %td &nbsp;
             %tr
+              %td{:colspan=>2}
+                - flash.each do |name, msg|
+                  = content_tag :div, msg, :id => "flash_#{name}"
+            %tr
               %td{:width => "100px"} Employee
               %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.order('created_at ASC'),'id','empname', params[:employee_id]),:prompt => 'Select Employee'
             %tr

@@ -9,7 +9,7 @@ describe SalaryGroupsController do
 
   def valid_attributes
     {
-        :salary_group_name => "Test",
+        :salary_group_name => "HrDetail",
         :based_on_gross => false
     }
   end

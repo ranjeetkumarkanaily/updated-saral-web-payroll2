@@ -1,0 +1,80 @@
+:css
+  .heading {
+      font-size: 25px; font-weight: bold; text-align: center; line-height: 40px;
+  }
+  .address {
+     font-size: 18px; text-align: center; line-height: 30px;
+  }
+  .report_header {
+     font-size: 16px; text-align: center; line-height: 30px;font-weight: bold;
+  }
+  .td_header {
+      font-size: 16px; line-height:30px; background-color:#cccccc; padding-left:5px;
+  }
+  .td_text {
+        font-size: 16px; line-height:25px; padding-left:5px;
+  }
+  .contact_header {
+        font-size: 15px; font-weight: bold;
+  }
+  .contact_text {
+        font-size: 15px
+  }
+  .spacing {
+      height : 20px;
+  }
+
+%table{:width=>800, :cellpadding => 0, :cellspacing => 0}
+  %tr
+    %td.heading= @company.companyname
+  %tr
+    %td.address= @company.address+", "+@company.address2+", "+@company.address3
+  - if @report_type != "Contact"
+    %tr
+      %td.report_header= @report_type_change+" Report"
+    %tr
+      %td
+        %table{:width=>800, :cellpadding => 0, :cellspacing => 0,:border => 1}
+          - i=0
+          %tr
+            %td.td_header Sl. No.
+            %td.td_header Ref. No.
+            %td.td_header Employee Name
+            %td.td_header= @report_type_change
+          - @employees.each do |employee|
+            - i=i+1
+            %tr
+              %td.td_text= i
+              %td.td_text= employee.refno
+              %td.td_text= employee.empname
+              %td.td_text= employee[@report_type]
+  - else
+    %tr
+      %td.report_header Contact Detail's Report
+    %tr
+      %td.spacing &nbsp;
+    %tr
+      %td
+        %table{:width=>800, :cellpadding => 0, :cellspacing => 0}
+          - @employees.each do |employee|
+            %tr
+              %td.contact_header{:width=>100} Ref No.
+              %td.contact_text{:width=>300}= employee.refno
+              %td.contact_header{:width=>100} Email
+              %td.contact_text{:width=>300}= employee.email
+            %tr
+              %td.contact_header{:width=>100} Name
+              %td.contact_text{:width=>300}= employee.empname
+              %td.contact_header{:width=>100} Mobile
+              %td.contact_text{:width=>300}= employee.mobile
+            %tr
+              %td.contact_header{:colspan=>2} Present Address
+            %tr
+              %td.contact_text{:colspan=>2}= employee.present_res_no+", "+employee.present_res_name
+            %tr
+              %td.contact_text{:colspan=>2}= employee.present_street+", "+employee.present_locality
+            %tr
+              %td.contact_text{:colspan=>2}= employee.present_city+", "+employee.present_state.state_name
+            %tr
+              %td{:colspan=>4}
+                %hr

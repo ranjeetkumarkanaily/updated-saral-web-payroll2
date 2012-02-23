@@ -126,6 +126,9 @@ class EmployeesController < ApplicationController
       e.designation = Designation.find_by_designation(row[17])
       e.department = Department.find_by_department(row[18])
       e.grade = Grade.find_by_grade(row[19])
+      e.branch = Branch.find_by_branch_name(row[20])
+      e.bank_account_number = row[21]
+      e.financial_institution = FinancialInstitution.find_by_name(row[22])
 
       if e.valid?
         @employees << e
@@ -146,6 +149,7 @@ class EmployeesController < ApplicationController
     if params[:report_type]
       @company = Company.first
       @report_type = params[:report_type]
+      @report_type_change = @report_type.split("_").each{|word| word.capitalize!}.join(" ")
 
 
       if params[:report][:designation_id] != "" && params[:report][:designation_id] != nil
@@ -171,8 +175,10 @@ class EmployeesController < ApplicationController
 
       respond_to do |format|
         format.html # new.html.haml
-        format.json { render json: @employee }
-        format.pdf
+        format.pdf do
+          render :pdf => 'Report',
+                 :template => 'employees/report.pdf.haml'
+        end
       end
     end
   end
