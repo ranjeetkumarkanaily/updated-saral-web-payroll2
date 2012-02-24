@@ -1,12 +1,25 @@
+:javascript
+  function setFocus()
+  {
+      selected = document.getElementById('selected_tab').value;
+      if (selected == "allotted")
+      document.getElementById("sal_allotted").className += " tabbertabdefault"
+      else
+      document.getElementById('sal_not_allotted').className += " tabbertabdefault"
+  }
+  $(document).ready(function() {
+    setFocus();
+  });
 #left_content
   = render 'left'
 #right_content
+  = hidden_field_tag "selected_tab", @param_selected_tab
   %h1 Salary Allotment Employee-wise
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td.std_td
         .tabber
-          .tabbertab
+          %div{:class=>'tabbertab',:id=>'sal_not_allotted'}
             %h2 Listing Employee (Salary not Allotted)
             %div
               %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
@@ -29,12 +42,12 @@
               .page_info
                 = page_entries_info @need_to_allot_Sal
               = will_paginate @need_to_allot_Sal, :container => false
-          .tabbertab
+          %div{:class=>'tabbertab',:id=>"sal_allotted"}
             %h2 Listing Employee (Salary Allotted)
             %div
               %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
                 %tr
-                  %td.table_grid_header Ref No
+                  %td.table_grid_header Reeef No
                   %td.table_grid_header Employee Name
                   %td.table_grid_header DOJ
                   %td.table_grid_header Department
@@ -47,10 +60,11 @@
                     %td.table_grid_td= allotted_sal.date_of_joining
                     %td.table_grid_td= Department.find(allotted_sal.department_id).department
                     %td.table_grid_td= Designation.find(allotted_sal.designation_id).designation
-                    %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Allotted Salary"), edit_salary_allotment_path(allotted_sal.id)
+                    %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Allotted Salary"), edit_salary_allotment_path(allotted_sal.id,:param1=>@param_selected_tab)
             .digg_pagination
               .page_info
                 = page_entries_info @already_allot_Sal
-              = will_paginate @already_allot_Sal, :container => false
-
+              = will_paginate @already_allot_Sal, :container => false,:params=>{:param1=>"allotted"}
+    %tr
+      %td &nbsp;
 
