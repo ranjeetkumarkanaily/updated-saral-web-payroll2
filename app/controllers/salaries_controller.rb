@@ -1,12 +1,19 @@
 class SalariesController < ApplicationController
   def new
     if(params[:month_year] && params[:employee_id])
-      allotted_salaries = SalaryAllotment.get_allotted_salaries params[:month_year], params[:employee_id]
-      if(!Salary.is_salary_generated? params[:month_year], params[:employee_id])
-        if allotted_salaries.count > 0
-          @salary_allotments = allotted_salaries
-        else
-          @salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date params[:month_year], params[:employee_id]
+      month_year = Date.strptime params[:month_year], '%b/%Y'
+      start_date = month_year.beginning_of_month
+      employee_dol = Employee.chk_dol params[:employee_id]
+      if employee_dol && employee_dol < start_date
+        redirect_to new_salary_path, notice: 'Employee already left the Company'
+      else
+        allotted_salaries = SalaryAllotment.get_allotted_salaries params[:month_year], params[:employee_id]
+        if(!Salary.is_salary_generated? params[:month_year], params[:employee_id])
+          if allotted_salaries.count > 0
+            @salary_allotments = allotted_salaries
+          else
+            @salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date params[:month_year], params[:employee_id]
+          end
         end
       end
     end
@@ -21,7 +28,15 @@ class SalariesController < ApplicationController
       leave_count = leave_count[0]['leave_count'].to_i
       @no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
       @no_of_day_in_selected_month = @no_of_day_in_selected_month[0]['number_of_days'].to_i
-      @no_of_present_days = @no_of_day_in_selected_month - leave_count
+
+      employee_dol = Employee.chk_dol params[:employee_id]
+      if employee_dol
+        no_of_day_if_dol_exist = employee_dol.day
+        @no_of_present_days = no_of_day_if_dol_exist - leave_count
+      else
+        @no_of_present_days = @no_of_day_in_selected_month - leave_count
+      end
+
 
 
       @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id]
@@ -48,10 +63,16 @@ class SalariesController < ApplicationController
       leave_count = leave_count[0]['leave_count'].to_i
       no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
       no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
-      no_of_present_days = no_of_day_in_selected_month - leave_count
+      employee_dol = Employee.chk_dol params[:salary][0]['employee_id']
+      if employee_dol
+        no_of_day_if_dol_exist = employee_dol.day
+        @no_of_present_days = no_of_day_if_dol_exist - leave_count
+      else
+        @no_of_present_days = no_of_day_in_selected_month - leave_count
+      end
 
       params[:salary].each do |sal|
-        updated_salary_amount = sal[:salary_amount].to_i * no_of_present_days / no_of_day_in_selected_month.to_f
+        updated_salary_amount = sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month.to_f
         Salary.create(:effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id])
       end
       redirect_to salaries_path

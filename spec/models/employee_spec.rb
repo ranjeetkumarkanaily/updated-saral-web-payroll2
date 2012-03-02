@@ -30,6 +30,10 @@ describe Employee do
 
   it { should belong_to(:grade)}
 
+  it { should belong_to(:branch)}
+
+  it { should belong_to(:financial_institution)}
+
   it "should require a name" do
     no_name_employee = Employee.new(@attr.merge(:empname => ""))
     no_name_employee.should_not be_valid

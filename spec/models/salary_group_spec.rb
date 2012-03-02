@@ -4,7 +4,7 @@ describe SalaryGroup do
   before(:each) do
     @attr =
         {
-            :salary_group_name => "Test",
+            :salary_group_name => "HrDetail",
             :based_on_gross => false
         }
   end

@@ -69,8 +69,7 @@
                   %td= f.text_field :present_locality, :size => '22'
                 %tr
                   %td{:width=>130} State:&nbsp;
-                  %td= f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] },
-                                                            @employee.present_state_id), {:prompt => 'Select State'}
+                  %td= f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] }, @employee.present_state_id), {:prompt => 'Select State'}
           %tr
             %td.std_td
               %table
@@ -97,6 +96,9 @@
                 %tr
                   %td{:width=>130} Grade:&nbsp;
                   %td= f.select :grade_id, options_for_select(Grade.all(:order => 'created_at ASC').collect {|grd| [ grd.grade, grd.id ] }, @employee.grade_id), {:prompt => 'Select Grade'}
+                %tr
+                  %td{:width=>130} Bank:&nbsp;
+                  %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.all(:order => 'created_at ASC').collect {|financial| [ financial.name, financial.id ] }, @employee.financial_institution_id), {:prompt => 'Select Payment'}
             %td.std_td
               %table
                 %tr
@@ -104,6 +106,12 @@
                 %tr
                   %td{:width=>130} Department:&nbsp;
                   %td= f.select :department_id, options_for_select(Department.all(:order => 'created_at ASC').collect {|dept| [ dept.department, dept.id ] }, @employee.department_id), {:prompt => 'Select Department'}
+                %tr
+                  %td{:width=>130} Branch:&nbsp;
+                  %td= f.select :branch_id, options_for_select(Branch.all(:order => 'created_at ASC').collect {|branch| [ branch.branch_name, branch.id ] }, @employee.branch_id), {:prompt => 'Select Branch'}
+                %tr
+                  %td{:width=>130} Bank Account No.:&nbsp;
+                  %td= f.text_field :bank_account_number, :size => '22'
           %tr
             %td.std_td{:colspan=>2}
               %table

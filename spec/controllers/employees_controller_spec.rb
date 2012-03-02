@@ -177,6 +177,12 @@ describe EmployeesController do
       get :report, :report_type => 'Contact', "report"=>{"designation_id"=>employees.designation_id,"department_id"=>employees.department.id,"grade_id"=>employees.grade_id}
       assigns(:employees).should_not be_nil
     end
+
+    it "generates pdf output" do
+      employees = FactoryGirl.create(:employee)
+      get :report, :report_type => 'Contact', "report"=>{"designation_id"=>employees.designation_id,"department_id"=>employees.department.id,"grade_id"=>employees.grade_id}, :format => "pdf"
+      response.should render_template('employees/report.pdf')
+    end
   end
 
   describe "DELETE destroy" do

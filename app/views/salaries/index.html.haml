@@ -13,6 +13,10 @@
             %tr
               %td &nbsp;
             %tr
+              %td{:colspan=>2}
+                - flash.each do |name, msg|
+                  = content_tag :div, msg, :id => "flash_#{name}"
+            %tr
               %td{:width => "100px"} Employee
               %td{:width => "200px"}= select_tag "employee_id", options_from_collection_for_select(Employee.order('created_at ASC'),'id','empname', params[:employee_id]),:prompt => 'Select Employee'
             %tr
@@ -42,26 +46,25 @@
                       - gross_total =   gross_total + salary.salary_amount.to_f
               %td.std_td{:valign => 'top',:style=>"width:270px;"}
                 %table
-                  - @salary_deduction.each do |salary|
-                    %tr
-                      %td{:width=>170}= salary.salary_head.head_name
-                      %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
-                      - deduction_total = deduction_total + salary.salary_amount.to_f
+                  %tr
+                    %td{:width=>170} PF
+                    %td{:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
+                    - deduction_total = deduction_total + @pf_amount.to_f
                   - if @pt_amount
                     %tr
                       %td{:width=>170} PT
                       %td{:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + @pt_amount.to_f
-                  %tr
-                    %td{:width=>170} PF
-                    %td{:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
-                    - deduction_total = deduction_total + @pf_amount.to_f
                   - if @esi_amount
                     %tr
                       %td ESI
                       %td{:style=>"text-align:right;"}= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + @esi_amount.to_f
-
+                  - @salary_deduction.each do |salary|
+                    %tr
+                      %td{:width=>170}= salary.salary_head.head_name
+                      %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                      - deduction_total = deduction_total + salary.salary_amount.to_f
             %tr
               %td.std_td{:style=>"width:270px;"}
                 %table

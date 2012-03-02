@@ -20,7 +20,7 @@ describe FinancialInstitutionsController do
 
   describe "GET index" do
     it "assigns all financial_institutions as @financial_institutions" do
-      financial_institution = FinancialInstitution.create! valid_attributes
+      financial_institution = FactoryGirl.create(:financial_institution)
       get :index
       assigns(:financial_institutions).should eq([financial_institution])
     end

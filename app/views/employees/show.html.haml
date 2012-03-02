@@ -93,6 +93,9 @@
                 %tr
                   %td{:width=>130} Grade:&nbsp;
                   %td= @employee.grade.grade
+                %tr
+                  %td{:width=>130} Bank:&nbsp;
+                  %td= @employee.financial_institution.name
             %td.std_td
               %table
                 %tr
@@ -100,3 +103,9 @@
                 %tr
                   %td{:width=>130} Department:&nbsp;
                   %td= @employee.department.department
+                %tr
+                  %td{:width=>130} Branch:&nbsp;
+                  %td= @employee.branch.branch_name
+                %tr
+                  %td{:width=>130} Bank Account No.:&nbsp;
+                  %td= @employee.bank_account_number

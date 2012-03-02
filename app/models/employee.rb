@@ -37,6 +37,9 @@ class Employee < ActiveRecord::Base
 
   has_many :salary_allotments
 
+  belongs_to :branch
+  belongs_to :financial_institution
+
 
 
   def dob_before_doj
@@ -58,11 +61,15 @@ class Employee < ActiveRecord::Base
   end
 
   def self.employee_with_salary_not_allotted
-    Employee.joins(:salary_allotments).where("salary_allotment = 0").group('employees.id')
+    Employee.joins(:salary_allotments).where("0 = (SELECT SUM(salary_allotment) from salary_allotments WHERE employee_id = employees.id)").group('employees.id')
   end
 
   def self.employee_with_salary_allotted
-    Employee.joins(:salary_allotments).where("salary_allotment > 0").group('employees.id')
+    Employee.joins(:salary_allotments).where("0 < (SELECT SUM(salary_allotment) from salary_allotments WHERE employee_id = employees.id)").group('employees.id')
+  end
+
+  def self.chk_dol emp_id
+    date_of_leaving = Employee.find(emp_id).date_of_leaving
   end
 
 end

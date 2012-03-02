@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120215042312) do
+ActiveRecord::Schema.define(:version => 20120223121525) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -132,6 +132,9 @@ ActiveRecord::Schema.define(:version => 20120215042312) do
     t.integer  "designation_id"
     t.integer  "department_id"
     t.integer  "grade_id"
+    t.integer  "branch_id"
+    t.integer  "financial_institution_id"
+    t.string   "bank_account_number"
   end
 
   create_table "esi_group_rates", :force => true do |t|
@@ -365,8 +368,10 @@ ActiveRecord::Schema.define(:version => 20120215042312) do
   add_foreign_key "branches", "pf_groups", :name => "branches_pf_group_id_fk"
   add_foreign_key "branches", "pt_groups", :name => "branches_pt_group_id_fk"
 
+  add_foreign_key "employees", "branches", :name => "employees_branch_id_fk"
   add_foreign_key "employees", "departments", :name => "employees_department_id_fk"
   add_foreign_key "employees", "designations", :name => "employees_designation_id_fk"
+  add_foreign_key "employees", "financial_institutions", :name => "employees_financial_institution_id_fk"
   add_foreign_key "employees", "grades", :name => "employees_grade_id_fk"
 
   add_foreign_key "esi_group_rates", "esi_groups", :name => "esi_group_rates_esi_group_id_fk"

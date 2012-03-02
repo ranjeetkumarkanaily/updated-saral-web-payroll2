@@ -3,5 +3,6 @@ class SalaryHead < ActiveRecord::Base
   has_many :salary_allotments
   has_many :salaries
 
-
+  validates :head_name, :uniqueness => true
+  validates :short_name, :uniqueness => { :case_sensitive => false }
 end
