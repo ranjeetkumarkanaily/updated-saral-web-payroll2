@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223121525) do
+ActiveRecord::Schema.define(:version => 20120228054046) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -184,6 +184,26 @@ ActiveRecord::Schema.define(:version => 20120223121525) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "hr_categories", :force => true do |t|
+    t.string   "category_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hr_category_details", :force => true do |t|
+    t.integer  "hr_category_id"
+    t.string   "name"
+    t.string   "data_type"
+    t.boolean  "required"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hr_category_details", ["hr_category_id"], :name => "index_hr_category_details_on_hr_category_id"
+
+# Could not dump table "hr_masters" because of following StandardError
+#   Unknown type 'hstore' for column 'category_values'
 
   create_table "leave_details", :force => true do |t|
     t.integer  "employee_id"
@@ -377,6 +397,11 @@ ActiveRecord::Schema.define(:version => 20120223121525) do
   add_foreign_key "esi_group_rates", "esi_groups", :name => "esi_group_rates_esi_group_id_fk"
 
   add_foreign_key "holidays", "attendance_configurations", :name => "holidays_attendance_configuration_id_fk"
+
+  add_foreign_key "hr_category_details", "hr_categories", :name => "hr_category_details_hr_category_id_fk"
+
+  add_foreign_key "hr_masters", "employees", :name => "hr_masters_employee_id_fk"
+  add_foreign_key "hr_masters", "hr_categories", :name => "hr_masters_hr_category_id_fk"
 
   add_foreign_key "pf_group_rates", "paymonths", :name => "pf_group_rates_paymonth_id_fk"
   add_foreign_key "pf_group_rates", "pf_groups", :name => "pf_group_rates_pf_group_id_fk"
