@@ -15,17 +15,76 @@
             %td
               %table
                 %tr
-                  %td{:width=>180} Effective Date:&nbsp;
-                  %td
-                    = f.date_select :effective_date
-                    = f.hidden_field :employee_id, :value => @paramempid
+                  %td.std_td
+                    %table
+                      %tr
+                        %td{:width=>130} Effective From:&nbsp;
+                        %td
+                          = f.date_select :effective_date
+                          = f.hidden_field :employee_id, :value => @paramempid
+                      %tr
+                        %td Salary Group:&nbsp;
+                        %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'created_at ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+                      %tr
+                        %td Branch:&nbsp;
+                        %td= f.text_field :branch_id
+                      %tr
+                        %td Bank :&nbsp;
+                        %td= f.text_field :financial_institution_id
+
+                  %td.std_td
+                    %table
+                      %tr
+                        %td{:width => 130} Effective To:&nbsp;
+                        %td= f.text_field :effective_to, :disabled => true, :value => 'Till Date'
+                      %tr
+                        %td Allotted Gross:&nbsp;
+                        %td= f.text_field :allotted_gross
+                      %tr
+                        %td Attn. Structure:&nbsp;
+                        %td= f.text_field :attendance_configuration_id
+                      %tr
+                        %td Bank A/c No.:&nbsp;
+                        %td= f.text_field :bank_account_number
                 %tr
-                  %td Salary Group:&nbsp;
-                  %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'created_at ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
-                %tr
-                  %td Allotted Gross:&nbsp;
-                  %td= f.text_field :allotted_gross
-                %tr
-                  %td &nbsp;
-                %tr
-                  %td{:colspan=>2}= f.submit
+                  %td.std_td
+                    %table
+                      %tr
+                        %td{:colspan=>2}
+                          - @classification_headings.each do |ch|
+                            = render :partial => 'classification', :locals => { :ch => ch }
+                      %tr
+                        %td &nbsp;
+                      %tr
+                        %td{:colspan=>2}= f.submit
+
+
+
+  -#%table.std_table{:cellpadding=>0,:cellspacing=>0}
+  -#  %tr
+  -#    %td
+  -#      %table
+  -#        %tr
+  -#          %td
+  -#            %table
+  -#              %tr
+  -#                %td{:width=>180} Effective Date:&nbsp;
+  -#                %td
+  -#                  = f.date_select :effective_date
+  -#                  = f.hidden_field :employee_id, :value => @paramempid
+  -#              %tr
+  -#                %td Salary Group:&nbsp;
+  -#                %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'created_at ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+  -#              %tr
+  -#                %td Allotted Gross:&nbsp;
+  -#                %td= f.text_field :allotted_gross
+  -#              %tr
+  -#                %td{:colspan=>2}
+  -#                  - @classification_headings.each do |ch|
+  -#                    = render :partial => 'classification', :locals => { :ch => ch }
+  -#              %tr
+  -#                %td &nbsp;
+  -#              %tr
+  -#                %td{:colspan=>2}= f.submit
+
+

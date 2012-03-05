@@ -9,19 +9,28 @@
       %td.std_td
         %table.table_grid{:width=>557, :cellpadding => 0, :cellspacing => 3}
           %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
             %td.table_grid_header Employee Name
-            %td.table_grid_header Effective Date
+            %td.table_grid_header Effective From
+            %td.table_grid_header Effective To
             %td.table_grid_header Salary Group
             %td.table_grid_header Allotted Gross
             %td.table_grid_header{:colspan => 2} Operations
+          - sl_no = 0
           - @employee_details.each do |employee_detail|
+          - sl_no = sl_no + 1
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= employee_detail.employee.empname
               %td.table_grid_td= employee_detail.effective_date
+              %td.table_grid_td= employee_detail.effective_to != nil ? employee_detail.effective_to : 'Till Date'
               %td.table_grid_td= employee_detail.salary_group.salary_group_name
               %td.table_grid_td= employee_detail.allotted_gross
-              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Employee Details"), edit_employee_detail_path(employee_detail,:param1=>@paramempid)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Employee Details"), employee_detail, confirm: 'Are you sure?', method: :delete
+              - if sl_no == 1
+                %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Employee Details"), edit_employee_detail_path(employee_detail,:param1=>@paramempid)
+                %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Employee Details"), employee_detail, confirm: 'Are you sure?', method: :delete
         %br/
         .digg_pagination
           .page_info
@@ -29,3 +38,4 @@
           = will_paginate @employee_details, :container => false
     %tr
       %td &nbsp;
+

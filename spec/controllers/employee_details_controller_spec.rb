@@ -8,9 +8,10 @@ describe EmployeeDetailsController do
 
   def valid_attributes
     {:employee_id => "1",
-    :effective_date => "2009-10-31",
+    :effective_date => "2012-01-01",
     :salary_group_id => "1",
-    :allotted_gross => 5000}
+    :allotted_gross => 5000,
+    :classification =>{'Department' => 'development'}}
   end
 
   describe "GET index" do
@@ -51,6 +52,9 @@ describe EmployeeDetailsController do
   end
 
   describe "POST create" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
     describe "with valid params" do
       it "creates a new EmployeeDetail" do
         expect {
@@ -149,7 +153,7 @@ describe EmployeeDetailsController do
     it "redirects to the employee_details list" do
       employee_detail = EmployeeDetail.create! valid_attributes
       delete :destroy, :id => employee_detail.id
-      response.should redirect_to(employee_details_url)
+      response.should redirect_to(employee_details_url(:param1 => valid_attributes[:employee_id] ))
     end
   end
 
