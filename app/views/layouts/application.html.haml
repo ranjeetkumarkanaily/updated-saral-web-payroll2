@@ -17,15 +17,15 @@
           %li
             %a{:href => root_path} Home
           %li
-            %a{:href => paymonths_path, :rel => "dropmenu1_b"} Settings
+            %a{:href => companies_path, :rel => "dropmenu1_b"} Settings
           %li
-            %a{:href => companies_path, :rel => "dropmenu2_b"} Company
+            %a{:href => branches_path, :rel => "dropmenu2_b"} Master
           %li
-            %a{:href => employees_path, :rel => "dropmenu3_b"} Master
+            %a{:href => attendance_configurations_path, :rel => "dropmenu3_b"} Attendance
           %li
             %a{:href => leave_details_path} Leave
           %li
-            %a{:href => salary_heads_path, :rel => "dropmenu4_b"} Salary
+            %a{:href => new_salary_path, :rel => "dropmenu4_b"} Salary
           %li
             %a{:href => report_employees_path, :rel => "dropmenu5_b"} Reports
           %li
@@ -38,27 +38,27 @@
 
       / 1st drop down menu
       #dropmenu1_b.dropmenudiv_b
+        %a{:href => companies_path} Company
         %a{:href => paymonths_path} Pay Months
+        %a{:href => pf_esi_rates_path} PF/ESI
         %a{:href => states_path} States
         -#%a{:href => classification_headings_path} Classifications
         %a{:href => designations_path} Designation
         %a{:href => departments_path} Department
         %a{:href => grades_path} Grade
-        %a{:href => attendance_configurations_path} Attendance Configuration
-        %a{:href => holidays_path} Holiday Lists
       #dropmenu2_b.dropmenudiv_b
-        %a{:href => pt_groups_path} PT Group
-        %a{:href => pf_esi_rates_path} PF/ESI
         %a{:href => branches_path} Branch
-        %a{:href => financial_institutions_path} Financial Institution (Bank)
-      #dropmenu3_b.dropmenudiv_b
-        %a{:href => employees_path} Employees
-      #dropmenu4_b.dropmenudiv_b
         %a{:href => salary_heads_path} Salary Head
         %a{:href => salary_groups_path} Salary Group
-        %a{:href => salary_allotments_path} Salary Allotment
+        %a{:href => employees_path} Employees
+        %a{:href => salary_allotments_path} Employee's - Salary Rate
+        %a{:href => financial_institutions_path} Financial Institution (Bank)
+      #dropmenu3_b.dropmenudiv_b
+        %a{:href => attendance_configurations_path} Attendance Configuration
+        %a{:href => holidays_path} Holiday Lists
+      #dropmenu4_b.dropmenudiv_b
         %a{:href => new_salary_path} Salary Editor
-        %a{:href => salaries_path} Generate Salary
+        %a{:href => salaries_path} Employee's - Salary Details
       #dropmenu5_b.dropmenudiv_b
         %a{:href => report_employees_path} Employee Master Report
       :javascript
@@ -71,4 +71,5 @@
       #main_content_index
         = yield
     #footer
-      %p Copyright &copy; #{Time.now.year}, Relyon Softech Limited, All rights reserved.
+      %p Copyright &copy; #{Time.now.year}, Relyon Softech Limited, All rights reserved.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Ver 0.2)
+

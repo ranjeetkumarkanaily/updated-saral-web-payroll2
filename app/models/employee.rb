@@ -57,7 +57,7 @@ class Employee < ActiveRecord::Base
 
   def self.search(search)
     search_condition = "%" + search + "%"
-    find(:all, :conditions => ['refno LIKE ? OR empname LIKE ? OR email LIKE ?', search_condition, search_condition, search_condition])
+    find(:all, :conditions => ['refno ILIKE ? OR empname ILIKE ? OR email ILIKE ?', search_condition, search_condition, search_condition])
   end
 
   def self.employee_with_salary_not_allotted

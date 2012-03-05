@@ -297,6 +297,12 @@ width: 100%;
   padding-left: 7px;
   padding-right: 7px;
 }
+.show_icon {
+  text-align:  center;
+  padding-left: 8px;
+  padding-right: 8px;
+  background:url(show.png) ;
+}
 
 .msg {
    color: #e9322d;
@@ -938,6 +944,7 @@ ul.tabbernav li.tabberactive a:hover
        text-align : center;
        margin: 4px 0;
     }
+
 }
 
 

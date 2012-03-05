@@ -1,0 +1,150 @@
+:css
+  .heading {
+      font-size: 25px; font-weight: bold; text-align: center; line-height: 40px;
+  }
+  .address {
+     font-size: 18px; text-align: center; line-height: 30px;
+  }
+  .payslip_header {
+       font-size: 18px; text-align: center;font-weight: bold; line-height: 30px;
+  }
+  .normal_txt {
+      font-size: 18px; line-height:25px;
+  }
+  .spacing {
+      height : 20px;
+  }
+  .td_bdr_all {
+      border : 1px solid #000000
+  }
+  .td_bdr_trb {
+      border-top : 1px solid #000000; border-right : 1px solid #000000; border-bottom : 1px solid #000000;
+  }
+  .table_header {
+      height : 30px; padding-left: 10px; font-size: 18px;
+  }
+  .table_text_left {
+      padding-left: 10px; font-size: 18px; line-height: 25px;
+  }
+  .table_text_right {
+        padding-right: 10px; font-size: 18px; line-height: 25px;
+  }
+  .td_bdr_lbr {
+        border-left : 1px solid #000000; border-bottom : 1px solid #000000; border-right : 1px solid #000000;
+  }
+  .td_bdr_br {
+          border-right : 1px solid #000000; border-bottom : 1px solid #000000;
+  }
+  .td_bdr_r {
+            border-right : 1px solid #000000;
+  }
+  .table_text_total {
+          font-weight : bold; height : 40px;
+  }
+
+
+- gross_total = 0
+- deduction_total = 0
+%table{:width=>800, :cellpadding => 0, :cellspacing => 0}
+  %tr
+    %td.heading= @company.companyname
+  %tr
+    %td.address= @company.address+", "+@company.address2+", "+@company.address3
+  %tr
+    %td.payslip_header= "Pay Slip for the Month of "+params[:month_year]
+  %tr
+    %td.spacing &nbsp;
+  %tr
+    %td
+      %table{:width=>800, :cellpadding => 0, :cellspacing => 0}
+        %tr
+          %td.normal_txt{:width=>180} Employee Number
+          %td.normal_txt{:width=>200}= @employee.id
+          %td{:width=>40} &nbsp;
+          %td.normal_txt{:width=>180} Employee Name
+          %td.normal_txt{:width=>200}= @employee.empname
+        %tr
+          %td.normal_txt{:width=>180} Designation
+          %td.normal_txt{:width=>200}= @employee.designation.designation
+          %td{:width=>40} &nbsp;
+          %td.normal_txt{:width=>180} Department
+          %td.normal_txt{:width=>200}= @employee.department.department
+        %tr
+          %td.normal_txt{:width=>180} Grade
+          %td.normal_txt{:width=>200}= @employee.grade.grade
+          %td{:width=>40} &nbsp;
+          %td.normal_txt{:width=>180} DOJ
+          %td.normal_txt{:width=>200}= @employee.date_of_joining
+        %tr
+          %td.normal_txt{:width=>180} Paid Days
+          %td.normal_txt{:width=>200}= number_with_precision(@no_of_day_in_selected_month, :precision => 2)
+          %td{:width=>40} &nbsp;
+          %td.normal_txt{:width=>180} Present Days
+          %td.normal_txt{:width=>200}= number_with_precision(@no_of_present_days, :precision => 2)
+  %tr
+    %td{:class=>"spacing"} &nbsp;
+  %tr
+    %td
+      %table{:width=>800, :cellpadding => 0, :cellspacing => 0}
+        %tr
+          %td{:width=>200,:class=>"td_bdr_all table_header"} Earnings
+          %td{:width=>200,:class=>"td_bdr_trb table_header"} Amount
+          %td{:width=>200,:class=>"td_bdr_trb table_header"} Deductions
+          %td{:width=>200,:class=>"td_bdr_trb table_header"} Amount
+        %tr
+          %td{:colspan=>4}
+            %table{:width=>800, :cellpadding => 0, :cellspacing => 0, :class=>"td_bdr_lbr"}
+              %tr
+                %td{:colspan=>2}
+                  %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
+                    - @salary_earning.each do |salary|
+                      %tr
+                        %td{:width=>198,:class=>"table_text_left td_bdr_r"}= salary.salary_head.head_name
+                        %td{:width=>200,:class=>"table_text_right td_bdr_r",:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                        - gross_total =   gross_total + salary.salary_amount.to_f
+                %td{:colspan=>2,:valign => 'top'}
+                  %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
+                    %tr
+                      %td{:width=>200,:class=>"table_text_left td_bdr_r"} PF
+                      %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
+                      - deduction_total = deduction_total + @pf_amount.to_f
+                    - if @pt_amount
+                      %tr
+                        %td{:width=>200,:class=>"table_text_left td_bdr_r"} PT
+                        %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
+                        - deduction_total = deduction_total + @pt_amount.to_f
+
+                    - if @esi_amount
+                      %tr
+                        %td{:width=>200,:class=>"table_text_left td_bdr_r"} ESI
+                        %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
+                        - deduction_total = deduction_total + @esi_amount.to_f
+                    - @salary_deduction.each do |salary|
+                      %tr
+                        %td{:width=>200,:class=>"table_text_left td_bdr_r"}= salary.salary_head.head_name
+                        %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
+                        - deduction_total = deduction_total + salary.salary_amount.to_f
+        %tr
+          %td{:colspan=>4}
+            %table{:width=>800, :cellpadding => 0, :cellspacing => 0, :class=>"td_bdr_lbr"}
+              %tr
+                %td{:colspan=>2}
+                  %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
+                    %tr
+                      %td{:width=>200,:class=>"table_text_left td_bdr_r table_text_total"} Total Earnings
+                      %td{:width=>200,:class=>"table_text_right td_bdr_r table_text_total",:style=>"text-align:right;"}= number_with_precision(gross_total, :precision => 2, :delimiter => ',')
+                %td{:colspan=>2}
+                  %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
+                    %tr
+                      %td{:width=>200,:class=>"table_text_left td_bdr_r table_text_total"} Total Deductions
+                      %td{:width=>200,:class=>"table_text_right table_text_total",:style=>"text-align:right;"}= number_with_precision(deduction_total, :precision => 2, :delimiter => ',')
+        %tr
+          %td{:colspan=>4}
+            %table{:width=>802, :cellpadding => 0, :cellspacing => 0, :class=>"td_bdr_lbr"}
+              %tr
+                %td{:width=>190,:class=>"table_text_left table_text_total"} Net Salary
+                %td{:width=>200,:class=>"table_text_right table_text_total",:style=>"text-align:right;"}= number_with_precision(gross_total-deduction_total, :precision => 2, :delimiter => ',')
+                %td{:width=>400,:class=>"table_text_left table_text_total"}
+              %tr
+                %td{:width=>190,:class=>"table_text_left table_text_total"} Net Salary(in words)
+                %td{:colspan=>2,:class=>"table_text_left table_text_total"}= number_to_currency_in_words(gross_total-deduction_total, locale: :en, currency: :rupee).split(" ").each{|word| word.capitalize!}.join(" ")+" Only"

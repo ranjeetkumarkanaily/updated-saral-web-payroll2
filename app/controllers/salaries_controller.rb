@@ -52,6 +52,10 @@ class SalariesController < ApplicationController
           render :pdf => 'Payslip',
                  :template => 'salaries/index.pdf.haml'
         end
+        format.xls do
+          render :xls => 'Payslip',
+                 :template => 'salaries/index.xls.haml'
+        end
       end
     end
   end

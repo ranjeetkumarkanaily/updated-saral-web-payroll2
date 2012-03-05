@@ -2,7 +2,7 @@
   = render 'left'
 #right_content
   %h1
-    Employee-wise Salary Details
+    Employee's Salary Detail
     - if params[:month_year] && params[:employee_id]
       = link_to image_tag('/assets/edit.png',:title => "Edit Salary"), edit_salaries_path(:month_year => params[:month_year], :employee_id => params[:employee_id])
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
@@ -25,7 +25,7 @@
                 = select_tag "month_year", options_from_collection_for_select(Paymonth.order('created_at ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
             %tr
               %td
-                = submit_tag("Generate Salary")
+                = submit_tag("Get Salary Detail")
             %tr
               %td
                 &nbsp;
@@ -86,5 +86,7 @@
           %table.table_grid{:width=>740, :cellpadding => 0, :cellspacing => 3}
             %tr
               %td{:align=>'right'}= link_to 'Generate Payslip', salaries_path(:month_year => params[:month_year],:employee_id => params[:employee_id], :format => "pdf")
+            %tr
+              %td{:align=>'right'}= link_to 'Excel', salaries_path(:month_year => params[:month_year],:employee_id => params[:employee_id], :format => "xls")
             %tr
               %td &nbsp;
