@@ -86,6 +86,8 @@ UpdatedSaralWebPayroll::Application.routes.draw do
   resources :salaries, :only => [:index, :create, :new] do
     get 'edit', :on => :collection
     put :update, :on => :collection
+
+    get "salary_sheet",  :on => :collection
   end
 
   # The priority is based upon order of creation:
