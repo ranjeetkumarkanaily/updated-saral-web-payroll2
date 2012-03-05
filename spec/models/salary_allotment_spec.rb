@@ -10,14 +10,16 @@ describe SalaryAllotment do
   it { should belong_to(:salary_group_detail)}
 
   it "should return allotted salaries" do
-    salary_group_detail = FactoryGirl.create(:salary_group_detail)
-    sal_allot = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => salary_group_detail.id)
+    salary_head = FactoryGirl.create(:salary_head)
+    salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+    sal_allot = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => salary_group_detail.id,:salary_head_id=>salary_head.id)
     SalaryAllotment.get_allotted_salaries("Feb/2011",sal_allot.employee_id).should be_true
   end
 
   it "should return allotted salaries for previous effective date" do
-    salary_group_detail = FactoryGirl.create(:salary_group_detail)
-    sal_allot = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => salary_group_detail.id)
+    salary_head = FactoryGirl.create(:salary_head)
+    salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+    sal_allot = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => salary_group_detail.id,:salary_head_id=>salary_head.id)
     SalaryAllotment.get_allotted_salaries_for_max_effective_date("Feb/2011", sal_allot.employee_id).should be_true
   end
 

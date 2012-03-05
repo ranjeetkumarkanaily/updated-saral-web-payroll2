@@ -7,10 +7,12 @@ class Salary < ActiveRecord::Base
     Salary.select("effective_date").where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id}").count > 0
   end
 
-  def self.get_salary_on_salary_type  salary_type, month_year, employee_id
+  def self.get_salary_on_salary_type  salary_type, month_year, employee_id=''
     month_year = Date.strptime month_year, '%b/%Y'
 
-    condition = "employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
+    empid = (employee_id=="")?" IS NOT NULL ":" = "+employee_id
+
+    condition = "employee_id " + empid + " and salary_type = '" + salary_type + "' and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year} and salary_amount != 0"
 
@@ -19,15 +21,17 @@ class Salary < ActiveRecord::Base
         where(condition).group('salary_head_id').order('salary_head_id ASC')
   end
 
-  def self.get_pf_amount month_year, employee_id
+  def self.get_pf_amount month_year, employee_id=''
     month_year = Date.strptime month_year, '%b/%Y'
 
-    condition = " employee_id = " + employee_id + " and salary_head_id = 1 and
+    empid = (employee_id=="")?" IS NOT NULL ":" = "+employee_id
+
+    condition = " employee_id " + empid + " and salary_head_id = 1 and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year}"
     basic_amount = Salary.select('sum(salary_amount) as salary_amount').where(condition)
 
-    condition = " employee_id = " + employee_id + " and salary_head_id = 2 and
+    condition = " employee_id " + empid + " and salary_head_id = 2 and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year}"
     da_amount = Salary.select('sum(salary_amount) as salary_amount').where(condition)
@@ -41,17 +45,19 @@ class Salary < ActiveRecord::Base
     end
   end
 
-  def self.get_gross_salary month_year, employee_id
+  def self.get_gross_salary month_year, employee_id=''
     month_year = Date.strptime month_year, '%b/%Y'
-    condition = " employee_id = " + employee_id + " and salary_type = 'Earnings' and
+    empid = (employee_id=="")?" IS NOT NULL ":" = "+employee_id
+    condition = " employee_id  " + empid + " and salary_type = 'Earnings' and
                     extract(month from effective_date) = #{month_year.month} and
                     extract(year from effective_date) = #{month_year.year}"
     gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins(:salary_head).where(condition)
     gross_salary = gross_salary[0]['salary_amount']
   end
 
-  def self.get_esi_amount  month_year, employee_id
-    gross_salary = get_gross_salary month_year, employee_id
+  def self.get_esi_amount  month_year, employee_id=''
+    empid = (employee_id=="")?"":employee_id
+    gross_salary = get_gross_salary month_year, empid
     esi_rate_value = PfEsiRate.last
 
     if gross_salary < esi_rate_value.esi_cutoff
@@ -61,8 +67,9 @@ class Salary < ActiveRecord::Base
     end
   end
 
-  def self.get_pt_amount month_year, employee_id
-    gross_salary = get_gross_salary month_year, employee_id
+  def self.get_pt_amount month_year, employee_id=''
+    empid = (employee_id=="")?"":employee_id
+    gross_salary = get_gross_salary month_year, empid
     month_year = Date.strptime month_year, '%b/%Y'
 
     pt_amount = PtRate.select('pt').joins(:paymonth).where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
@@ -75,7 +82,8 @@ class Salary < ActiveRecord::Base
 
   end
 
-  def self.find_employees_leave from_date, to_date, employee_id
-    LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" )
+  def self.find_employees_leave from_date, to_date, employee_id=''
+    empid = (employee_id=="")?" IS NOT NULL ":" = "+employee_id
+    LeaveDetail.select("count(employee_id) as leave_count").where("employee_id  #{empid} and leave_date between '#{from_date}' and '#{to_date}'" )
   end
 end

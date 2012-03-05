@@ -50,24 +50,27 @@ describe SalariesController do
   describe "GET new" do
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
       employee = FactoryGirl.create(:employee)
-      salary_group_detail = FactoryGirl.create(:salary_group_detail)
-      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
       get :new, :month_year => "Feb/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
 
     it "assigns a requested SalaryAllotment as @SalaryAllotment" do
       employee = FactoryGirl.create(:employee)
-      salary_group_detail = FactoryGirl.create(:salary_group_detail)
-      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
       get :new, :month_year => "Mar/2011", :employee_id => sal_allot.employee_id
       assigns(:salary_allotments).should eq([sal_allot])
     end
 
     it "should redirect to new salary page if selected employee is already leave the company" do
       employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-28")
-      salary_group_detail = FactoryGirl.create(:salary_group_detail)
-      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
       get :new, :month_year => "Mar/2011", :employee_id => sal_allot.employee_id
       response.should redirect_to new_salary_path
     end
@@ -82,8 +85,8 @@ describe SalariesController do
 
     it "get salary earnings for the given employee" do
       employee = FactoryGirl.create(:employee)
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
@@ -94,9 +97,9 @@ describe SalariesController do
 
     it "get salary deductions for the given employee" do
       employee = FactoryGirl.create(:employee)
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Deductions")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Deductions")
-      salaryHead3 = FactoryGirl.create(:salary_head, :id => 3, :head_name => "HRA", :salary_type => "Earnings")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC",:salary_type => "Deductions")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Deductions")
+      salaryHead3 = FactoryGirl.create(:salary_head, :id => 3, :head_name => "HRA", :short_name => "HRA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2)
       salary_hra = FactoryGirl.create(:salary, :salary_head => salaryHead3)
@@ -109,8 +112,8 @@ describe SalariesController do
 
     it "get pf for the given employee" do
       employee = FactoryGirl.create(:employee)
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :salary_amount=>500.00)
 
@@ -123,8 +126,8 @@ describe SalariesController do
 
     it "generates pdf output" do
       employee = FactoryGirl.create(:employee)
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
@@ -134,8 +137,8 @@ describe SalariesController do
 
     it "should give no of present days" do
       employee = FactoryGirl.create(:employee)
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
@@ -145,8 +148,8 @@ describe SalariesController do
 
     it "should give no of present days" do
       employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :salary_type => "Earnings")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :salary_type => "Earnings")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
       salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
