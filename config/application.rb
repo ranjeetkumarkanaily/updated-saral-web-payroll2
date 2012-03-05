@@ -54,6 +54,8 @@ module UpdatedSaralWebPayroll
     config.assets.version = '1.0'
 
     Paperclip::Railtie.insert
+
+    config.active_record.schema_format = :sql
   end
 
 end

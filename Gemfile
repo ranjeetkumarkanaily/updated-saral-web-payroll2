@@ -31,6 +31,8 @@ group :development, :test do
   #gem 'libnotify'
   gem 'simplecov'
   gem 'database_cleaner'
+  gem 'activerecord-postgres-hstore'
+  gem 'active_record_hstore_serializer'
 end
 
 group :test do
