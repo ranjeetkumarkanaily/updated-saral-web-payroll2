@@ -392,7 +392,10 @@ CREATE TABLE employees (
     refno character varying(255),
     designation_id integer,
     department_id integer,
-    grade_id integer
+    grade_id integer,
+    branch_id integer,
+    financial_institution_id integer,
+    bank_account_number character varying(255)
 );
 
 
@@ -483,6 +486,44 @@ CREATE SEQUENCE esi_groups_id_seq
 --
 
 ALTER SEQUENCE esi_groups_id_seq OWNED BY esi_groups.id;
+
+
+--
+-- Name: financial_institutions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE financial_institutions (
+    id integer NOT NULL,
+    name character varying(255),
+    address_line1 character varying(255),
+    address_line2 character varying(255),
+    address_line3 character varying(255),
+    address_line4 character varying(255),
+    pincode character varying(255),
+    branch_code character varying(255),
+    email character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: financial_institutions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE financial_institutions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: financial_institutions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE financial_institutions_id_seq OWNED BY financial_institutions.id;
 
 
 --
@@ -1233,6 +1274,13 @@ ALTER TABLE esi_groups ALTER COLUMN id SET DEFAULT nextval('esi_groups_id_seq'::
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE financial_institutions ALTER COLUMN id SET DEFAULT nextval('financial_institutions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE grades ALTER COLUMN id SET DEFAULT nextval('grades_id_seq'::regclass);
 
 
@@ -1456,6 +1504,14 @@ ALTER TABLE ONLY esi_group_rates
 
 ALTER TABLE ONLY esi_groups
     ADD CONSTRAINT esi_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: financial_institutions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY financial_institutions
+    ADD CONSTRAINT financial_institutions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1740,6 +1796,14 @@ ALTER TABLE ONLY branches
 
 
 --
+-- Name: employees_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_branch_id_fk FOREIGN KEY (branch_id) REFERENCES branches(id);
+
+
+--
 -- Name: employees_department_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1753,6 +1817,14 @@ ALTER TABLE ONLY employees
 
 ALTER TABLE ONLY employees
     ADD CONSTRAINT employees_designation_id_fk FOREIGN KEY (designation_id) REFERENCES designations(id);
+
+
+--
+-- Name: employees_financial_institution_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_financial_institution_id_fk FOREIGN KEY (financial_institution_id) REFERENCES financial_institutions(id);
 
 
 --
@@ -1928,3 +2000,7 @@ INSERT INTO schema_migrations (version) VALUES ('20120224071031');
 INSERT INTO schema_migrations (version) VALUES ('20120224072313');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
+
+INSERT INTO schema_migrations (version) VALUES ('20120215042312');
+
+INSERT INTO schema_migrations (version) VALUES ('20120223121525');
