@@ -55,22 +55,48 @@ class EmployeeDetailsController < ApplicationController
   # POST /employee_details.json
   def create
     @employee_detail = EmployeeDetail.new(params[:employee_detail])
-    effective_date = @employee_detail.effective_date
-    employee_id = @employee_detail.employee_id
-    EmployeeDetail.set_current_employee_id employee_id
-    last_record_id = EmployeeDetail.find_last_record_id employee_id  if employee_id != nil
     respond_to do |format|
-      if employee_id != nil && EmployeeDetail.effective_date_after_doj?(effective_date) && EmployeeDetail.effective_date_before_dol?(effective_date) && EmployeeDetail.effective_date_validation_with_saved_dates? then
+      if @employee_detail.employee_id != nil
+        effective_date = @employee_detail.effective_date
+        employee_id = @employee_detail.employee_id
+        #EmployeeDetail.set_current_employee_id employee_id
+        last_record_id = EmployeeDetail.find_last_record_id employee_id  if employee_id != nil
 
-        if @employee_detail.save
-          sal_gr_id = @employee_detail.salary_group_id
-          SalaryGroupDetail.all(:conditions => [ "salary_group_id = ?", sal_gr_id]).each do |sgd|
-            SalaryAllotment.create!(:employee_id => employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
+        effective_date_after_doj = true
+        if effective_date < Employee.find(employee_id).date_of_joining then
+          @employee_detail.errors.add(:effective_date, "effective_date should be after date of joining")
+          effective_date_after_doj = false
+        end
+
+        effective_date_before_dol = true
+        if Employee.find(employee_id).date_of_leaving != nil then
+          if effective_date > Employee.find(employee_id).date_of_leaving then
+            @employee_detail.errors.add(:effective_date, "effective_date should be before date of leaving")
+            effective_date_before_dol = false
           end
+        end
 
-          EmployeeDetail.update_last_record last_record_id,effective_date.yesterday if last_record_id != 0
-          format.html { redirect_to employee_details_path(:param1 => employee_id), notice: 'Employee detail was successfully created.' }
-          format.json { render json: @employee_detail, status: :created, location: @employee_detail }
+        effective_date_validation_with_saved_dates = true
+        last_record_id = EmployeeDetail.find_last_record_id employee_id
+        if last_record_id != 0
+          last_effective_date = EmployeeDetail.find(last_record_id).effective_date
+          if effective_date < last_effective_date then
+            @employee_detail.errors.add(:effective_date, "effective_date should be after date of last saved Effective date")
+            effective_date_validation_with_saved_dates = false
+          end
+        end
+
+
+        if ( effective_date_after_doj && effective_date_before_dol && effective_date_validation_with_saved_dates ) && @employee_detail.save then
+            sal_gr_id = @employee_detail.salary_group_id
+
+            SalaryGroupDetail.all(:conditions => [ "salary_group_id = ?", sal_gr_id]).each do |sgd|
+              SalaryAllotment.create!(:employee_id => employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
+            end
+
+            EmployeeDetail.update_last_record last_record_id,effective_date.yesterday if last_record_id != 0
+            format.html { redirect_to employee_details_path(:param1 => employee_id), notice: 'Employee detail was successfully created.' }
+            format.json { render json: @employee_detail, status: :created, location: @employee_detail }
         else
           @paramempid = employee_id
           @classification_headings = ClassificationHeading.order('display_order')
@@ -82,8 +108,8 @@ class EmployeeDetailsController < ApplicationController
         @classification_headings = ClassificationHeading.order('display_order')
         format.html { render action: "new" }
         format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
-      end
 
+      end
     end
   end
 

@@ -1985,17 +1985,17 @@ INSERT INTO schema_migrations (version) VALUES ('20120206150058');
 
 INSERT INTO schema_migrations (version) VALUES ('20120207094010');
 
-INSERT INTO schema_migrations (version) VALUES ('20120208045836');
-
 INSERT INTO schema_migrations (version) VALUES ('20120208092014');
 
 INSERT INTO schema_migrations (version) VALUES ('20120209060116');
 
 INSERT INTO schema_migrations (version) VALUES ('20120209065012');
 
-INSERT INTO schema_migrations (version) VALUES ('20120215042312');
+INSERT INTO schema_migrations (version) VALUES ('20120208045836');
 
-INSERT INTO schema_migrations (version) VALUES ('20120223121525');
+INSERT INTO schema_migrations (version) VALUES ('20120223113136');
+
+INSERT INTO schema_migrations (version) VALUES ('20120224071031');
 
 INSERT INTO schema_migrations (version) VALUES ('20120224072313');
 
