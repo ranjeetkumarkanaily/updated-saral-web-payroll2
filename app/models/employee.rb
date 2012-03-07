@@ -72,4 +72,8 @@ class Employee < ActiveRecord::Base
     date_of_leaving = Employee.find(emp_id).date_of_leaving
   end
 
+  scope:employees_list, lambda {|month_year|
+    where("date_of_leaving IS NULL OR (EXTRACT(MONTH FROM date_of_leaving)=#{month_year.month} AND EXTRACT(YEAR FROM date_of_leaving)=#{month_year.year})").order("created_at ASC")
+  }
+
 end

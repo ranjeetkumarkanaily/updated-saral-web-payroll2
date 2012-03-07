@@ -5,7 +5,7 @@ class GradesController < ApplicationController
     @grades = Grade.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @grades }
     end
   end

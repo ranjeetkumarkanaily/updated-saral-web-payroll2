@@ -10,7 +10,7 @@ class SalaryGroupDetailsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @salary_group_details }
     end
   end

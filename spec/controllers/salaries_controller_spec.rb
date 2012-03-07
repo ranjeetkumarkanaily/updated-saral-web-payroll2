@@ -157,15 +157,15 @@ describe SalariesController do
       assigns(:no_of_present_days).should eq(15)
     end
   end
-    describe "Update" do
-      it "should update the salary amount" do
-        sal = FactoryGirl.create(:salary)
-        post :update, :id => sal.id, :salary => [sal.attributes.merge(:salary_amount => 1000)]
-        Salary.find_by_id(sal.id)[:salary_amount].should eq(1000)
-      end
+  describe "Update" do
+    it "should update the salary amount" do
+      sal = FactoryGirl.create(:salary)
+      post :update, :id => sal.id, :salary => [sal.attributes.merge(:salary_amount => 1000)]
+      Salary.find_by_id(sal.id)[:salary_amount].should eq(1000)
     end
+  end
 
-    describe "GET edit" do
+  describe "GET edit" do
     it "assigns the requested Salary as @salary" do
       salary = FactoryGirl.create(:salary)
       get :edit, :month_year => "Feb/2011", :employee_id => 1
@@ -173,5 +173,32 @@ describe SalariesController do
     end
   end
 
+  describe "Salary Sheet" do
+    before :each do
+      @pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+      paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
+      pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
+    end
+    it "generates excel for salary sheet for employee whose data of leaving is not present" do
+      employee = FactoryGirl.create(:employee)
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
+      get :salary_sheet, :month_year => "Feb/2011", :format => "xls"
+      response.should render_template('salaries/salary_sheet.xls')
+    end
+
+    it "generates excel for salary sheet for employee whose data of leaving is present" do
+      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
+      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
+      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1, :employee_id => employee.id)
+      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
+
+      get :salary_sheet, :month_year => "Feb/2011", :format => "xls"
+      response.should render_template('salaries/salary_sheet.xls')
+    end
+  end
 end

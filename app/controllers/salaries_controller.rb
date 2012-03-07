@@ -39,8 +39,8 @@ class SalariesController < ApplicationController
 
 
 
-      @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id]
-      @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id]
+      @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id],0
+      @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
       @pf_amount = Salary.get_pf_amount params[:month_year], params[:employee_id]
       @esi_amount = Salary.get_esi_amount params[:month_year], params[:employee_id]
 
@@ -52,10 +52,6 @@ class SalariesController < ApplicationController
           render :pdf => 'Payslip',
                  :template => 'salaries/index.pdf.haml'
         end
-        #format.xls do
-        #  render :xls => 'Payslip',
-        #         :template => 'salaries/index.xls.haml'
-        #end
       end
     end
   end
@@ -98,31 +94,20 @@ class SalariesController < ApplicationController
   end
 
   def salary_sheet
-    @company = Company.first
-    @employee = Employee.find(params[:employee_id])
-    month_year = Date.strptime params[:month_year], '%b/%Y'
-    leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,params[:employee_id]
-    leave_count = leave_count[0]['leave_count'].to_i
-    @no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
-    @no_of_day_in_selected_month = @no_of_day_in_selected_month[0]['number_of_days'].to_i
+    if params[:month_year]
+      @company = Company.first
+      @earning_heads = SalaryHead.salary_heads("Earnings")
+      @deduction_heads = SalaryHead.salary_heads("Deductions")
 
-    employee_dol = Employee.chk_dol params[:employee_id]
-    if employee_dol
-      no_of_day_if_dol_exist = employee_dol.day
-      @no_of_present_days = no_of_day_if_dol_exist - leave_count
-    else
-      @no_of_present_days = @no_of_day_in_selected_month - leave_count
+      @employee_salary_detail = Salary.salary_sheet params[:month_year]
+
+      respond_to do |format|
+        format.xls do
+          render :xls => 'Salary Sheet',
+                 :template => 'salaries/salary_sheet.xls.haml'
+        end
+      end
     end
-
-
-
-    @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id]
-    @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id]
-    @pf_amount = Salary.get_pf_amount params[:month_year], params[:employee_id]
-    @esi_amount = Salary.get_esi_amount params[:month_year], params[:employee_id]
-
-    @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
-
 
   end
 

@@ -5,7 +5,7 @@ class SalaryHeadsController < ApplicationController
     @salary_heads = SalaryHead.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @salary_heads }
     end
   end
