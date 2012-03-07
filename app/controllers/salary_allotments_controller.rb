@@ -17,6 +17,8 @@ class SalaryAllotmentsController < ApplicationController
   end
 
   def update
+
+    #puts params[:salAllotment].inspect
     params[:salAllotment].each do |salAllot|
       allotSal = SalaryAllotment.find(salAllot[:id])
       allotSal.update_attributes(salAllot)

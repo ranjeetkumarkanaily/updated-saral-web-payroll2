@@ -183,6 +183,27 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def pf_contribution_restrict
+    if params[:search]
+      @employeesList = Employee.order('created_at ASC').search(params[:search])
+    else
+      @employeesList = Employee.order('created_at ASC')
+    end
+  end
+
+  def pf_restrict_update
+    params[:employee_data].each do |value|
+      @val=Employee.find(value[:id])
+      #puts val.inspect
+      if value[:pf].nil?
+        @val.update_attribute(:restrct_pf,false)
+      else
+        @val.update_attribute(:restrct_pf,true)
+      end
+    end
+    redirect_to pf_contribution_restrict_employees_path
+  end
+
   private
     def save_employee employees
       employees.each do |employee|

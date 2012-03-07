@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223121525) do
+ActiveRecord::Schema.define(:version => 20120225104413) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20120223121525) do
     t.integer  "branch_id"
     t.integer  "financial_institution_id"
     t.string   "bank_account_number"
+    t.boolean  "restrct_pf",               :default => false
   end
 
   create_table "esi_group_rates", :force => true do |t|

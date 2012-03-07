@@ -5,6 +5,16 @@
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    %script{:language => "JavaScript"}
+      $(document).ready(function(){
+      var c=0;
+      $("#select_all").click(function(){
+      c++;
+      if (c==1){
+      $("input:checkbox").prop("checked", true);}
+      else{
+      $("input:checkbox").prop("checked",false);c=0}});
+      });
   %body
     #header
       #header_left

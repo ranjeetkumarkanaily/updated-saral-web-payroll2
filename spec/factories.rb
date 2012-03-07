@@ -11,6 +11,7 @@ FactoryGirl.define do
     department
     designation
     grade
+    restrct_pf false
   end
 
   factory :lop do
