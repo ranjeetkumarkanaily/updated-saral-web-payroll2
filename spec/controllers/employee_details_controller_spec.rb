@@ -57,10 +57,11 @@ describe EmployeeDetailsController do
   end
 
   describe "POST create" do
-    before :each do
-      @employee = FactoryGirl.create(:employee)
-    end
+
     describe "with valid params" do
+      before :each do
+        @employee = FactoryGirl.create(:employee)
+      end
       it "creates a new EmployeeDetail" do
         expect {
           post :create, :employee_detail => valid_attributes
@@ -87,6 +88,9 @@ describe EmployeeDetailsController do
     end
 
     describe "with invalid params" do
+      before :each do
+        @employee = FactoryGirl.create(:employee)
+      end
       it "assigns a newly created but unsaved employee_detail as @employee_detail" do
         # Trigger the behavior that occurs when invalid params are submitted
         EmployeeDetail.any_instance.stub(:save).and_return(false)
@@ -103,12 +107,13 @@ describe EmployeeDetailsController do
     end
     describe "validation for the effective date" do
       it "validation with date of joining" do
+        employee = FactoryGirl.create(:employee)
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         post :create, :employee_detail => valid_attributes.merge(:effective_date => '2009-01-01')
         assigns(:employee_detail).should be_a_new(EmployeeDetail)
       end
 
-      xit "validation with date of leaving" do
+      it "validation with date of leaving" do
         department = FactoryGirl.create(:department)
         employee = FactoryGirl.create(:employee,:date_of_leaving => '2011-03-03',:department_id => department.id)
         EmployeeDetail.any_instance.stub(:save).and_return(false)
@@ -117,6 +122,7 @@ describe EmployeeDetailsController do
       end
 
       it "validation with saved effective dates" do
+        employee = FactoryGirl.create(:employee)
         employee_details_prev = FactoryGirl.create(:employee_detail)
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         post :create, :employee_detail => valid_attributes.merge(:effective_date => '2009-01-01')
