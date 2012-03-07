@@ -13,43 +13,43 @@ class EmployeeDetail < ActiveRecord::Base
 
   validates_uniqueness_of :employee_id, :scope => [:effective_date],:message => "Details already exist for the same date"
 
-  attr_accessor :current_employee_id
+  #attr_accessor :current_employee_id
+  #
+  #def self.set_current_employee_id employee_id
+  #  @current_employee_id = employee_id
+  #end
+  #def self.effective_date_after_doj? effective_date
+  #  result = true
+  #  if effective_date < Employee.find(@current_employee_id).date_of_joining then
+  #     errors.add(:effective_date, "effective_date should be after date of joining")
+  #     result = false
+  #  end
+  #  result
+  #end
 
-  def self.set_current_employee_id employee_id
-    @current_employee_id = employee_id
-  end
-  def self.effective_date_after_doj? effective_date
-    result = true
-    if effective_date < Employee.find(@current_employee_id).date_of_joining then
-       errors.add(:effective_date, "effective_date should be after date of joining")
-       result = false
-    end
-    result
-  end
+  #def self.effective_date_before_dol? effective_date
+  #  result = true
+  #  if Employee.find(@current_employee_id).date_of_leaving != nil then
+  #    if effective_date > Employee.find(@current_employee_id).date_of_leaving then
+  #      errors.add(:effective_date, "effective_date should be before date of leaving")
+  #      result = false
+  #    end
+  #  end
+  #  result
+  #end
 
-  def self.effective_date_before_dol? effective_date
-    result = true
-    if Employee.find(@current_employee_id).date_of_leaving != nil then
-      if effective_date > Employee.find(@current_employee_id).date_of_leaving then
-        errors.add(:effective_date, "effective_date should be before date of leaving")
-        result = false
-      end
-    end
-    result
-  end
-
-  def self.effective_date_validation_with_saved_dates?
-    result = true
-    last_record_id = find_last_record_id @current_employee_id
-    if last_record_id != 0
-      last_effective_date = EmployeeDetail.find(last_record_id).effective_date
-      if effective_date < last_effective_date then
-        errors.add(:effective_date, "effective_date should be after date of last saved Effective date")
-        result = false
-      end
-    end
-    result
-  end
+  #def self.effective_date_validation_with_saved_dates? effective_date
+  #  result = true
+  #  last_record_id = find_last_record_id @current_employee_id
+  #  if last_record_id != 0
+  #    last_effective_date = EmployeeDetail.find(last_record_id).effective_date
+  #    if effective_date < last_effective_date then
+  #      errors.add(:effective_date, "effective_date should be after date of last saved Effective date")
+  #      result = false
+  #    end
+  #  end
+  #  result
+  #end
 
   def self.update_last_record last_record_id,effective_date
     pre_employee_detail = EmployeeDetail.find(last_record_id)
