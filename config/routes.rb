@@ -1,5 +1,11 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+  resources :hr_masters
+
+  resources :hr_category_details
+
+  resources :hr_categories
+
   resources :financial_institutions
 
   resources :pt_group_rates

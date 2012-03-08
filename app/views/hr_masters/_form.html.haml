@@ -1,0 +1,14 @@
+= form_tag hr_masters_path do
+  = hidden_field_tag 'hr_master[employee_id]', @employee_id
+  = hidden_field_tag 'hr_master[hr_category_id]', @hr_category_id
+  = hidden_field_tag 'hr_master[hr_category_detail_id]', 1
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table
+          - @hr_category.hr_category_details.each do |hr_category_detail|
+            %tr
+              %td= label_tag hr_category_detail.name
+              %td= text_field_tag "hr_master[category_values][#{hr_category_detail.name}]"
+    %tr
+      %td= submit_tag "Save"

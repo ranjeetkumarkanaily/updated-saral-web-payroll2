@@ -1,0 +1,46 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1= @hr_category.category_name
+  - if params[:errors]
+    #error_explanation
+      %h2
+        = pluralize(params[:errors].count, "error")
+        prohibited this Hr Master from being saved:
+      %ul
+        - params[:errors].each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            - if !@hr_masters.empty?
+              - @hr_masters[0].category_values.keys.each do |key|
+                %td.table_grid_header= key
+              %td.table_grid_header{:colspan => 2}= "Operations"
+              - @hr_masters.each do |hr_master|
+                %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                  - hr_master[:category_values].each do |value|
+                    -#%td{:style => "text-align:center"}= value[1]
+                    %td.table_grid_td= value[1]
+                  %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit HR Master"), edit_hr_master_path(hr_master)
+                  %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Master"), hr_master, confirm: 'Are you sure?', method: :delete
+    %tr
+      %td &nbsp;
+    %tr
+      %td
+        = form_tag hr_masters_path do
+          = hidden_field_tag 'hr_master[employee_id]', @employee_id
+          = hidden_field_tag 'hr_master[hr_category_id]', @hr_category_id
+          %table
+            %tr
+              %td.std_td
+                %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+                  %tr
+                  - @hr_category.hr_category_details.each do |hr_category_detail|
+                    %tr
+                      %td= label_tag hr_category_detail.name
+                      %td= text_field_tag "hr_master[category_values][#{hr_category_detail.name}]"
+                  %tr
+                    %td= submit_tag "Save"

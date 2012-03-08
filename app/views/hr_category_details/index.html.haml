@@ -1,0 +1,32 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing HR Category details
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header HR Category Name
+            %td.table_grid_header Name
+            %td.table_grid_header Data type
+            %td.table_grid_header Required
+            %td.table_grid_header{:colspan => 3} Operations
+          - @hr_category_details.each do |hr_category_detail|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= hr_category_detail.hr_category.category_name
+              %td.table_grid_td= hr_category_detail.name
+              %td.table_grid_td= hr_category_detail.data_type
+              %td.table_grid_td= hr_category_detail.required
+              %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show HR Category Detail"), hr_category_detail
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit HR Category Detail"), edit_hr_category_detail_path(hr_category_detail, :param1 => @hr_category_id)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Category Detail"), hr_category_detail, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @hr_category_details
+          = will_paginate @hr_category_details, :container => false
+    %tr
+      %td &nbsp;

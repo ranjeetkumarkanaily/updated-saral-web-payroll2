@@ -1,0 +1,26 @@
+= form_for @hr_category do |f|
+  - if @hr_category.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@hr_category.errors.count, "error")
+        prohibited this HR Category from being saved:
+      %ul
+        - @hr_category.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} HR Category :&nbsp;
+                  %td= f.text_field :category_name
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td= f.submit

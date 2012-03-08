@@ -1,0 +1,45 @@
+= form_for @hr_category_detail do |f|
+  - if @hr_category_detail.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@hr_category_detail.errors.count, "error")
+        prohibited this HR Category Detail from being saved:
+      %ul
+        - @hr_category_detail.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Detail Name:&nbsp;
+                  %td= f.text_field :name, :size => '22'
+                  = f.hidden_field :hr_category_id, :value => @hr_category_id
+                %tr
+                  %td{:width=>130} Required :&nbsp;
+                  %td= f.check_box :required
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Data Type :&nbsp;
+                  %td= f.text_field :data_type
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td= f.submit
+
+-#
+-#  <div class="field">
+-#    <%= f.label :required %><br />
+-#    <%= f.check_box :required %>
+-#  </div>
+-#  <div class="actions">
+-#    <%= f.submit %>
+-#  </div>
+-#<% end %>

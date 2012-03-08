@@ -20,6 +20,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1.json
   def show
     @employee = Employee.find(params[:id])
+    @hr_categories = HrCategory.all
 
     respond_to do |format|
       format.html # show.html.haml

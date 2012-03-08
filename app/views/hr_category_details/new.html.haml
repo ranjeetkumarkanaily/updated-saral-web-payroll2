@@ -1,0 +1,5 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 New HR Category Details for #{HrCategory.find_by_id(@hr_category_id).category_name}
+  = render 'form'

@@ -1,0 +1,27 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1= "Editing " + @hr_master.hr_category.category_name
+  - if params[:errors]
+    #error_explanation
+      %h2
+        = pluralize(params[:errors].count, "error")
+        prohibited this Hr Master from being saved:
+      %ul
+        - params[:errors].each do |msg|
+          %li= msg
+  = form_tag hr_master_path, :method => :put do
+    = hidden_field_tag 'hr_master[employee_id]', @hr_master.employee_id
+    = hidden_field_tag 'hr_master[hr_category_id]', @hr_master.hr_category_id
+    -#= hidden_field_tag 'hr_master[hr_category_detail_id]', 1
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td.std_td
+          %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+            %tr
+            - @hr_master.category_values.each do |value|
+              %tr
+                %td= label_tag value[0]
+                %td= text_field_tag "hr_master[category_values][#{value[0]}]", value[1]
+            %tr
+              %td= submit_tag "Save"

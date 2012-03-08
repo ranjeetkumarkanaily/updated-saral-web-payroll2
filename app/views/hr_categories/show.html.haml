@@ -1,0 +1,18 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1
+    Showing HR Category
+    = link_to image_tag('/assets/edit.png',:title => "Edit HR Category"), edit_hr_category_path(@hr_category)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} HR Category :&nbsp;
+                  %td= @hr_category.category_name
+          %tr
+            %td &nbsp;

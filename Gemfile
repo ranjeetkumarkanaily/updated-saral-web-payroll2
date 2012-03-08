@@ -58,6 +58,8 @@ gem "spreadsheet"
 gem 'will_paginate'
 gem 'wicked_pdf'
 
+gem 'active_record_hstore_serializer'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
