@@ -592,6 +592,104 @@ ALTER SEQUENCE holidays_id_seq OWNED BY holidays.id;
 
 
 --
+-- Name: hr_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hr_categories (
+    id integer NOT NULL,
+    category_name character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hr_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hr_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hr_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hr_categories_id_seq OWNED BY hr_categories.id;
+
+
+--
+-- Name: hr_category_details; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hr_category_details (
+    id integer NOT NULL,
+    hr_category_id integer,
+    name character varying(255),
+    data_type character varying(255),
+    required boolean,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
+-- Name: hr_category_details_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hr_category_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hr_category_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hr_category_details_id_seq OWNED BY hr_category_details.id;
+
+
+--
+-- Name: hr_masters; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE hr_masters (
+    id integer NOT NULL,
+    hr_category_id integer,
+    employee_id integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    category_values hstore
+);
+
+
+--
+-- Name: hr_masters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE hr_masters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: hr_masters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE hr_masters_id_seq OWNED BY hr_masters.id;
+
+
+--
 -- Name: leave_details; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1295,6 +1393,27 @@ ALTER TABLE holidays ALTER COLUMN id SET DEFAULT nextval('holidays_id_seq'::regc
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE hr_categories ALTER COLUMN id SET DEFAULT nextval('hr_categories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE hr_category_details ALTER COLUMN id SET DEFAULT nextval('hr_category_details_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE hr_masters ALTER COLUMN id SET DEFAULT nextval('hr_masters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE leave_details ALTER COLUMN id SET DEFAULT nextval('leave_details_id_seq'::regclass);
 
 
@@ -1531,6 +1650,30 @@ ALTER TABLE ONLY holidays
 
 
 --
+-- Name: hr_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hr_categories
+    ADD CONSTRAINT hr_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hr_category_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hr_category_details
+    ADD CONSTRAINT hr_category_details_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hr_masters_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY hr_masters
+    ADD CONSTRAINT hr_masters_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: leave_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1688,6 +1831,27 @@ CREATE INDEX index_branches_on_pt_group_id ON branches USING btree (pt_group_id)
 
 
 --
+-- Name: index_hr_category_details_on_hr_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hr_category_details_on_hr_category_id ON hr_category_details USING btree (hr_category_id);
+
+
+--
+-- Name: index_hr_masters_on_employee_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hr_masters_on_employee_id ON hr_masters USING btree (employee_id);
+
+
+--
+-- Name: index_hr_masters_on_hr_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_hr_masters_on_hr_category_id ON hr_masters USING btree (hr_category_id);
+
+
+--
 -- Name: index_leave_details_on_employee_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1796,6 +1960,30 @@ ALTER TABLE ONLY branches
 
 
 --
+-- Name: employee_details_attendance_configuration_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employee_details
+    ADD CONSTRAINT employee_details_attendance_configuration_id_fk FOREIGN KEY (attendance_configuration_id) REFERENCES attendance_configurations(id);
+
+
+--
+-- Name: employee_details_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employee_details
+    ADD CONSTRAINT employee_details_branch_id_fk FOREIGN KEY (branch_id) REFERENCES branches(id);
+
+
+--
+-- Name: employee_details_financial_institution_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employee_details
+    ADD CONSTRAINT employee_details_financial_institution_id_fk FOREIGN KEY (financial_institution_id) REFERENCES financial_institutions(id);
+
+
+--
 -- Name: employees_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1849,6 +2037,30 @@ ALTER TABLE ONLY esi_group_rates
 
 ALTER TABLE ONLY holidays
     ADD CONSTRAINT holidays_attendance_configuration_id_fk FOREIGN KEY (attendance_configuration_id) REFERENCES attendance_configurations(id);
+
+
+--
+-- Name: hr_category_details_hr_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hr_category_details
+    ADD CONSTRAINT hr_category_details_hr_category_id_fk FOREIGN KEY (hr_category_id) REFERENCES hr_categories(id);
+
+
+--
+-- Name: hr_masters_employee_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hr_masters
+    ADD CONSTRAINT hr_masters_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employees(id);
+
+
+--
+-- Name: hr_masters_hr_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hr_masters
+    ADD CONSTRAINT hr_masters_hr_category_id_fk FOREIGN KEY (hr_category_id) REFERENCES hr_categories(id);
 
 
 --
@@ -1985,22 +2197,28 @@ INSERT INTO schema_migrations (version) VALUES ('20120206150058');
 
 INSERT INTO schema_migrations (version) VALUES ('20120207094010');
 
+INSERT INTO schema_migrations (version) VALUES ('20120208045836');
+
 INSERT INTO schema_migrations (version) VALUES ('20120208092014');
 
 INSERT INTO schema_migrations (version) VALUES ('20120209060116');
 
 INSERT INTO schema_migrations (version) VALUES ('20120209065012');
 
-INSERT INTO schema_migrations (version) VALUES ('20120208045836');
+INSERT INTO schema_migrations (version) VALUES ('20120215042312');
 
-INSERT INTO schema_migrations (version) VALUES ('20120223113136');
+INSERT INTO schema_migrations (version) VALUES ('20120223121525');
 
-INSERT INTO schema_migrations (version) VALUES ('20120224071031');
+INSERT INTO schema_migrations (version) VALUES ('20120224055527');
+
+INSERT INTO schema_migrations (version) VALUES ('20120224060650');
+
+INSERT INTO schema_migrations (version) VALUES ('20120224061125');
+
+INSERT INTO schema_migrations (version) VALUES ('20120228054045');
+
+INSERT INTO schema_migrations (version) VALUES ('20120228054046');
 
 INSERT INTO schema_migrations (version) VALUES ('20120224072313');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
-
-INSERT INTO schema_migrations (version) VALUES ('20120215042312');
-
-INSERT INTO schema_migrations (version) VALUES ('20120223121525');
