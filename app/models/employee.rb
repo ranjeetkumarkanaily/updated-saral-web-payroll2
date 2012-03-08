@@ -57,7 +57,7 @@ class Employee < ActiveRecord::Base
 
   def self.search(search)
     search_condition = "%" + search + "%"
-    find(:all, :conditions => ['refno LIKE ? OR empname LIKE ? OR email LIKE ?', search_condition, search_condition, search_condition])
+    find(:all, :conditions => ['refno ILIKE ? OR empname ILIKE ? OR email ILIKE ?', search_condition, search_condition, search_condition])
   end
 
   def self.employee_with_salary_not_allotted
@@ -71,5 +71,9 @@ class Employee < ActiveRecord::Base
   def self.chk_dol emp_id
     date_of_leaving = Employee.find(emp_id).date_of_leaving
   end
+
+  scope:employees_list, lambda {|month_year|
+    where("date_of_leaving IS NULL OR (EXTRACT(MONTH FROM date_of_leaving)=#{month_year.month} AND EXTRACT(YEAR FROM date_of_leaving)=#{month_year.year})").order("created_at ASC")
+  }
 
 end

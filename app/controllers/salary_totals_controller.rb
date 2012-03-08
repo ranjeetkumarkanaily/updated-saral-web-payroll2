@@ -4,7 +4,7 @@ class SalaryTotalsController < ApplicationController
     @salary_totals = SalaryTotal.all
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @salary_totals }
     end
   end

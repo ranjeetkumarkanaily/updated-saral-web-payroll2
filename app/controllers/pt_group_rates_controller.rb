@@ -5,7 +5,7 @@ class PtGroupRatesController < ApplicationController
     @pt_group_rates = PtGroupRate.all
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @pt_group_rates }
     end
   end

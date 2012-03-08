@@ -6,7 +6,7 @@ class AttendanceConfigurationsController < ApplicationController
 
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @attendance_configurations }
     end
   end

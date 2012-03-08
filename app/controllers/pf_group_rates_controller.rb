@@ -6,7 +6,7 @@ class PfGroupRatesController < ApplicationController
     @pf_group_rates = PfGroupRate.where(:pf_group_id => @param_pf_group_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @pf_group_rates }
     end
   end

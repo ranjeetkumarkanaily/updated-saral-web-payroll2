@@ -5,7 +5,7 @@ class SalaryAllotmentsController < ApplicationController
     @already_allot_Sal = Employee.employee_with_salary_allotted.order("created_at ASC").paginate(:page => params[:page], :per_page => 10)
     @param_selected_tab = params[:param1]
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @allotSal }
       format.pdf { render :layout => false }
     end

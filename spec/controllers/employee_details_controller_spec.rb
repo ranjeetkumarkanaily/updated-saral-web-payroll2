@@ -8,9 +8,15 @@ describe EmployeeDetailsController do
 
   def valid_attributes
     {:employee_id => "1",
-    :effective_date => "2009-10-31",
+    :effective_date => "2012-01-01",
     :salary_group_id => "1",
-    :allotted_gross => 5000}
+    :allotted_gross => 5000,
+    :classification =>{'Department' => 'development'},
+    :branch_id => 1,
+    :financial_institution_id => 1,
+    :attendance_configuration_id => 1,
+    :bank_account_number => 2316,
+    :effective_to => ''}
   end
 
   describe "GET index" do
@@ -51,7 +57,11 @@ describe EmployeeDetailsController do
   end
 
   describe "POST create" do
+
     describe "with valid params" do
+      before :each do
+        @employee = FactoryGirl.create(:employee)
+      end
       it "creates a new EmployeeDetail" do
         expect {
           post :create, :employee_detail => valid_attributes
@@ -78,6 +88,9 @@ describe EmployeeDetailsController do
     end
 
     describe "with invalid params" do
+      before :each do
+        @employee = FactoryGirl.create(:employee)
+      end
       it "assigns a newly created but unsaved employee_detail as @employee_detail" do
         # Trigger the behavior that occurs when invalid params are submitted
         EmployeeDetail.any_instance.stub(:save).and_return(false)
@@ -92,16 +105,38 @@ describe EmployeeDetailsController do
         response.should render_template("new")
       end
     end
+    describe "validation for the effective date" do
+      it "validation with date of joining" do
+        employee = FactoryGirl.create(:employee)
+        EmployeeDetail.any_instance.stub(:save).and_return(false)
+        post :create, :employee_detail => valid_attributes.merge(:effective_date => '2009-01-01')
+        assigns(:employee_detail).should be_a_new(EmployeeDetail)
+      end
+
+      it "validation with date of leaving" do
+        department = FactoryGirl.create(:department)
+        employee = FactoryGirl.create(:employee,:date_of_leaving => '2011-03-03',:department_id => department.id)
+        EmployeeDetail.any_instance.stub(:save).and_return(false)
+        post :create, :employee_detail => valid_attributes.merge(:effective_date => '2011-04-01',:employee_id => employee.id)
+        assigns(:employee_detail).should be_a_new(EmployeeDetail)
+      end
+
+      it "validation with saved effective dates" do
+        employee = FactoryGirl.create(:employee)
+        employee_details_prev = FactoryGirl.create(:employee_detail)
+        EmployeeDetail.any_instance.stub(:save).and_return(false)
+        post :create, :employee_detail => valid_attributes.merge(:effective_date => '2009-01-01')
+        assigns(:employee_detail).should be_a_new(EmployeeDetail)
+      end
+
+    end
+
   end
 
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested employee_detail" do
         employee_detail = EmployeeDetail.create! valid_attributes
-        # Assuming there are no other employee_details in the database, this
-        # specifies that the EmployeeDetail created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         EmployeeDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => employee_detail.id, :employee_detail => {'these' => 'params'}
       end
@@ -122,7 +157,6 @@ describe EmployeeDetailsController do
     describe "with invalid params" do
       it "assigns the employee_detail as @employee_detail" do
         employee_detail = EmployeeDetail.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         put :update, :id => employee_detail.id, :employee_detail => {}
         assigns(:employee_detail).should eq(employee_detail)
@@ -130,11 +164,13 @@ describe EmployeeDetailsController do
 
       it "re-renders the 'edit' template" do
         employee_detail = EmployeeDetail.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         put :update, :id => employee_detail.id, :employee_detail => {}
         response.should render_template("edit")
       end
+
+
+
     end
   end
 
@@ -146,10 +182,17 @@ describe EmployeeDetailsController do
       }.to change(EmployeeDetail, :count).by(-1)
     end
 
+    it "redirects to the employee_details list and updates the last record's effective date'" do
+      employee_detail_first = FactoryGirl.create(:employee_detail)
+      employee_detail_second = EmployeeDetail.create! valid_attributes
+      delete :destroy, :id => employee_detail_second.id
+      response.should redirect_to(employee_details_url(:param1 => valid_attributes[:employee_id] ))
+    end
+
     it "redirects to the employee_details list" do
       employee_detail = EmployeeDetail.create! valid_attributes
       delete :destroy, :id => employee_detail.id
-      response.should redirect_to(employee_details_url)
+      response.should redirect_to(employee_details_url(:param1 => valid_attributes[:employee_id] ))
     end
   end
 

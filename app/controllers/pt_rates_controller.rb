@@ -10,7 +10,7 @@ class PtRatesController < ApplicationController
       @pt_rates = PtRate.order('min_sal_range ASC').paginate(:page => params[:page], :per_page => 10)
     end
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @pt_rates }
     end
   end

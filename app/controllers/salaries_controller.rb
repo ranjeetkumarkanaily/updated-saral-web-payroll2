@@ -39,8 +39,8 @@ class SalariesController < ApplicationController
 
 
 
-      @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id]
-      @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id]
+      @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id],0
+      @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
       @pf_amount = Salary.get_pf_amount params[:month_year], params[:employee_id]
       @esi_amount = Salary.get_esi_amount params[:month_year], params[:employee_id]
 
@@ -91,6 +91,24 @@ class SalariesController < ApplicationController
       allotSal.update_attributes(sal)
     end
     redirect_to salaries_path, notice: 'Salary updated successfully'
+  end
+
+  def salary_sheet
+    if params[:month_year]
+      @company = Company.first
+      @earning_heads = SalaryHead.salary_heads("Earnings")
+      @deduction_heads = SalaryHead.salary_heads("Deductions")
+
+      @employee_salary_detail = Salary.salary_sheet params[:month_year]
+
+      respond_to do |format|
+        format.xls do
+          render :xls => 'Salary Sheet',
+                 :template => 'salaries/salary_sheet.xls.haml'
+        end
+      end
+    end
+
   end
 
 end
