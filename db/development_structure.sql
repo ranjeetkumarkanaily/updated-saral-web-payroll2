@@ -1796,6 +1796,30 @@ ALTER TABLE ONLY branches
 
 
 --
+-- Name: employee_details_attendance_configuration_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employee_details
+    ADD CONSTRAINT employee_details_attendance_configuration_id_fk FOREIGN KEY (attendance_configuration_id) REFERENCES attendance_configurations(id);
+
+
+--
+-- Name: employee_details_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employee_details
+    ADD CONSTRAINT employee_details_branch_id_fk FOREIGN KEY (branch_id) REFERENCES branches(id);
+
+
+--
+-- Name: employee_details_financial_institution_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employee_details
+    ADD CONSTRAINT employee_details_financial_institution_id_fk FOREIGN KEY (financial_institution_id) REFERENCES financial_institutions(id);
+
+
+--
 -- Name: employees_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1985,22 +2009,18 @@ INSERT INTO schema_migrations (version) VALUES ('20120206150058');
 
 INSERT INTO schema_migrations (version) VALUES ('20120207094010');
 
+INSERT INTO schema_migrations (version) VALUES ('20120208045836');
+
 INSERT INTO schema_migrations (version) VALUES ('20120208092014');
 
 INSERT INTO schema_migrations (version) VALUES ('20120209060116');
 
 INSERT INTO schema_migrations (version) VALUES ('20120209065012');
 
-INSERT INTO schema_migrations (version) VALUES ('20120208045836');
+INSERT INTO schema_migrations (version) VALUES ('20120215042312');
 
-INSERT INTO schema_migrations (version) VALUES ('20120223113136');
-
-INSERT INTO schema_migrations (version) VALUES ('20120224071031');
+INSERT INTO schema_migrations (version) VALUES ('20120223121525');
 
 INSERT INTO schema_migrations (version) VALUES ('20120224072313');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
-
-INSERT INTO schema_migrations (version) VALUES ('20120215042312');
-
-INSERT INTO schema_migrations (version) VALUES ('20120223121525');
