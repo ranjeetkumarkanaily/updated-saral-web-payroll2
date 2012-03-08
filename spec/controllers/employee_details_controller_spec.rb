@@ -4,6 +4,9 @@ require 'spec_helper'
 describe EmployeeDetailsController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    @branch = FactoryGirl.create(:branch)
+    @financial_institution = FactoryGirl.create(:financial_institution)
+    @attendance_configuration = FactoryGirl.create(:attendance_configuration)
   end
 
   def valid_attributes
@@ -12,9 +15,9 @@ describe EmployeeDetailsController do
     :salary_group_id => "1",
     :allotted_gross => 5000,
     :classification =>{'Department' => 'development'},
-    :branch_id => 1,
-    :financial_institution_id => 1,
-    :attendance_configuration_id => 1,
+    :branch_id => @branch.id,
+    :financial_institution_id => @financial_institution.id,
+    :attendance_configuration_id => @attendance_configuration.id,
     :bank_account_number => 2316,
     :effective_to => ''}
   end
@@ -123,7 +126,7 @@ describe EmployeeDetailsController do
 
       it "validation with saved effective dates" do
         employee = FactoryGirl.create(:employee)
-        employee_details_prev = FactoryGirl.create(:employee_detail)
+        employee_details_prev = FactoryGirl.create(:employee_detail,:branch_id => @branch.id,:financial_institution_id => @financial_institution.id,:attendance_configuration_id => @attendance_configuration.id)
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         post :create, :employee_detail => valid_attributes.merge(:effective_date => '2009-01-01')
         assigns(:employee_detail).should be_a_new(EmployeeDetail)
@@ -183,7 +186,7 @@ describe EmployeeDetailsController do
     end
 
     it "redirects to the employee_details list and updates the last record's effective date'" do
-      employee_detail_first = FactoryGirl.create(:employee_detail)
+      employee_detail_first = FactoryGirl.create(:employee_detail,:branch_id => @branch.id,:financial_institution_id => @financial_institution.id,:attendance_configuration_id => @attendance_configuration.id)
       employee_detail_second = EmployeeDetail.create! valid_attributes
       delete :destroy, :id => employee_detail_second.id
       response.should redirect_to(employee_details_url(:param1 => valid_attributes[:employee_id] ))
