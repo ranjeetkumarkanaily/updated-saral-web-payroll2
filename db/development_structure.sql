@@ -395,7 +395,8 @@ CREATE TABLE employees (
     grade_id integer,
     branch_id integer,
     financial_institution_id integer,
-    bank_account_number character varying(255)
+    bank_account_number character varying(255),
+    restrct_pf boolean DEFAULT false
 );
 
 
@@ -2024,3 +2025,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120223121525');
 INSERT INTO schema_migrations (version) VALUES ('20120224072313');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
+
+INSERT INTO schema_migrations (version) VALUES ('20120225104413');

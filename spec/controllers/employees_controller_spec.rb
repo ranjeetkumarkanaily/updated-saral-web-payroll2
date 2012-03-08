@@ -207,7 +207,12 @@ describe EmployeesController do
     end
     it "assigns all employees as @employees" do
       get :pf_contribution_restrict
-      assigns(:employees).should eq([@employee])
+      assigns(:employeesList).should eq([@employee])
+    end
+
+    it "assigns all employees as @employees" do
+      get :pf_contribution_restrict, :search => "XYZ"
+      assigns(:employeesList).should eq([@employee])
     end
   end
 
