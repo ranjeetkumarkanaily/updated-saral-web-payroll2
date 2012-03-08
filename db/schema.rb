@@ -11,12 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120228054046) do
-=======
 ActiveRecord::Schema.define(:version => 20120228053057) do
-
->>>>>>> dcd90e4c2f76840eebffaaff4b2d6f550eca85cc
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"

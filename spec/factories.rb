@@ -188,4 +188,15 @@ FactoryGirl.define do
     esi_applicable false
   end
 
+  factory :hr_category do
+    category_name "Family"
+  end
+
+  factory :hr_category_details do
+    hr_category
+    name "Name"
+    data_type "String"
+    required t
+  end
+
 end

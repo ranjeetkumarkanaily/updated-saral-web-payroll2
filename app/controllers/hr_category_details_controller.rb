@@ -4,7 +4,6 @@ class HrCategoryDetailsController < ApplicationController
   def index
     @hr_category_id = params[:param1]
     @hr_category_details = HrCategoryDetail.where("hr_category_id = ?", @hr_category_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
-
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @hr_category_details }
@@ -64,7 +63,6 @@ class HrCategoryDetailsController < ApplicationController
   # PUT /hr_category_details/1.json
   def update
     @hr_category_detail = HrCategoryDetail.find(params[:id])
-
     respond_to do |format|
       if @hr_category_detail.update_attributes(params[:hr_category_detail])
         format.html { redirect_to hr_category_details_path(:param1 => params[:hr_category_detail]['hr_category_id']), notice: 'Hr category detail was successfully updated.' }
