@@ -11,7 +11,7 @@ class HolidaysController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # index.html.haml
+      format.html # salary_sheet.html.haml
       format.json { render json: @holidays }
     end
   end

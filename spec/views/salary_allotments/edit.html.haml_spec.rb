@@ -4,8 +4,9 @@ describe "salary_allotments/edit.html.haml" do
 
   it "render form contains salary heads for selected employee" do
     employee = FactoryGirl.create(:employee)
-    salary_group_detail = FactoryGirl.create(:salary_group_detail)
-    salAllot = FactoryGirl.create(:salary_allotment, :employee_id => employee.id, :salary_group_detail_id => salary_group_detail.id)
+    salary_head = FactoryGirl.create(:salary_head)
+    salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+    salAllot = FactoryGirl.create(:salary_allotment, :employee_id => employee.id, :salary_group_detail_id => salary_group_detail.id,:salary_head_id=>salary_head.id)
     view.stub!(:params).and_return :id => salAllot.employee_id
 
     assign(:allotSal, [stub_model(SalaryAllotment,

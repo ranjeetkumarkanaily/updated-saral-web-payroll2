@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120225104413) do
+ActiveRecord::Schema.define(:version => 20120228053057) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -97,9 +97,15 @@ ActiveRecord::Schema.define(:version => 20120225104413) do
     t.integer  "employee_id"
     t.date     "effective_date"
     t.integer  "salary_group_id"
-    t.decimal  "allotted_gross",  :precision => 8, :scale => 2
+    t.decimal  "allotted_gross",              :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.hstore   "classification"
+    t.integer  "branch_id"
+    t.integer  "financial_institution_id"
+    t.integer  "attendance_configuration_id"
+    t.string   "bank_account_number"
+    t.date     "effective_to"
   end
 
   create_table "employees", :force => true do |t|

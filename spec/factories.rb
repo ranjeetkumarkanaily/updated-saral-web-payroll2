@@ -61,6 +61,12 @@ FactoryGirl.define do
     effective_date "2009-10-31"
     salary_group_id 1
     allotted_gross 5000
+    classification {'Department => development'}
+    branch_id 1
+    financial_institution_id  1
+    attendance_configuration_id  2
+    bank_account_number 2316
+    effective_to  ''
   end
 
   factory :state do
@@ -170,6 +176,17 @@ FactoryGirl.define do
     pincode "560086"
     branch_code "SBI000434"
     email "sbi@gmail.com"
+  end
+
+  factory :branch do
+    id 1
+    branch_name "Bangalore"
+    responsible_person "rahul"
+    address "Bangalore"
+    pf_group
+    esi_group
+    pt_group
+    esi_applicable false
   end
 
 end

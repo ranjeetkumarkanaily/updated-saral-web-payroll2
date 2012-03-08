@@ -16,6 +16,7 @@ GEM
       rack-mount (~> 0.8.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.0.2)
+    active_record_hstore_serializer (0.0.4)
     activemodel (3.1.1)
       activesupport (= 3.1.1)
       builder (~> 3.0.0)
@@ -25,6 +26,9 @@ GEM
       activesupport (= 3.1.1)
       arel (~> 2.2.1)
       tzinfo (~> 0.3.29)
+    activerecord-postgres-hstore (0.3.0)
+      activerecord
+      rake
     activeresource (3.1.1)
       activemodel (= 3.1.1)
       activesupport (= 3.1.1)
@@ -77,8 +81,9 @@ GEM
     ffi (1.0.11)
     fileutils (0.7)
       rmagick (>= 2.13.1)
-    foreigner (1.1.5)
-      activerecord (>= 3.0.0)
+
+    foreigner (1.1.2)
+    activerecord (>= 3.0.0)
     gherkin (2.9.0)
       json (>= 1.4.6)
     guard (1.0.1)
@@ -223,6 +228,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record_hstore_serializer
+  activerecord-postgres-hstore
   capybara
   carrierwave
   coffee-rails

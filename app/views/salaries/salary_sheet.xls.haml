@@ -1,0 +1,106 @@
+:css
+  .heading {
+      font-size: 25px; font-weight: bold; text-align: center; line-height: 40px;
+  }
+  .address {
+     font-size: 18px; text-align: center; line-height: 30px;
+  }
+  .payslip_header {
+       font-size: 18px; text-align: center;font-weight: bold; line-height: 30px;
+  }
+  .normal_txt {
+      font-size: 18px; line-height:25px;
+  }
+  .spacing {
+      height : 20px;
+  }
+  .td_bdr_all {
+      border : 1px solid #000000
+  }
+  .td_bdr_trb {
+      border-top : 1px solid #000000; border-right : 1px solid #000000; border-bottom : 1px solid #000000;
+  }
+  .table_header {
+      height : 30px; padding-left: 10px; font-size: 18px;
+  }
+  .table_text_left {
+      padding-left: 10px; font-size: 18px; line-height: 25px;
+  }
+  .table_text_right {
+        padding-right: 10px; font-size: 18px; line-height: 25px;
+  }
+  .td_bdr_lbr {
+        border-left : 1px solid #000000; border-bottom : 1px solid #000000; border-right : 1px solid #000000;
+  }
+  .td_bdr_br {
+          border-right : 1px solid #000000; border-bottom : 1px solid #000000;
+  }
+  .td_bdr_r {
+            border-right : 1px solid #000000;
+  }
+  .table_text_total {
+          font-weight : bold; height : 40px;
+  }
+
+
+
+
+%table{:width=>1500, :cellpadding => 0, :cellspacing => 0}
+  %tr
+    %td.heading= @company.companyname
+  %tr
+    %td.address= @company.address+", "+@company.address2+", "+@company.address3
+  %tr
+    %td.payslip_header= "Salary Sheet for the Month of "+params[:month_year]
+  %tr
+    %td.spacing &nbsp;
+  %tr
+    %td
+      %table{:width=>1500, :cellpadding => 0, :cellspacing => 0,:border=>1}
+        %tr
+          %td Emp ID
+          %td Employee Name
+          %td Designation
+          %td Paid Days
+          - @earning_heads.each do |earning_head|
+            %td= earning_head.head_name
+          %td
+            %b Total Earnings
+          %td PF
+          %td ESI
+          %td PT
+          - @deduction_heads.each do |deduction_head|
+            %td= deduction_head.head_name
+          %td
+            %b Total Deductions
+          %td
+            %b Net Salary
+        -@employee_salary_detail.each do |employee|
+          %tr
+            %td= employee[0][:refno]
+            %td= employee[0][:empname]
+            %td= employee[0][:designation]
+            %td= employee[0][:paid_days]
+            - total_earning = 0
+            -employee[0][:salary_earnings].each do |earning|
+              %td= earning.salary_amount
+              - total_earning =   total_earning + earning.salary_amount.to_f
+            %td
+              %b= total_earning
+            - total_deduction = 0
+            %td= employee[0][:pf]
+            - total_deduction = total_deduction + employee[0][:pf].to_f
+            %td= employee[0][:esi]
+            - total_deduction = total_deduction + employee[0][:esi].to_f
+            %td= employee[0][:pt]
+            - total_deduction = total_deduction + employee[0][:pt].to_f
+            -employee[0][:salary_deductions].each do |deduction|
+              %td= deduction.salary_amount
+              - total_deduction =   total_deduction + deduction.salary_amount.to_f
+            %td
+              %b= total_deduction
+            %td
+              %b= total_earning-total_deduction
+        %tr
+          %td{:colspan=>4,:align=>'center'}
+            %b TOTAL

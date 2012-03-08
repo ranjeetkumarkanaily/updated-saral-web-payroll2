@@ -1,5 +1,6 @@
 class ClassificationHeading < ActiveRecord::Base
   has_many :classifications ,:dependent => :destroy
+  belongs_to :employee_detail
 
   validates :classification_heading_name ,
             :presence => true,

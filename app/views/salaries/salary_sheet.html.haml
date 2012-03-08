@@ -1,0 +1,18 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 Salary Sheet
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        = form_tag salary_sheet_salaries_path, :method => :get do
+          %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td{:width => "100px"} Pay Months
+              %td= select_tag "month_year", options_from_collection_for_select(Paymonth.order('created_at ASC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
+            %tr
+              %td{:colspan=>2}= hidden_field_tag :format, "xls"
+
+          = submit_tag("Generate Salary Sheet")
