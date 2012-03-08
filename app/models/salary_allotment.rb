@@ -50,6 +50,4 @@ class SalaryAllotment < ActiveRecord::Base
     SalaryAllotment.where("employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
   end
 
-
-
 end

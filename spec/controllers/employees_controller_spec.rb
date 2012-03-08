@@ -18,6 +18,7 @@ describe EmployeesController do
       :designation_id => '1',
       :department_id => '1',
       :grade_id => '1',
+      :restrct_pf => false
     }
   end
 
@@ -199,4 +200,32 @@ describe EmployeesController do
       response.should redirect_to(employees_url)
     end
   end
+
+  describe "GET pf_contribution_restrict" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
+    it "assigns all employees as @employees" do
+      get :pf_contribution_restrict
+      assigns(:employees).should eq([@employee])
+    end
+  end
+
+  describe "pf_restrict_update" do
+
+    before :each do
+      @employee=FactoryGirl.create(:employee)
+    end
+
+    it "should update employees restrict_pf Value for true" do
+      put :pf_restrict_update,:employee_data => [:id => @employee.id, :pf => true]
+      Employee.find_by_id(@employee.id)[:restrct_pf].should eq(true)
+    end
+
+    it "should update employees restrict_pf Value for false" do
+      put :pf_restrict_update,:employee_data => [:id => @employee.id, :pf => nil]
+      Employee.find_by_id(@employee.id)[:restrct_pf].should eq(false)
+    end
+  end
+
 end

@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
     t.integer  "branch_id"
     t.integer  "financial_institution_id"
     t.string   "bank_account_number"
+    t.boolean  "restrct_pf",               :default => false
   end
 
   create_table "esi_group_rates", :force => true do |t|

@@ -57,7 +57,13 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     post "save", :on => :collection
 
     get "report",  :on => :collection
+
+    get "pf_contribution_restrict", :on => :collection
+
+    put "pf_restrict_update", :on => :collection
   end
+
+
 
   resources :leave_details, :only => [:index] do
     get 'upload', :on => :collection
