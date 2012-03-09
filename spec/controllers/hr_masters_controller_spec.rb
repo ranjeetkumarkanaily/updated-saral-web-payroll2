@@ -6,6 +6,22 @@ describe HrMastersController do
   end
 
 
+  describe "GET new" do
+    it "assigns a new hr_master as @hr_master" do
+      get :new
+      assigns(:hr_master).should be_a_new(HrMaster)
+    end
+  end
+
+  describe "GET edit" do
+    it "assigns the requested hr_master as @hr_master" do
+      hr_master = FactoryGirl.create(:hr_master)
+      get :edit, :id => hr_master.id
+      assigns(:hr_master).should eq(hr_master)
+    end
+  end
+
+
   describe "POST create" do
     describe "with valid params" do
       before :each do
