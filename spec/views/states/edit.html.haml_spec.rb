@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "states/edit.html.haml" do
+describe "states/edit" do
   before(:each) do
     @state = assign(:state, stub_model(State,
       :state_name => "MyString"

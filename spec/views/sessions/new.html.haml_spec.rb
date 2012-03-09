@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "sessions/new.html.haml" do
+describe "sessions/new" do
   before(:each) do
     assign(:user, stub_model(User,
       :username => "MyString",

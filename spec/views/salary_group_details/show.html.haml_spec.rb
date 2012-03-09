@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salary_group_details/show.html.haml" do
+describe "salary_group_details/show" do
   before(:each) do
     @salary_head = SalaryHead.create(:head_name => "test_head", :short_name => "test_short_name", :salary_type => "test_salary_type")
     @salary_group = SalaryGroup.create(:salary_group_name => "test_salary_group", :based_on_gross => false)

@@ -44,7 +44,7 @@ class HrCategoriesController < ApplicationController
 
     respond_to do |format|
       if @hr_category.save
-        format.html { redirect_to @hr_category, notice: 'Hr category was successfully created.' }
+        format.html { redirect_to hr_categories_path, notice: 'Hr category was successfully created.' }
         format.json { render json: @hr_category, status: :created, location: @hr_category }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class HrCategoriesController < ApplicationController
 
     respond_to do |format|
       if @hr_category.update_attributes(params[:hr_category])
-        format.html { redirect_to @hr_category, notice: 'Hr category was successfully updated.' }
+        format.html { redirect_to hr_categories_path, notice: 'Hr category was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

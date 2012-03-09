@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "employees/edit.html.haml" do
+describe "employees/edit" do
   before(:each) do
     @employee = assign(:employee, stub_model(Employee,
       :empname => "MyString"

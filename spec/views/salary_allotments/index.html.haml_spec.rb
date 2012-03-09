@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salary_allotments/index.html.haml" do
+describe "salary_allotments/index" do
 
   it "render index page" do
     employee = FactoryGirl.create(:employee)

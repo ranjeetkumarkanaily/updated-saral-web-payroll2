@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salary_group_details/new.html.haml" do
+describe "salary_group_details/new" do
 
   it "renders new salary_group_detail form" do
     salary_group = FactoryGirl.create(:salary_group)

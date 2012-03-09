@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe "salaries/index.html.haml" do
+describe "salaries/index" do
 
   it "render form to generate salary" do
     render

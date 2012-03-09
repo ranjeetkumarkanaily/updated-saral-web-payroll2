@@ -50,7 +50,7 @@ class HrCategoryDetailsController < ApplicationController
 
     respond_to do |format|
       if @hr_category_detail.save
-        format.html { redirect_to @hr_category_detail, notice: 'Hr category detail was successfully created.' }
+        format.html { redirect_to hr_category_details_path(:param1=> @hr_category_detail.hr_category_id), notice: 'Hr category detail was successfully created.' }
         format.json { render json: @hr_category_detail, status: :created, location: @hr_category_detail }
       else
         format.html { render action: "new" }

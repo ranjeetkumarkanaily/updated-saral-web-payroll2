@@ -66,7 +66,7 @@ describe HrCategoryDetailsController do
 
       it "redirects to the created HrCategoryDetail" do
         post :create, :hr_category_detail => valid_attributes
-        response.should redirect_to(HrCategoryDetail.last)
+        response.should redirect_to hr_category_details_path(:param1 => valid_attributes[:hr_category_id])
       end
     end
 

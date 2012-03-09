@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "companies/new.html.haml" do
+describe "companies/new" do
   before(:each) do
     assign(:company, stub_model(Company,
       :companyname => "My test Company",

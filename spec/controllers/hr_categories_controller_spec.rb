@@ -61,7 +61,7 @@ describe HrCategoriesController do
 
       it "redirects to the created hr category" do
         post :create, {:hr_category => valid_attributes}
-        response.should redirect_to(HrCategory.last)
+        response.should redirect_to (hr_categories_path)
       end
     end
 
@@ -108,7 +108,7 @@ describe HrCategoriesController do
       it "redirects to the hr category" do
         category = HrCategory.create! valid_attributes
         put :update, {:id => category.to_param, :hr_category => valid_attributes}
-        response.should redirect_to(category)
+        response.should redirect_to (hr_categories_path)
       end
     end
 

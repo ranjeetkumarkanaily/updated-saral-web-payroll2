@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salary_heads/index.html.haml" do
+describe "salary_heads/index" do
   before(:each) do
     assign(:salary_heads, [
       stub_model(SalaryHead,

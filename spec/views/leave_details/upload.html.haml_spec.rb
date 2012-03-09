@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "leave_details/upload.html.haml" do
+describe "leave_details/upload" do
   it "render excel file upload" do
     render
 

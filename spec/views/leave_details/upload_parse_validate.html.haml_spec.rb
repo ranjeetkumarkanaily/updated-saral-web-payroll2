@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "leave_details/upload_parse_validate.html.haml" do
+describe "leave_details/upload_parse_validate" do
   it "render contents of excel file" do
     employee = FactoryGirl.create(:employee)
     assign(:leaves,[

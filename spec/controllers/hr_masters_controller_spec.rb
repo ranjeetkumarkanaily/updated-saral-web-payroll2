@@ -43,8 +43,8 @@ describe HrMastersController do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         HrMaster.any_instance.stub(:save).and_return(false)
-        post :create, :hr_master => {}
-        response.should redirect_to(new_hr_master_path(:employee_id => @hr_master.employee_id, :hr_category_id => @hr_master.hr_category_id))
+        post :create, {:hr_master => {}}
+        response.should redirect_to(new_hr_master_path(:errors => @hr_master.errors.full_messages))
       end
     end
   end

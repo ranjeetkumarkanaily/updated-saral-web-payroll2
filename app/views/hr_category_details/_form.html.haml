@@ -15,17 +15,17 @@
             %td.std_td
               %table
                 %tr
-                  %td{:width=>130} Detail Name:&nbsp;
+                  %td{:width=>130} Label : &nbsp;
                   %td= f.text_field :name, :size => '22'
                   = f.hidden_field :hr_category_id, :value => @hr_category_id
-                %tr
-                  %td{:width=>130} Required :&nbsp;
-                  %td= f.check_box :required
+                -#%tr
+                -#  %td{:width=>130} Data Type :&nbsp;
+                -#  %td= f.text_field :data_type
             %td.std_td
               %table
                 %tr
-                  %td{:width=>130} Data Type :&nbsp;
-                  %td= f.text_field :data_type
+                  %td{:width=>130} Required :&nbsp;
+                  %td= f.check_box :required
           %tr
             %td.std_td{:colspan=>2}
               %table
@@ -33,13 +33,3 @@
                   %td &nbsp;
                 %tr
                   %td= f.submit
-
--#
--#  <div class="field">
--#    <%= f.label :required %><br />
--#    <%= f.check_box :required %>
--#  </div>
--#  <div class="actions">
--#    <%= f.submit %>
--#  </div>
--#<% end %>

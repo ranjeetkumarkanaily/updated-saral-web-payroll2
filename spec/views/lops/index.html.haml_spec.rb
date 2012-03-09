@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe "lops/index.html.haml" do
+describe "lops/index" do
   it "render form for csv file upload" do
     render
     #puts rendered

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salaries/edit.html.haml" do
+describe "salaries/edit" do
   before(:each) do
     salary = Factory(:salary)
     @salary = assign(:salary,

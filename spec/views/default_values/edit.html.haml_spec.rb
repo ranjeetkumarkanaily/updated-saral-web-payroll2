@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "default_values/edit.html.haml" do
+describe "default_values/edit" do
   before(:each) do
     @default_value = assign(:default_value, stub_model(DefaultValue,
       :type => "",

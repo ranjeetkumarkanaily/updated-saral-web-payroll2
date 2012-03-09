@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "paymonths/index.html.haml" do
+describe "paymonths/index" do
   before(:each) do
     assign(:paymonths, [
       stub_model(Paymonth,

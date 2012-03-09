@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "states/index.html.haml" do
+describe "states/index" do
   before(:each) do
     assign(:states, [
       stub_model(State,

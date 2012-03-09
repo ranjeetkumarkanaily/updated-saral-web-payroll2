@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salary_allotments/edit.html.haml" do
+describe "salary_allotments/edit" do
 
   it "render form contains salary heads for selected employee" do
     employee = FactoryGirl.create(:employee)

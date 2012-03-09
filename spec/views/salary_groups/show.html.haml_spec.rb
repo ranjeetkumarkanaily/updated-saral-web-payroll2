@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "salary_groups/show.html.haml" do
+describe "salary_groups/show" do
   before(:each) do
     @salary_group = assign(:salary_group, stub_model(SalaryGroup,
       :salary_group_name => "Salary Group Name",

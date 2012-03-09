@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "default_values/index.html.haml" do
+describe "default_values/index" do
   before(:each) do
     assign(:default_values, [
       stub_model(DefaultValue,
