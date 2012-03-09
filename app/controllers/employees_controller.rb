@@ -10,10 +10,10 @@ class EmployeesController < ApplicationController
       @employees = Employee.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     end
 
-    respond_to do |format|
-      format.html # salary_sheet.html.haml
-      format.json { render json: @employees }
-    end
+    #respond_to do |format|
+    #  format.html # salary_sheet.html.haml
+    #  format.json { render json: @employees }
+    #end
   end
 
   # GET /employees/1
