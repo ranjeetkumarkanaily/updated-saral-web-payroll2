@@ -43,6 +43,7 @@ describe HrMastersController do
         post :create, :hr_master => @hr_master.attributes
         response.should redirect_to(new_hr_master_path(:employee_id => @hr_master.employee_id, :hr_category_id => @hr_master.hr_category_id))
       end
+
     end
 
     describe "with invalid params" do
@@ -62,6 +63,15 @@ describe HrMastersController do
         post :create, {:hr_master => {}}
         response.should redirect_to(new_hr_master_path(:errors => @hr_master.errors.full_messages))
       end
+
+      it "validates presence of Hr Category Details Required field" do
+        hr_category = HrCategory.create(:category_name => "Education Details")
+        hr_cat_det = HrCategoryDetail.create(:hr_category_id => hr_category.id, :name => "Degree", :required => true)
+        hr_master = FactoryGirl.build(:hr_master, :employee_id => 1, :hr_category_id => hr_category.id)
+        post :create, {:hr_master => {:employee_id => 1, :hr_category_id => hr_category.id, :category_values => "{'Degree1 => '}"}}
+        response.should redirect_to(new_hr_master_path(:employee_id => 1, :hr_category_id => hr_category.id))
+      end
+
     end
   end
 

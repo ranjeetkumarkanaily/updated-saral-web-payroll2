@@ -193,11 +193,11 @@ FactoryGirl.define do
     category_name "Family"
   end
 
-  factory :hr_category_details do
+  factory :hr_category_detail do
     hr_category
     name "Name"
     data_type "String"
-    required t
+    required true
   end
 
   factory :hr_master do
