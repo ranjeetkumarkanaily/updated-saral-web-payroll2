@@ -33,7 +33,7 @@
                   %td= f.check_box :esi_applicable,:onclick=>"enable(this.checked)"
                 %tr
                   %td{:width=>130} ESI Group:&nbsp;
-                  %td= f.select :esi_group_id, options_for_select(EsiGroup.all(:order => 'created_at ASC').collect {|esi| [ esi.esi_group_name, esi.id ] }, @branch.esi_group_id),{:prompt => 'Select ESI Group'},:disabled=>true
+                  %td= f.select :esi_group_id, options_for_select(EsiGroup.all(:order => 'created_at ASC').collect {|esi| [ esi.esi_group_name, esi.id ] }, @branch.esi_group_id),{:prompt => 'Select ESI Group'},:disabled=>!@branch.esi_applicable
             %td.std_td
               %table
                 %tr
