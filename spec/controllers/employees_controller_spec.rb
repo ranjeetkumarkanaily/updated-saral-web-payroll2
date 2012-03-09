@@ -95,8 +95,6 @@ describe EmployeesController do
         }.to change(Employee, :count).by(1)
       end
 
-
-
       it "assigns a newly created employee as @employee" do
         post :create, :employee => @employee.attributes
         assigns(:employee).should be_a(Employee)

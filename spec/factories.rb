@@ -200,4 +200,10 @@ FactoryGirl.define do
     required t
   end
 
+  factory :hr_master do
+    hr_category
+    employee
+    category_values {'Name => Kanaily'}
+  end
+
 end

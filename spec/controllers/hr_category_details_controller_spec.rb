@@ -8,7 +8,7 @@ describe HrCategoryDetailsController do
 
   def valid_attributes
     {
-        :hr_category => @hr_category,
+        :hr_category_id => @hr_category.id,
         :name => "Age",
         :data_type => "String",
         :required => true
@@ -42,10 +42,51 @@ describe HrCategoryDetailsController do
       category_detail = HrCategoryDetail.create! valid_attributes
       get :edit, :id => category_detail.id
       assigns(:hr_category_detail).should eq(category_detail)
+    end
 
+    it "assigns the requested hr_category_details as @hr_category_details" do
+      category_detail = HrCategoryDetail.create! valid_attributes
+      get :edit, :id => category_detail.id, :param1 => category_detail.hr_category_id
+      assigns(:hr_category_detail).should eq(category_detail)
     end
   end
 
+  describe "POST create" do
+    describe "with valid params" do
+      it "creates a new HrCategoryDetail" do
+        expect {
+          post :create, :hr_category_detail => valid_attributes
+        }.to change(HrCategoryDetail, :count).by(1)
+      end
+      it "assigns a newly created HrCategoryDetail as @HrCategoryDetail" do
+        post :create, :hr_category_detail => valid_attributes
+        assigns(:hr_category_detail).should be_a(HrCategoryDetail)
+        assigns(:hr_category_detail).should be_persisted
+      end
+
+      it "redirects to the created HrCategoryDetail" do
+        post :create, :hr_category_detail => valid_attributes
+        response.should redirect_to(HrCategoryDetail.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved HrCategoryDetail as @HrCategoryDetail" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        HrCategoryDetail.any_instance.stub(:save).and_return(false)
+        post :create, :hr_category_detail => {}
+        assigns(:hr_category_detail).should be_a_new(HrCategoryDetail)
+      end
+
+      it "re-renders the 'new' template" do
+        # Trigger the behavior that occurs when invalid params are submitted
+        HrCategoryDetail.any_instance.stub(:save).and_return(false)
+        post :create, :hr_category_detail => {}
+        response.should render_template("new")
+      end
+    end
+
+  end
 
   describe "PUT update" do
     describe "with valid params" do
@@ -55,11 +96,11 @@ describe HrCategoryDetailsController do
         put :update, :id => category_detail.id, :hr_category_detail => {'these' => 'params'}
       end
 
-      #it "assigns the requested hr_category_detail as @hr_category_detail" do
-      #  category_detail = HrCategoryDetail.create! valid_attributes
-      #  put :update, :id => category_detail.id, :hr_category_detail => valid_attributes
-      #  assigns(:hr_category_detail).should eq(category_detail)
-      #end
+      it "assigns the requested hr_category_detail as @hr_category_detail" do
+        category_detail = HrCategoryDetail.create! valid_attributes
+        put :update, {:id => category_detail.id, :hr_category_detail => valid_attributes}
+        assigns(:hr_category_detail).should eq(category_detail)
+      end
 
       it "redirects to the hr_category_detail" do
         category_detail = HrCategoryDetail.create! valid_attributes
@@ -70,21 +111,33 @@ describe HrCategoryDetailsController do
 
     describe "with invalid params" do
       it "assigns the hr_category_detail as @hr_category_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes
-        EmployeeDetail.any_instance.stub(:save).and_return(false)
-        put :update, :id => employee_detail.id, :employee_detail => {}
-        assigns(:employee_detail).should eq(employee_detail)
+        category_detail = HrCategoryDetail.create! valid_attributes
+        HrCategoryDetail.any_instance.stub(:save).and_return(false)
+        put :update, :id => category_detail.id, :employee_detail => {}
+        assigns(:hr_category_detail).should eq(category_detail)
       end
 
       it "re-renders the 'edit' template" do
-        employee_detail = EmployeeDetail.create! valid_attributes
-        EmployeeDetail.any_instance.stub(:save).and_return(false)
-        put :update, :id => employee_detail.id, :employee_detail => {}
+        category_detail = HrCategoryDetail.create! valid_attributes
+        HrCategoryDetail.any_instance.stub(:save).and_return(false)
+        put :update, :id => category_detail.id, :employee_detail => {}
         response.should render_template("edit")
       end
+    end
+  end
 
+  describe "DELETE destroy" do
+    it "destroys the requested hr_category_detail" do
+      category_detail = HrCategoryDetail.create! valid_attributes
+      expect {
+        delete :destroy, :id => category_detail.id
+      }.to change(HrCategoryDetail, :count).by(-1)
+    end
 
-
+    it "redirects to the employee_details list" do
+      category_detail = HrCategoryDetail.create! valid_attributes
+      delete :destroy, :id => category_detail.id
+      response.should redirect_to(hr_category_details_url(:param1 => valid_attributes[:employee_id] ))
     end
   end
 
