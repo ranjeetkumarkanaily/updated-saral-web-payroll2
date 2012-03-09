@@ -1,4 +1,3 @@
--@search_path=pf_contribution_restrict_employees_path
 #left_content
   = render 'left'
 #right_content
@@ -13,7 +12,7 @@
         %td &nbsp;
       %tr
         %td.std_td
-          = render 'pfEmpSearch'
+          = render 'search'
       %tr
         %td.std_td
 
@@ -22,7 +21,7 @@
               %tr
                 %td
                   %div{:style=>"overflow-Y:scroll;height:200px;", :id => "employees"}
-                    =render 'employees'
+                    =render 'pfemployees'
               %tr
                 %td= submit_tag "Save Changes"
 
