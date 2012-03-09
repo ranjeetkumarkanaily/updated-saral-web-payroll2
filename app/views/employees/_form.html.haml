@@ -25,10 +25,10 @@
                   %td= f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],@employee.marital_status), {:prompt => 'Select Marital Status'}
                 %tr
                   %td Date of Birth:&nbsp;
-                  %td= f.date_select :date_of_birth,:include_blank => true,  :start_year => 1920, :end_year => 2010
+                  %td= f.text_field :date_of_birth, :id=>"dob", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
                 %tr
                   %td Date of Leaving:&nbsp;
-                  %td= f.date_select :date_of_leaving, :include_blank => true,  :start_year => 2000, :end_year => 2014
+                  %td= f.text_field :date_of_leaving, :id=>"dol", :class=>"date_input1", :include_blank => true,  :start_year => 2000, :end_year => 2014
             %td.std_td
               %table
                 %tr
@@ -42,7 +42,7 @@
                   %td= f.text_field :spouse_name, :size => '22'
                 %tr
                   %td Date of Joining:&nbsp;
-                  %td= f.date_select :date_of_joining, :include_blank => true,  :start_year => 2000, :end_year => 2014
+                  %td= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
           %tr
             %td.std_td
               %table
