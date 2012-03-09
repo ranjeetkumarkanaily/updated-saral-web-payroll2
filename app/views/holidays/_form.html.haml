@@ -24,7 +24,7 @@
               %table
                 %tr
                   %td{:width=>130} Date:&nbsp;
-                  %td= f.date_select :holiday_date
+                  %td= f.text_field :holiday_date, :id => "hdd", :class => "date_input"
                 %tr
                   %td{:width=>130} National Holiday:&nbsp;
                   %td= f.check_box :national_holiday
