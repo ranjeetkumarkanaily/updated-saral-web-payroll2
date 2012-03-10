@@ -71,6 +71,10 @@ describe HrMastersController do
         post :create, {:hr_master => {:employee_id => 1, :hr_category_id => hr_category.id, :category_values => "{'Degree1 => '}"}}
         response.should redirect_to(new_hr_master_path(:employee_id => 1, :hr_category_id => hr_category.id))
       end
+      #"category_values"=>{"Masrks"=>"", "Degree"=>""}}
+
+
+
 
     end
   end
