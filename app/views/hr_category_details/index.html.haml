@@ -3,7 +3,7 @@
     %li= link_to 'Back', hr_categories_path
     %li= link_to 'Add New Label', new_hr_category_detail_path(:param1=>@hr_category_id)
 #right_content
-  %h1{:style => 'width:450px'} Listing #{HrCategory.find_by_id(@hr_category_id).category_name}'s Label
+  %h1 Listing #{HrCategory.find_by_id(@hr_category_id).category_name}'s Label
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;

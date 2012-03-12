@@ -3,7 +3,7 @@
     %li= link_to 'Back', salary_groups_path
     %li= link_to 'Add New Configuration', new_salary_group_detail_path(:param1=>@param_sal_grp_id)
 #right_content
-  %h1{:style=>"width:500px;"} Listing #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}'s Configurations
+  %h1 Listing #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}'s Configurations
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;

@@ -3,7 +3,7 @@
     %li= link_to 'Back', pf_groups_path
     %li= link_to 'Add New PF Group Rate', new_pf_group_rate_path(:params1 => @param_pf_group_id)
 #right_content
-  %h1{:style=>"width:450px;"} Listing PF Group Rates for #{PfGroup.find(@param_pf_group_id).pf_group}
+  %h1 Listing PF Group Rates for #{PfGroup.find(@param_pf_group_id).pf_group}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;
