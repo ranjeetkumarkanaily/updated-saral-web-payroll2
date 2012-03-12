@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Add New HR Category', new_hr_category_path
 #right_content
   %h1 Listing HR Categories
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
@@ -16,7 +17,7 @@
               %td.table_grid_td= hr_category.category_name
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit HR Category"), edit_hr_category_path(hr_category)
               %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Category"), hr_category, confirm: 'Are you sure?', method: :delete
-              %td.table_grid_icon= link_to image_tag('/assets/settings.png',:title => "View Hr Category Details"), hr_category_details_path(:param1=>hr_category.id)
+              %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "View Hr Category Details"), hr_category_details_path(:param1=>hr_category.id)
         %br/
         .digg_pagination
           .page_info

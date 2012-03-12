@@ -1,5 +1,6 @@
 #left_content
-    = render 'left'
+    %ul
+        %li= link_to 'Edit Company', edit_company_path(@company.id)
 #right_content
     - if @company
         %h1

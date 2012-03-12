@@ -1,7 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', hr_categories_path
 #right_content
   %h1
     Editing HR Category
-    = link_to image_tag('/assets/show.png',:title => "Show HR Category"), @hr_category
   = render 'form'

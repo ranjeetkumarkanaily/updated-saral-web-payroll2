@@ -1,6 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', salary_group_details_path(:param1=>@param_sal_grp_id)
 #right_content
   %h1{:style=>"width:500px;"}
-    Editing Salary Group Configuration for #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}
+    Editing #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}'s Configuration
   = render 'form'

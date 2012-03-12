@@ -1,5 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', pf_groups_path
+    %li= link_to 'Edit PF Group', edit_pf_group_path(@pf_group)
 #right_content
   %h1
     Showing PF Group

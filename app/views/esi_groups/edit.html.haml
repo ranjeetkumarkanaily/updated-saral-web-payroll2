@@ -1,7 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', esi_groups_path
 #right_content
   %h1
     Editing ESI Group
-    = link_to image_tag('/assets/show.png',:title => "Show PT Group"), @esi_group
   = render "form"

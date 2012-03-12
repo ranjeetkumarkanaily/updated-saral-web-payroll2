@@ -1,5 +1,13 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', employees_path
+    %li= link_to 'Edit Employee', edit_employee_path(@employee)
+  %hr
+  %p{:style=>"padding-left:5px;text-decoration:underline;"} HR Details
+  %ul
+    - if @hr_categories
+      - @hr_categories.each do |hr_category|
+        %li= link_to hr_category.category_name, new_hr_master_path(:hr_category_id => hr_category.id, :employee_id => @employee.id)
 #right_content
   %h1
     Showing Employee

@@ -1,5 +1,11 @@
 #left_content
-  = render "left"
+  %ul
+    %li= link_to 'Add New Branch', new_branch_path
+  %hr
+  %ul
+    %li= link_to 'Listing PF Groups', pf_groups_path
+    %li= link_to 'Listing PT Groups', pt_groups_path
+    %li= link_to 'Listing ESI Groups', esi_groups_path
 #right_content
   %h1 Listing Branches
   %table.std_table{:cellpadding=>0,:cellspacing=>0}

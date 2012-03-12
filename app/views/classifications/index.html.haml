@@ -1,5 +1,7 @@
 #left_content
-  = render "left"
+  %ul
+    %li= link_to 'Back', classification_headings_path
+    %li= link_to 'Add New Classification', new_classification_path(:params1 => @paramclassification_id)
 #right_content
   %h1{:style=>"width:450px;"} Listing Classifications for #{ClassificationHeading.find(@paramclassification_id).classification_heading_name}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}

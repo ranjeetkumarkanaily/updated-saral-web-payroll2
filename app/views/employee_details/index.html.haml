@@ -1,19 +1,20 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', employees_path
+    %li= link_to 'Add New Detail', new_employee_detail_path(:param1 => @paramempid)
 #right_content
-  %h1{:style=>"width:400px;"} Listing Employee Details for #{Employee.find_by_id(@paramempid).empname}
+  %h1{:style=>"width:400px;"} Listing Details for #{Employee.find_by_id(@paramempid).empname}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;
     %tr
       %td.std_td
-        %table.table_grid{:width=>557, :cellpadding => 0, :cellspacing => 3}
+        %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
           %tr
             %td{:colspan=>4}
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
-            %td.table_grid_header Employee Name
             %td.table_grid_header Effective From
             %td.table_grid_header Effective To
             %td.table_grid_header Salary Group
@@ -23,7 +24,6 @@
           - @employee_details.each do |employee_detail|
           - sl_no = sl_no + 1
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= employee_detail.employee.empname
               %td.table_grid_td= employee_detail.effective_date
               %td.table_grid_td= employee_detail.effective_to != nil ? employee_detail.effective_to : 'Till Date'
               %td.table_grid_td= employee_detail.salary_group.salary_group_name

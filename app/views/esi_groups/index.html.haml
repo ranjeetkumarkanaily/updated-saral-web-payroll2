@@ -1,5 +1,9 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Add New ESI Group', new_esi_group_path
+  %hr
+  %ul
+    %li= link_to 'Listing Branches', branches_path
 #right_content
   %h1 Listing ESI Groups
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
@@ -20,7 +24,6 @@
               %td.table_grid_td= esi_group.address
               %td.table_grid_td{:align => "right"}= esi_group.esi_no
               %td.table_grid_td= esi_group.esi_local_office
-              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show ESI Group"), esi_group
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit ESI Group"), edit_esi_group_path(esi_group)
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete ESI Group"), esi_group, confirm: 'Are you sure?', method: :delete
               %td.table_grid_icon{:align => "center"}= link_to image_tag('/assets/details.png',:title => "Details"), esi_group_rates_path(:params1 => esi_group.id)

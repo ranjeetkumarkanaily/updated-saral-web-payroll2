@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Add New State', new_state_path
 #right_content
   %h1 Listing States
   %table.std_table{:cellpadding=>0,:cellspacing=>0}

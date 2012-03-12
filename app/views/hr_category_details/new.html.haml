@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', hr_category_details_path(:param1=>@hr_category_id)
 #right_content
-  %h1 New HR Category Details for #{HrCategory.find_by_id(@hr_category_id).category_name}
+  %h1 New #{HrCategory.find_by_id(@hr_category_id).category_name}'s Label
   = render 'form'

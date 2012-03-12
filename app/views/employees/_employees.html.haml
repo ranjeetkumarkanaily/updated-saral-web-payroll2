@@ -19,7 +19,7 @@
       %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Employee"), employee
       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Employee"), edit_employee_path(employee)
       %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Employee"), employee, confirm: 'Are you sure?', method: :delete
-      %td.table_grid_icon= link_to image_tag('/assets/settings.png',:title => "View Employee's Details"), employee_details_path(:param1=>employee.id)
+      %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "View Employee's Details"), employee_details_path(:param1=>employee.id)
 %br/
 .digg_pagination
   .page_info

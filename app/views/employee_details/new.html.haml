@@ -1,6 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', employee_details_path(:param1=>@paramempid)
 #right_content
-  %h1{:style=>"width:400px;"} New Employee Detail for #{Employee.find_by_id(@paramempid).empname}
+  %h1{:style=>"width:400px;"} New Detail for #{Employee.find_by_id(@paramempid).empname}
   = render 'form'
 

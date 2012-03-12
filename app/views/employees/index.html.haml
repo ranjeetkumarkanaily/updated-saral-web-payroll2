@@ -1,6 +1,9 @@
 -#@search_path=employees_path
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Add New Employee', new_employee_path
+    %li= link_to 'Excel Upload', upload_employees_path
+    %li= link_to 'Restrict PF Contribution', pf_contribution_restrict_employees_path
 #right_content
   %h1 Listing Employees
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
