@@ -12,13 +12,16 @@
       %td.std_td
         %table
           %tr
-            %td{:style=>"width:130px"} Effective Month:&nbsp;
-            %td= @pf_group_rate.paymonth.month_name
+            %td{:style=>"width:130px"} Effective From:&nbsp;
+            %td= Date.strptime(@pf_group_rate.paymonth.month_name,"%b/%Y").beginning_of_month
           %tr
             %td EPF(%) :&nbsp;
             %td= @pf_group_rate.epf
       %td.std_td
         %table
+          %tr
+            %td{:style=>"width:130px"} Effective To:&nbsp;
+            %td= Date.strptime(@pf_group_rate.paymonth.month_name,"%b/%Y").end_of_month
           %tr
             %td{:style=>"width:130px"} Cutoff(%) :&nbsp;
             %td= @pf_group_rate.cutoff

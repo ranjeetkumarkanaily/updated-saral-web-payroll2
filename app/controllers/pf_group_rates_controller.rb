@@ -3,7 +3,7 @@ class PfGroupRatesController < ApplicationController
   # GET /pf_group_rates.json
   def index
     @param_pf_group_id = params[:params1]
-    @pf_group_rates = PfGroupRate.where(:pf_group_id => @param_pf_group_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
+    @pf_group_rates = PfGroupRate.where(:pf_group_id => @param_pf_group_id).order('paymonth_id DESC,created_at DESC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # salary_sheet.html.haml
