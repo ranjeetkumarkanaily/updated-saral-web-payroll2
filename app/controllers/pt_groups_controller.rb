@@ -44,7 +44,7 @@ class PtGroupsController < ApplicationController
 
     respond_to do |format|
       if @pt_group.save
-        format.html { redirect_to @pt_group, notice: 'Pt group was successfully created.' }
+        format.html { redirect_to pt_groups_path, notice: 'Pt group was successfully created.' }
         format.json { render json: @pt_group, status: :created, location: @pt_group }
       else
         format.html { render action: "new" }

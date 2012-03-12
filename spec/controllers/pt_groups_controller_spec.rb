@@ -65,9 +65,9 @@ describe PtGroupsController do
         assigns(:pt_group).should be_persisted
       end
 
-      it "redirects to the created pt_group" do
+      it "redirects to the pt_groups page" do
         post :create, {:pt_group => valid_attributes}, valid_session
-        response.should redirect_to(PtGroup.last)
+        response.should redirect_to pt_groups_path
       end
     end
 
