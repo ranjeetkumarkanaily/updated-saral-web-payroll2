@@ -24,6 +24,8 @@ class PtGroupRatesController < ApplicationController
   # GET /pt_group_rates/new
   # GET /pt_group_rates/new.json
   def new
+    @pt_group_id = params[:pt_group_id]
+    @ptGroup = PtGroup.find @pt_group_id
     @pt_group_rate = PtGroupRate.new
 
     respond_to do |format|

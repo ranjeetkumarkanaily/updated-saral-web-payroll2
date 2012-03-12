@@ -1,5 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', pf_groups_path
+    %li= link_to 'Edit PF Group Rate', edit_pf_group_rate_path(@pf_group_rate,:params1 => @param_pf_group_id)
 #right_content
   %h1
     Showing PF Group Rate
@@ -21,7 +23,7 @@
         %table
           %tr
             %td{:style=>"width:130px"} Effective To:&nbsp;
-            %td= Date.strptime(@pf_group_rate.paymonth.month_name,"%b/%Y").end_of_month
+            %td= @pf_group_rate.to_date ? @pf_group_rate.to_date : 'Till Date'
           %tr
             %td{:style=>"width:130px"} Cutoff(%) :&nbsp;
             %td= @pf_group_rate.cutoff

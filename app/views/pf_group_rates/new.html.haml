@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', pf_group_rates_path(:params1 => @param_pf_group_id)
 #right_content
   %h1 New PF Group Rate for #{PfGroup.find(@param_pf_group_id).pf_group}
   = render 'form'

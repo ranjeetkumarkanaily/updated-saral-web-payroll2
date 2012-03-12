@@ -1,7 +1,7 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to "Back", pt_rates_path(:paymonth_id =>  @pt_rate.paymonth_id, :pt_group_id => @pt_rate.pt_group_id)
 #right_content
   %h1
-    New PT Rate
-    = link_to image_tag('/assets/show.png',:title => "Show PT Rate"), @pt_rate
+    New PT Slab
   = render "form"

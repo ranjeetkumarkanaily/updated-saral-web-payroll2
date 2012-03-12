@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', employee_path(:id => @employee_id)
 #right_content
   %h1= @hr_category.category_name
   - if params[:errors]
@@ -38,9 +39,11 @@
               %td.std_td
                 %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
                   %tr
-                  - @hr_category.hr_category_details.each do |hr_category_detail|
+                  - @hr_category_details.each do |hr_category_detail|
                     %tr
-                      %td= label_tag hr_category_detail.name
+                      %td= hr_category_detail.name
                       %td= text_field_tag "hr_master[category_values][#{hr_category_detail.name}]"
+                  %tr
+                    %td &nbsp;
                   %tr
                     %td= submit_tag "Save"

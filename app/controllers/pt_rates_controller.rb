@@ -4,6 +4,7 @@ class PtRatesController < ApplicationController
   def index
     if params[:paymonth_id] && params[:pt_group_id]
       @pt_group_id = params[:pt_group_id]
+      @pt_group = PtGroup.find @pt_group_id
       @paymonth_id = params[:paymonth_id]
       @pt_rates = PtRate.where("paymonth_id = #{params[:paymonth_id]} AND pt_group_id = #{params[:pt_group_id]}").order('min_sal_range ASC').paginate(:page => params[:page], :per_page => 10)
     else

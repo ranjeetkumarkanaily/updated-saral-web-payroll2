@@ -7,6 +7,7 @@ class HrMastersController < ApplicationController
 
     ### Category Name for displaying at form
     @hr_category = HrCategory.find_by_id(@hr_category_id)
+    @hr_category_details = @hr_category.hr_category_details.order("created_at ASC")
     @hr_masters = HrMaster.find_all_by_employee_id_and_hr_category_id(@employee_id, @hr_category_id)
 
     respond_to do |format|

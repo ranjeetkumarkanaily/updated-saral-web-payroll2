@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', new_hr_master_path(:hr_category_id => @hr_category_id, :employee_id => @employee_id)
 #right_content
   %h1= "Editing " + @hr_master.hr_category.category_name
   - if params[:errors]
@@ -21,7 +22,9 @@
             %tr
             - @hr_master.category_values.each do |value|
               %tr
-                %td= label_tag value[0]
+                %td= value[0]
                 %td= text_field_tag "hr_master[category_values][#{value[0]}]", value[1]
+            %tr
+              %td &nbsp;
             %tr
               %td= submit_tag "Save"
