@@ -178,7 +178,9 @@ class EmployeesController < ApplicationController
         format.html # new.html.haml
         format.pdf do
           render :pdf => 'Report',
-                 :template => 'employees/report.pdf.haml'
+                 :handlers => [:haml],
+                 :format => [:pdf],
+                 :template => 'employees/report'
         end
       end
     end

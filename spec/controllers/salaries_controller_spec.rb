@@ -132,7 +132,7 @@ describe SalariesController do
       salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id, :format => "pdf"
-      response.should render_template('salaries/index.pdf')
+      response.should render_template('salaries/index')
     end
 
     it "should give no of present days" do

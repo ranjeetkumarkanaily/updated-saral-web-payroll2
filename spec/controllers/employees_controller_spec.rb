@@ -180,7 +180,7 @@ describe EmployeesController do
     it "generates pdf output" do
       employees = FactoryGirl.create(:employee)
       get :report, :report_type => 'Contact', "report"=>{"designation_id"=>employees.designation_id,"department_id"=>employees.department.id,"grade_id"=>employees.grade_id}, :format => "pdf"
-      response.should render_template('employees/report.pdf')
+      response.should render_template('employees/report')
     end
   end
 

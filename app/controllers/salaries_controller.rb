@@ -50,7 +50,9 @@ class SalariesController < ApplicationController
         format.html
         format.pdf do
           render :pdf => 'Payslip',
-                 :template => 'salaries/index.pdf.haml'
+                 :handlers => [:haml],
+                 :formats => [:pdf],
+                 :template => 'salaries/index'
         end
       end
     end
