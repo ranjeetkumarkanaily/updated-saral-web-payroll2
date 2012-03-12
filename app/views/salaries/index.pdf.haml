@@ -74,7 +74,7 @@
           %td.normal_txt{:width=>200}= @employee.grade.grade
           %td{:width=>40} &nbsp;
           %td.normal_txt{:width=>180} DOJ
-          %td.normal_txt{:width=>200}= @employee.date_of_joining
+          %td.normal_txt{:width=>200}= l @employee.date_of_joining, :format=>:default
         %tr
           %td.normal_txt{:width=>180} Paid Days
           %td.normal_txt{:width=>200}= number_with_precision(@no_of_day_in_selected_month, :precision => 2)

@@ -18,7 +18,7 @@
                                         %td= @company.companyname
                                     %tr
                                         %td Estd. Date:&nbsp;
-                                        %td= @company.dateofestablishment.to_s
+                                        %td= l @company.dateofestablishment, :format => :default
                                     %tr
                                         %td Address:&nbsp;
                                         %td= @company.address + ", " + @company.address2 + ", " + @company.address3

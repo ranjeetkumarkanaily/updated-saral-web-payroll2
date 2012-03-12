@@ -1,6 +1,6 @@
 #left_content
   %ul
-    %li= link_to 'Back', pf_groups_path
+    %li= link_to 'Back', pf_group_rates_path(:params1 => @param_pf_group_id)
     %li= link_to 'Edit PF Group Rate', edit_pf_group_rate_path(@pf_group_rate,:params1 => @param_pf_group_id)
 #right_content
   %h1
@@ -15,7 +15,7 @@
         %table
           %tr
             %td{:style=>"width:130px"} Effective From:&nbsp;
-            %td= Date.strptime(@pf_group_rate.paymonth.month_name,"%b/%Y").beginning_of_month
+            %td= l Date.strptime(@pf_group_rate.paymonth.month_name,"%b/%Y").beginning_of_month, :format => :default
           %tr
             %td EPF(%) :&nbsp;
             %td= @pf_group_rate.epf

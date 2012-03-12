@@ -47,7 +47,7 @@
               %td.td_text= i
               %td.td_text= employee.refno
               %td.td_text= employee.empname
-              %td.td_text= employee[@report_type]
+              %td.td_text= l employee[@report_type], :format=>:default
   - else
     %tr
       %td.report_header Contact Detail's Report

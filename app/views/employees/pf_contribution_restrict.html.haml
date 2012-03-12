@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', employees_path
 #right_content
 
   -if @employeesList.blank?
@@ -23,9 +24,8 @@
                   %div{:style=>"overflow-Y:scroll;height:200px;", :id => "employees"}
                     =render 'pfemployees'
               %tr
+                %td &nbsp;
+              %tr
                 %td= submit_tag "Save Changes"
 
-            %br/
 
-      %tr
-        %td &nbsp;

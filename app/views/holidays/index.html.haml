@@ -18,7 +18,7 @@
             %td.table_grid_header{:colspan => 3} Operations
           - @holidays.each do |holiday|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= holiday.holiday_date
+              %td.table_grid_td= l holiday.holiday_date, :format => :default
               %td.table_grid_td= holiday.description
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Holiday"), holiday
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Holiday"), edit_holiday_path(holiday)

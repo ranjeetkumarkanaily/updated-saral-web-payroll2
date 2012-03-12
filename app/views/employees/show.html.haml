@@ -30,10 +30,14 @@
                   %td= @employee.marital_status
                 %tr
                   %td Date of Birth:&nbsp;
-                  %td= @employee.date_of_birth
+                  %td= l @employee.date_of_birth, :format => :default
                 %tr
                   %td Date of Leaving:&nbsp;
-                  %td= @employee.date_of_leaving
+                  %td
+                    - if @employee.date_of_leaving != nil
+                      = l @employee.date_of_leaving, :format => :default
+                    - else
+                      = ""
             %td.std_td
               %table
                 %tr
@@ -47,7 +51,7 @@
                   %td= @employee.spouse_name
                 %tr
                   %td Date of Joining:&nbsp;
-                  %td= @employee.date_of_joining
+                  %td= l @employee.date_of_joining, :format => :default
           %tr
             %td.std_td
               %table

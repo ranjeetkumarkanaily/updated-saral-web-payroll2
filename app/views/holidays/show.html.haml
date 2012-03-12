@@ -23,9 +23,9 @@
               %table
                 %tr
                   %td{:width=>130} Date:&nbsp;
-                  %td= @holiday.holiday_date
+                  %td= l @holiday.holiday_date, :format => :default
                 %tr
                   %td{:width=>130} National Holiday:&nbsp;
-                  %td= @holiday.national_holiday
+                  %td= (@holiday.national_holiday == true)?"Yes":"No"
           %tr
             %td &nbsp;

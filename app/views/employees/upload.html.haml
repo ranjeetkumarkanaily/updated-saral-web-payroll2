@@ -1,5 +1,6 @@
 #left_content
-  = render "left"
+  %ul
+    %li= link_to 'Back', employees_path
 #right_content
   %h1 Excel Upload (Employee)
   = form_tag('/employees/upload_parse_validate', :multipart => true)
