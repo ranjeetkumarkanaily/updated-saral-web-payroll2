@@ -104,3 +104,20 @@
         %tr
           %td{:colspan=>4,:align=>'center'}
             %b TOTAL
+          - grand_total_earning = 0
+          - @employee_salary_total[0][:salary_earnings_total].each do |salary_earning_total|
+            %td
+              %b= salary_earning_total.salary_amount
+              - grand_total_earning =   grand_total_earning + salary_earning_total.salary_amount.to_f
+          %td
+            %b= grand_total_earning
+          %td= @employee_salary_total[0][:grand_pf]
+          %td
+          %td
+          - grand_total_deduction = 0
+          - @employee_salary_total[0][:salary_deductions_total].each do |salary_deduction_total|
+            %td
+              %b= salary_deduction_total.salary_amount
+              - grand_total_deduction =   grand_total_deduction + salary_deduction_total.salary_amount.to_f
+          %td
+            %b= grand_total_deduction

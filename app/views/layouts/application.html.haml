@@ -34,8 +34,8 @@
             %a{:href => companies_path, :rel => "dropmenu1_b"} Settings
           %li
             %a{:href => branches_path, :rel => "dropmenu2_b"} Master
-          %li
-            %a{:href => attendance_configurations_path, :rel => "dropmenu3_b"} Attendance
+          -#%li
+          -#  %a{:href => attendance_configurations_path, :rel => "dropmenu3_b"} Attendance
           %li
             %a{:href => leave_details_path} Leave
           %li
@@ -60,6 +60,7 @@
         %a{:href => departments_path} Department
         %a{:href => grades_path} Grade
         %a{:href => hr_categories_path} HR Category
+        %a{:href => attendance_configurations_path} Attendance Configuration
       #dropmenu2_b.dropmenudiv_b
         %a{:href => branches_path} Branch
         %a{:href => pf_groups_path} PF Group
@@ -70,9 +71,10 @@
         %a{:href => employees_path} Employees
         %a{:href => salary_allotments_path} Employee's - Salary Rate
         %a{:href => financial_institutions_path} Financial Institution (Bank)
-      #dropmenu3_b.dropmenudiv_b
-        %a{:href => attendance_configurations_path} Attendance Configuration
         %a{:href => holidays_path} Holiday Lists
+      -##dropmenu3_b.dropmenudiv_b
+
+
       #dropmenu4_b.dropmenudiv_b
         %a{:href => new_salary_path} Salary Editor
         %a{:href => salaries_path} Employee's - Salary Details

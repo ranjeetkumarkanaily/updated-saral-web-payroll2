@@ -1,7 +1,9 @@
 #left_content
-    %ul
-        %li= link_to 'Edit Company', edit_company_path(@company.id)
+    - if @company
+        %ul
+            %li= link_to 'Edit Company', edit_company_path(@company.id)
 #right_content
+    = render "breadcrumb"
     - if @company
         %h1
             Company Details
