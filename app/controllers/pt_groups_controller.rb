@@ -14,7 +14,7 @@ class PtGroupsController < ApplicationController
   # GET /pt_groups/1.json
   def show
     @pt_group = PtGroup.find(params[:id])
-    @pt_group_rates = @pt_group.pt_group_rates
+    @pt_group_rates = @pt_group.pt_group_rates.order('paymonth_id Desc')
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @pt_group }
