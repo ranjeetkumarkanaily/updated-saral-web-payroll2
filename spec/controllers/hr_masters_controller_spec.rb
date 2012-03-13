@@ -8,7 +8,9 @@ describe HrMastersController do
 
   describe "GET new" do
     it "assigns a new hr_master as @hr_master" do
-      get :new
+      hr_category_details = FactoryGirl.create(:hr_category_detail)
+      employee = FactoryGirl.create(:employee)
+      get :new, :hr_category_id => hr_category_details.hr_category.id, :employee_id => employee.id
       assigns(:hr_master).should be_a_new(HrMaster)
     end
   end

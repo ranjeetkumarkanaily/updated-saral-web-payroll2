@@ -6,12 +6,14 @@ describe "holidays/index" do
       stub_model(Holiday,
         :attendance_configuration_id => 1,
         :description => "Description",
-        :national_holiday => false
+        :national_holiday => true,
+        :holiday_date => "2012-01-26"
       ),
       stub_model(Holiday,
         :attendance_configuration_id => 1,
         :description => "Description",
-        :national_holiday => false
+        :national_holiday => true,
+        :holiday_date => "2012-10-02"
       )
     ]).stub!(:total_pages).and_return(0)
   end

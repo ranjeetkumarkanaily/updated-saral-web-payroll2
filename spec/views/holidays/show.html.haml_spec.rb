@@ -6,7 +6,8 @@ describe "holidays/show" do
     @holiday = assign(:holiday, stub_model(Holiday,
       :attendance_configuration => @attendance_configuration,
       :description => "Description",
-      :national_holiday => false
+      :national_holiday => true,
+      :holiday_date => "2012-10-02"
     ))
   end
 
@@ -17,6 +18,6 @@ describe "holidays/show" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/Description/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/false/)
+    rendered.should match(/Yes/)
   end
 end

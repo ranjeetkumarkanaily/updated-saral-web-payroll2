@@ -61,8 +61,9 @@ describe PtGroupRatesController do
 
   describe "GET new" do
     it "assigns a new pt_group_rate as @pt_group_rate" do
-      get :new, {}, valid_session
+      get :new, {:pt_group_id => valid_attributes[:pt_group_id]}, valid_session
       assigns(:pt_group_rate).should be_a_new(PtGroupRate)
+
     end
   end
 

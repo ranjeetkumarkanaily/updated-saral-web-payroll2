@@ -9,14 +9,18 @@ describe "salary_allotments/index" do
                                           :empname => employee.empname,
                                           :refno => employee.refno,
                                           :department_id => employee.department.id,
-                                          :designation_id => employee.designation.id)]).stub!(:total_pages).and_return(0)
+                                          :designation_id => employee.designation.id,
+                                          :date_of_joining => "2011-12-01")
+                              ]).stub!(:total_pages).and_return(0)
 
     assign(:already_allot_Sal,[stub_model(Employee,
                                           :id => employee.id,
                                           :empname => employee.empname,
                                           :refno => employee.refno,
                                           :department_id => employee.department.id,
-                                          :designation_id => employee.designation.id)]).stub!(:total_pages).and_return(0)
+                                          :designation_id => employee.designation.id,
+                                          :date_of_joining => "2011-12-01")
+                              ]).stub!(:total_pages).and_return(0)
 
     render
     rendered.should have_content(employee.empname)

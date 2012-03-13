@@ -6,12 +6,16 @@ describe "paymonths/index" do
       stub_model(Paymonth,
         :month_year => 24144,
         :number_of_days => 31,
-        :month_name => "Dec/2011"
+        :month_name => "Dec/2011",
+        :from_date => "2011-12-01",
+        :to_date => "2011-12-31"
       ),
       stub_model(Paymonth,
         :month_year => 24145,
         :number_of_days => 31,
-        :month_name => "Jan/2012"
+        :month_name => "Jan/2012",
+        :from_date => "2012-01-01",
+        :to_date => "2012-01-31"
       )
     ]).stub!(:total_pages).and_return(0)
   end
