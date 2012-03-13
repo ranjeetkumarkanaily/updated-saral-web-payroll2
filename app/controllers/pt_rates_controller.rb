@@ -80,10 +80,12 @@ class PtRatesController < ApplicationController
   # DELETE /pt_rates/1.json
   def destroy
     @pt_rate = PtRate.find(params[:id])
+    paymonth_id = @pt_rate.paymonth_id
+    pt_group_id = @pt_rate.pt_group_id
     @pt_rate.destroy
 
     respond_to do |format|
-      format.html { redirect_to pt_rates_url }
+      format.html { redirect_to pt_rates_path(:paymonth_id =>  paymonth_id, :pt_group_id => pt_group_id) }
       format.json { head :ok }
     end
   end

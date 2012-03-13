@@ -117,6 +117,11 @@ FactoryGirl.define do
     state_id 1
   end
 
+  factory :pt_group_rate do
+    pt_group
+    paymonth
+  end
+
   factory :pt_rate do
     pt_group
     paymonth

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "pt_groups/show" do
   before(:each) do
     state = FactoryGirl.create(:state)
-
+    paymonth = FactoryGirl.create(:paymonth)
     @pt_group = assign(:pt_group, stub_model(PtGroup,
       :name => "Name",
       :state => state,
@@ -12,23 +12,17 @@ describe "pt_groups/show" do
       :address => "Address",
       :return_period => "Return Period"
     ))
-    FactoryGirl.create(:pt_rate, :pt_group_id => @pt_group.id)
-    assign(@pt_group_rates, @pt_group.pt_group_rates)
+
+    assign(:pt_group_rates, [stub_model(PtGroupRate,
+                                       :pt_group_id => @pt_group.id,
+                                       :paymonth_id => paymonth.id
+                                       )])
   end
 
-  xit "renders attributes in <p>" do
+  it "renders attributes in <p>" do
     render
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
+
     rendered.should match(/Name/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(//)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Certificate No/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Pto Circle No/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Address/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Return Period/)
+
   end
 end
