@@ -3,4 +3,13 @@ class PtGroupRate < ActiveRecord::Base
   belongs_to :paymonth
 
   validates_uniqueness_of :pt_group_id, :scope => :paymonth_id
+
+  def to_date
+    next_row = next_row_on_pf_group_id
+    (Date.strptime(Paymonth.find(next_row.paymonth_id).month_name, "%b/%Y")-1).strftime("%d-%m-%Y") if next_row
+  end
+
+  def next_row_on_pf_group_id
+    PtGroupRate.where("pt_group_id = ? AND paymonth_id > ?", self.id, self.paymonth_id).order("paymonth_id").first
+  end
 end
