@@ -64,7 +64,7 @@ describe PfGroupsController do
 
       it "redirects to the created pf_group" do
         post :create, {:pf_group => valid_attributes}
-        response.should redirect_to(PfGroup.last)
+        response.should redirect_to(pf_groups_url)
       end
     end
 
@@ -102,7 +102,7 @@ describe PfGroupsController do
       it "redirects to the pf_group" do
         pf_group = PfGroup.create! valid_attributes
         put :update, {:id => pf_group.to_param, :pf_group => valid_attributes}
-        response.should redirect_to(pf_group)
+        response.should redirect_to(pf_groups_url)
       end
     end
 

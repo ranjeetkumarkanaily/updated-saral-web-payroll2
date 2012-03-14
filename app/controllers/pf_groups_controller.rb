@@ -44,7 +44,7 @@ class PfGroupsController < ApplicationController
 
     respond_to do |format|
       if @pf_group.save
-        format.html { redirect_to @pf_group, notice: 'Pf group was successfully created.' }
+        format.html { redirect_to pf_groups_url, notice: 'Pf group was successfully created.' }
         format.json { render json: @pf_group, status: :created, location: @pf_group }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class PfGroupsController < ApplicationController
 
     respond_to do |format|
       if @pf_group.update_attributes(params[:pf_group])
-        format.html { redirect_to @pf_group, notice: 'Pf group was successfully updated.' }
+        format.html { redirect_to pf_groups_url, notice: 'Pf group was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

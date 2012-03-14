@@ -44,7 +44,7 @@ class EsiGroupsController < ApplicationController
 
     respond_to do |format|
       if @esi_group.save
-        format.html { redirect_to @esi_group, notice: 'Esi group was successfully created.' }
+        format.html { redirect_to esi_groups_url, notice: 'Esi group was successfully created.' }
         format.json { render json: @esi_group, status: :created, location: @esi_group }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class EsiGroupsController < ApplicationController
 
     respond_to do |format|
       if @esi_group.update_attributes(params[:esi_group])
-        format.html { redirect_to @esi_group, notice: 'Esi group was successfully updated.' }
+        format.html { redirect_to esi_groups_url, notice: 'Esi group was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
