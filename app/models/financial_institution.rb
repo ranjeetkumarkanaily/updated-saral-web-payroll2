@@ -3,5 +3,5 @@ class FinancialInstitution < ActiveRecord::Base
             :uniqueness => { :case_sensitive => false }
   validates :pincode, :numericality => true
 
-  has_many :employees
+  has_many :employee_details
 end

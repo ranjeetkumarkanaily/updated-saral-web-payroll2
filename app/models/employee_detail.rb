@@ -3,6 +3,7 @@ class EmployeeDetail < ActiveRecord::Base
   serialize :classification,HstoreSerializer
   belongs_to :employee
   belongs_to :salary_group
+  belongs_to :financial_institution
   has_many :salary_allotments, :dependent => :destroy
   has_many :salaries, :dependent => :destroy
   has_many :classification_headings
