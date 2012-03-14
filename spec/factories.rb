@@ -8,9 +8,6 @@ FactoryGirl.define do
     empname "XYZ"
     date_of_joining "2011-02-01"
     date_of_leaving ""
-    department
-    designation
-    grade
     restrct_pf false
   end
 

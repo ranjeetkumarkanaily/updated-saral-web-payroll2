@@ -124,12 +124,6 @@ class EmployeesController < ApplicationController
       e.present_state = State.find_by_state_name(row[14])
       e.email = row[15]
       e.mobile = row[16].to_s
-      e.designation = Designation.find_by_designation(row[17])
-      e.department = Department.find_by_department(row[18])
-      e.grade = Grade.find_by_grade(row[19])
-      e.branch = Branch.find_by_branch_name(row[20])
-      e.bank_account_number = row[21]
-      e.financial_institution = FinancialInstitution.find_by_name(row[22])
 
       if e.valid?
         @employees << e
@@ -151,27 +145,27 @@ class EmployeesController < ApplicationController
       @company = Company.first
       @report_type = params[:report_type]
       @report_type_change = @report_type.split("_").each{|word| word.capitalize!}.join(" ")
+      condition = ''
 
-
-      if params[:report][:designation_id] != "" && params[:report][:designation_id] != nil
-        condition = " designation_id = #{params[:report][:designation_id]}"
-      end
-
-      if params[:report][:department_id] != "" && params[:report][:department_id] != nil
-        condition += " and " if condition.length > 0
-        condition += " department_id = #{params[:report][:department_id]}"
-      end
-
-      if params[:report][:grade_id] != "" && params[:report][:grade_id] != nil
-        condition += " and " if condition.length > 0
-        condition += " grade_id = #{params[:report][:grade_id]}"
-      end
+      #if params[:report][:designation_id] != "" && params[:report][:designation_id] != nil
+      #  condition = " designation_id = #{params[:report][:designation_id]}"
+      #end
+      #
+      #if params[:report][:department_id] != "" && params[:report][:department_id] != nil
+      #  condition += " and " if condition.length > 0
+      #  condition += " department_id = #{params[:report][:department_id]}"
+      #end
+      #
+      #if params[:report][:grade_id] != "" && params[:report][:grade_id] != nil
+      #  condition += " and " if condition.length > 0
+      #  condition += " grade_id = #{params[:report][:grade_id]}"
+      #end
 
       if @report_type != "Contact"
-        (condition)? condition = condition + " and #{@report_type} IS NOT NULL" : condition = "#{@report_type} IS NOT NULL"
+        (condition.length > 1)? condition = condition + " and #{@report_type} IS NOT NULL" : condition = "#{@report_type} IS NOT NULL"
         @employees = Employee.select("refno,empname,#{@report_type}").where(condition).order('created_at ASC')
       else
-        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").where(condition).order('created_at ASC')
+        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").order('created_at ASC')
       end
 
       respond_to do |format|

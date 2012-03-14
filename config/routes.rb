@@ -32,12 +32,6 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :pt_groups
 
-  resources :grades
-
-  resources :departments
-
-  resources :designations
-
   resources :pf_esi_rates
 
   resources :paymonths

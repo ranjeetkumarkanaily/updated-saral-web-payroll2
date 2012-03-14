@@ -86,33 +86,6 @@
                   %td{:width=>130} Mobile Number:&nbsp;
                   %td= f.text_field :mobile, :size => '22'
           %tr
-            %td.std_td
-              %table
-                %tr
-                  %td{:colspan=>2,:class=>'form_title'} Classification
-                %tr
-                  %td{:width=>130} Designation:&nbsp;
-                  %td= f.select :designation_id, options_for_select(Designation.all(:order => 'created_at ASC').collect {|desig| [ desig.designation, desig.id ] }, @employee.designation_id), {:prompt => 'Select Designation'}
-                %tr
-                  %td{:width=>130} Grade:&nbsp;
-                  %td= f.select :grade_id, options_for_select(Grade.all(:order => 'created_at ASC').collect {|grd| [ grd.grade, grd.id ] }, @employee.grade_id), {:prompt => 'Select Grade'}
-                %tr
-                  %td{:width=>130} Bank:&nbsp;
-                  %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.all(:order => 'created_at ASC').collect {|financial| [ financial.name, financial.id ] }, @employee.financial_institution_id), {:prompt => 'Select Payment'}
-            %td.std_td
-              %table
-                %tr
-                  %td &nbsp
-                %tr
-                  %td{:width=>130} Department:&nbsp;
-                  %td= f.select :department_id, options_for_select(Department.all(:order => 'created_at ASC').collect {|dept| [ dept.department, dept.id ] }, @employee.department_id), {:prompt => 'Select Department'}
-                %tr
-                  %td{:width=>130} Branch:&nbsp;
-                  %td= f.select :branch_id, options_for_select(Branch.all(:order => 'created_at ASC').collect {|branch| [ branch.branch_name, branch.id ] }, @employee.branch_id), {:prompt => 'Select Branch'}
-                %tr
-                  %td{:width=>130} Bank Account No.:&nbsp;
-                  %td= f.text_field :bank_account_number, :size => '22'
-          %tr
             %td.std_td{:colspan=>2}
               %table
                 %tr

@@ -15,9 +15,6 @@ describe EmployeesController do
       :present_state_id => "1",
       :refno => "A1",
       :email => "ganny@gnaa.com",
-      :designation_id => '1',
-      :department_id => '1',
-      :grade_id => '1',
       :restrct_pf => false
     }
   end
@@ -26,9 +23,6 @@ describe EmployeesController do
 
     before :each do
       @state = FactoryGirl.create(:state)
-      @dept = FactoryGirl.create(:department)
-      @desig = FactoryGirl.create(:designation)
-      @grade = FactoryGirl.create(:grade)
     end
 
     it "save_parse_validate" do
@@ -38,7 +32,7 @@ describe EmployeesController do
     end
 
     it "gives error" do
-      FactoryGirl.create(:employee, :refno => 1004, :department => @dept, :designation => @desig, :grade => @grade)
+      FactoryGirl.create(:employee, :refno => 1004)
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success
@@ -167,19 +161,19 @@ describe EmployeesController do
   describe "GET report" do
     it "should generate report for other than contact info" do
       employees = FactoryGirl.create(:employee)
-      get :report, :report_type => 'date_of_joining', "report"=>{"designation_id"=>employees.designation_id,"department_id"=>employees.department.id,"grade_id"=>employees.grade_id}
+      get :report, :report_type => 'date_of_joining', "report"=>{}
       assigns(:employees).should_not be_nil
     end
 
     it "should generate report for contact info" do
       employees = FactoryGirl.create(:employee)
-      get :report, :report_type => 'Contact', "report"=>{"designation_id"=>employees.designation_id,"department_id"=>employees.department.id,"grade_id"=>employees.grade_id}
+      get :report, :report_type => 'Contact', "report"=>{}
       assigns(:employees).should_not be_nil
     end
 
     it "generates pdf output" do
       employees = FactoryGirl.create(:employee)
-      get :report, :report_type => 'Contact', "report"=>{"designation_id"=>employees.designation_id,"department_id"=>employees.department.id,"grade_id"=>employees.grade_id}, :format => "pdf"
+      get :report, :report_type => 'Contact', "report"=>{}, :format => "pdf"
       response.should render_template('employees/report')
     end
   end

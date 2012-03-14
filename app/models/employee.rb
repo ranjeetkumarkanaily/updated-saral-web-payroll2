@@ -7,9 +7,12 @@ class Employee < ActiveRecord::Base
 
   has_many :leave_details, :dependent => :destroy
 
-  belongs_to :designation
-  belongs_to :department
-  belongs_to :grade
+  #has_many :salary_allotments
+  #belongs_to :branch
+  #belongs_to :financial_institution
+  #belongs_to :designation
+  #belongs_to :department
+  #belongs_to :grade
 
   belongs_to :present_state, :class_name => "State"
 
@@ -31,14 +34,11 @@ class Employee < ActiveRecord::Base
 
   validate :dob_before_doj
 
-  validates_presence_of :designation
-  validates_presence_of :department
-  validates_presence_of :grade
+  #validates_presence_of :designation
+  #validates_presence_of :department
+  #validates_presence_of :grade
 
-  has_many :salary_allotments
 
-  belongs_to :branch
-  belongs_to :financial_institution
 
 
 

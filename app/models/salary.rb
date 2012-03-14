@@ -104,7 +104,7 @@ class Salary < ActiveRecord::Base
       esi_amount = get_esi_amount month_year,emp_salary_data.id.to_s
       pt_amount = get_pt_amount month_year,emp_salary_data.id.to_s
 
-      employee_salary_detail[i] = [:refno=>emp_salary_data.refno,:empname=>emp_salary_data.empname,:designation=>emp_salary_data.designation.designation,:paid_days=>no_of_present_days,:salary_earnings=>salary_earning,:pf=>pf_amount,:esi=>esi_amount,:pt=>pt_amount,:salary_deductions=>salary_deduction]
+      employee_salary_detail[i] = [:refno=>emp_salary_data.refno,:empname=>emp_salary_data.empname,:paid_days=>no_of_present_days,:salary_earnings=>salary_earning,:pf=>pf_amount,:esi=>esi_amount,:pt=>pt_amount,:salary_deductions=>salary_deduction]
       i=i+1
     end
 

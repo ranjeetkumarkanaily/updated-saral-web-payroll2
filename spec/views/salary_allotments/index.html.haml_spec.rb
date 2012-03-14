@@ -8,8 +8,6 @@ describe "salary_allotments/index" do
                                           :id => employee.id,
                                           :empname => employee.empname,
                                           :refno => employee.refno,
-                                          :department_id => employee.department.id,
-                                          :designation_id => employee.designation.id,
                                           :date_of_joining => "2011-12-01")
                               ]).stub!(:total_pages).and_return(0)
 
@@ -17,8 +15,6 @@ describe "salary_allotments/index" do
                                           :id => employee.id,
                                           :empname => employee.empname,
                                           :refno => employee.refno,
-                                          :department_id => employee.department.id,
-                                          :designation_id => employee.designation.id,
                                           :date_of_joining => "2011-12-01")
                               ]).stub!(:total_pages).and_return(0)
 

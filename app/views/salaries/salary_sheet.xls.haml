@@ -60,7 +60,6 @@
         %tr
           %td Emp ID
           %td Employee Name
-          %td Designation
           %td Paid Days
           - @earning_heads.each do |earning_head|
             %td= earning_head.head_name
@@ -79,7 +78,6 @@
           %tr
             %td= employee[0][:refno]
             %td= employee[0][:empname]
-            %td= employee[0][:designation]
             %td= employee[0][:paid_days]
             - total_earning = 0
             -employee[0][:salary_earnings].each do |earning|
