@@ -22,7 +22,7 @@ class Salary < ActiveRecord::Base
 
   def self.get_pf_amount month_year, employee_id=0
     month_year = Date.strptime month_year, '%b/%Y'
-    puts employee_id
+
     condition_emp_id = (employee_id != 0)?" employee_id = " + employee_id + " and ":""
     condition = " #{condition_emp_id} salary_head_id = 1 and
                   extract(month from effective_date) = #{month_year.month} and

@@ -154,8 +154,10 @@ describe PtRatesController do
 
     it "redirects to the pt_rates list" do
       pt_rate = PtRate.create! valid_attributes
+      paymonth_id = pt_rate.paymonth_id
+      pt_group_id = pt_rate.pt_group_id
       delete :destroy, {:id => pt_rate.to_param}, valid_session
-      response.should redirect_to(pt_rates_url)
+      response.should redirect_to pt_rates_path(:paymonth_id =>  paymonth_id, :pt_group_id => pt_group_id)
     end
 
     it "destroy the request and updates previous request max sal range to 0" do
