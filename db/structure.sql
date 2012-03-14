@@ -845,9 +845,7 @@ CREATE TABLE pf_group_rates (
     restrict_employer_share boolean,
     restrict_employee_share_to_employer_share boolean,
     employer_epf double precision,
-    cutoff double precision,
-    effective_from date,
-    effective_to date
+    cutoff double precision
 );
 
 
@@ -914,9 +912,7 @@ CREATE TABLE pt_group_rates (
     pt_group_id integer,
     paymonth_id integer,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    effective_from date,
-    effective_to date
+    updated_at timestamp without time zone
 );
 
 
@@ -2226,8 +2222,6 @@ INSERT INTO schema_migrations (version) VALUES ('20120225104413');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
 
+INSERT INTO schema_migrations (version) VALUES ('20120228054045');
+
 INSERT INTO schema_migrations (version) VALUES ('20120228054046');
-
-INSERT INTO schema_migrations (version) VALUES ('20120309103656');
-
-INSERT INTO schema_migrations (version) VALUES ('20120309112224');
