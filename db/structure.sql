@@ -257,6 +257,68 @@ ALTER SEQUENCE default_values_id_seq OWNED BY default_values.id;
 
 
 --
+-- Name: departments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE departments (
+    id integer NOT NULL,
+    department character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE departments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE departments_id_seq OWNED BY departments.id;
+
+
+--
+-- Name: designations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE designations (
+    id integer NOT NULL,
+    designation character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: designations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE designations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: designations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE designations_id_seq OWNED BY designations.id;
+
+
+--
 -- Name: employee_details; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -328,6 +390,12 @@ CREATE TABLE employees (
     email character varying(255),
     mobile character varying(255),
     refno character varying(255),
+    designation_id integer,
+    department_id integer,
+    grade_id integer,
+    branch_id integer,
+    financial_institution_id integer,
+    bank_account_number character varying(255),
     restrct_pf boolean DEFAULT false
 );
 
@@ -457,6 +525,37 @@ CREATE SEQUENCE financial_institutions_id_seq
 --
 
 ALTER SEQUENCE financial_institutions_id_seq OWNED BY financial_institutions.id;
+
+
+--
+-- Name: grades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE grades (
+    id integer NOT NULL,
+    grade character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE grades_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE grades_id_seq OWNED BY grades.id;
 
 
 --
@@ -990,7 +1089,9 @@ CREATE TABLE salary_group_details (
     salary_group_id integer,
     salary_head_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    pf_applicability boolean,
+    pf_percentage numeric
 );
 
 
@@ -1232,6 +1333,20 @@ ALTER TABLE default_values ALTER COLUMN id SET DEFAULT nextval('default_values_i
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE departments ALTER COLUMN id SET DEFAULT nextval('departments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE designations ALTER COLUMN id SET DEFAULT nextval('designations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE employee_details ALTER COLUMN id SET DEFAULT nextval('employee_details_id_seq'::regclass);
 
 
@@ -1261,6 +1376,13 @@ ALTER TABLE esi_groups ALTER COLUMN id SET DEFAULT nextval('esi_groups_id_seq'::
 --
 
 ALTER TABLE financial_institutions ALTER COLUMN id SET DEFAULT nextval('financial_institutions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE grades ALTER COLUMN id SET DEFAULT nextval('grades_id_seq'::regclass);
 
 
 --
@@ -1459,6 +1581,22 @@ ALTER TABLE ONLY default_values
 
 
 --
+-- Name: departments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY departments
+    ADD CONSTRAINT departments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: designations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY designations
+    ADD CONSTRAINT designations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: employee_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1496,6 +1634,14 @@ ALTER TABLE ONLY esi_groups
 
 ALTER TABLE ONLY financial_institutions
     ADD CONSTRAINT financial_institutions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: grades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY grades
+    ADD CONSTRAINT grades_pkey PRIMARY KEY (id);
 
 
 --
@@ -1841,6 +1987,46 @@ ALTER TABLE ONLY employee_details
 
 
 --
+-- Name: employees_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_branch_id_fk FOREIGN KEY (branch_id) REFERENCES branches(id);
+
+
+--
+-- Name: employees_department_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_department_id_fk FOREIGN KEY (department_id) REFERENCES departments(id);
+
+
+--
+-- Name: employees_designation_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_designation_id_fk FOREIGN KEY (designation_id) REFERENCES designations(id);
+
+
+--
+-- Name: employees_financial_institution_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_financial_institution_id_fk FOREIGN KEY (financial_institution_id) REFERENCES financial_institutions(id);
+
+
+--
+-- Name: employees_grade_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY employees
+    ADD CONSTRAINT employees_grade_id_fk FOREIGN KEY (grade_id) REFERENCES grades(id);
+
+
+--
 -- Name: esi_group_rates_esi_group_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1972,6 +2158,18 @@ INSERT INTO schema_migrations (version) VALUES ('20120104045249');
 
 INSERT INTO schema_migrations (version) VALUES ('20120105111756');
 
+INSERT INTO schema_migrations (version) VALUES ('20120106055841');
+
+INSERT INTO schema_migrations (version) VALUES ('20120106120556');
+
+INSERT INTO schema_migrations (version) VALUES ('20120106120557');
+
+INSERT INTO schema_migrations (version) VALUES ('20120106120558');
+
+INSERT INTO schema_migrations (version) VALUES ('20120106123525');
+
+INSERT INTO schema_migrations (version) VALUES ('20120106124054');
+
 INSERT INTO schema_migrations (version) VALUES ('20120109100545');
 
 INSERT INTO schema_migrations (version) VALUES ('20120110053508');
@@ -2012,6 +2210,8 @@ INSERT INTO schema_migrations (version) VALUES ('20120209065012');
 
 INSERT INTO schema_migrations (version) VALUES ('20120215042312');
 
+INSERT INTO schema_migrations (version) VALUES ('20120223121525');
+
 INSERT INTO schema_migrations (version) VALUES ('20120224055527');
 
 INSERT INTO schema_migrations (version) VALUES ('20120224060650');
@@ -2025,3 +2225,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120225104413');
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228054046');
+
+INSERT INTO schema_migrations (version) VALUES ('20120314111529');

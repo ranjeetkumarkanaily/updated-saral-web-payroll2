@@ -44,7 +44,7 @@ class SalaryHeadsController < ApplicationController
 
     respond_to do |format|
       if @salary_head.save
-        format.html { redirect_to @salary_head, notice: 'Salary head was successfully created.' }
+        format.html { redirect_to salary_heads_url, notice: 'Salary head was successfully created.' }
         format.json { render json: @salary_head, status: :created, location: @salary_head }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class SalaryHeadsController < ApplicationController
 
     respond_to do |format|
       if @salary_head.update_attributes(params[:salary_head])
-        format.html { redirect_to @salary_head, notice: 'Salary head was successfully updated.' }
+        format.html { redirect_to salary_heads_url, notice: 'Salary head was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

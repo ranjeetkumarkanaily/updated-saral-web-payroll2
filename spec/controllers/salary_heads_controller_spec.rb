@@ -61,7 +61,7 @@ describe SalaryHeadsController do
 
       it "redirects to the created salary_head" do
         post :create, :salary_head => valid_attributes
-        response.should redirect_to(SalaryHead.last)
+        response.should redirect_to(salary_heads_url)
       end
     end
 
@@ -103,7 +103,7 @@ describe SalaryHeadsController do
       it "redirects to the salary_head" do
         salary_head = SalaryHead.create! valid_attributes
         put :update, :id => salary_head.id, :salary_head => valid_attributes
-        response.should redirect_to(salary_head)
+        response.should redirect_to(salary_heads_url)
       end
     end
 

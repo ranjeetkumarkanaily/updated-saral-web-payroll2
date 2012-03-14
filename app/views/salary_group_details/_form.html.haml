@@ -16,7 +16,13 @@
                   %td= f.collection_select :salary_head_id, SalaryHead.all, :id, :head_name, :prompt => "Select Salary Head"
                 %tr
                   %td{:width=>130} Based On:&nbsp;
-                  %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],        @salary_group_detail.based_on), {:prompt => 'Select'}
+                  %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],@salary_group_detail.based_on), {:prompt => 'Select'}
+                %tr
+                  %td{:width=>130} PF Applicability:&nbsp;
+                  %td= f.check_box :pf_applicability
+                %tr
+                  %td{:width=>130} PF Percentage(%):&nbsp;
+                  %td= f.text_field :pf_percentage, :size => '22'
             %td.std_td
               %table
                 %tr

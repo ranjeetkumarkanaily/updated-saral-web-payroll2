@@ -18,6 +18,7 @@ class SalaryGroupDetailsController < ApplicationController
   # GET /salary_group_details/1
   # GET /salary_group_details/1.json
   def show
+    @param_sal_grp_id = params[:param1]
     @salary_group_detail = SalaryGroupDetail.find(params[:id])
 
     respond_to do |format|

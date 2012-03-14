@@ -65,7 +65,7 @@ describe SalaryGroupsController do
 
       it "redirects to the created salary_group" do
         post :create, :salary_group => valid_attributes
-        response.should redirect_to(SalaryGroup.last)
+        response.should redirect_to(salary_groups_url)
       end
     end
 
@@ -107,7 +107,7 @@ describe SalaryGroupsController do
       it "redirects to the salary_group" do
         salary_group = SalaryGroup.create! valid_attributes
         put :update, :id => salary_group.id, :salary_group => valid_attributes
-        response.should redirect_to(salary_group)
+        response.should redirect_to(salary_groups_url)
       end
     end
 

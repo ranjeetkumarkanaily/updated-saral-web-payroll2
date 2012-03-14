@@ -44,7 +44,7 @@ class SalaryGroupsController < ApplicationController
 
     respond_to do |format|
       if @salary_group.save
-        format.html { redirect_to @salary_group, notice: 'Salary group was successfully created.' }
+        format.html { redirect_to salary_groups_url, notice: 'Salary group was successfully created.' }
         format.json { render json: @salary_group, status: :created, location: @salary_group }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class SalaryGroupsController < ApplicationController
 
     respond_to do |format|
       if @salary_group.update_attributes(params[:salary_group])
-        format.html { redirect_to @salary_group, notice: 'Salary group was successfully updated.' }
+        format.html { redirect_to salary_groups_url, notice: 'Salary group was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

@@ -1,9 +1,11 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', salary_group_details_path(:param1=>@param_sal_grp_id)
+    %li= link_to 'Edit Configuration',edit_salary_group_detail_path(@salary_group_detail,:param1=>@param_sal_grp_id)
 #right_content
   %h1
     Showing Salary Group Configuration
-    = link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(@salary_group_detail)
+    = link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(@salary_group_detail,:param1=>@param_sal_grp_id)
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
@@ -20,6 +22,12 @@
                 %tr
                   %td{:width=>130} Based On:&nbsp;
                   %td= @salary_group_detail.based_on
+                %tr
+                  %td{:width=>130} PF Applicability:&nbsp;
+                  %td= (@salary_group_detail.pf_applicability == true)?"Yes":"No"
+                %tr
+                  %td{:width=>130} PF Percentage(%):&nbsp;
+                  %td= @salary_group_detail.pf_percentage
             %td.std_td
               %table
                 %tr
