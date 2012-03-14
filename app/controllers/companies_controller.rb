@@ -1,15 +1,21 @@
 class CompaniesController < ApplicationController
+  add_breadcrumb "Settings", :root_path
 
   def index
     @company = Company.count ==0 ? nil : Company.first
+    add_breadcrumb "Company", companies_path
   end
 
   def new
     @company = Company.new
+    add_breadcrumb "Company", companies_path
+    add_breadcrumb "Edit Company", new_company_path
   end
 
   def edit
     @company = Company.find(params[:id])
+    add_breadcrumb "Company", companies_path
+    add_breadcrumb "Edit Company", edit_company_path(@company)
   end
 
   def create

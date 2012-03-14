@@ -20,14 +20,16 @@ class Salary < ActiveRecord::Base
         where(condition).group('salary_head_id').order('salary_head_id ASC')
   end
 
-  def self.get_pf_amount month_year, employee_id
+  def self.get_pf_amount month_year, employee_id=0
     month_year = Date.strptime month_year, '%b/%Y'
-    condition = " employee_id = " + employee_id + " and salary_head_id = 1 and
+    puts employee_id
+    condition_emp_id = (employee_id != 0)?" employee_id = " + employee_id + " and ":""
+    condition = " #{condition_emp_id} salary_head_id = 1 and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year}"
     basic_amount = Salary.select('sum(salary_amount) as salary_amount').where(condition)
 
-    condition = " employee_id = " + employee_id + " and salary_head_id = 2 and
+    condition = " #{condition_emp_id} salary_head_id = 2 and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year}"
     da_amount = Salary.select('sum(salary_amount) as salary_amount').where(condition)
@@ -109,5 +111,16 @@ class Salary < ActiveRecord::Base
     end
 
     employee_salary_detail
+  end
+
+  def self.salary_total month_year
+    month_year_format = Date.strptime month_year, '%b/%Y'
+    salary_earning_total = Salary.select("salary_heads.id,sum(salary_amount) as salary_amount").joins(:salary_head).where("effective_date='#{month_year_format.end_of_month}' and salary_type = 'Earnings'").group("salary_heads.id").order("salary_heads.id ASC")
+
+    salary_deduction_total = Salary.select("salary_heads.id,sum(salary_amount) as salary_amount").joins(:salary_head).where("effective_date='#{month_year_format.end_of_month}' and salary_type = 'Deductions'").group("salary_heads.id").order("salary_heads.id ASC")
+
+    grand_pf_total = get_pf_amount month_year,0
+
+    employee_salary_total = [:salary_earnings_total=>salary_earning_total,:grand_pf=>grand_pf_total,:salary_deductions_total=>salary_deduction_total]
   end
 end

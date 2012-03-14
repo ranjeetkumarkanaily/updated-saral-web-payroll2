@@ -61,6 +61,7 @@ gem 'will_paginate'
 gem 'wicked_pdf'
 
 gem 'active_record_hstore_serializer'
+gem 'breadcrumbs_on_rails'
 
 # Use unicorn as the web server
 # gem 'unicorn'

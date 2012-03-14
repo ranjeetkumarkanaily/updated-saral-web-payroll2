@@ -103,6 +103,8 @@ class SalariesController < ApplicationController
 
       @employee_salary_detail = Salary.salary_sheet params[:month_year]
 
+      @employee_salary_total = Salary.salary_total params[:month_year]
+
       respond_to do |format|
         format.xls do
           render :xls => 'Salary Sheet',
