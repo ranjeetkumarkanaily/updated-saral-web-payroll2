@@ -9,3 +9,4 @@ public/system/photos/*
 public/excel_uploaded_files/*
 !.gitignore
 db/development_structure.sql
+db/structure.sql

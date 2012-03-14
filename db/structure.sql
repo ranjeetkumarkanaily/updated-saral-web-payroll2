@@ -51,8 +51,8 @@ CREATE TABLE attendance_configurations (
     attendance character varying(255),
     short_name character varying(255),
     salary_calendar_days character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -87,8 +87,8 @@ CREATE TABLE branches (
     pf_group_id integer,
     esi_group_id integer,
     pt_group_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     esi_applicable boolean
 );
 
@@ -120,8 +120,8 @@ CREATE TABLE classification_headings (
     id integer NOT NULL,
     classification_heading_name character varying(255),
     display_order integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -152,8 +152,8 @@ CREATE TABLE classifications (
     id integer NOT NULL,
     classification_heading_id integer,
     classification_name character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -194,8 +194,8 @@ CREATE TABLE companies (
     address2 character varying(255),
     address3 character varying(255),
     email character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     pt boolean,
     tds boolean,
     photo_file_name character varying(255),
@@ -232,8 +232,8 @@ CREATE TABLE default_values (
     default_type character varying(255),
     value character varying(255),
     value_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -257,68 +257,6 @@ ALTER SEQUENCE default_values_id_seq OWNED BY default_values.id;
 
 
 --
--- Name: departments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE departments (
-    id integer NOT NULL,
-    department character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: departments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE departments_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: departments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE departments_id_seq OWNED BY departments.id;
-
-
---
--- Name: designations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE designations (
-    id integer NOT NULL,
-    designation character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: designations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE designations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: designations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE designations_id_seq OWNED BY designations.id;
-
-
---
 -- Name: employee_details; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -328,8 +266,8 @@ CREATE TABLE employee_details (
     effective_date date,
     salary_group_id integer,
     allotted_gross numeric(8,2),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     classification hstore,
     branch_id integer,
     financial_institution_id integer,
@@ -367,8 +305,8 @@ CREATE TABLE employees (
     empname character varying(255),
     date_of_joining date,
     date_of_leaving date,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     date_of_birth date,
     marital_status character varying(255),
     father_name character varying(255),
@@ -390,12 +328,6 @@ CREATE TABLE employees (
     email character varying(255),
     mobile character varying(255),
     refno character varying(255),
-    designation_id integer,
-    department_id integer,
-    grade_id integer,
-    branch_id integer,
-    financial_institution_id integer,
-    bank_account_number character varying(255),
     restrct_pf boolean DEFAULT false
 );
 
@@ -431,8 +363,8 @@ CREATE TABLE esi_group_rates (
     cut_off double precision,
     minimum_limit_dailywage double precision,
     round_off character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -465,8 +397,8 @@ CREATE TABLE esi_groups (
     address character varying(255),
     esi_no character varying(255),
     esi_local_office character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -503,8 +435,8 @@ CREATE TABLE financial_institutions (
     pincode character varying(255),
     branch_code character varying(255),
     email character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -528,37 +460,6 @@ ALTER SEQUENCE financial_institutions_id_seq OWNED BY financial_institutions.id;
 
 
 --
--- Name: grades; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE grades (
-    id integer NOT NULL,
-    grade character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE grades_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE grades_id_seq OWNED BY grades.id;
-
-
---
 -- Name: holidays; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -568,8 +469,8 @@ CREATE TABLE holidays (
     holiday_date date,
     description character varying(255),
     national_holiday boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -599,8 +500,8 @@ ALTER SEQUENCE holidays_id_seq OWNED BY holidays.id;
 CREATE TABLE hr_categories (
     id integer NOT NULL,
     category_name character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -633,8 +534,8 @@ CREATE TABLE hr_category_details (
     name character varying(255),
     data_type character varying(255),
     required boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -665,8 +566,8 @@ CREATE TABLE hr_masters (
     id integer NOT NULL,
     hr_category_id integer,
     employee_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     category_values hstore
 );
 
@@ -698,8 +599,8 @@ CREATE TABLE leave_details (
     id integer NOT NULL,
     employee_id integer,
     leave_date date,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -731,8 +632,8 @@ CREATE TABLE lops (
     employee_id integer,
     month_year character varying(255),
     lop double precision,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -766,8 +667,8 @@ CREATE TABLE paymonths (
     from_date date,
     to_date date,
     month_name character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -802,8 +703,8 @@ CREATE TABLE pf_esi_rates (
     esi_employee_rate numeric(8,2),
     esi_employer_rate numeric(8,2),
     esi_cutoff numeric(8,2),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -835,8 +736,8 @@ CREATE TABLE pf_group_rates (
     pf_group_id integer,
     paymonth_id integer,
     account_number_21 double precision,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     pension_fund double precision,
     epf double precision,
     account_number_02 double precision,
@@ -879,8 +780,8 @@ CREATE TABLE pf_groups (
     db_file_code character varying(255),
     extension integer,
     address character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -911,8 +812,8 @@ CREATE TABLE pt_group_rates (
     id integer NOT NULL,
     pt_group_id integer,
     paymonth_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -947,8 +848,8 @@ CREATE TABLE pt_groups (
     pto_circle_no character varying(255),
     address character varying(255),
     return_period character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -982,8 +883,8 @@ CREATE TABLE pt_rates (
     min_sal_range numeric,
     max_sal_range numeric,
     pt numeric,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1017,8 +918,8 @@ CREATE TABLE salaries (
     employee_id integer,
     employee_detail_id integer,
     salary_head_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1052,8 +953,8 @@ CREATE TABLE salary_allotments (
     effective_date date,
     salary_head_id integer,
     salary_allotment numeric(8,2),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     salary_group_detail_id integer
 );
 
@@ -1088,8 +989,8 @@ CREATE TABLE salary_group_details (
     based_on character varying(255),
     salary_group_id integer,
     salary_head_id integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1120,8 +1021,8 @@ CREATE TABLE salary_groups (
     id integer NOT NULL,
     salary_group_name character varying(255),
     based_on_gross boolean,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1153,8 +1054,8 @@ CREATE TABLE salary_heads (
     head_name character varying(255),
     short_name character varying(255),
     salary_type character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1189,8 +1090,8 @@ CREATE TABLE salary_totals (
     earned numeric(8,2),
     deducted numeric(8,2),
     net_salary numeric(8,2),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1229,8 +1130,8 @@ CREATE TABLE schema_migrations (
 CREATE TABLE states (
     id integer NOT NULL,
     state_name character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1261,8 +1162,8 @@ CREATE TABLE users (
     id integer NOT NULL,
     username character varying(255),
     password character varying(255),
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1331,20 +1232,6 @@ ALTER TABLE default_values ALTER COLUMN id SET DEFAULT nextval('default_values_i
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE departments ALTER COLUMN id SET DEFAULT nextval('departments_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE designations ALTER COLUMN id SET DEFAULT nextval('designations_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE employee_details ALTER COLUMN id SET DEFAULT nextval('employee_details_id_seq'::regclass);
 
 
@@ -1374,13 +1261,6 @@ ALTER TABLE esi_groups ALTER COLUMN id SET DEFAULT nextval('esi_groups_id_seq'::
 --
 
 ALTER TABLE financial_institutions ALTER COLUMN id SET DEFAULT nextval('financial_institutions_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE grades ALTER COLUMN id SET DEFAULT nextval('grades_id_seq'::regclass);
 
 
 --
@@ -1579,22 +1459,6 @@ ALTER TABLE ONLY default_values
 
 
 --
--- Name: departments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY departments
-    ADD CONSTRAINT departments_pkey PRIMARY KEY (id);
-
-
---
--- Name: designations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY designations
-    ADD CONSTRAINT designations_pkey PRIMARY KEY (id);
-
-
---
 -- Name: employee_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1632,14 +1496,6 @@ ALTER TABLE ONLY esi_groups
 
 ALTER TABLE ONLY financial_institutions
     ADD CONSTRAINT financial_institutions_pkey PRIMARY KEY (id);
-
-
---
--- Name: grades_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY grades
-    ADD CONSTRAINT grades_pkey PRIMARY KEY (id);
 
 
 --
@@ -1985,46 +1841,6 @@ ALTER TABLE ONLY employee_details
 
 
 --
--- Name: employees_branch_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY employees
-    ADD CONSTRAINT employees_branch_id_fk FOREIGN KEY (branch_id) REFERENCES branches(id);
-
-
---
--- Name: employees_department_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY employees
-    ADD CONSTRAINT employees_department_id_fk FOREIGN KEY (department_id) REFERENCES departments(id);
-
-
---
--- Name: employees_designation_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY employees
-    ADD CONSTRAINT employees_designation_id_fk FOREIGN KEY (designation_id) REFERENCES designations(id);
-
-
---
--- Name: employees_financial_institution_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY employees
-    ADD CONSTRAINT employees_financial_institution_id_fk FOREIGN KEY (financial_institution_id) REFERENCES financial_institutions(id);
-
-
---
--- Name: employees_grade_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY employees
-    ADD CONSTRAINT employees_grade_id_fk FOREIGN KEY (grade_id) REFERENCES grades(id);
-
-
---
 -- Name: esi_group_rates_esi_group_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2156,18 +1972,6 @@ INSERT INTO schema_migrations (version) VALUES ('20120104045249');
 
 INSERT INTO schema_migrations (version) VALUES ('20120105111756');
 
-INSERT INTO schema_migrations (version) VALUES ('20120106055841');
-
-INSERT INTO schema_migrations (version) VALUES ('20120106120556');
-
-INSERT INTO schema_migrations (version) VALUES ('20120106120557');
-
-INSERT INTO schema_migrations (version) VALUES ('20120106120558');
-
-INSERT INTO schema_migrations (version) VALUES ('20120106123525');
-
-INSERT INTO schema_migrations (version) VALUES ('20120106124054');
-
 INSERT INTO schema_migrations (version) VALUES ('20120109100545');
 
 INSERT INTO schema_migrations (version) VALUES ('20120110053508');
@@ -2208,8 +2012,6 @@ INSERT INTO schema_migrations (version) VALUES ('20120209065012');
 
 INSERT INTO schema_migrations (version) VALUES ('20120215042312');
 
-INSERT INTO schema_migrations (version) VALUES ('20120223121525');
-
 INSERT INTO schema_migrations (version) VALUES ('20120224055527');
 
 INSERT INTO schema_migrations (version) VALUES ('20120224060650');
@@ -2221,7 +2023,5 @@ INSERT INTO schema_migrations (version) VALUES ('20120224072313');
 INSERT INTO schema_migrations (version) VALUES ('20120225104413');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228053057');
-
-INSERT INTO schema_migrations (version) VALUES ('20120228054045');
 
 INSERT INTO schema_migrations (version) VALUES ('20120228054046');
