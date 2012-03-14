@@ -75,20 +75,7 @@ FactoryGirl.define do
     leave_date '2011-01-01'
   end
 
-
-  factory :department do
-    department 'WDO'
-  end
-
-  factory :designation do
-    designation 'Developer'
-  end
-
-  factory :grade do
-    grade 'First'
-  end
-
-  factory :paymonth do
+ factory :paymonth do
     month_year 24132
     number_of_days 31
     from_date "2010-12-01"
