@@ -7,7 +7,8 @@ class Employee < ActiveRecord::Base
 
   has_many :leave_details, :dependent => :destroy
 
-  #has_many :salary_allotments
+  has_many :salary_allotments
+
   #belongs_to :branch
   #belongs_to :financial_institution
   #belongs_to :designation

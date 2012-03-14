@@ -28,7 +28,7 @@
                   %td= @branch.pf_group.pf_group
                 %tr
                   %td{:width=>130} ESI Applicable:&nbsp;
-                  %td= @branch.esi_applicable
+                  %td= (@branch.esi_applicable==true)?"Yes":"No"
                 -if @branch.esi_applicable == true
                   %tr
                     %td{:width=>130} ESI Group:&nbsp;
