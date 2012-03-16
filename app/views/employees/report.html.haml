@@ -9,6 +9,16 @@
     %tr
       %td.std_td
         = form_tag report_employees_path, :method => :get do
+          - if @classification_headings != nil
+            %fieldset
+              %legend Search By
+              %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+                %tr
+                  %td{:colspan=>3}
+                  - @classification_headings.each do |ch|
+                    -#= render :partial => 'classification', :locals => { :ch => ch }
+                    %td= ch.classification_heading_name
+                    %td= select_tag "report[classification][#{ch.classification_heading_name}]",options_from_collection_for_select(Classification.where(:classification_heading_id => ch.id),"classification_name","classification_name"), :prompt => "Select #{ch.classification_heading_name}"
           -#%fieldset
           -#  %legend Search By
           -#  %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}

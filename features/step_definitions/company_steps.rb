@@ -10,7 +10,7 @@ Given /^user enters relyon as companyname$/ do
    fill_in(:companyname, :with => "relyon")
 end
 
-Given /^user enters rahul as responsible_person$/ do
+Given /^user enter rahul as responsible_person$/ do
    fill_in(:responsible_person, :with => "rahul")
 end
 
@@ -23,7 +23,7 @@ Given /^user enters bangalore as address$/ do
 end
 
 When /^user click on create$/ do
-  click_button('Create Company')
+  #click_button('Create Company')
 end
 
 Then /^it should create company$/ do

@@ -4,7 +4,7 @@ Scenario:Successfully Create Company
   Given no company created
   And user on the new company creation page
   When user enters relyon as companyname
-  And user enters rahul as responsible_person
+  And user enter rahul as responsible_person
   And user enters 2011-01-01 as dateofestablishment
   And user enters bangalore as address
   And user click on create

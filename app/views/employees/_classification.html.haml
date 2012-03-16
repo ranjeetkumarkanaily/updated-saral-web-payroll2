@@ -1,0 +1,8 @@
+%table
+  %tr
+    %td{:width=>130}= ch.classification_heading_name
+    %td= select_tag "report[classification][#{ch.classification_heading_name}]",options_from_collection_for_select(Classification.where(:classification_heading_id => ch.id),"classification_name","classification_name"), :prompt => "Select #{ch.classification_heading_name}"
+
+
+
+

@@ -47,9 +47,11 @@ class PfGroupRatesController < ApplicationController
 
     @param_pf_group_id = params[:pf_group_rate][:pf_group_id]
     @pf_group_rate = PfGroupRate.new(params[:pf_group_rate])
-
+    effective_date = Paymonth.find(params[:pf_group_rate][:paymonth_id]).from_date
     respond_to do |format|
       if @pf_group_rate.save
+        last_saved = PfGroupRate.find(@pf_group_rate.id)
+        last_saved.update_attribute(:effective_date,effective_date)
         format.html { redirect_to pf_group_rates_url(:params1 => @param_pf_group_id), notice: 'Pf group rate was successfully created.' }
         format.json { render json: @pf_group_rate, status: :created, location: @pf_group_rate }
       else
