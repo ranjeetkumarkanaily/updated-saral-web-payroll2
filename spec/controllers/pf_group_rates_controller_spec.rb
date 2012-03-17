@@ -64,18 +64,18 @@ describe PfGroupRatesController do
     describe "with valid params" do
       it "creates a new PfGroupRate" do
         expect {
-          post :create, {:pf_group_rate => valid_attributes.merge(:pf_group_id => @pf_group.id, :paymonth_id => @paymonth.id)}
+          post :create, {:pf_group_rate => valid_attributes.merge(:pf_group_id => @pf_group.id, :paymonth_id => @paymonth.id, :effective_date => '2010-12-01')}
         }.to change(PfGroupRate, :count).by(1)
       end
 
       it "assigns a newly created pf_group_rate as @pf_group_rate" do
-        post :create, {:pf_group_rate => valid_attributes.merge(:pf_group_id => @pf_group.id, :paymonth_id => @paymonth.id)}
+        post :create, {:pf_group_rate => valid_attributes.merge(:pf_group_id => @pf_group.id, :paymonth_id => @paymonth.id, :effective_date => '2010-12-01')}
         assigns(:pf_group_rate).should be_a(PfGroupRate)
         assigns(:pf_group_rate).should be_persisted
       end
 
       it "redirects to the created pf_group_rate" do
-        post :create, {:pf_group_rate => valid_attributes.merge(:pf_group_id => @pf_group.id, :paymonth_id => @paymonth.id)}
+        post :create, {:pf_group_rate => valid_attributes.merge(:pf_group_id => @pf_group.id, :paymonth_id => @paymonth.id, :effective_date => '2010-12-01')}
         response.should redirect_to(pf_group_rates_url(:params1 => @pf_group.id))
       end
     end

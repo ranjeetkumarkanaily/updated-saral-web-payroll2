@@ -46,20 +46,11 @@
                       - gross_total =   gross_total + salary.salary_amount.to_f
               %td.std_td{:valign => 'top',:style=>"width:270px;"}
                 %table
-                  %tr
-                    %td{:width=>170} PF
-                    %td{:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
-                    - deduction_total = deduction_total + @pf_amount.to_f
                   - if @pt_amount
                     %tr
                       %td{:width=>170} PT
                       %td{:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + @pt_amount.to_f
-                  - if @esi_amount
-                    %tr
-                      %td ESI
-                      %td{:style=>"text-align:right;"}= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
-                      - deduction_total = deduction_total + @esi_amount.to_f
                   - @salary_deduction.each do |salary|
                     %tr
                       %td{:width=>170}= salary.salary_head.head_name

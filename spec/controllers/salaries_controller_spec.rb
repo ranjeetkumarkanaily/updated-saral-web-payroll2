@@ -9,7 +9,6 @@ describe SalariesController do
 
       before :each do
         @pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
-        #@salary = FactoryGirl.build(:salary)
       end
 
       it "should give no of present days" do
@@ -107,21 +106,6 @@ describe SalariesController do
       get :index, :month_year => "Feb/2011", :employee_id => salary_basic.employee_id
 
       assigns(:salary_deduction)[0].salary_amount.should eq(salary_basic.salary_amount)
-    end
-
-
-    it "get pf for the given employee" do
-      employee = FactoryGirl.create(:employee)
-      salaryHead1 = FactoryGirl.create(:salary_head, :id => 1, :head_name => "Basic", :short_name => "BASIC", :salary_type => "Earnings")
-      salaryHead2 = FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
-      salary_basic = FactoryGirl.create(:salary, :salary_head => salaryHead1)
-      salary_da = FactoryGirl.create(:salary, :salary_head => salaryHead2, :salary_amount=>500.00)
-
-      get :index, :month_year => "Feb/2011", :employee_id => salary_da.employee_id
-
-      pf_amount = ((salary_basic.salary_amount + salary_da.salary_amount) * @pf_esi_rate.pf_rate/100).round.to_f
-
-      assigns(:pf_amount).should eq(pf_amount)
     end
 
     it "generates pdf output" do

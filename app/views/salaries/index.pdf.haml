@@ -63,16 +63,16 @@
           %td{:width=>40} &nbsp;
           %td.normal_txt{:width=>180} Employee Name
           %td.normal_txt{:width=>200}= @employee.empname
+        -#%tr
+        -#  %td.normal_txt{:width=>180} Designation
+        -#  %td.normal_txt{:width=>200}= @employee.designation.designation
+        -#  %td{:width=>40} &nbsp;
+        -#  %td.normal_txt{:width=>180} Department
+        -#  %td.normal_txt{:width=>200}= @employee.department.department
         %tr
-          %td.normal_txt{:width=>180} Designation
-          %td.normal_txt{:width=>200}= @employee.designation.designation
-          %td{:width=>40} &nbsp;
-          %td.normal_txt{:width=>180} Department
-          %td.normal_txt{:width=>200}= @employee.department.department
-        %tr
-          %td.normal_txt{:width=>180} Grade
-          %td.normal_txt{:width=>200}= @employee.grade.grade
-          %td{:width=>40} &nbsp;
+          -#%td.normal_txt{:width=>180} Grade
+          -#%td.normal_txt{:width=>200}= @employee.grade.grade
+          -#%td{:width=>40} &nbsp;
           %td.normal_txt{:width=>180} DOJ
           %td.normal_txt{:width=>200}= l @employee.date_of_joining, :format=>:default
         %tr
@@ -104,21 +104,11 @@
                         - gross_total =   gross_total + salary.salary_amount.to_f
                 %td{:colspan=>2,:valign => 'top'}
                   %table{:width=>400, :cellpadding => 0, :cellspacing => 0}
-                    %tr
-                      %td{:width=>200,:class=>"table_text_left td_bdr_r"} PF
-                      %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pf_amount, :precision => 2, :delimiter => ',')
-                      - deduction_total = deduction_total + @pf_amount.to_f
                     - if @pt_amount
                       %tr
                         %td{:width=>200,:class=>"table_text_left td_bdr_r"} PT
                         %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')
                         - deduction_total = deduction_total + @pt_amount.to_f
-
-                    - if @esi_amount
-                      %tr
-                        %td{:width=>200,:class=>"table_text_left td_bdr_r"} ESI
-                        %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}= number_with_precision(@esi_amount, :precision => 2, :delimiter => ',')
-                        - deduction_total = deduction_total + @esi_amount.to_f
                     - @salary_deduction.each do |salary|
                       %tr
                         %td{:width=>200,:class=>"table_text_left td_bdr_r"}= salary.salary_head.head_name

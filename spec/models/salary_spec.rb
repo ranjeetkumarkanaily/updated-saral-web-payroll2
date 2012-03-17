@@ -19,50 +19,6 @@ describe Salary do
       getSalary[0].salary_head.head_name.should eq("Basic")
     end
 
-    describe "Get PF" do
-
-      it "should get pf amount for the given employee if pf_cut_off is more than summation of Basic and DA" do
-        salary_head =  FactoryGirl.create(:salary_head, :id => 1, :head_name => "BASIC", :short_name => "Basic", :salary_type => "Earnings")
-        salary = FactoryGirl.create(:salary, :salary_head => salary_head)
-        salary_head =  FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
-        salary_da = FactoryGirl.create(:salary, :salary_head => salary_head )
-        pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-        getPF = Salary.get_pf_amount "Feb/2011", salary.employee_id.to_s
-        getPF_float = getPF.to_f
-        getPF_float.should eq(183.0966)
-      end
-
-      it "should get pf amount for the given employee if pf_cut_off is less than summation of Basic and DA" do
-        salary_head =  FactoryGirl.create(:salary_head, :id => 1, :head_name => "BASIC", :short_name => "Basic", :salary_type => "Earnings")
-        salary = FactoryGirl.create(:salary, :salary_head => salary_head)
-        salary_head =  FactoryGirl.create(:salary_head, :id => 2, :head_name => "DA", :short_name => "DA", :salary_type => "Earnings")
-        salary_da = FactoryGirl.create(:salary, :salary_head => salary_head, :salary_amount=>500.00)
-        pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-        getPF = Salary.get_pf_amount "Feb/2011", salary.employee_id.to_s
-        getPF_float = getPF.to_f
-        getPF_float.should eq(180.0)
-      end
-
-    end
-
-    describe "get esi amount" do
-
-      it "should get esi amount if gross salary is less or equal to 15000" do
-        salary = FactoryGirl.create(:salary)
-        pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-        getESI = Salary.get_esi_amount "Feb/2011", salary.employee_id.to_s
-        getESI.should eq(120.00)
-
-      end
-
-      it "should get 0 esi amount if gross salary is more than 15000" do
-        salary = FactoryGirl.create(:salary,:salary_amount => 17000)
-        pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
-        getESI = Salary.get_esi_amount "Feb/2011", salary.employee_id.to_s
-        getESI.should eq(nil)
-      end
-
-    end
 
     describe "find employee Leave" do
       it "should find employee leave" do
@@ -92,7 +48,7 @@ describe Salary do
         salary = FactoryGirl.create(:salary,:salary_amount => 6000)
         pt_rate = FactoryGirl.create(:pt_rate,:min_sal_range => 7000.0)
         get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
-        get_pt.should eq(nil)
+        get_pt.should eq(0)
       end
 
     end

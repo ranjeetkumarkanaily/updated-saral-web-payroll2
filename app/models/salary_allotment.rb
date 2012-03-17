@@ -43,7 +43,7 @@ class SalaryAllotment < ActiveRecord::Base
 
   def self.get_allotted_salaries_for_max_effective_date month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
-    SalaryAllotment.select("id, employee_id, employee_detail_id,date_trunc('month', date('#{month_year.year}-#{month_year.month}-01') + '1 month'::interval) - '1 day'::interval as effective_date, salary_head_id, salary_allotment").where("employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order("salary_head_id ASC")
+    SalaryAllotment.select("id, employee_id, employee_detail_id,date_trunc('month', date('#{month_year.year}-#{month_year.month}-01')) as effective_date, salary_head_id, salary_allotment, salary_group_detail_id").where("employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order("salary_head_id ASC")
   end
 
   def self.row_for_salary_allotment employee_id

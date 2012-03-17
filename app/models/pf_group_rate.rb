@@ -21,4 +21,14 @@ class PfGroupRate < ActiveRecord::Base
     PfGroupRate.where("pf_group_id = ? AND paymonth_id > ?", self.pf_group_id, self.paymonth_id).order("paymonth_id").first
   end
 
+  def self.pf_rate month_date, pf_grp_id
+    pf_rate = PfGroupRate.where("effective_date = '#{month_date.beginning_of_month}' and pf_group_id = ?",pf_grp_id)
+    if pf_rate.count > 0
+      return_pf_rate = pf_rate
+    else
+      return_pf_rate = PfGroupRate.where("effective_date = (select MAX(effective_date) from pf_group_rates where pf_group_id = #{pf_grp_id}) and pf_group_id = ?",pf_grp_id)
+    end
+    return_pf_rate
+  end
+
 end

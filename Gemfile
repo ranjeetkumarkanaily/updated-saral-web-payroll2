@@ -46,10 +46,10 @@ gem 'hpricot'
 gem "haml"
 gem 'jquery-rails'
 gem 'fileutils'
-gem 'prawn'
-gem 'prawn-core'
-gem 'prawn-layout'
-gem "prawnto_2", :require => "prawnto"
+#gem 'prawn'
+#gem 'prawn-core'
+#gem 'prawn-layout'
+#gem "prawnto_2", :require => "prawnto"
 gem 'currency-in-words'
 gem "pdfkit"
 gem "wkhtmltopdf"

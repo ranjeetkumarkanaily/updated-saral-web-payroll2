@@ -65,4 +65,14 @@ class EmployeeDetail < ActiveRecord::Base
     end
     last_record_id
   end
+
+  def self.employee_branch month_date, emp_id
+    emp_det_branch = EmployeeDetail.select('branch_id').where("effective_date = '#{month_date.beginning_of_month}' and employee_id = ?",emp_id)
+    if emp_det_branch.count > 0
+      emp_branch = emp_det_branch
+    else
+      emp_branch =  EmployeeDetail.select('branch_id').where("effective_date = (select MAX(effective_date) from employee_details where employee_id = #{emp_id}) and employee_id = ?",emp_id)
+    end
+    emp_branch
+  end
 end

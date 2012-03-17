@@ -41,8 +41,6 @@ class SalariesController < ApplicationController
 
       @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id],0
       @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
-      @pf_amount = Salary.get_pf_amount params[:month_year], params[:employee_id]
-      @esi_amount = Salary.get_esi_amount params[:month_year], params[:employee_id]
 
       @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
 
@@ -75,8 +73,15 @@ class SalariesController < ApplicationController
 
       params[:salary].each do |sal|
         updated_salary_amount = sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month.to_f
-        Salary.create(:effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id])
+        Salary.create(:effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id], :salary_group_detail_id => sal[:salary_group_detail_id])
       end
+
+      pf_amount = Salary.get_pf_amount params[:month_year],params[:salary][0]['employee_id']
+      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => params[:salary][0]['salary_group_detail_id'])
+
+      esi_amount = Salary.get_esi_amount params[:month_year],params[:salary][0]['employee_id']
+      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => params[:salary][0]['salary_group_detail_id'])
+
       redirect_to salaries_path
     end
   end

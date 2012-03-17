@@ -9,12 +9,12 @@
       = check_box_tag "select_all"
       Select All
 
-  - for @employee_data in @employeesList
-    = hidden_field_tag "employee_data[][id]",@employee_data.id
+  - @employeesList.each do |employeeList|
+    = hidden_field_tag "employee_data[][id]",employeeList.id
     %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-      %td.table_grid_td=  @employee_data.refno
-      %td.table_grid_td=  @employee_data.empname
-      %td.table_grid_td=  @employee_data.gender
-      %td.table_grid_td= @employee_data.date_of_joining
-      %td.table_grid_td= @employee_data.email
-      %td.table_grid_td= check_box_tag "employee_data[][pf]", @employee_data.restrct_pf ,@employee_data.restrct_pf
+      %td.table_grid_td=  employeeList.refno
+      %td.table_grid_td=  employeeList.empname
+      %td.table_grid_td=  employeeList.gender
+      %td.table_grid_td= l employeeList.date_of_joining, :format => :default
+      %td.table_grid_td= employeeList.email
+      %td.table_grid_td= check_box_tag "employee_data[][pf]", employeeList.restrct_pf ,employeeList.restrct_pf

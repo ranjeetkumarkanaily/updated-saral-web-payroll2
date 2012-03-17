@@ -65,8 +65,6 @@
             %td= earning_head.head_name
           %td
             %b Total Earnings
-          %td PF
-          %td ESI
           %td PT
           - @deduction_heads.each do |deduction_head|
             %td= deduction_head.head_name
@@ -74,6 +72,8 @@
             %b Total Deductions
           %td
             %b Net Salary
+        - grand_pt_amount = 0
+        - grand_net_salary = 0
         -@employee_salary_detail.each do |employee|
           %tr
             %td= employee[0][:refno]
@@ -86,11 +86,8 @@
             %td
               %b= total_earning
             - total_deduction = 0
-            %td= employee[0][:pf]
-            - total_deduction = total_deduction + employee[0][:pf].to_f
-            %td= employee[0][:esi]
-            - total_deduction = total_deduction + employee[0][:esi].to_f
             %td= employee[0][:pt]
+            - grand_pt_amount = grand_pt_amount + employee[0][:pt]
             - total_deduction = total_deduction + employee[0][:pt].to_f
             -employee[0][:salary_deductions].each do |deduction|
               %td= deduction.salary_amount
@@ -99,8 +96,9 @@
               %b= total_deduction
             %td
               %b= total_earning-total_deduction
+            - grand_net_salary = grand_net_salary + (total_earning-total_deduction)
         %tr
-          %td{:colspan=>4,:align=>'center'}
+          %td{:colspan=>3,:align=>'center'}
             %b TOTAL
           - grand_total_earning = 0
           - @employee_salary_total[0][:salary_earnings_total].each do |salary_earning_total|
@@ -109,9 +107,7 @@
               - grand_total_earning =   grand_total_earning + salary_earning_total.salary_amount.to_f
           %td
             %b= grand_total_earning
-          %td= @employee_salary_total[0][:grand_pf]
-          %td
-          %td
+          %td= grand_pt_amount
           - grand_total_deduction = 0
           - @employee_salary_total[0][:salary_deductions_total].each do |salary_deduction_total|
             %td
@@ -119,3 +115,5 @@
               - grand_total_deduction =   grand_total_deduction + salary_deduction_total.salary_amount.to_f
           %td
             %b= grand_total_deduction
+          %td
+            %b= grand_net_salary
