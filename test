@@ -1,0 +1,2 @@
+EmployeeDetail.select('classification,employee_id').joins(:employee).where("classification -> 'Team' ILIKE 'WDO'","classification -> 'Department' ILIKE 'Development'")
+

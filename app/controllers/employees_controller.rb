@@ -143,14 +143,15 @@ class EmployeesController < ApplicationController
   def report
     @classification_headings = ClassificationHeading.order('display_order')
     if params[:report_type]
+      condition = ''
+      condition1 = ''
       @company = Company.first
       @report_type = params[:report_type]
       @report_type_change = @report_type.split("_").each{|word| word.capitalize!}.join(" ")
-     # classiftn = params[:report][:classification]
-     # puts "hiii"
-     # classification = classiftn.to_hash
-     #puts classification.keys
-      condition = ''
+      classification = params[:report][:classification].to_hash
+      classification.each_pair { |key,value| (condition1.length > 1)? condition1 = condition1 + ", classification -> '#{key}' ILIKE '#{value}' " :condition1 = condition1 + " classification -> '#{key}' ILIKE '#{value}' "  }
+
+
       #if params[:report][:designation_id] != "" && params[:report][:designation_id] != nil
       #  condition = " designation_id = #{params[:report][:designation_id]}"
       #end
@@ -172,15 +173,15 @@ class EmployeesController < ApplicationController
         @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").order('created_at ASC')
       end
 
-      #respond_to do |format|
-      #  format.html # new.html.haml
-      #  format.pdf do
-      #    render :pdf => 'Report',
-      #           :handlers => [:haml],
-      #           :format => [:pdf],
-      #           :template => 'employees/report'
-      #  end
-      #end
+      respond_to do |format|
+        format.html # new.html.haml
+        format.pdf do
+          render :pdf => 'Report',
+                 :handlers => [:haml],
+                 :format => [:pdf],
+                 :template => 'employees/report'
+        end
+      end
     end
   end
 
