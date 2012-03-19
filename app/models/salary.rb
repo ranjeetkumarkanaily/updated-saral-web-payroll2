@@ -58,7 +58,7 @@ class Salary < ActiveRecord::Base
     employee_esi_group = Branch.find(employee_branch[0]['branch_id']).esi_group_id
     if employee_esi_group != nil
       esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
-      if gross_salary < esi_rate_value[:cut_off]
+      if gross_salary <= esi_rate_value[:cut_off]
         esi_amount = (gross_salary*(esi_rate_value[:employee_rate]/100)).round.to_f
       else
         esi_amount = 0

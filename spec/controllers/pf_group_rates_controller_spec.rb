@@ -84,13 +84,13 @@ describe PfGroupRatesController do
       it "assigns a newly created but unsaved pf_group_rate as @pf_group_rate" do
         # Trigger the behavior that occurs when invalid params are submitted
         PfGroupRate.any_instance.stub(:save).and_return(false)
-        post :create, {:pf_group_rate => {}}
+        post :create, {:pf_group_rate => {:paymonth_id => @paymonth.id}}
         assigns(:pf_group_rate).should be_a_new(PfGroupRate)
       end
 
       it "re-renders the 'new' template" do
         PfGroupRate.any_instance.stub(:save).and_return(false)
-        post :create, {:pf_group_rate => {}}
+        post :create, {:pf_group_rate => {:paymonth_id => @paymonth.id}}
         response.should render_template("new")
       end
     end

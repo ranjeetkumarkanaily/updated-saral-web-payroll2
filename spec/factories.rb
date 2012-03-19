@@ -58,7 +58,7 @@ FactoryGirl.define do
 
   factory :employee_detail do
     employee_id  1
-    effective_date "2009-10-31"
+    effective_date "2009-10-01"
     salary_group_id 1
     allotted_gross 5000
     classification {'Department => development'}
