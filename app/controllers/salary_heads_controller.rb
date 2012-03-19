@@ -2,7 +2,7 @@ class SalaryHeadsController < ApplicationController
   # GET /salary_heads
   # GET /salary_heads.json
   def index
-    @salary_heads = SalaryHead.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
+    @salary_heads = SalaryHead.where('id != 2 and id != 3').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # salary_sheet.html.haml

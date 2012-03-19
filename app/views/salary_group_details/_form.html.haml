@@ -21,7 +21,7 @@
                 = f.hidden_field :salary_group_id, :value => @param_sal_grp_id
                 %tr
                   %td{:width=>130} Salary Head:&nbsp;
-                  %td= f.collection_select :salary_head_id, SalaryHead.all, :id, :head_name, :prompt => "Select Salary Head"
+                  %td= f.collection_select :salary_head_id, SalaryHead.where('id != 2 and id != 3').order('created_at ASC'), :id, :head_name, :prompt => "Select Salary Head"
                 %tr
                   %td{:width=>130} Based On:&nbsp;
                   %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],@salary_group_detail.based_on), {:prompt => 'Select'}
