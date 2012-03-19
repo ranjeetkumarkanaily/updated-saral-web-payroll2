@@ -21,10 +21,8 @@ class Salary < ActiveRecord::Base
         where(condition).group('salary_head_id').order('salary_head_id ASC')
   end
 
-  def self.get_pf_amount month_year, employee_id=0
+  def self.get_pf_amount month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
-
-    condition_emp_id = (employee_id != 0)?" employee_id = " + employee_id + " and ":""
 
     pf_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("pf_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
 
@@ -46,7 +44,7 @@ class Salary < ActiveRecord::Base
 
   def self.get_gross_salary month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
-    condition = " employee_id  = " + employee_id + " and salary_type = 'Earnings' and
+    condition = " employee_id  = #{employee_id} and salary_type = 'Earnings' and
                     extract(month from effective_date) = #{month_year.month} and
                     extract(year from effective_date) = #{month_year.year}"
     gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins(:salary_head).where(condition)
@@ -58,9 +56,8 @@ class Salary < ActiveRecord::Base
     month_year = Date.strptime month_year, '%b/%Y'
     employee_branch = EmployeeDetail.employee_branch month_year,employee_id
     employee_esi_group = Branch.find(employee_branch[0]['branch_id']).esi_group_id
-
     if employee_esi_group != nil
-      esi_rate_value = EsiGroupRate.find(employee_esi_group)
+      esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
       if gross_salary < esi_rate_value[:cut_off]
         esi_amount = (gross_salary*(esi_rate_value[:employee_rate]/100)).round.to_f
       else

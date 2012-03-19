@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe "salaries/edit" do
   before(:each) do
-    salary = Factory(:salary)
+    salary_head = FactoryGirl.create(:salary_head)
+    salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+    salary = FactoryGirl.create(:salary, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
     @salary = assign(:salary,
                       [stub_model(Salary,
                                  :employee_id => salary.employee_id,

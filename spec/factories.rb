@@ -43,6 +43,7 @@ FactoryGirl.define do
     employee_id 1
     employee_detail_id 1
     salary_head
+    salary_group_detail
   end
 
   factory :salary_group_detail do
@@ -51,6 +52,8 @@ FactoryGirl.define do
     calc_type 'Lumpsum'
     calculation ""
     based_on "PayDays"
+    pf_applicability true
+    pf_percentage 100
   end
 
   factory :employee_detail do
@@ -193,6 +196,31 @@ FactoryGirl.define do
     hr_category
     employee
     category_values {'Name => Kanaily'}
+  end
+
+  factory :pf_group_rate do
+    pf_group
+    paymonth
+    account_number_21 2
+    pension_fund 2
+    epf 12
+    account_number_02 3
+    account_number_22 4
+    round_off "Higher Rupees"
+    restrict_employer_share false
+    restrict_employee_share_to_employer_share false
+    employer_epf 3
+    cutoff 6500
+    effective_date '2010-12-01'
+  end
+
+  factory :esi_group_rate do
+    esi_group
+    employee_rate 1.75
+    employer_rate 4.75
+    cut_off 15000
+    minimum_limit_dailywage 100
+    round_off "Higher Rupees"
   end
 
 end

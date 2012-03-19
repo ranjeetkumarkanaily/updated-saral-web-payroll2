@@ -12,7 +12,9 @@ describe "salaries/index" do
 
   describe "Generate Salary" do
     it 'should show generated salary of employee for selected month_year' do
-      salary = Factory(:salary)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+      salary = FactoryGirl.create(:salary, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
       view.stub!(:params).and_return :month_year => '02/2011',:employee_id => salary.employee_id
 
       assign(:salary_earning, [stub_model(Salary,
