@@ -77,4 +77,15 @@ class Employee < ActiveRecord::Base
     where("date_of_leaving IS NULL OR (EXTRACT(MONTH FROM date_of_leaving)=#{month_year.month} AND EXTRACT(YEAR FROM date_of_leaving)=#{month_year.year})").order("created_at ASC")
   }
 
+  def self.report_data report_type,classification
+    condition=''
+    if classification != nil
+      classification = classification.to_hash
+      classification.each_pair { |key,value| (condition.length > 1)? condition = condition + " and  classification -> '#{key}' ILIKE '#{value}' " :condition = condition + " classification -> '#{key}' ILIKE '#{value}' " if value != '' }
+    end
+    (condition.length > 1)? condition = condition + " and #{report_type} IS NOT NULL" : condition = "#{report_type} IS NOT NULL" if report_type != "Contact"
+    @employees = Employee.includes(:employee_details).joins(:employee_details).where("#{condition}").order('employees.created_at ASC')
+
+    @employees
+  end
 end

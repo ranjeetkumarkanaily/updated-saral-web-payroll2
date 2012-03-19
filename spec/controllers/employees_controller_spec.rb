@@ -176,6 +176,19 @@ describe EmployeesController do
       get :report, :report_type => 'Contact', "report"=>{}, :format => "pdf"
       response.should render_template('employees/report')
     end
+
+    it "should generate report for other than contact info with classification search" do
+      employees = FactoryGirl.create(:employee)
+      get :report, :report_type => 'date_of_joining', "report"=>{"classification"=>{"Department"=>""}}
+      assigns(:employees).should_not be_nil
+    end
+
+    it "should generate report for contact info with classification search" do
+      employees = FactoryGirl.create(:employee)
+      get :report, :report_type => 'Contact', "report"=>{"classification"=>{"Department"=>""}}
+      assigns(:employees).should_not be_nil
+    end
+
   end
 
   describe "DELETE destroy" do

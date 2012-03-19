@@ -143,36 +143,10 @@ class EmployeesController < ApplicationController
   def report
     @classification_headings = ClassificationHeading.order('display_order')
     if params[:report_type]
-      condition = ''
-      condition1 = ''
       @company = Company.first
       @report_type = params[:report_type]
-      @report_type_change = @report_type.split("_").each{|word| word.capitalize!}.join(" ")
-      classification = params[:report][:classification].to_hash
-      classification.each_pair { |key,value| (condition1.length > 1)? condition1 = condition1 + ", classification -> '#{key}' ILIKE '#{value}' " :condition1 = condition1 + " classification -> '#{key}' ILIKE '#{value}' "  }
-
-
-      #if params[:report][:designation_id] != "" && params[:report][:designation_id] != nil
-      #  condition = " designation_id = #{params[:report][:designation_id]}"
-      #end
-      #
-      #if params[:report][:department_id] != "" && params[:report][:department_id] != nil
-      #  condition += " and " if condition.length > 0
-      #  condition += " department_id = #{params[:report][:department_id]}"
-      #end
-      #
-      #if params[:report][:grade_id] != "" && params[:report][:grade_id] != nil
-      #  condition += " and " if condition.length > 0
-      #  condition += " grade_id = #{params[:report][:grade_id]}"
-      #end
-
-      if @report_type != "Contact"
-        (condition.length > 1)? condition = condition + " and #{@report_type} IS NOT NULL" : condition = "#{@report_type} IS NOT NULL"
-        @employees = Employee.select("refno,empname,#{@report_type}").where(condition).order('created_at ASC')
-      else
-        @employees = Employee.select("refno,empname,mobile,email,present_res_no,present_res_name,present_street,present_locality,present_city,present_state_id").order('created_at ASC')
-      end
-
+      @report_type_change = params[:report_type].split("_").each{|word| word.capitalize!}.join(" ")
+      @employees = Employee.report_data params[:report_type],params[:report][:classification]
       respond_to do |format|
         format.html # new.html.haml
         format.pdf do

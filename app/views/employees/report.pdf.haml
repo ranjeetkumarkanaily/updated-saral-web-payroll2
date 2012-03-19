@@ -41,13 +41,18 @@
             %td.td_header Ref. No.
             %td.td_header Employee Name
             %td.td_header= @report_type_change
-          - @employees.each do |employee|
-            - i=i+1
+          - if @employees.count > 1
+            - @employees.each do |employee|
+              - i=i+1
+              %tr
+                %td.td_text= i
+                %td.td_text= employee.refno
+                %td.td_text= employee.empname
+                %td.td_text= l employee[@report_type], :format=>:default
+          - else
             %tr
-              %td.td_text= i
-              %td.td_text= employee.refno
-              %td.td_text= employee.empname
-              %td.td_text= l employee[@report_type], :format=>:default
+              %td.td_text{:colspan=>4, :align => "center"} No Data Found
+
   - else
     %tr
       %td.report_header Contact Detail's Report
