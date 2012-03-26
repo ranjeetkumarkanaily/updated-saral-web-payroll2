@@ -68,10 +68,10 @@ class SalaryGroupDetailsController < ApplicationController
 
     respond_to do |format|
       if @salary_group_detail.update_attributes(params[:salary_group_detail])
-        format.html { redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully updated.' }
+        format.html{ redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit",:param1 => params[:salary_group_detail]['salary_group_id'] }
+        format.html { redirect_to edit_salary_group_detail_path(:param1 => params[:salary_group_detail]['salary_group_id'])}
         format.json { render json: @salary_group_detail.errors, status: :unprocessable_entity }
       end
     end

@@ -23,6 +23,12 @@
                   %td{:width=>130} Salary Head:&nbsp;
                   %td= f.collection_select :salary_head_id, SalaryHead.where('id != 2 and id != 3').order('created_at ASC'), :id, :head_name, :prompt => "Select Salary Head"
                 %tr
+                  %td{:width=>130} Print Name:&nbsp;
+                  %td= f.text_field :print_name, :size => '22'
+                %tr
+                  %td{:width=>130} Print Order:&nbsp;
+                  %td= f.text_field :print_order, :size => '22'
+                %tr
                   %td{:width=>130} Based On:&nbsp;
                   %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],@salary_group_detail.based_on), {:prompt => 'Select'}
                 %tr

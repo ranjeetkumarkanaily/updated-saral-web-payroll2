@@ -126,8 +126,8 @@ describe SalaryGroupDetailsController do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         SalaryGroupDetail.any_instance.stub(:save).and_return(false)
-        put :update, :id => salary_group_detail.id, :salary_group_detail => {}
-        response.should render_template("edit")
+        put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
+        response.should redirect_to(edit_salary_group_detail_path(:param1 => valid_attributes[:salary_group_id]))
       end
     end
   end
