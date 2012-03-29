@@ -1,4 +1,6 @@
 class SalaryGroup < ActiveRecord::Base
+  acts_as_audited
+
   has_many :salary_group_details
   has_many :employee_details, :dependent => :destroy
 

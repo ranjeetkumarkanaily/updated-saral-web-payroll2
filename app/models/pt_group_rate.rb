@@ -1,4 +1,6 @@
 class PtGroupRate < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :pt_group
   belongs_to :paymonth
 

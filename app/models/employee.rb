@@ -1,4 +1,5 @@
 class Employee < ActiveRecord::Base
+  acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

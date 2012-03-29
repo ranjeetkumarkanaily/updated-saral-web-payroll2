@@ -1,4 +1,5 @@
 class EmployeeDetail < ActiveRecord::Base
+  acts_as_audited
 
   serialize :classification,HstoreSerializer
   belongs_to :employee

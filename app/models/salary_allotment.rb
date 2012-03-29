@@ -1,4 +1,6 @@
 class SalaryAllotment < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :salary_head
   belongs_to :employee
   belongs_to :employee_detail

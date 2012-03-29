@@ -1,4 +1,6 @@
 class AttendanceConfiguration < ActiveRecord::Base
+  acts_as_audited
+
   validates :attendance,   :presence   => true,
             :uniqueness => { :case_sensitive => false }
 

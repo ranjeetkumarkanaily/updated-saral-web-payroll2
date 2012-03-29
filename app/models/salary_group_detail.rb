@@ -1,4 +1,6 @@
 class SalaryGroupDetail < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :salary_group
   belongs_to :salary_head
   has_many :salary_allotments
