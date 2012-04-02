@@ -61,9 +61,7 @@ class SalaryAllotmentsController < ApplicationController
   private
     def update_salary_allotments sal_allots
       sal_allots.each do |sal_allot|
-
         sal_allotment = SalaryAllotment.find_by_employee_id_and_employee_detail_id_and_effective_date_and_salary_head_id(sal_allot.employee_id, sal_allot.employee_detail_id, sal_allot.effective_date, sal_allot.salary_head_id)
-
         sal_allotment.update_attributes(:salary_allotment => sal_allot.salary_allotment)
       end
     end

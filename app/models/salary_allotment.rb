@@ -93,10 +93,4 @@ class SalaryAllotment < ActiveRecord::Base
     sal_heads.size != sal_heads.uniq.size ? true : false
   end
 
-  private
-    def employee_salary_group_details emp
-      emp.employee_details.first.salary_group.salary_group_details
-    end
-
-
 end

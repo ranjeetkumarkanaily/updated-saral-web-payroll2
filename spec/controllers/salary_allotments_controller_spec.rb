@@ -48,23 +48,37 @@ describe SalaryAllotmentsController do
   describe "Excel File Upload, Parse and Save" do
 
     before :each do
-      @state = FactoryGirl.create(:employee)
+      @employee = FactoryGirl.create(:employee)
       @basic = FactoryGirl.create(:salary_head)
       @da = FactoryGirl.create(:salary_head, :head_name => "DA",  :short_name => "DA")
       @hra = FactoryGirl.create(:salary_head, :head_name => "HRA",  :short_name => "HRA")
       @sal_grp = FactoryGirl.create(:salary_group)
-      @sal_grp_det = FactoryGirl.create(:salary_group_detail, :salary_group_id => @sal_grp.id, :salary_head_id => @basic.id)
+      @sal_grp_det1 = FactoryGirl.create(:salary_group_detail, :salary_group_id => @sal_grp.id, :salary_head_id => @basic.id)
+      @sal_grp_det2 = FactoryGirl.create(:salary_group_detail, :salary_group_id => @sal_grp.id, :salary_head_id => @da.id)
+      @sal_grp_det3 = FactoryGirl.create(:salary_group_detail, :salary_group_id => @sal_grp.id, :salary_head_id => @hra.id)
+      @attn_config = FactoryGirl.create(:attendance_configuration)
+      @fin_insti = FactoryGirl.create(:financial_institution)
+      @branch = FactoryGirl.create(:branch)
+      @employee_detail = FactoryGirl.create(:employee_detail, :employee_id => @employee.id, :salary_group_id => @sal_grp.id, :financial_institution_id => @fin_insti.id)
+      SalaryAllotment.create(:employee_id => @employee.id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => @sal_grp_det1.salary_head_id, :salary_group_detail_id => @sal_grp_det1.id, :salary_allotment =>0)
+      SalaryAllotment.create(:employee_id => @employee.id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => @sal_grp_det2.salary_head_id, :salary_group_detail_id => @sal_grp_det2.id, :salary_allotment =>0)
+      SalaryAllotment.create(:employee_id => @employee.id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => @sal_grp_det3.salary_head_id, :salary_group_detail_id => @sal_grp_det3.id, :salary_allotment =>0)
     end
 
     it "save_parse_validate" do
-      excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
+      excel_file = fixture_file_upload("spec/factories/Template_Theoretical_Salary.xls")
       post :upload_parse_validate, :excel_file => excel_file
-      response.should redirect_to(employees_path)
+      response.should redirect_to(salary_allotments_path(:param1 => "allotted"))
     end
 
-    it "gives error" do
-      FactoryGirl.create(:employee, :refno => 1004)
-      excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
+    it "gives error for duplication of heads" do
+      excel_file = fixture_file_upload("spec/factories/Template_Theoretical_Salary  Duplication.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should be_success
+    end
+
+    it "gives error No allotment for salary head" do
+      excel_file = fixture_file_upload("spec/factories/Template_Theoretical_Salary_No_allot.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success
     end
