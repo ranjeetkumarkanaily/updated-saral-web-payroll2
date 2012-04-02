@@ -23,7 +23,7 @@
           - @pt_groups.each do |pt_group|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= pt_group.name
-              %td.table_grid_td= pt_group.state.state_name
+              %td.table_grid_td= pt_group.state_state_name
               %td.table_grid_td{:align => "right"}= pt_group.certificate_no
               %td.table_grid_td{:align => "right"}= pt_group.pto_circle_no
               %td.table_grid_td= pt_group.address

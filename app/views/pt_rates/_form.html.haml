@@ -16,14 +16,14 @@
               %table
                 %tr
                   %td{:width => 160} PT Group
-                  %td= @pt_rate.pt_group.name
+                  %td= @pt_rate.pt_group_name
                   = hidden_field_tag "pt_rate[pt_group_id]", @pt_rate.pt_group_id
             %td.std_td
               %table
                 %tr
                   %td
                     %td{:width=>160} Effective Month
-                    %td= @pt_rate.paymonth.month_name
+                    %td= @pt_rate.paymonth_month_name
                     = hidden_field_tag "pt_rate[paymonth_id]", @pt_rate.paymonth_id
         %table
           %tr

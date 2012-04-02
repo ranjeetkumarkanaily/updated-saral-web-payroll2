@@ -1,6 +1,11 @@
 class PtRate < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :pt_group
   belongs_to :paymonth
+
+  delegate :name, :to => :pt_group, :prefix => true
+  delegate :month_name, :to => :paymonth, :prefix => true
 
   validates_presence_of :pt_group_id, :paymonth_id
   validates_uniqueness_of :min_sal_range, :scope => [:paymonth_id, :pt_group_id]

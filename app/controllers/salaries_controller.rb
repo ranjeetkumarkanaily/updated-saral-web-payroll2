@@ -77,10 +77,10 @@ class SalariesController < ApplicationController
       end
 
       pf_amount = Salary.get_pf_amount params[:month_year],params[:salary][0]['employee_id']
-      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => params[:salary][0]['salary_group_detail_id'])
+      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil)
 
       esi_amount = Salary.get_esi_amount params[:month_year],params[:salary][0]['employee_id']
-      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => params[:salary][0]['salary_group_detail_id'])
+      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => nil)
 
       redirect_to salaries_path
     end

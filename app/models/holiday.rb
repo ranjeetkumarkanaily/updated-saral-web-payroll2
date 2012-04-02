@@ -1,6 +1,8 @@
 class Holiday < ActiveRecord::Base
+  acts_as_audited
 
   belongs_to :attendance_configuration
+  delegate :attendance, :to => :attendance_configuration, :prefix => true
 
   def self.search(search)
     find(:all, :conditions => ['attendance_configuration_id = 1 OR attendance_configuration_id = ?', search])

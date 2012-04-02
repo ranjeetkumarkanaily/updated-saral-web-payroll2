@@ -1,7 +1,11 @@
 class Salary < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :salary_head
   belongs_to :employee_detail
   belongs_to :salary_group_detail
+
+  delegate :head_name, :to => :salary_head, :prefix => true
 
   def self.is_salary_generated? month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
@@ -12,13 +16,11 @@ class Salary < ActiveRecord::Base
     month_year = Date.strptime month_year, '%b/%Y'
     zero_salary_amount = (with_zero_val==0)?" and salary_amount != 0":""
 
-    condition = "employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
+    condition = "salaries.employee_id = " + employee_id + " and salary_type = '" + salary_type + "' and
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year} #{zero_salary_amount}"
 
-    Salary.select('salary_head_id, sum(salary_amount) as salary_amount').
-        joins(:salary_head).
-        where(condition).group('salary_head_id').order('salary_head_id ASC')
+    Salary.select('salaries.salary_head_id, sum(salary_amount) as salary_amount,salaries.salary_group_detail_id,print_name,print_order').joins(:salary_head).joins('LEFT OUTER JOIN "salary_group_details" ON "salary_group_details"."salary_head_id" = "salaries"."salary_head_id"').where(condition).group('salaries.salary_head_id, print_name, print_order, salaries.id, salary_group_details.id').order('print_order ASC')
   end
 
   def self.get_pf_amount month_year, employee_id

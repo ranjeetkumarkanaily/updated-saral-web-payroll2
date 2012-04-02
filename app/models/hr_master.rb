@@ -1,4 +1,6 @@
 class HrMaster < ActiveRecord::Base
+  acts_as_audited
+
   serialize :category_values, HstoreSerializer
   belongs_to :hr_category
   belongs_to :employee

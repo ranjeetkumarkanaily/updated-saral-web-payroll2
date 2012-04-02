@@ -1,4 +1,5 @@
 class Paymonth < ActiveRecord::Base
+  acts_as_audited
 
   has_many :pf_esi_rates, :dependent => :destroy
   has_many :pt_rates, :dependent => :destroy
