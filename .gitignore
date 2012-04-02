@@ -10,4 +10,4 @@ public/excel_uploaded_files/*
 !.gitignore
 db/development_structure.sql
 db/structure.sql
-.rails_best_practices_output.html
+rails_best_practices_output.html
