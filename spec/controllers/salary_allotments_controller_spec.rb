@@ -44,4 +44,38 @@ describe SalaryAllotmentsController do
       SalaryAllotment.find_by_id(salAllot.id)[:salary_allotment].should eq(2222.00)
     end
   end
+
+  describe "Excel File Upload, Parse and Save" do
+
+    before :each do
+      @state = FactoryGirl.create(:employee)
+      @basic = FactoryGirl.create(:salary_head)
+      @da = FactoryGirl.create(:salary_head, :head_name => "DA",  :short_name => "DA")
+      @hra = FactoryGirl.create(:salary_head, :head_name => "HRA",  :short_name => "HRA")
+      @sal_grp = FactoryGirl.create(:salary_group)
+      @sal_grp_det = FactoryGirl.create(:salary_group_detail, :salary_group_id => @sal_grp.id, :salary_head_id => @basic.id)
+    end
+
+    it "save_parse_validate" do
+      excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should redirect_to(employees_path)
+    end
+
+    it "gives error" do
+      FactoryGirl.create(:employee, :refno => 1004)
+      excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should be_success
+    end
+
+  end
+
+  describe "Generate Sample excel sheet template" do
+    it "should render template excel sheet" do
+      get :generate_sample_excel_template, :format => "xls"
+      response.should render_template('salary_allotments/generate_sample_excel_template.xls')
+    end
+  end
+
 end

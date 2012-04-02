@@ -1,0 +1,17 @@
+:css
+  .heading {
+      font-size: 25px; font-weight: bold; text-align: center; line-height: 40px;
+  }
+
+%table{:width=>1500, :cellpadding => 0, :cellspacing => 0}
+  %tr
+    %td.heading
+      %b EmployeeID
+    %td.heading
+      %b Employee Name
+    %td.heading
+      %b Effective Month
+    - @sal_heads.each do |head|
+      %td.heading
+        %b= head.short_name
+

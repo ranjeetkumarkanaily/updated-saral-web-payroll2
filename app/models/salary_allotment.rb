@@ -50,4 +50,51 @@ class SalaryAllotment < ActiveRecord::Base
     SalaryAllotment.where("employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
   end
 
+  def self.process_salary_excel_sheet salary_rate_sheet
+    sal_allotments = Hash.new
+    sal_allotments["salary_allotments"] = []
+    sal_allotments["errors"] = Hash.new
+    errors = Hash.new
+    counter = 0
+
+    excel_first_row = salary_rate_sheet.first
+
+    if duplicates_in_salary_heads? excel_first_row
+      errors["#{counter+1}"] = ["Duplication of salary head"]
+    else
+      salary_rate_sheet.each 1 do |row|
+        counter += 1
+        emp = Employee.find_by_refno(row[0].to_s)
+        local_error = []
+        emp.employee_details.first.salary_group.salary_group_details.each do |sal_grp_det|
+          sal_head = sal_grp_det.salary_head
+          if (excel_first_row.include? sal_head.short_name) && (!row[excel_first_row.index(sal_head.short_name)].nil?) && (row[excel_first_row.index(sal_head.short_name)] > 0)
+            sal_allot = SalaryAllotment.new
+            sal_allot.employee_id = emp[:id]
+            sal_allot.employee_detail_id = emp.employee_details.first[:id]
+            sal_allot.effective_date = row[2]
+            sal_allot.salary_head_id = sal_head.id
+            sal_allot.salary_allotment = row[excel_first_row.index(sal_head.short_name)]
+            sal_allotments["salary_allotments"] << sal_allot
+          else
+            local_error << "No allotment for #{sal_head.short_name} of employee id : #{emp[:refno]}"
+          end
+        end
+        errors["#{counter+1}"] = local_error if local_error.length > 0
+      end
+    end
+    sal_allotments["errors"] = errors
+    sal_allotments
+  end
+
+  def self.duplicates_in_salary_heads? sal_heads
+    sal_heads.size != sal_heads.uniq.size ? true : false
+  end
+
+  private
+    def employee_salary_group_details emp
+      emp.employee_details.first.salary_group.salary_group_details
+    end
+
+
 end
