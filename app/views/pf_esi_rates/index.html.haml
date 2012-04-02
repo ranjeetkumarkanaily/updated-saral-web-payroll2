@@ -18,7 +18,7 @@
             %td.table_grid_header Operations
           - @pfesirate.each do |pf_esi_rate|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td{:align => "center"}= pf_esi_rate.paymonth.month_name
+              %td.table_grid_td{:align => "center"}= pf_esi_rate.paymonth_month_name
               %td.table_grid_td{:align => "right"}= pf_esi_rate.pf_rate
               %td.table_grid_td{:align => "right"}= pf_esi_rate.pf_cutoff
               %td.table_grid_td{:align => "right"}= pf_esi_rate.esi_employee_rate

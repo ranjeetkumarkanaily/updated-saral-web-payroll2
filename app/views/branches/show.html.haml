@@ -25,14 +25,14 @@
                   %td= @branch.address
                 %tr
                   %td{:width=>130} PF Group:&nbsp;
-                  %td= @branch.pf_group.pf_group
+                  %td= @branch.pf_group_pf_group
                 %tr
                   %td{:width=>130} ESI Applicable:&nbsp;
                   %td= (@branch.esi_applicable==true)?"Yes":"No"
                 -if @branch.esi_applicable == true
                   %tr
                     %td{:width=>130} ESI Group:&nbsp;
-                    %td= @branch.esi_group.esi_group_name
+                    %td= @branch.esi_group_esi_group_name
             %td.std_td
               %table
                 %tr
@@ -42,6 +42,6 @@
                   %td &nbsp;
                 %tr
                   %td{:width=>130} PT Group:&nbsp;
-                  %td= @branch.pt_group.name
+                  %td= @branch.pt_group_name
                 %tr
                   %td &nbsp;

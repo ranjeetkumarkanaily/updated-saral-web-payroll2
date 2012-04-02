@@ -22,7 +22,7 @@
           - @pt_group_rates.each do |pt_group_rate|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= sl_no = sl_no + 1
-              %td.table_grid_td= Date.strptime(pt_group_rate.paymonth.month_name,"%b/%Y").beginning_of_month
+              %td.table_grid_td= Date.strptime(pt_group_rate.paymonth_month_name,"%b/%Y").beginning_of_month
               %td.table_grid_td= @pt_group.to_date(pt_group_rate.paymonth_id) ? @pt_group.to_date(pt_group_rate.paymonth_id) : 'Till Date'
               %td.table_grid_icon= link_to image_tag('/assets/settings.png',:title => "PT Rate Details"), pt_rates_path(:paymonth_id => pt_group_rate.paymonth_id, :pt_group_id => pt_group_rate.pt_group_id)
     %tr

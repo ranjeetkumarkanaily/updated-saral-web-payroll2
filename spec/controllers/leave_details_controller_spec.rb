@@ -32,7 +32,7 @@ describe LeaveDetailsController do
 
 
     it "save" do
-      leave_detail = Factory.build(:leave_detail)
+      leave_detail = FactoryGirl.build(:leave_detail)
       post :save, :leave_details => [leave_detail]
       response.should redirect_to(leave_details_path)
     end

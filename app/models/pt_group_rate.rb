@@ -4,6 +4,8 @@ class PtGroupRate < ActiveRecord::Base
   belongs_to :pt_group
   belongs_to :paymonth
 
+  delegate :month_name, :to => :paymonth, :prefix => true
+
   validates_uniqueness_of :pt_group_id, :scope => :paymonth_id
 
   def to_date

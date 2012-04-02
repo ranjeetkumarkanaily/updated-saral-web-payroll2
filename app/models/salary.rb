@@ -5,6 +5,8 @@ class Salary < ActiveRecord::Base
   belongs_to :employee_detail
   belongs_to :salary_group_detail
 
+  delegate :head_name, :to => :salary_head, :prefix => true
+
   def self.is_salary_generated? month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
     Salary.select("effective_date").where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id}").count > 0

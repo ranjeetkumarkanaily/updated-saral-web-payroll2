@@ -62,6 +62,7 @@ gem 'wicked_pdf'
 gem 'active_record_hstore_serializer'
 gem 'breadcrumbs_on_rails'
 gem "acts_as_audited"
+gem 'rails_best_practices'
 
 # Use unicorn as the web server
 # gem 'unicorn'

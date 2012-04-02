@@ -9,6 +9,8 @@ class PtGroup < ActiveRecord::Base
 
   has_many :pt_group_rates
 
+  delegate :state_name, :to => :state, :prefix => true
+
 
   def to_date(paymonth_id)
     next_row = next_row_on_pf_group_id paymonth_id

@@ -5,6 +5,10 @@ class Branch < ActiveRecord::Base
   belongs_to :esi_group
   belongs_to :pt_group
 
+  delegate :pf_group, :to => :pf_group, :prefix => true
+  delegate :esi_group_name, :to => :esi_group, :prefix => true
+  delegate :name, :to => :pt_group, :prefix => true
+
 
   validates :branch_name, :presence => true
   validates :responsible_person, :presence => true
