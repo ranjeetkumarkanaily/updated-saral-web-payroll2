@@ -22,7 +22,7 @@ class EmployeeDetail < ActiveRecord::Base
 
   validates :pan_effective_date, :presence => true, :if => :pan_present?
 
-  validates :pan_effective_date_after_dob, :if => :pan_present?
+  #validate :pan_effective_date_after_dob, :if => :pan_present?
 
   def pan_present?
     self.pan != 'PAN Applied' and self.pan != 'PAN Invalid' and self.pan != 'PAN Not Avbl'
