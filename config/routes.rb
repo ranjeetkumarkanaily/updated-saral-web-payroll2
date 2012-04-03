@@ -55,6 +55,8 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     get "pf_contribution_restrict", :on => :collection
 
     put "pf_restrict_update", :on => :collection
+
+    get 'generate_sample_excel_template',  :on => :collection
   end
 
 
@@ -63,6 +65,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     get 'upload', :on => :collection
     post 'upload_parse_validate', :on => :collection
     post 'save', :on => :collection
+    get 'generate_sample_excel_template',  :on => :collection
   end
 
   resources :companies
@@ -75,6 +78,10 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :salary_allotments do
     put :update, :on => :collection
+
+    get 'upload', :on => :collection
+    post 'upload_parse_validate', :on => :collection
+    get 'generate_sample_excel_template',  :on => :collection
   end
 
   root :to => 'welcome#index'

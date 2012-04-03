@@ -32,7 +32,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'database_cleaner'
   gem 'activerecord-postgres-hstore'
-  gem 'active_record_hstore_serializer'
 end
 
 group :test do
@@ -62,6 +61,8 @@ gem 'wicked_pdf'
 
 gem 'active_record_hstore_serializer'
 gem 'breadcrumbs_on_rails'
+gem "acts_as_audited"
+gem 'rails_best_practices'
 
 # Use unicorn as the web server
 # gem 'unicorn'

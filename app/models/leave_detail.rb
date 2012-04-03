@@ -1,4 +1,6 @@
 class LeaveDetail < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :employee, :validate => true
   validates_presence_of :leave_date, :employee_id
   validates_presence_of :employee, :message => " does not exists."

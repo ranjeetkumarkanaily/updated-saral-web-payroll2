@@ -1,4 +1,6 @@
 class ClassificationHeading < ActiveRecord::Base
+  acts_as_audited
+
   has_many :classifications ,:dependent => :destroy
   belongs_to :employee_detail
 

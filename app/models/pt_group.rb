@@ -1,4 +1,6 @@
 class PtGroup < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :state
   validates_presence_of :state_id, :name, :address
   validates_uniqueness_of :name
@@ -6,6 +8,8 @@ class PtGroup < ActiveRecord::Base
   has_many :branches
 
   has_many :pt_group_rates
+
+  delegate :state_name, :to => :state, :prefix => true
 
 
   def to_date(paymonth_id)

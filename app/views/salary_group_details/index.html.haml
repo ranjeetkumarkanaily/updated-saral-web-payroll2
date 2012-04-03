@@ -23,7 +23,7 @@
             %td.table_grid_header{:colspan => 3} Operations
           - @salary_group_details.each do |salary_group_detail|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= salary_group_detail.salary_head.head_name
+              %td.table_grid_td= salary_group_detail.salary_head_head_name
               %td.table_grid_td= salary_group_detail.calc_type
               %td.table_grid_td= (salary_group_detail.pf_applicability==true)?"Yes":"No"
               %td.table_grid_td= salary_group_detail.pf_percentage

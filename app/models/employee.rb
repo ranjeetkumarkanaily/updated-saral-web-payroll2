@@ -1,9 +1,9 @@
 class Employee < ActiveRecord::Base
+  acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   has_many :employee_details, :dependent => :destroy
-  has_many :salary_totals, :dependent => :destroy
 
   has_many :leave_details, :dependent => :destroy
 
@@ -16,6 +16,7 @@ class Employee < ActiveRecord::Base
   #belongs_to :grade
 
   belongs_to :present_state, :class_name => "State"
+  delegate :state_name, :to => :present_state, :prefix => true
 
   validates :empname, :presence => true,
                     :length   => {:maximum => 100}

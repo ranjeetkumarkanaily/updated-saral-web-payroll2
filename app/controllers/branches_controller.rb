@@ -1,6 +1,7 @@
 class BranchesController < ApplicationController
-  # GET /branches
-  # GET /branches.json
+
+  before_filter :find_branch, :only => [:show, :edit, :update, :destroy]
+
   def index
     @branches = Branch.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,19 +11,13 @@ class BranchesController < ApplicationController
     end
   end
 
-  # GET /branches/1
-  # GET /branches/1.json
   def show
-    @branch = Branch.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @branch }
     end
   end
 
-  # GET /branches/new
-  # GET /branches/new.json
   def new
     @branch = Branch.new
 
@@ -32,13 +27,6 @@ class BranchesController < ApplicationController
     end
   end
 
-  # GET /branches/1/edit
-  def edit
-    @branch = Branch.find(params[:id])
-  end
-
-  # POST /branches
-  # POST /branches.json
   def create
     @branch = Branch.new(params[:branch])
 
@@ -53,11 +41,7 @@ class BranchesController < ApplicationController
     end
   end
 
-  # PUT /branches/1
-  # PUT /branches/1.json
   def update
-    @branch = Branch.find(params[:id])
-
     respond_to do |format|
       if @branch.update_attributes(params[:branch])
         format.html { redirect_to @branch, notice: 'Branch was successfully updated.' }
@@ -69,10 +53,7 @@ class BranchesController < ApplicationController
     end
   end
 
-  # DELETE /branches/1
-  # DELETE /branches/1.json
   def destroy
-    @branch = Branch.find(params[:id])
     @branch.destroy
 
     respond_to do |format|
@@ -80,4 +61,9 @@ class BranchesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_branch
+      @branch = Branch.find(params[:id])
+    end
 end

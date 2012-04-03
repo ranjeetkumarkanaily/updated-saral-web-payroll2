@@ -1,6 +1,7 @@
 class StatesController < ApplicationController
-  # GET /states
-  # GET /states.json
+
+  before_filter :find_state, :only => [:show, :edit, :update, :destroy]
+
   def index
     @states = State.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,19 +11,13 @@ class StatesController < ApplicationController
     end
   end
 
-  # GET /states/1
-  # GET /states/1.json
   def show
-    @state = State.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @state }
     end
   end
 
-  # GET /states/new
-  # GET /states/new.json
   def new
     @state = State.new
 
@@ -32,13 +27,6 @@ class StatesController < ApplicationController
     end
   end
 
-  # GET /states/1/edit
-  def edit
-    @state = State.find(params[:id])
-  end
-
-  # POST /states
-  # POST /states.json
   def create
     @state = State.new(params[:state])
 
@@ -53,11 +41,7 @@ class StatesController < ApplicationController
     end
   end
 
-  # PUT /states/1
-  # PUT /states/1.json
   def update
-    @state = State.find(params[:id])
-
     respond_to do |format|
       if @state.update_attributes(params[:state])
         format.html { redirect_to states_url, notice: 'State was successfully updated.' }
@@ -69,10 +53,7 @@ class StatesController < ApplicationController
     end
   end
 
-  # DELETE /states/1
-  # DELETE /states/1.json
   def destroy
-    @state = State.find(params[:id])
     @state.destroy
 
     respond_to do |format|
@@ -80,4 +61,9 @@ class StatesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_state
+      @state = State.find(params[:id])
+    end
 end

@@ -238,4 +238,11 @@ describe EmployeesController do
     end
   end
 
+  describe "Generate Sample excel sheet template" do
+    it "should render template excel sheet" do
+      get :generate_sample_excel_template, :format => "xls"
+      response.should render_template('employees/generate_sample_excel_template.xls')
+    end
+  end
+
 end

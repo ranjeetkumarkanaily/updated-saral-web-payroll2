@@ -1,6 +1,7 @@
 class SalaryHeadsController < ApplicationController
-  # GET /salary_heads
-  # GET /salary_heads.json
+
+  before_filter :find_salary_head, :only => [:show, :edit, :update, :destroy]
+
   def index
     @salary_heads = SalaryHead.where('id != 2 and id != 3').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,19 +11,13 @@ class SalaryHeadsController < ApplicationController
     end
   end
 
-  # GET /salary_heads/1
-  # GET /salary_heads/1.json
   def show
-    @salary_head = SalaryHead.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @salary_head }
     end
   end
 
-  # GET /salary_heads/new
-  # GET /salary_heads/new.json
   def new
     @salary_head = SalaryHead.new
 
@@ -32,13 +27,6 @@ class SalaryHeadsController < ApplicationController
     end
   end
 
-  # GET /salary_heads/1/edit
-  def edit
-    @salary_head = SalaryHead.find(params[:id])
-  end
-
-  # POST /salary_heads
-  # POST /salary_heads.json
   def create
     @salary_head = SalaryHead.new(params[:salary_head])
 
@@ -53,11 +41,7 @@ class SalaryHeadsController < ApplicationController
     end
   end
 
-  # PUT /salary_heads/1
-  # PUT /salary_heads/1.json
   def update
-    @salary_head = SalaryHead.find(params[:id])
-
     respond_to do |format|
       if @salary_head.update_attributes(params[:salary_head])
         format.html { redirect_to salary_heads_url, notice: 'Salary head was successfully updated.' }
@@ -69,10 +53,7 @@ class SalaryHeadsController < ApplicationController
     end
   end
 
-  # DELETE /salary_heads/1
-  # DELETE /salary_heads/1.json
   def destroy
-    @salary_head = SalaryHead.find(params[:id])
     @salary_head.destroy
 
     respond_to do |format|
@@ -80,4 +61,9 @@ class SalaryHeadsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_salary_head
+      @salary_head = SalaryHead.find(params[:id])
+    end
 end

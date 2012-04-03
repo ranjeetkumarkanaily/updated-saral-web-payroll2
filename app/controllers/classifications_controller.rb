@@ -1,8 +1,9 @@
 class ClassificationsController < ApplicationController
-  # GET /classifications
-  # GET /classifications.json
+
+  before_filter :accept_param, :only => [:index, :new, :edit]
+  before_filter :find_classification, :only => [:show, :update, :destroy]
+
   def index
-   @paramclassification_id = params[:params1]
     @classifications = Classification.where(:classification_heading_id => @paramclassification_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
@@ -11,21 +12,14 @@ class ClassificationsController < ApplicationController
     end
   end
 
-  # GET /classifications/1
-  # GET /classifications/1.json
   def show
-    @classification = Classification.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @classification }
     end
   end
 
-  # GET /classifications/new
-  # GET /classifications/new.json
   def new
-    @paramclassification_id = params[:params1]
     @classification = Classification.new
 
     respond_to do |format|
@@ -34,14 +28,10 @@ class ClassificationsController < ApplicationController
     end
   end
 
-  # GET /classifications/1/edit
   def edit
-    @paramclassification_id = params[:params1]
     @classification = Classification.find(params[:id])
   end
 
-  # POST /classifications
-  # POST /classifications.json
   def create
     @paramclassification_id = params[:classification][:classification_heading_id]
     @classification = Classification.new(:classification_heading_id => @paramclassification_id,:classification_name => params[:classification][:classification_name] )
@@ -57,10 +47,7 @@ class ClassificationsController < ApplicationController
     end
   end
 
-  # PUT /classifications/1
-  # PUT /classifications/1.json
   def update
-    @classification = Classification.find(params[:id])
     @paramclassification_id = params[:classification][:classification_heading_id]
     respond_to do |format|
       if @classification.update_attributes(params[:classification])
@@ -73,11 +60,7 @@ class ClassificationsController < ApplicationController
     end
   end
 
-  # DELETE /classifications/1
-  # DELETE /classifications/1.json
   def destroy
-
-    @classification = Classification.find(params[:id])
     @paramclassification_id = @classification.classification_heading_id
     @classification.destroy
 
@@ -86,4 +69,13 @@ class ClassificationsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def accept_param
+      @paramclassification_id = params[:params1]
+    end
+
+    def find_classification
+      @classification = Classification.find(params[:id])
+    end
 end

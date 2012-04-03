@@ -1,4 +1,6 @@
 class EsiGroupRate < ActiveRecord::Base
+  acts_as_audited
+
   belongs_to :esi_group
 
   validates :employee_rate, :presence => true, :numericality => {:less_than_or_equal_to => 100}

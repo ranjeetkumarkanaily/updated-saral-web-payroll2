@@ -1,6 +1,7 @@
 class HrCategoryDetailsController < ApplicationController
-  # GET /hr_category_details
-  # GET /hr_category_details.json
+
+  before_filter :find_hr_category_detail, :only => [:show, :edit, :update, :destroy]
+
   def index
     @hr_category_id = params[:param1]
     @hr_category_details = HrCategoryDetail.where("hr_category_id = ?", @hr_category_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -10,10 +11,7 @@ class HrCategoryDetailsController < ApplicationController
     end
   end
 
-  # GET /hr_category_details/1
-  # GET /hr_category_details/1.json
   def show
-    @hr_category_detail = HrCategoryDetail.find(params[:id])
     @hr_category_id = @hr_category_detail.hr_category_id
     respond_to do |format|
       format.html # show.html.haml
@@ -21,10 +19,7 @@ class HrCategoryDetailsController < ApplicationController
     end
   end
 
-  # GET /hr_category_details/new
-  # GET /hr_category_details/new.json
   def new
-
     @hr_category_detail = HrCategoryDetail.new
     @hr_category_id = params[:param1]
     respond_to do |format|
@@ -33,9 +28,7 @@ class HrCategoryDetailsController < ApplicationController
     end
   end
 
-  # GET /hr_category_details/1/edit
   def edit
-    @hr_category_detail = HrCategoryDetail.find(params[:id])
     if params[:param1]
       @hr_category_id = params[:param1]
     else
@@ -43,8 +36,6 @@ class HrCategoryDetailsController < ApplicationController
     end
   end
 
-  # POST /hr_category_details
-  # POST /hr_category_details.json
   def create
     @hr_category_detail = HrCategoryDetail.new(params[:hr_category_detail])
 
@@ -59,10 +50,7 @@ class HrCategoryDetailsController < ApplicationController
     end
   end
 
-  # PUT /hr_category_details/1
-  # PUT /hr_category_details/1.json
   def update
-    @hr_category_detail = HrCategoryDetail.find(params[:id])
     respond_to do |format|
       if @hr_category_detail.update_attributes(params[:hr_category_detail])
         format.html { redirect_to hr_category_details_path(:param1 => params[:hr_category_detail]['hr_category_id']), notice: 'Hr category detail was successfully updated.' }
@@ -74,10 +62,7 @@ class HrCategoryDetailsController < ApplicationController
     end
   end
 
-  # DELETE /hr_category_details/1
-  # DELETE /hr_category_details/1.json
   def destroy
-    @hr_category_detail = HrCategoryDetail.find(params[:id])
     @hr_category_detail.destroy
 
     respond_to do |format|
@@ -85,4 +70,9 @@ class HrCategoryDetailsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_hr_category_detail
+      @hr_category_detail = HrCategoryDetail.find(params[:id])
+    end
 end

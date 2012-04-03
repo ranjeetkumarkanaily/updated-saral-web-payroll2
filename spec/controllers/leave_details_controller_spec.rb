@@ -32,9 +32,16 @@ describe LeaveDetailsController do
 
 
     it "save" do
-      leave_detail = Factory.build(:leave_detail)
+      leave_detail = FactoryGirl.build(:leave_detail)
       post :save, :leave_details => [leave_detail]
       response.should redirect_to(leave_details_path)
+    end
+  end
+
+  describe "Generate Sample excel sheet template" do
+    it "should render template excel sheet" do
+      get :generate_sample_excel_template, :format => "xls"
+      response.should render_template('leave_details/generate_sample_excel_template.xls')
     end
   end
 end

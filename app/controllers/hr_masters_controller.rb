@@ -1,5 +1,7 @@
 class HrMastersController < ApplicationController
 
+  before_filter :find_hr_master, :only => [:edit, :update, :destroy]
+
   def new
     @hr_master = HrMaster.new
     @employee_id = params[:employee_id]
@@ -16,7 +18,6 @@ class HrMastersController < ApplicationController
   end
 
   def edit
-    @hr_master = HrMaster.find(params[:id])
     @employee_id = @hr_master.employee_id
     @hr_category_id = @hr_master.hr_category_id
   end
@@ -35,8 +36,6 @@ class HrMastersController < ApplicationController
   end
 
   def update
-    @hr_master = HrMaster.find(params[:id])
-
     respond_to do |format|
       if @hr_master.update_attributes(params[:hr_master])
         format.html { redirect_to new_hr_master_path(:employee_id => params[:hr_master][:employee_id], :hr_category_id => params[:hr_master][:hr_category_id]), notice: 'Hr master was successfully updated.' }
@@ -50,7 +49,6 @@ class HrMastersController < ApplicationController
   end
 
   def destroy
-    @hr_master = HrMaster.find(params[:id])
     @employee_id = @hr_master.employee_id
     @hr_category_id = @hr_master.hr_category_id
     @hr_master.destroy
@@ -60,4 +58,9 @@ class HrMastersController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_hr_master
+      @hr_master = HrMaster.find(params[:id])
+    end
 end

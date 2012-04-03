@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
-  # GET /employees
-  # GET /employees.json
   require 'will_paginate/array'
+
+  before_filter :find_employee, :only => [:show, :edit, :update, :destroy]
 
   def index
     if params[:search]
@@ -9,17 +9,9 @@ class EmployeesController < ApplicationController
     else
       @employees = Employee.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     end
-
-    #respond_to do |format|
-    #  format.html # salary_sheet.html.haml
-    #  format.json { render json: @employees }
-    #end
   end
 
-  # GET /employees/1
-  # GET /employees/1.json
   def show
-    @employee = Employee.find(params[:id])
     @hr_categories = HrCategory.all
 
     respond_to do |format|
@@ -28,8 +20,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # GET /employees/new
-  # GET /employees/new.json
   def new
     @employee = Employee.new
 
@@ -39,13 +29,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # GET /employees/1/edit
-  def edit
-    @employee = Employee.find(params[:id])
-  end
-
-  # POST /employees
-  # POST /employees.json
   def create
     @employee = Employee.new(params[:employee])
 
@@ -60,11 +43,7 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # PUT /employees/1
-  # PUT /employees/1.json
   def update
-    @employee = Employee.find(params[:id])
-
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
@@ -76,10 +55,7 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # DELETE /employees/1
-  # DELETE /employees/1.json
   def destroy
-    @employee = Employee.find(params[:id])
     @employee.destroy
 
     respond_to do |format|
@@ -170,7 +146,7 @@ class EmployeesController < ApplicationController
   def pf_restrict_update
     params[:employee_data].each do |value|
       @val=Employee.find(value[:id])
-      #puts val.inspect
+
       if value[:pf].nil?
         @val.update_attribute(:restrct_pf,false)
       else
@@ -180,6 +156,15 @@ class EmployeesController < ApplicationController
     redirect_to pf_contribution_restrict_employees_path
   end
 
+  def generate_sample_excel_template
+    respond_to do |format|
+      format.xls do
+        render :xls => 'Employee Template',
+               :template => 'employees/generate_sample_excel_template.xls.haml'
+      end
+    end
+  end
+
   private
     def save_employee employees
       employees.each do |employee|
@@ -187,4 +172,8 @@ class EmployeesController < ApplicationController
       end
     end
 
+  protected
+    def find_employee
+      @employee = Employee.find(params[:id])
+    end
 end

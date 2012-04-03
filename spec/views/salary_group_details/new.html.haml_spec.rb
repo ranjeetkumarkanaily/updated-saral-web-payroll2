@@ -15,6 +15,8 @@ describe "salary_group_details/new" do
       assert_select "textarea#salary_group_detail_calculation", :name => "salary_group_detail[calculation]"
       assert_select "select#salary_group_detail_based_on", :name => "salary_group_detail[based_on]"
       assert_select "select#salary_group_detail_salary_head_id", :name => "salary_group_detail[salary_head]"
+      assert_select "input#salary_group_detail_print_name", :name => "salary_group_detail[print_name]"
+      assert_select "input#salary_group_detail_print_order", :name => "salary_group_detail[print_order]"
     end
   end
 end

@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
   def new
     @company = Company.new
     add_breadcrumb "Company", companies_path
-    add_breadcrumb "Edit Company", new_company_path
+    add_breadcrumb "New Company", new_company_path
   end
 
   def edit
