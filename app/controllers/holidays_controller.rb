@@ -1,7 +1,7 @@
 class HolidaysController < ApplicationController
-  # GET /holidays
-  # GET /holidays.json
   require 'will_paginate/array'
+
+  before_filter :find_holiday, :only => [:show, :edit, :update, :destroy]
 
   def index
     if params[:attendance_configuration]
@@ -16,19 +16,13 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # GET /holidays/1
-  # GET /holidays/1.json
   def show
-    @holiday = Holiday.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @holiday }
     end
   end
 
-  # GET /holidays/new
-  # GET /holidays/new.json
   def new
     @holiday = Holiday.new
 
@@ -38,13 +32,6 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # GET /holidays/1/edit
-  def edit
-    @holiday = Holiday.find(params[:id])
-  end
-
-  # POST /holidays
-  # POST /holidays.json
   def create
     @holiday = Holiday.new(params[:holiday])
     chk_existing_holiday = Holiday.existing_holiday @holiday
@@ -67,11 +54,7 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # PUT /holidays/1
-  # PUT /holidays/1.json
   def update
-    @holiday = Holiday.find(params[:id])
-
     respond_to do |format|
       if @holiday.update_attributes(params[:holiday])
         format.html { redirect_to @holiday, notice: 'Holiday was successfully updated.' }
@@ -83,10 +66,7 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # DELETE /holidays/1
-  # DELETE /holidays/1.json
   def destroy
-    @holiday = Holiday.find(params[:id])
     @holiday.destroy
 
     respond_to do |format|
@@ -94,4 +74,9 @@ class HolidaysController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_holiday
+      @holiday = Holiday.find(params[:id])
+    end
 end

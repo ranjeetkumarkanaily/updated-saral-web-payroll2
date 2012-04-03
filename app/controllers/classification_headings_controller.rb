@@ -1,6 +1,7 @@
 class ClassificationHeadingsController < ApplicationController
-  # GET /classification_headings
-  # GET /classification_headings.json
+
+  before_filter :find_classification_heading, :only => [:show, :edit, :update, :destroy]
+
   def index
     @classification_headings = ClassificationHeading.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,8 +11,6 @@ class ClassificationHeadingsController < ApplicationController
     end
   end
 
-  # GET /classification_headings/1
-  # GET /classification_headings/1.json
   def show
     @classification_heading = ClassificationHeading.find(params[:id])
 
@@ -21,8 +20,6 @@ class ClassificationHeadingsController < ApplicationController
     end
   end
 
-  # GET /classification_headings/new
-  # GET /classification_headings/new.json
   def new
     @classification_heading = ClassificationHeading.new
 
@@ -32,13 +29,6 @@ class ClassificationHeadingsController < ApplicationController
     end
   end
 
-  # GET /classification_headings/1/edit
-  def edit
-    @classification_heading = ClassificationHeading.find(params[:id])
-  end
-
-  # POST /classification_headings
-  # POST /classification_headings.json
   def create
     @classification_heading = ClassificationHeading.new(params[:classification_heading])
 
@@ -53,8 +43,6 @@ class ClassificationHeadingsController < ApplicationController
     end
   end
 
-  # PUT /classification_headings/1
-  # PUT /classification_headings/1.json
   def update
     @classification_heading = ClassificationHeading.find(params[:id])
 
@@ -69,10 +57,7 @@ class ClassificationHeadingsController < ApplicationController
     end
   end
 
-  # DELETE /classification_headings/1
-  # DELETE /classification_headings/1.json
   def destroy
-    @classification_heading = ClassificationHeading.find(params[:id])
     @classification_heading.destroy
 
     respond_to do |format|
@@ -80,4 +65,9 @@ class ClassificationHeadingsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_classification_heading
+      @classification_heading = ClassificationHeading.find(params[:id])
+    end
 end

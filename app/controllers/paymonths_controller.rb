@@ -1,19 +1,14 @@
 class PaymonthsController < ApplicationController
 
+  before_filter :find_paymonth, :only => [:show, :edit, :update]
+
+
   def index
     @paymonths = Paymonth.order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
   end
 
-  def show
-    @paymonth = Paymonth.find(params[:id])
-  end
-
   def new
     @paymonth = Paymonth.new
-  end
-
-  def edit
-    @paymonth = Paymonth.find(params[:id])
   end
 
   def create
@@ -49,8 +44,6 @@ class PaymonthsController < ApplicationController
   end
 
   def update
-    @paymonth = Paymonth.find(params[:id])
-
     respond_to do |format|
       if @paymonth.update_attributes(params[:paymonth])
         format.html { redirect_to paymonths_url, notice: 'Paymonth was successfully updated.' }
@@ -65,6 +58,7 @@ class PaymonthsController < ApplicationController
   def destroy
     first_paymonth = Paymonth.first
     last_paymonth = Paymonth.last
+
     @paymonth = Paymonth.find(params[:id])
 
     if( @paymonth.id == first_paymonth.id or @paymonth.id == last_paymonth.id )
@@ -79,7 +73,10 @@ class PaymonthsController < ApplicationController
         format.html { redirect_to paymonths_url, notice: "Out of sequence Month/Year can not be deleted." }
       end
     end
-
-
   end
+
+  protected
+    def find_paymonth
+      @paymonth = Paymonth.find(params[:id])
+    end
 end

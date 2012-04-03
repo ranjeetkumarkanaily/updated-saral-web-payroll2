@@ -1,8 +1,9 @@
 class PfGroupRatesController < ApplicationController
-  # GET /pf_group_rates
-  # GET /pf_group_rates.json
+
+  before_filter :param_pf_group_id, :only => [:index, :show, :new, :edit]
+  before_filter :find_pf_group_rate, :only => [:update, :destroy]
+
   def index
-    @param_pf_group_id = params[:params1]
     @pf_group_rates = PfGroupRate.where(:pf_group_id => @param_pf_group_id).order('paymonth_id DESC,created_at DESC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
@@ -11,10 +12,7 @@ class PfGroupRatesController < ApplicationController
     end
   end
 
-  # GET /pf_group_rates/1
-  # GET /pf_group_rates/1.json
   def show
-    @param_pf_group_id = params[:params1]
     @pf_group_rate = PfGroupRate.find(params[:id])
 
     respond_to do |format|
@@ -23,10 +21,7 @@ class PfGroupRatesController < ApplicationController
     end
   end
 
-  # GET /pf_group_rates/new
-  # GET /pf_group_rates/new.json
   def new
-    @param_pf_group_id = params[:params1]
     @pf_group_rate = PfGroupRate.new
 
     respond_to do |format|
@@ -35,16 +30,11 @@ class PfGroupRatesController < ApplicationController
     end
   end
 
-  # GET /pf_group_rates/1/edit
   def edit
-    @param_pf_group_id = params[:params1]
     @pf_group_rate = PfGroupRate.find(params[:id])
   end
 
-  # POST /pf_group_rates
-  # POST /pf_group_rates.json
   def create
-
     @param_pf_group_id = params[:pf_group_rate][:pf_group_id]
     @pf_group_rate = PfGroupRate.new(params[:pf_group_rate])
     effective_date = Paymonth.find(params[:pf_group_rate][:paymonth_id]).from_date
@@ -61,10 +51,7 @@ class PfGroupRatesController < ApplicationController
     end
   end
 
-  # PUT /pf_group_rates/1
-  # PUT /pf_group_rates/1.json
   def update
-    @pf_group_rate = PfGroupRate.find(params[:id])
     @param_pf_group_id = params[:pf_group_rate][:pf_group_id]
     respond_to do |format|
       if @pf_group_rate.update_attributes(params[:pf_group_rate])
@@ -77,10 +64,7 @@ class PfGroupRatesController < ApplicationController
     end
   end
 
-  # DELETE /pf_group_rates/1
-  # DELETE /pf_group_rates/1.json
   def destroy
-    @pf_group_rate = PfGroupRate.find(params[:id])
     @param_pf_group_id = @pf_group_rate.pf_group_id
     @pf_group_rate.destroy
 
@@ -89,4 +73,13 @@ class PfGroupRatesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def param_pf_group_id
+      @param_pf_group_id = params[:params1]
+    end
+
+    def find_pf_group_rate
+      @pf_group_rate = PfGroupRate.find(params[:id])
+    end
 end

@@ -1,6 +1,7 @@
 class PtGroupRatesController < ApplicationController
-  # GET /pt_group_rates
-  # GET /pt_group_rates.json
+
+  before_filter :find_pt_group_rates, :only => [:show, :edit, :update, :destroy]
+
   def index
     @pt_group_rates = PtGroupRate.all
 
@@ -10,19 +11,13 @@ class PtGroupRatesController < ApplicationController
     end
   end
 
-  # GET /pt_group_rates/1
-  # GET /pt_group_rates/1.json
   def show
-    @pt_group_rate = PtGroupRate.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @pt_group_rate }
     end
   end
 
-  # GET /pt_group_rates/new
-  # GET /pt_group_rates/new.json
   def new
     @pt_group_id = params[:pt_group_id]
     @ptGroup = PtGroup.find @pt_group_id
@@ -34,13 +29,6 @@ class PtGroupRatesController < ApplicationController
     end
   end
 
-  # GET /pt_group_rates/1/edit
-  def edit
-    @pt_group_rate = PtGroupRate.find(params[:id])
-  end
-
-  # POST /pt_group_rates
-  # POST /pt_group_rates.json
   def create
     @pt_group_rate = PtGroupRate.new(params[:pt_group_rate])
 
@@ -55,11 +43,7 @@ class PtGroupRatesController < ApplicationController
     end
   end
 
-  # PUT /pt_group_rates/1
-  # PUT /pt_group_rates/1.json
   def update
-    @pt_group_rate = PtGroupRate.find(params[:id])
-
     respond_to do |format|
       if @pt_group_rate.update_attributes(params[:pt_group_rate])
         format.html { redirect_to @pt_group_rate, notice: 'Pt group rate was successfully updated.' }
@@ -71,10 +55,7 @@ class PtGroupRatesController < ApplicationController
     end
   end
 
-  # DELETE /pt_group_rates/1
-  # DELETE /pt_group_rates/1.json
   def destroy
-    @pt_group_rate = PtGroupRate.find(params[:id])
     @pt_group_rate.destroy
 
     respond_to do |format|
@@ -82,4 +63,9 @@ class PtGroupRatesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_pt_group_rates
+      @pt_group_rate = PtGroupRate.find(params[:id])
+    end
 end

@@ -1,8 +1,9 @@
 class EsiGroupRatesController < ApplicationController
-  # GET /esi_group_rates
-  # GET /esi_group_rates.json
+
+  before_filter :param_esi_group_id, :only => [:index, :new, :edit]
+  before_filter :find_esi_group_rate, :only => [:show, :update, :destroy]
+
   def index
-    @param_esi_group_id = params[:params1]
     @esi_group_rates = EsiGroupRate.where(:esi_group_id => @param_esi_group_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
@@ -11,21 +12,14 @@ class EsiGroupRatesController < ApplicationController
     end
   end
 
-  # GET /esi_group_rates/1
-  # GET /esi_group_rates/1.json
   def show
-    @esi_group_rate = EsiGroupRate.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @esi_group_rate }
     end
   end
 
-  # GET /esi_group_rates/new
-  # GET /esi_group_rates/new.json
   def new
-    @param_esi_group_id = params[:params1]
     @esi_group_rate = EsiGroupRate.new
 
     respond_to do |format|
@@ -34,14 +28,10 @@ class EsiGroupRatesController < ApplicationController
     end
   end
 
-  # GET /esi_group_rates/1/edit
   def edit
-    @param_esi_group_id = params[:params1]
     @esi_group_rate = EsiGroupRate.find(params[:id])
   end
 
-  # POST /esi_group_rates
-  # POST /esi_group_rates.json
   def create
     @param_esi_group_id = params[:esi_group_rate][:esi_group_id]
     @esi_group_rate = EsiGroupRate.new(params[:esi_group_rate])
@@ -60,7 +50,6 @@ class EsiGroupRatesController < ApplicationController
   # PUT /esi_group_rates/1
   # PUT /esi_group_rates/1.json
   def update
-    @esi_group_rate = EsiGroupRate.find(params[:id])
     @param_esi_group_id = params[:esi_group_rate][:esi_group_id]
     respond_to do |format|
       if @esi_group_rate.update_attributes(params[:esi_group_rate])
@@ -73,10 +62,7 @@ class EsiGroupRatesController < ApplicationController
     end
   end
 
-  # DELETE /esi_group_rates/1
-  # DELETE /esi_group_rates/1.json
   def destroy
-    @esi_group_rate = EsiGroupRate.find(params[:id])
     @param_esi_group_id = @esi_group_rate.esi_group_id
     @esi_group_rate.destroy
 
@@ -85,4 +71,13 @@ class EsiGroupRatesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def param_esi_group_id
+      @param_esi_group_id = params[:params1]
+    end
+
+    def find_esi_group_rate
+      @esi_group_rate = EsiGroupRate.find(params[:id])
+    end
 end

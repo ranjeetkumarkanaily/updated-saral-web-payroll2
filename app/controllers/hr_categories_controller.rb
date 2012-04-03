@@ -1,6 +1,7 @@
 class HrCategoriesController < ApplicationController
-  # GET /hr_categories
-  # GET /hr_categories.json
+
+  before_filter :find_hr_category, :only => [:show, :edit, :update, :destroy]
+
   def index
     @hr_categories = HrCategory.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,19 +11,13 @@ class HrCategoriesController < ApplicationController
     end
   end
 
-  # GET /hr_categories/1
-  # GET /hr_categories/1.json
   def show
-    @hr_category = HrCategory.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @hr_category }
     end
   end
 
-  # GET /hr_categories/new
-  # GET /hr_categories/new.json
   def new
     @hr_category = HrCategory.new
 
@@ -32,13 +27,6 @@ class HrCategoriesController < ApplicationController
     end
   end
 
-  # GET /hr_categories/1/edit
-  def edit
-    @hr_category = HrCategory.find(params[:id])
-  end
-
-  # POST /hr_categories
-  # POST /hr_categories.json
   def create
     @hr_category = HrCategory.new(params[:hr_category])
 
@@ -53,11 +41,7 @@ class HrCategoriesController < ApplicationController
     end
   end
 
-  # PUT /hr_categories/1
-  # PUT /hr_categories/1.json
   def update
-    @hr_category = HrCategory.find(params[:id])
-
     respond_to do |format|
       if @hr_category.update_attributes(params[:hr_category])
         format.html { redirect_to hr_categories_path, notice: 'Hr category was successfully updated.' }
@@ -69,10 +53,7 @@ class HrCategoriesController < ApplicationController
     end
   end
 
-  # DELETE /hr_categories/1
-  # DELETE /hr_categories/1.json
   def destroy
-    @hr_category = HrCategory.find(params[:id])
     @hr_category.destroy
 
     respond_to do |format|
@@ -80,4 +61,9 @@ class HrCategoriesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_hr_category
+      @hr_category = HrCategory.find(params[:id])
+    end
 end

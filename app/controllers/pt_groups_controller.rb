@@ -1,6 +1,7 @@
 class PtGroupsController < ApplicationController
-  # GET /pt_groups
-  # GET /pt_groups.json
+
+  before_filter :find_pt_group, :only => [:show, :edit, :update, :destroy]
+
   def index
     @pt_groups = PtGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,10 +11,7 @@ class PtGroupsController < ApplicationController
     end
   end
 
-  # GET /pt_groups/1
-  # GET /pt_groups/1.json
   def show
-    @pt_group = PtGroup.find(params[:id])
     @pt_group_rates = @pt_group.pt_group_rates.order('paymonth_id Desc')
     respond_to do |format|
       format.html # show.html.haml
@@ -21,8 +19,6 @@ class PtGroupsController < ApplicationController
     end
   end
 
-  # GET /pt_groups/new
-  # GET /pt_groups/new.json
   def new
     @pt_group = PtGroup.new
 
@@ -32,13 +28,6 @@ class PtGroupsController < ApplicationController
     end
   end
 
-  # GET /pt_groups/1/edit
-  def edit
-    @pt_group = PtGroup.find(params[:id])
-  end
-
-  # POST /pt_groups
-  # POST /pt_groups.json
   def create
     @pt_group = PtGroup.new(params[:pt_group])
 
@@ -53,11 +42,7 @@ class PtGroupsController < ApplicationController
     end
   end
 
-  # PUT /pt_groups/1
-  # PUT /pt_groups/1.json
   def update
-    @pt_group = PtGroup.find(params[:id])
-
     respond_to do |format|
       if @pt_group.update_attributes(params[:pt_group])
         format.html { redirect_to @pt_group, notice: 'Pt group was successfully updated.' }
@@ -69,10 +54,7 @@ class PtGroupsController < ApplicationController
     end
   end
 
-  # DELETE /pt_groups/1
-  # DELETE /pt_groups/1.json
   def destroy
-    @pt_group = PtGroup.find(params[:id])
     @pt_group.destroy
 
     respond_to do |format|
@@ -80,4 +62,9 @@ class PtGroupsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_pt_group
+      @pt_group = PtGroup.find(params[:id])
+    end
 end

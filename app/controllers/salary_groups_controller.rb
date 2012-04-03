@@ -1,6 +1,7 @@
 class SalaryGroupsController < ApplicationController
-  # GET /salary_groups
-  # GET /salary_groups.json
+
+  before_filter :find_salary_groups, :only => [:show, :edit, :update, :destroy]
+
   def index
     @salary_groups = SalaryGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
 
@@ -10,19 +11,13 @@ class SalaryGroupsController < ApplicationController
     end
   end
 
-  # GET /salary_groups/1
-  # GET /salary_groups/1.json
   def show
-    @salary_group = SalaryGroup.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @salary_group }
     end
   end
 
-  # GET /salary_groups/new
-  # GET /salary_groups/new.json
   def new
     @salary_group = SalaryGroup.new
 
@@ -32,13 +27,6 @@ class SalaryGroupsController < ApplicationController
     end
   end
 
-  # GET /salary_groups/1/edit
-  def edit
-    @salary_group = SalaryGroup.find(params[:id])
-  end
-
-  # POST /salary_groups
-  # POST /salary_groups.json
   def create
     @salary_group = SalaryGroup.new(params[:salary_group])
 
@@ -53,11 +41,7 @@ class SalaryGroupsController < ApplicationController
     end
   end
 
-  # PUT /salary_groups/1
-  # PUT /salary_groups/1.json
   def update
-    @salary_group = SalaryGroup.find(params[:id])
-
     respond_to do |format|
       if @salary_group.update_attributes(params[:salary_group])
         format.html { redirect_to salary_groups_url, notice: 'Salary group was successfully updated.' }
@@ -69,8 +53,6 @@ class SalaryGroupsController < ApplicationController
     end
   end
 
-  # DELETE /salary_groups/1
-  # DELETE /salary_groups/1.json
   def destroy
     @salary_group = SalaryGroup.find(params[:id])
     @salary_group.destroy
@@ -80,4 +62,9 @@ class SalaryGroupsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  protected
+    def find_salary_groups
+      @salary_group = SalaryGroup.find(params[:id])
+    end
 end
