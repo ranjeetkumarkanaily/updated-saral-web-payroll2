@@ -1,0 +1,14 @@
+#left_content
+  %ul
+    %li= link_to "Back", upload_salary_allotments_path
+    %li= link_to "Employee's Salary Rate", salary_allotments_path
+#right_content
+  - unless @sal_allotments["errors"].empty?
+    %h1{:style => "background-color:#e9322d"} Failure
+    %ul
+      - @sal_allotments["errors"].each do |error|
+        %li
+          Problems in line number #{error[0]}:
+          - error[1].each do |msg|
+            %p
+              = msg

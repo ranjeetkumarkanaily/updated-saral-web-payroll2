@@ -86,7 +86,6 @@ class EmployeeDetailsController < ApplicationController
           end
         end
 
-
         if ( effective_date_after_doj && effective_date_before_dol && effective_date_validation_with_saved_dates ) && @employee_detail.save then
             sal_gr_id = @employee_detail.salary_group_id
 

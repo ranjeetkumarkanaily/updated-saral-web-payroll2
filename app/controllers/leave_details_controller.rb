@@ -39,4 +39,13 @@ class LeaveDetailsController < ApplicationController
     redirect_to leave_details_path
   end
 
+  def generate_sample_excel_template
+    respond_to do |format|
+      format.xls do
+        render :xls => 'Leaves Template',
+               :template => 'leave_details/generate_sample_excel_template.xls.haml'
+      end
+    end
+  end
+
 end

@@ -13,17 +13,57 @@ class SalaryAllotmentsController < ApplicationController
 
   def edit
     @param_selected_tab = params[:param1]
+
     @allotSal = SalaryAllotment.row_for_salary_allotment params[:id]
   end
 
   def update
 
-    #puts params[:salAllotment].inspect
     params[:salAllotment].each do |salAllot|
       allotSal = SalaryAllotment.find(salAllot[:id])
       allotSal.update_attributes(salAllot)
     end
     redirect_to salary_allotments_path(:param1 => params[:selected]), notice: 'Salary Allotted successfully'
   end
+
+  def upload
+
+  end
+
+  def upload_parse_validate
+    excel_file = params[:excel_file]
+    file = FileUploader.new
+    file.store!(excel_file)
+    book = Spreadsheet.open "#{file.store_path}"
+    theoretical_salary_sheet = book.worksheet 0
+
+    @sal_allotments = SalaryAllotment.process_salary_excel_sheet theoretical_salary_sheet
+
+    if @sal_allotments["errors"].empty?
+      update_salary_allotments @sal_allotments["salary_allotments"]
+      redirect_to salary_allotments_path(:param1 => "allotted"), notice: 'Salary Allotted successfully'
+    end
+
+    file.remove!
+  end
+
+  def generate_sample_excel_template
+    @sal_heads = SalaryHead.select("short_name").where('id != 2 and id != 3').order('created_at ASC')
+
+    respond_to do |format|
+      format.xls do
+        render :xls => 'Salary Rate Template',
+               :template => 'salary_allotments/generate_sample_excel_template.xls.haml'
+      end
+    end
+  end
+
+  private
+    def update_salary_allotments sal_allots
+      sal_allots.each do |sal_allot|
+        sal_allotment = SalaryAllotment.find_by_employee_id_and_employee_detail_id_and_effective_date_and_salary_head_id(sal_allot.employee_id, sal_allot.employee_detail_id, sal_allot.effective_date, sal_allot.salary_head_id)
+        sal_allotment.update_attributes(:salary_allotment => sal_allot.salary_allotment)
+      end
+    end
 
 end

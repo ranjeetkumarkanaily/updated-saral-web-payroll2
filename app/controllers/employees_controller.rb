@@ -146,7 +146,7 @@ class EmployeesController < ApplicationController
   def pf_restrict_update
     params[:employee_data].each do |value|
       @val=Employee.find(value[:id])
-      #puts val.inspect
+
       if value[:pf].nil?
         @val.update_attribute(:restrct_pf,false)
       else
@@ -154,6 +154,15 @@ class EmployeesController < ApplicationController
       end
     end
     redirect_to pf_contribution_restrict_employees_path
+  end
+
+  def generate_sample_excel_template
+    respond_to do |format|
+      format.xls do
+        render :xls => 'Employee Template',
+               :template => 'employees/generate_sample_excel_template.xls.haml'
+      end
+    end
   end
 
   private
