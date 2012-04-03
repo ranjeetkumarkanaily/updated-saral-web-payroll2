@@ -17,7 +17,7 @@ class PfEsiRatesController < ApplicationController
         format.html { redirect_to @pfesirate, notice: 'Rate was successfully created.' }
         format.json { render json: @pfesirate, status: :created, location: @pfesirate }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @pfesirate.errors, status: :unprocessable_entity }
       end
     end
@@ -29,7 +29,7 @@ class PfEsiRatesController < ApplicationController
         format.html { redirect_to @pfesirate, notice: 'PF ESI Rate was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @pfesirate.errors, status: :unprocessable_entity }
       end
     end

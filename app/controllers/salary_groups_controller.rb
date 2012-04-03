@@ -35,7 +35,7 @@ class SalaryGroupsController < ApplicationController
         format.html { redirect_to salary_groups_url, notice: 'Salary group was successfully created.' }
         format.json { render json: @salary_group, status: :created, location: @salary_group }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @salary_group.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +47,7 @@ class SalaryGroupsController < ApplicationController
         format.html { redirect_to salary_groups_url, notice: 'Salary group was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @salary_group.errors, status: :unprocessable_entity }
       end
     end

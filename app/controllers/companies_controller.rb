@@ -24,7 +24,7 @@ class CompaniesController < ApplicationController
       if @company.save
         format.html { redirect_to companies_path, notice: 'Company was successfully created.' }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
       end
     end
   end
@@ -36,7 +36,7 @@ class CompaniesController < ApplicationController
       if @company.update_attributes(params[:company])
         format.html { redirect_to companies_path, notice: 'Company was successfully updated.' }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
       end
     end
   end

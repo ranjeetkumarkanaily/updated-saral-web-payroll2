@@ -44,7 +44,7 @@ class HrCategoryDetailsController < ApplicationController
         format.html { redirect_to hr_category_details_path(:param1=> @hr_category_detail.hr_category_id), notice: 'Hr category detail was successfully created.' }
         format.json { render json: @hr_category_detail, status: :created, location: @hr_category_detail }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @hr_category_detail.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +56,7 @@ class HrCategoryDetailsController < ApplicationController
         format.html { redirect_to hr_category_details_path(:param1 => params[:hr_category_detail]['hr_category_id']), notice: 'Hr category detail was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @hr_category_detail.errors, status: :unprocessable_entity }
       end
     end

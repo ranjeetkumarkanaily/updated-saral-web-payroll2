@@ -1,6 +1,6 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
-  resources :hr_masters
+  resources :hr_masters, :except => [:index, :show]
 
   resources :hr_category_details
 

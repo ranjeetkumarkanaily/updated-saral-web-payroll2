@@ -37,7 +37,7 @@ class EsiGroupsController < ApplicationController
         format.html { redirect_to esi_groups_url, notice: 'Esi group was successfully created.' }
         format.json { render json: @esi_group, status: :created, location: @esi_group }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @esi_group.errors, status: :unprocessable_entity }
       end
     end
@@ -49,7 +49,7 @@ class EsiGroupsController < ApplicationController
         format.html { redirect_to esi_groups_url, notice: 'Esi group was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @esi_group.errors, status: :unprocessable_entity }
       end
     end

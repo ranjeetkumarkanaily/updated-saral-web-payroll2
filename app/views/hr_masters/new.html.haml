@@ -2,7 +2,7 @@
   %ul
     %li= link_to 'Back', employee_path(:id => @employee_id)
 #right_content
-  %h1= "#{@hr_category.category_name} : #{Employee.find(@employee_id).empname} (#{Employee.find(@employee_id).refno})"
+  %h1= "#{@hr_category.category_name} : #{@employee.empname} (#{@employee.refno})"
   - if params[:errors]
     #error_explanation
       %h2

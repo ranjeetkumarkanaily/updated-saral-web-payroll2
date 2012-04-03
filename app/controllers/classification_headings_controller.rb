@@ -37,7 +37,7 @@ class ClassificationHeadingsController < ApplicationController
         format.html { redirect_to classification_headings_url, notice: 'Classification heading was successfully created.' }
         format.json { render json: @classification_heading, status: :created, location: @classification_heading }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @classification_heading.errors, status: :unprocessable_entity }
       end
     end
@@ -51,7 +51,7 @@ class ClassificationHeadingsController < ApplicationController
         format.html { redirect_to classification_headings_url, notice: 'Classification heading was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @classification_heading.errors, status: :unprocessable_entity }
       end
     end

@@ -6,6 +6,8 @@ class SalaryAllotment < ActiveRecord::Base
   belongs_to :employee_detail
   belongs_to :salary_group_detail
 
+  delegate :head_name, :short_name, :salary_type, :to => :salary_head, :prefix => true
+
   def salaryHead
     SalaryHead.find(salary_head_id).head_name
   end
@@ -91,6 +93,13 @@ class SalaryAllotment < ActiveRecord::Base
 
   def self.duplicates_in_salary_heads? sal_heads
     sal_heads.size != sal_heads.uniq.size ? true : false
+  end
+
+  def self.update_salary_allotments sal_allots
+    sal_allots.each do |sal_allot|
+      sal_allotment = SalaryAllotment.find_by_employee_id_and_employee_detail_id_and_effective_date_and_salary_head_id(sal_allot.employee_id, sal_allot.employee_detail_id, sal_allot.effective_date, sal_allot.salary_head_id)
+      sal_allotment.update_attributes(:salary_allotment => sal_allot.salary_allotment)
+    end
   end
 
 end
