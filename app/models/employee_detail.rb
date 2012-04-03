@@ -14,6 +14,25 @@ class EmployeeDetail < ActiveRecord::Base
 
   validates_uniqueness_of :employee_id, :scope => [:effective_date],:message => "Details already exist for the same date"
 
+  regex_for_pan = /([PAN Not Avbl]|[PAN Applied]|[PAN Invalid]|[a-z]{5}[d]{4}[a-z]{1})/i
+
+  validates :pan,   :presence   => true, :allow_blank => true,
+            :format     => { :with => regex_for_pan }
+
+  validates :pan_effective_date, :presence => true, :if => :pan_present?
+
+  validates :pan_effective_date_after_dob, :if => :pan_present?
+
+  def pan_present?
+    self.pan != 'PAN Applied' and self.pan != 'PAN Invalid' and self.pan != 'PAN Not Avbl'
+  end
+
+  def pan_effective_date_after_dob
+    dob = Employee.find(employee_id).date_of_birth
+    if !pan_effective_date.nil? and !dob.nil? and pan_effective_date > dob then
+      errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
+    end
+  end
   #attr_accessor :current_employee_id
   #
   #def self.set_current_employee_id employee_id
@@ -55,6 +74,7 @@ class EmployeeDetail < ActiveRecord::Base
   def self.update_last_record last_record_id,effective_date
     pre_employee_detail = EmployeeDetail.find(last_record_id)
     pre_employee_detail.update_attribute(:effective_to,effective_date)
+
   end
 
   def self.find_last_record_id employee_id

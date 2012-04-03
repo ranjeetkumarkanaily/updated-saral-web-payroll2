@@ -19,7 +19,9 @@ describe EmployeeDetailsController do
     :financial_institution_id => @financial_institution.id,
     :attendance_configuration_id => @attendance_configuration.id,
     :bank_account_number => 2316,
-    :effective_to => ''}
+    :effective_to => '',
+    :pan => 'aaaaa1234a',
+    :pan_effective_date => "2012-03-01" }
   end
 
   describe "GET index" do
@@ -67,25 +69,25 @@ describe EmployeeDetailsController do
       end
       it "creates a new EmployeeDetail" do
         expect {
-          post :create, :employee_detail => valid_attributes
+          post :create, :employee_detail => valid_attributes, :panoption => "ADD PAN"
         }.to change(EmployeeDetail, :count).by(1)
       end
 
       it "creates salary allotments for the employee details created" do
         FactoryGirl.create(:salary_group_detail)
         expect {
-          post :create, :employee_detail => valid_attributes
+          post :create, :employee_detail => valid_attributes, :panoption => "ADD PAN"
         }.to change(SalaryAllotment, :count)
       end
 
       it "assigns a newly created employee_detail as @employee_detail" do
-        post :create, :employee_detail => valid_attributes
+        post :create, :employee_detail => valid_attributes, :panoption => "ADD PAN"
         assigns(:employee_detail).should be_a(EmployeeDetail)
         assigns(:employee_detail).should be_persisted
       end
 
       it "redirects to the created employee_detail" do
-        post :create, :employee_detail => valid_attributes
+        post :create, :employee_detail => valid_attributes, :panoption => "ADD PAN"
         response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id]))
       end
     end
@@ -138,34 +140,34 @@ describe EmployeeDetailsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested employee_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes
-        EmployeeDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => employee_detail.id, :employee_detail => {'these' => 'params'}
+        employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
+        EmployeeDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params','panoption' => "ADD PAN", "pan" => nil})
+        put :update, :id => employee_detail.id, :employee_detail => {'these' => 'params','panoption' => "ADD PAN", "pan" => nil}
       end
 
       it "assigns the requested employee_detail as @employee_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes
+        employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
         put :update, :id => employee_detail.id, :employee_detail => valid_attributes
         assigns(:employee_detail).should eq(employee_detail)
       end
 
       it "redirects to the employee_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes
-        put :update, :id => employee_detail.id, :employee_detail => valid_attributes
+        employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
+        put :update, :id => employee_detail.id, :employee_detail => valid_attributes, :panoption => "ADD PAN"
         response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id]))
       end
     end
 
     describe "with invalid params" do
       it "assigns the employee_detail as @employee_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes
+        employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         put :update, :id => employee_detail.id, :employee_detail => {}
         assigns(:employee_detail).should eq(employee_detail)
       end
 
       it "re-renders the 'edit' template" do
-        employee_detail = EmployeeDetail.create! valid_attributes
+        employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         put :update, :id => employee_detail.id, :employee_detail => {}
         response.should render_template("edit")
@@ -178,7 +180,7 @@ describe EmployeeDetailsController do
 
   describe "DELETE destroy" do
     it "destroys the requested employee_detail" do
-      employee_detail = EmployeeDetail.create! valid_attributes
+      employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
       expect {
         delete :destroy, :id => employee_detail.id
       }.to change(EmployeeDetail, :count).by(-1)
@@ -186,15 +188,15 @@ describe EmployeeDetailsController do
 
     it "redirects to the employee_details list and updates the last record's effective date'" do
       employee_detail_first = FactoryGirl.create(:employee_detail,:branch_id => @branch.id,:financial_institution_id => @financial_institution.id,:attendance_configuration_id => @attendance_configuration.id)
-      employee_detail_second = EmployeeDetail.create! valid_attributes
+      employee_detail_second = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
       delete :destroy, :id => employee_detail_second.id
-      response.should redirect_to(employee_details_url(:param1 => valid_attributes[:employee_id] ))
+      response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id] ))
     end
 
     it "redirects to the employee_details list" do
-      employee_detail = EmployeeDetail.create! valid_attributes
+      employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
       delete :destroy, :id => employee_detail.id
-      response.should redirect_to(employee_details_url(:param1 => valid_attributes[:employee_id] ))
+      response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id] ))
     end
   end
 

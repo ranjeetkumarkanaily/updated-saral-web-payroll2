@@ -67,6 +67,8 @@ FactoryGirl.define do
     attendance_configuration_id  2
     bank_account_number 2316
     effective_to  ''
+    pan 'aaaaa1234a'
+    pan_effective_date "2012-03-01"
   end
 
   factory :state do

@@ -54,7 +54,9 @@ class EmployeeDetailsController < ApplicationController
   # POST /employee_details
   # POST /employee_details.json
   def create
+    params[:employee_detail][:pan] = params[:panoption] if params[:panoption] != "ADD PAN"
     @employee_detail = EmployeeDetail.new(params[:employee_detail])
+
     respond_to do |format|
       if @employee_detail.employee_id != nil
         effective_date = @employee_detail.effective_date
@@ -116,8 +118,10 @@ class EmployeeDetailsController < ApplicationController
   # PUT /employee_details/1
   # PUT /employee_details/1.json
   def update
-
+    params[:employee_detail][:pan] = params[:panoption] if ( params[:panoption] != "ADD PAN"  and params[:panoption] != " " )
     @employee_detail = EmployeeDetail.find(params[:id])
+    @paramempid = params[:employee_detail]['employee_id']
+    @classification_headings = ClassificationHeading.order('display_order')
     respond_to do |format|
       if @employee_detail.update_attributes(params[:employee_detail])
         format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully updated.' }

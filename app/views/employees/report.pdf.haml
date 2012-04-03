@@ -41,7 +41,7 @@
             %td.td_header Ref. No.
             %td.td_header Employee Name
             %td.td_header= @report_type_change
-          - if @employees.count > 1
+          - if @employees.count > 0
             - @employees.each do |employee|
               - i=i+1
               %tr
