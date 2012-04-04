@@ -1,2 +1,0 @@
-module SalaryTotalsHelper
-end
