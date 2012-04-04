@@ -1,4 +1,5 @@
 class SalaryGroupDetail < ActiveRecord::Base
+  attr_accessible :calc_type, :calculation,:based_on,:salary_group_id,:salary_head_id, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :salary_group

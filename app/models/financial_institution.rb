@@ -1,4 +1,5 @@
 class FinancialInstitution < ActiveRecord::Base
+  attr_accessible :name, :address_line1, :address_line2, :address_line3, :address_line4, :pincode,:branch_code,:email, :created_at,:updated_at
   acts_as_audited
 
   validates :name, :presence => true,

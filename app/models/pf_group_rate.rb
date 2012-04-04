@@ -1,4 +1,5 @@
 class PfGroupRate < ActiveRecord::Base
+  attr_accessible :pf_group_id, :paymonth_id, :account_number_21, :pension_fund,:epf,:account_number_02,:account_number_22,:round_off,:restrict_employer_share,:restrict_employee_share_to_employer_share,:employer_epf,:cutoff, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :pf_group

@@ -1,4 +1,5 @@
 class EsiGroupRate < ActiveRecord::Base
+  attr_accessible :esi_group_id, :employee_rate, :employer_rate, :cut_off, :minimum_limit_dailywage, :round_off, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :esi_group

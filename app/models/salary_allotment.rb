@@ -1,4 +1,5 @@
 class SalaryAllotment < ActiveRecord::Base
+  attr_accessible :employee_id, :employee_detail_id,:effective_date,:salary_head_id,:salary_allotment,:salary_group_detail_id, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :salary_head

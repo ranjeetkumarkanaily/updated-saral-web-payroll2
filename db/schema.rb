@@ -73,26 +73,6 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
     t.integer  "photo_file_size"
   end
 
-  create_table "default_values", :force => true do |t|
-    t.string   "default_type"
-    t.string   "value"
-    t.integer  "value_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "departments", :force => true do |t|
-    t.string   "department"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "designations", :force => true do |t|
-    t.string   "designation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "employee_details", :force => true do |t|
     t.integer  "employee_id"
     t.date     "effective_date"
@@ -135,12 +115,6 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
     t.string   "email"
     t.string   "mobile"
     t.string   "refno"
-    t.integer  "designation_id"
-    t.integer  "department_id"
-    t.integer  "grade_id"
-    t.integer  "branch_id"
-    t.integer  "financial_institution_id"
-    t.string   "bank_account_number"
     t.boolean  "restrct_pf",               :default => false
   end
 
@@ -173,12 +147,6 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
     t.string   "pincode"
     t.string   "branch_code"
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "grades", :force => true do |t|
-    t.string   "grade"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -240,17 +208,6 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
   end
 
   add_index "paymonths", ["month_year"], :name => "index_paymonths_on_month_year"
-
-  create_table "pf_esi_rates", :force => true do |t|
-    t.integer  "paymonth_id"
-    t.decimal  "pf_rate",           :precision => 8, :scale => 2
-    t.decimal  "pf_cutoff",         :precision => 8, :scale => 2
-    t.decimal  "esi_employee_rate", :precision => 8, :scale => 2
-    t.decimal  "esi_employer_rate", :precision => 8, :scale => 2
-    t.decimal  "esi_cutoff",        :precision => 8, :scale => 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "pf_group_rates", :force => true do |t|
     t.integer  "pf_group_id"

@@ -1,4 +1,5 @@
 class Employee < ActiveRecord::Base
+  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf, :created_at,:updated_at
   acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -8,12 +9,6 @@ class Employee < ActiveRecord::Base
   has_many :leave_details, :dependent => :destroy
 
   has_many :salary_allotments
-
-  #belongs_to :branch
-  #belongs_to :financial_institution
-  #belongs_to :designation
-  #belongs_to :department
-  #belongs_to :grade
 
   belongs_to :present_state, :class_name => "State"
   delegate :state_name, :to => :present_state, :prefix => true

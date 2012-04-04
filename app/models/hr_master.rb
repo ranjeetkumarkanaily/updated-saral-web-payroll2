@@ -1,4 +1,5 @@
 class HrMaster < ActiveRecord::Base
+
   acts_as_audited
 
   serialize :category_values, HstoreSerializer

@@ -1,4 +1,5 @@
 class LeaveDetail < ActiveRecord::Base
+  attr_accessible :employee_id, :leave_date, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :employee, :validate => true

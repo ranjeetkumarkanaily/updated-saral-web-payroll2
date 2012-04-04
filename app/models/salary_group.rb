@@ -1,4 +1,5 @@
 class SalaryGroup < ActiveRecord::Base
+  attr_accessible :salary_group_name, :based_on_gross, :created_at,:updated_at
   acts_as_audited
 
   has_many :salary_group_details

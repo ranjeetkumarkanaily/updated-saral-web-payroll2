@@ -1,4 +1,5 @@
 class PtGroup < ActiveRecord::Base
+  attr_accessible :name, :state_id, :certificate_no, :pto_circle_no,:address,:return_period, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :state
