@@ -1,11 +1,11 @@
-= form_for @hr_category_detail do |f|
-  - if @hr_category_detail.errors.any?
+= form_for hr_category_detail do |f|
+  - if hr_category_detail.errors.any?
     #error_explanation
       %h2
-        = pluralize(@hr_category_detail.errors.count, "error")
+        = pluralize(hr_category_detail.errors.count, "error")
         prohibited this HR Category Detail from being saved:
       %ul
-        - @hr_category_detail.errors.full_messages.each do |msg|
+        - hr_category_detail.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -17,10 +17,7 @@
                 %tr
                   %td{:width=>130} Label : &nbsp;
                   %td= f.text_field :name, :size => '22'
-                  = f.hidden_field :hr_category_id, :value => @hr_category_id
-                -#%tr
-                -#  %td{:width=>130} Data Type :&nbsp;
-                -#  %td= f.text_field :data_type
+                  = f.hidden_field :hr_category_id, :value => hr_category_id
             %td.std_td
               %table
                 %tr

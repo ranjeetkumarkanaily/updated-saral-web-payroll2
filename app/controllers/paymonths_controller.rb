@@ -1,6 +1,6 @@
 class PaymonthsController < ApplicationController
 
-  before_filter :find_paymonth, :only => [:show, :edit, :update]
+  before_filter :find_paymonth, :only => [:show, :update]
 
 
   def index
@@ -9,6 +9,13 @@ class PaymonthsController < ApplicationController
 
   def new
     @paymonth = Paymonth.new
+  end
+
+  def show
+    respond_to do |format|
+      format.html # show.html.haml
+      format.json { render json: @employee }
+    end
   end
 
   def create
@@ -23,7 +30,7 @@ class PaymonthsController < ApplicationController
             format.html {redirect_to paymonths_url, notice: 'Paymonth was successfully created.' }
             format.json { render json: @paymonth, status: :created, location: @paymonth }
           else
-            format.html { render action: "new" }
+            format.html { render 'new' }
             format.json { render json: @paymonth.errors, status: :unprocessable_entity }
           end
         end
@@ -31,26 +38,14 @@ class PaymonthsController < ApplicationController
         @paymonth = Paymonth.new
         @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be created. Next Month to be created is #{res[1]}")
         respond_to do |format|
-          format.html { render action: "new"}
+          format.html { render 'new'}
         end
       end
     else
       @paymonth = Paymonth.new
       @paymonth.errors.add(:paymonth, "is invalid.")
       respond_to do |format|
-        format.html { render action: "new" }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @paymonth.update_attributes(params[:paymonth])
-        format.html { redirect_to paymonths_url, notice: 'Paymonth was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @paymonth.errors, status: :unprocessable_entity }
+        format.html { render 'new' }
       end
     end
   end

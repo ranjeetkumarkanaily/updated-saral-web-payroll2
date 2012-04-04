@@ -1,11 +1,11 @@
-= form_for(@classification) do |f|
-  - if @classification.errors.any?
+= form_for(classification) do |f|
+  - if classification.errors.any?
     #error_explanation
       %h2
-        = pluralize(@classification.errors.count, "error")
+        = pluralize(classification.errors.count, "error")
         prohibited this department from being saved:
       %ul
-        - @classification.errors.full_messages.each do |msg|
+        - classification.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -18,7 +18,7 @@
                   %td Classification Name:&nbsp;
                   %td
                     = f.text_field :classification_name, :size => '22'
-                    = f.hidden_field :classification_heading_id, :value => @paramclassification_id
+                    = f.hidden_field :classification_heading_id, :value => paramclassification_id
                 %tr
                   %td &nbsp;
                 %tr

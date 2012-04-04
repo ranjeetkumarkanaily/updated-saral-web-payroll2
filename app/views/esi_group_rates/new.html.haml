@@ -2,5 +2,5 @@
   %ul
     %li= link_to 'Back', esi_group_rates_path(:params1 => @param_esi_group_id)
 #right_content
-  %h1 New ESI Group Rate for #{EsiGroup.find(@param_esi_group_id).esi_group_name}
-  = render 'form'
+  %h1 New ESI Group Rate for #{@esi_group}
+  = render 'form', :esi_group_rate => @esi_group_rate, :param_esi_group_id => @param_esi_group_id

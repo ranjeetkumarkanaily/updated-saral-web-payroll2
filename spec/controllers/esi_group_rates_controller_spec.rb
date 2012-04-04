@@ -28,17 +28,9 @@ describe EsiGroupRatesController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested esi_group_rate as @esi_group_rate" do
-      esi_group_rate = EsiGroupRate.create! valid_attributes.merge(:esi_group_id => @esi_group.id)
-      get :show, {:id => esi_group_rate.to_param}, valid_session
-      assigns(:esi_group_rate).should eq(esi_group_rate)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new esi_group_rate as @esi_group_rate" do
-      get :new, {}, valid_session
+      get :new, {:params1 => @esi_group.id}, valid_session
       assigns(:esi_group_rate).should be_a_new(EsiGroupRate)
     end
   end

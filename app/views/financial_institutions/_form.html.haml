@@ -1,11 +1,11 @@
-= form_for(@financial_institution) do |f|
-  - if @financial_institution.errors.any?
+= form_for(financial_institution) do |f|
+  - if financial_institution.errors.any?
     #error_explanation
       %h2
-        = pluralize(@financial_institution.errors.count, "error")
+        = pluralize(financial_institution.errors.count, "error")
         prohibited this Financial Institution from being saved:
       %ul
-        - @financial_institution.errors.full_messages.each do |msg|
+        - financial_institution.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr

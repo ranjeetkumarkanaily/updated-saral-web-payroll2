@@ -3,5 +3,5 @@
     %li= link_to 'Back', employee_details_path(:param1=>@paramempid)
 #right_content
   %h1 New Detail for #{Employee.find_by_id(@paramempid).empname}
-  = render 'form'
+  = render 'form', :employee_detail => @employee_detail, :paramempid => @paramempid, :classification_headings => @classification_headings
 

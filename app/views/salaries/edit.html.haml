@@ -21,9 +21,9 @@
               = hidden_field_tag "salary[][effective_date]", sal.effective_date
               = hidden_field_tag "salary[][salary_head_id]", sal.salary_head_id
               %tr
-                %td.table_grid_td= SalaryHead.find(sal.salary_head_id).head_name
-                %td.table_grid_td= SalaryHead.find(sal.salary_head_id).short_name
-                %td.table_grid_td= SalaryHead.find(sal.salary_head_id).salary_type
+                %td.table_grid_td= sal.salary_head_head_name
+                %td.table_grid_td= sal.salary_head_short_name
+                %td.table_grid_td= sal.salary_head_salary_type
                 %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal.salary_amount
             %tr
               %td

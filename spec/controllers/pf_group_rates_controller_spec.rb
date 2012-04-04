@@ -47,7 +47,7 @@ describe PfGroupRatesController do
 
   describe "GET new" do
     it "assigns a new pf_group_rate as @pf_group_rate" do
-      get :new
+      get :new, {:params1 => @pf_group.id}
       assigns(:pf_group_rate).should be_a_new(PfGroupRate)
     end
   end

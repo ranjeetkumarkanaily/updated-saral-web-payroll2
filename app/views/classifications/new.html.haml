@@ -2,5 +2,5 @@
   %ul
     %li= link_to 'Back', classifications_path(:params1 => @paramclassification_id)
 #right_content
-  %h1 New Classification for #{ClassificationHeading.find(@paramclassification_id).classification_heading_name}
-  = render 'form'
+  %h1 New Classification for #{@heading_name}
+  = render 'form', :classification => @classification, :paramclassification_id => @paramclassification_id

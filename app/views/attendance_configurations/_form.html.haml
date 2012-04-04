@@ -1,11 +1,11 @@
-= form_for(@attendance_configuration) do |f|
-  - if @attendance_configuration.errors.any?
+= form_for(attendance_configuration) do |f|
+  - if attendance_configuration.errors.any?
     #error_explanation
       %h2
-        = pluralize(@attendance_configuration.errors.count, "error")
+        = pluralize(attendance_configuration.errors.count, "error")
         prohibited this Attendance Configuration from being saved:
       %ul
-        - @attendance_configuration.errors.full_messages.each do |msg|
+        - attendance_configuration.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr

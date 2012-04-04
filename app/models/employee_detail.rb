@@ -25,6 +25,9 @@ class EmployeeDetail < ActiveRecord::Base
 
   validate :pan_effective_date_after_dob, :if => :pan_present?
 
+  delegate :salary_group_name, :to => :salary_group, :prefix => true
+  delegate :empname, :to => :employee, :prefix => true
+
   def pan_present?
     self.pan != 'PAN Applied' and self.pan != 'PAN Invalid' and self.pan != 'PAN Not Avbl'
   end

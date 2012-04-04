@@ -1,14 +1,14 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
-  resources :hr_masters
+  resources :hr_masters, :except => [:index, :show]
 
-  resources :hr_category_details
+  resources :hr_category_details, :except => [:show]
 
-  resources :hr_categories
+  resources :hr_categories, :except => [:edit]
 
   resources :financial_institutions
 
-  resources :pt_group_rates
+  resources :pt_group_rates, :except => [:edit]
 
   resources :esi_group_rates
 
@@ -32,7 +32,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :pt_groups
 
-  resources :pf_esi_rates
+  resources :pf_esi_rates, :only => [:new, :create, :update, :index]
 
   resources :paymonths
 
@@ -68,7 +68,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     get 'generate_sample_excel_template',  :on => :collection
   end
 
-  resources :companies
+  resources :companies, :except => [:show, :destroy]
 
   resources :salary_group_details
 
@@ -76,7 +76,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :salary_groups
 
-  resources :salary_allotments do
+  resources :salary_allotments, :only => [:edit, :update, :index] do
     put :update, :on => :collection
 
     get 'upload', :on => :collection
@@ -94,7 +94,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     post 'file_upload', :on => :collection
   end
 
-  resources :sessions
+  resources :sessions, :only => [:new, :create, :destroy]
   resources :users
   resources :salaries, :only => [:index, :create, :new] do
     get 'edit', :on => :collection

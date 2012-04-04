@@ -1,6 +1,6 @@
 class AttendanceConfigurationsController < ApplicationController
 
-  before_filter :find_attendance_configuration, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_attendance_configuration, :only => [:edit, :update, :destroy]
 
   def index
     @attendance_configurations = AttendanceConfiguration.where('id>1').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,13 +8,6 @@ class AttendanceConfigurationsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @attendance_configurations }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @attendance_configuration }
     end
   end
 
@@ -35,7 +28,7 @@ class AttendanceConfigurationsController < ApplicationController
         format.html { redirect_to attendance_configurations_url, notice: 'Attendance configuration was successfully created.' }
         format.json { render json: @attendance_configuration, status: :created, location: @attendance_configuration }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @attendance_configuration.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +40,7 @@ class AttendanceConfigurationsController < ApplicationController
         format.html { redirect_to attendance_configurations_url, notice: 'Attendance configuration was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @attendance_configuration.errors, status: :unprocessable_entity }
       end
     end

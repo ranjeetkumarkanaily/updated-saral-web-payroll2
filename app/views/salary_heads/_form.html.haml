@@ -1,11 +1,11 @@
-= form_for(@salary_head) do |f|
-  - if @salary_head.errors.any?
+= form_for(salary_head) do |f|
+  - if salary_head.errors.any?
     #error_explanation
       %h2
-        = pluralize(@salary_head.errors.count, "error")
+        = pluralize(salary_head.errors.count, "error")
         prohibited this salary_head from being saved:
       %ul
-        - @salary_head.errors.full_messages.each do |msg|
+        - salary_head.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -19,7 +19,7 @@
                   %td= f.text_field :head_name, :size => '22'
                 %tr
                   %td{:width=>130} Salary Type:&nbsp;
-                  %td= f.select :salary_type, options_for_select(["Earnings", "Deductions"],@salary_head.salary_type), {:prompt => 'Select Salary Type'}
+                  %td= f.select :salary_type, options_for_select(["Earnings", "Deductions"],salary_head.salary_type), {:prompt => 'Select Salary Type'}
             %td.std_td
               %table
                 %tr

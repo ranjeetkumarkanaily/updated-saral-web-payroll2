@@ -19,17 +19,10 @@ describe ClassificationsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested classification as @classification" do
-      classification = Classification.create! valid_attributes
-      get :show, {:id => classification.to_param}
-      assigns(:classification).should eq(classification)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new classification as @classification" do
-      get :new
+      classification_heading = FactoryGirl.create(:classification_heading)
+      get :new, {:params1 => classification_heading.id}
       assigns(:classification).should be_a_new(Classification)
     end
   end

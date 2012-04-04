@@ -21,14 +21,6 @@ describe HrCategoriesController do
      end
   end
 
-  describe "GET show" do
-    it "assigns the requested hr category as @hr_category" do
-      category = FactoryGirl.create(:hr_category)
-      get :show, {:id => category.id}
-      assigns(:hr_category).should eq(category)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new HR Category as @hr_category" do
       get :new, {}

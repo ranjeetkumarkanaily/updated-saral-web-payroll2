@@ -1,6 +1,6 @@
 class PfGroupsController < ApplicationController
 
-  before_filter :find_pf_group, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_pf_group, :only => [:edit, :update, :destroy]
 
   def index
     @pf_groups = PfGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,13 +8,6 @@ class PfGroupsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @pf_groups }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @pf_group }
     end
   end
 
@@ -35,7 +28,7 @@ class PfGroupsController < ApplicationController
         format.html { redirect_to pf_groups_url, notice: 'Pf group was successfully created.' }
         format.json { render json: @pf_group, status: :created, location: @pf_group }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @pf_group.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +40,7 @@ class PfGroupsController < ApplicationController
         format.html { redirect_to pf_groups_url, notice: 'Pf group was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @pf_group.errors, status: :unprocessable_entity }
       end
     end

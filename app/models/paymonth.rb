@@ -2,7 +2,6 @@ class Paymonth < ActiveRecord::Base
   attr_accessible :month_year, :number_of_days, :from_date, :to_date,:month_name, :created_at,:updated_at
   acts_as_audited
 
-  has_many :pf_esi_rates, :dependent => :destroy
   has_many :pt_rates, :dependent => :destroy
   has_many :pf_group_rates, :dependent => :destroy
   has_many :pt_group_rates, :dependent => :destroy

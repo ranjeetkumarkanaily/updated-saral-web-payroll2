@@ -39,7 +39,7 @@ class HolidaysController < ApplicationController
       @holiday = Holiday.new
       @holiday.errors.add(:holiday, " already assigned for selected date and selected Attendance Head")
       respond_to do |format|
-        format.html { render action: "new"}
+        format.html { render 'new'}
       end
     else
       respond_to do |format|
@@ -47,7 +47,7 @@ class HolidaysController < ApplicationController
           format.html { redirect_to @holiday, notice: 'Holiday was successfully created.' }
           format.json { render json: @holiday, status: :created, location: @holiday }
         else
-          format.html { render action: "new" }
+          format.html { render 'new' }
           format.json { render json: @holiday.errors, status: :unprocessable_entity }
         end
       end
@@ -60,7 +60,7 @@ class HolidaysController < ApplicationController
         format.html { redirect_to @holiday, notice: 'Holiday was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @holiday.errors, status: :unprocessable_entity }
       end
     end

@@ -6,7 +6,7 @@ class Salary < ActiveRecord::Base
   belongs_to :employee_detail
   belongs_to :salary_group_detail
 
-  delegate :head_name, :to => :salary_head, :prefix => true
+  delegate :head_name, :short_name, :salary_type, :to => :salary_head, :prefix => true
 
   def self.is_salary_generated? month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'

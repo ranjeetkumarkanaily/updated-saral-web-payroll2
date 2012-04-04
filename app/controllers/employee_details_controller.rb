@@ -44,7 +44,6 @@ class EmployeeDetailsController < ApplicationController
 
   # GET /employee_details/1/edit
   def edit
-
     @paramempid = params[:param1]
     @employee_detail = EmployeeDetail.find(params[:id])
 
@@ -101,13 +100,13 @@ class EmployeeDetailsController < ApplicationController
         else
           @paramempid = employee_id
           @classification_headings = ClassificationHeading.order('display_order')
-          format.html { render action: "new" }
+          format.html { render "new" }
           format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
         end
       else
         @paramempid = employee_id
         @classification_headings = ClassificationHeading.order('display_order')
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
 
       end
@@ -126,7 +125,7 @@ class EmployeeDetailsController < ApplicationController
         format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
       end
     end

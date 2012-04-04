@@ -1,7 +1,7 @@
 class EsiGroupRatesController < ApplicationController
 
   before_filter :param_esi_group_id, :only => [:index, :new, :edit]
-  before_filter :find_esi_group_rate, :only => [:show, :update, :destroy]
+  before_filter :find_esi_group_rate, :only => [:update, :destroy]
 
   def index
     @esi_group_rates = EsiGroupRate.where(:esi_group_id => @param_esi_group_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -12,16 +12,9 @@ class EsiGroupRatesController < ApplicationController
     end
   end
 
-  def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @esi_group_rate }
-    end
-  end
-
   def new
     @esi_group_rate = EsiGroupRate.new
-
+    @esi_group = EsiGroup.find(@param_esi_group_id).esi_group_name
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @esi_group_rate }
@@ -41,7 +34,7 @@ class EsiGroupRatesController < ApplicationController
         format.html { redirect_to esi_group_rates_url(:params1 => @param_esi_group_id), notice: 'Esi group rate was successfully created.' }
         format.json { render json: @esi_group_rate, status: :created, location: @esi_group_rate }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @esi_group_rate.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +49,7 @@ class EsiGroupRatesController < ApplicationController
         format.html { redirect_to esi_group_rates_url(:params1 => @param_esi_group_id), notice: 'Esi group rate was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @esi_group_rate.errors, status: :unprocessable_entity }
       end
     end

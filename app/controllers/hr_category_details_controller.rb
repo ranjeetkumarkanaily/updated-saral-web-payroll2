@@ -1,6 +1,6 @@
 class HrCategoryDetailsController < ApplicationController
 
-  before_filter :find_hr_category_detail, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_hr_category_detail, :only => [:edit, :update, :destroy]
 
   def index
     @hr_category_id = params[:param1]
@@ -8,14 +8,6 @@ class HrCategoryDetailsController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @hr_category_details }
-    end
-  end
-
-  def show
-    @hr_category_id = @hr_category_detail.hr_category_id
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @hr_category_detail }
     end
   end
 
@@ -44,7 +36,7 @@ class HrCategoryDetailsController < ApplicationController
         format.html { redirect_to hr_category_details_path(:param1=> @hr_category_detail.hr_category_id), notice: 'Hr category detail was successfully created.' }
         format.json { render json: @hr_category_detail, status: :created, location: @hr_category_detail }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @hr_category_detail.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +48,7 @@ class HrCategoryDetailsController < ApplicationController
         format.html { redirect_to hr_category_details_path(:param1 => params[:hr_category_detail]['hr_category_id']), notice: 'Hr category detail was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @hr_category_detail.errors, status: :unprocessable_entity }
       end
     end

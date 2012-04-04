@@ -1,11 +1,11 @@
-= form_for(@salary_group) do |f|
-  - if @salary_group.errors.any?
+= form_for(salary_group) do |f|
+  - if salary_group.errors.any?
     #error_explanation
       %h2
-        = pluralize(@salary_group.errors.count, "error")
+        = pluralize(salary_group.errors.count, "error")
         prohibited this salary_group from being saved:
       %ul
-        - @salary_group.errors.full_messages.each do |msg|
+        - salary_group.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr

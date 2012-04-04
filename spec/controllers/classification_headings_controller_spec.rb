@@ -19,14 +19,6 @@ describe ClassificationHeadingsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested classification_heading as @classification_heading" do
-      classification_heading = ClassificationHeading.create! valid_attributes
-      get :show, {:id => classification_heading.to_param}
-      assigns(:classification_heading).should eq(classification_heading)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new classification_heading as @classification_heading" do
       get :new

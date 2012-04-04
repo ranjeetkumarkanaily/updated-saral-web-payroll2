@@ -2,6 +2,6 @@
   %ul
     %li= link_to 'Back', pf_group_rates_path(:params1 => @param_pf_group_id)
 #right_content
-  %h1 New PF Group Rate for #{PfGroup.find(@param_pf_group_id).pf_group}
-  = render 'form'
+  %h1 New PF Group Rate for #{@pf_group}
+  = render 'form', :pf_group_rate => @pf_group_rate, :param_pf_group_id => @param_pf_group_id
 

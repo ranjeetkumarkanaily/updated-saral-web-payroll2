@@ -9,14 +9,14 @@
   document.getElementById('pf_group_rate_employer_epf').value = getValue.toFixed(2)
   }
   }
-= form_for(@pf_group_rate) do |f|
-  - if @pf_group_rate.errors.any?
+= form_for(pf_group_rate) do |f|
+  - if pf_group_rate.errors.any?
     #error_explanation
       %h2
-        = pluralize(@pf_group_rate.errors.count, "error")
+        = pluralize(pf_group_rate.errors.count, "error")
         prohibited this PF Group Rate from being saved:
       %ul
-        - @pf_group_rate.errors.full_messages.each do |msg|
+        - pf_group_rate.errors.full_messages.each do |msg|
           %li= msg
 
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
@@ -28,10 +28,10 @@
         %table
           %tr
             %td{:style=>"width:130px"} Effective Month:&nbsp;
-            -if @pf_group_rate.id == nil
-              %td= f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at DESC').collect {|pm| [ pm.month_name, pm.id ]}, @pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
+            -if pf_group_rate.id == nil
+              %td= f.select :paymonth_id, options_for_select(Paymonth.all(:order => 'created_at DESC').collect {|pm| [ pm.month_name, pm.id ]}, pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
             -else
-              %td= Paymonth.find(@pf_group_rate.paymonth_id).month_name
+              %td= Paymonth.find(pf_group_rate.paymonth_id).month_name
           %tr
             %td EPF :&nbsp;
             %td= f.text_field :epf, :size => '22',:onchange=>"calculate()"
@@ -50,7 +50,7 @@
             %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
             %td
               = f.text_field :account_number_22, :size => '22'
-              = f.hidden_field :pf_group_id, :value => @param_pf_group_id
+              = f.hidden_field :pf_group_id, :value => param_pf_group_id
           %tr
             %td Account No. 21(%):&nbsp;
             %td= f.text_field :account_number_21, :size => '22'
@@ -67,7 +67,7 @@
             %td= f.text_field :employer_epf, :size => '22',:readonly => "readonly"
           %tr
             %td Round off:&nbsp;
-            %td= f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], @pf_group_rate.round_off),:prompt => 'Select Round off Group'
+            %td= f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], pf_group_rate.round_off),:prompt => 'Select Round off Group'
     %tr
       %td.std_td{:colspan=>2}
         %table

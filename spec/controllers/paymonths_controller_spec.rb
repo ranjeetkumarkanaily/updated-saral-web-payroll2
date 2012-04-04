@@ -41,14 +41,6 @@ describe PaymonthsController do
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested paymonth as @paymonth" do
-      paymonth = Paymonth.create! valid_attributes
-      get :edit, :id => paymonth.id
-      assigns(:paymonth).should eq(paymonth)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Paymonth" do
@@ -99,50 +91,6 @@ describe PaymonthsController do
         response.should render_template("new")
       end
 
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested paymonth" do
-        paymonth = Paymonth.create! valid_attributes
-        # Assuming there are no other paymonths in the database, this
-        # specifies that the Paymonth created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Paymonth.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => paymonth.id, :paymonth => {'these' => 'params'}
-      end
-
-      it "assigns the requested paymonth as @paymonth" do
-        paymonth = Paymonth.create! valid_attributes
-        put :update, :id => paymonth.id, "paymonth"=>{"month_name"=>"feb/2011"}
-        assigns(:paymonth).should eq(paymonth)
-      end
-
-      it "redirects to the paymonth" do
-        paymonth = Paymonth.create! valid_attributes
-        put :update, :id => paymonth.id, "paymonth"=>{"month_name"=>"feb/2011"}
-        response.should redirect_to(paymonths_url)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the paymonth as @paymonth" do
-        paymonth = Paymonth.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Paymonth.any_instance.stub(:save).and_return(false)
-        put :update, :id => paymonth.id, :paymonth => {}
-        assigns(:paymonth).should eq(paymonth)
-      end
-
-      it "re-renders the 'edit' template" do
-        paymonth = Paymonth.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Paymonth.any_instance.stub(:save).and_return(false)
-        put :update, :id => paymonth.id, :paymonth => {}
-        response.should render_template("edit")
-      end
     end
   end
 

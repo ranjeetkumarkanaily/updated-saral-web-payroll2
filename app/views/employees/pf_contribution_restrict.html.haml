@@ -13,7 +13,7 @@
         %td &nbsp;
       %tr
         %td.std_td
-          = render 'search'
+          = render 'search', :srchpath => @srchpath
       %tr
         %td.std_td
 
@@ -22,7 +22,7 @@
               %tr
                 %td
                   %div{:style=>"overflow-Y:scroll;height:200px;", :id => "employees"}
-                    =render 'pfemployees'
+                    =render 'pfemployees', :employeesList => @employeesList
               %tr
                 %td &nbsp;
               %tr

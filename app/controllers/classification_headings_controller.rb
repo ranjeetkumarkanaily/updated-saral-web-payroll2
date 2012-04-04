@@ -1,6 +1,6 @@
 class ClassificationHeadingsController < ApplicationController
 
-  before_filter :find_classification_heading, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_classification_heading, :only => [:edit, :update, :destroy]
 
   def index
     @classification_headings = ClassificationHeading.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,15 +8,6 @@ class ClassificationHeadingsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @classification_headings }
-    end
-  end
-
-  def show
-    @classification_heading = ClassificationHeading.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @classification_heading }
     end
   end
 
@@ -37,7 +28,7 @@ class ClassificationHeadingsController < ApplicationController
         format.html { redirect_to classification_headings_url, notice: 'Classification heading was successfully created.' }
         format.json { render json: @classification_heading, status: :created, location: @classification_heading }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @classification_heading.errors, status: :unprocessable_entity }
       end
     end
@@ -51,7 +42,7 @@ class ClassificationHeadingsController < ApplicationController
         format.html { redirect_to classification_headings_url, notice: 'Classification heading was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @classification_heading.errors, status: :unprocessable_entity }
       end
     end

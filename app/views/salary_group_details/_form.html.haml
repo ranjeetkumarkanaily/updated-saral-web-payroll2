@@ -6,7 +6,7 @@
   else
   document.getElementById('salary_group_detail_pf_percentage').value = 0
   }
-= form_for(@salary_group_detail) do |f|
+= form_for(salary_group_detail) do |f|
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
@@ -18,7 +18,7 @@
           %tr
             %td.std_td
               %table
-                = f.hidden_field :salary_group_id, :value => @param_sal_grp_id
+                = f.hidden_field :salary_group_id, :value => param_sal_grp_id
                 %tr
                   %td{:width=>130} Salary Head:&nbsp;
                   %td= f.collection_select :salary_head_id, SalaryHead.where('id != 2 and id != 3').order('created_at ASC'), :id, :head_name, :prompt => "Select Salary Head"
@@ -30,7 +30,7 @@
                   %td= f.text_field :print_order, :size => '22'
                 %tr
                   %td{:width=>130} Based On:&nbsp;
-                  %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],@salary_group_detail.based_on), {:prompt => 'Select'}
+                  %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],salary_group_detail.based_on), {:prompt => 'Select'}
                 %tr
                   %td{:width=>130} PF Applicability:&nbsp;
                   %td= f.check_box :pf_applicability, :onclick=> 'setPercentage()'
@@ -41,7 +41,7 @@
               %table
                 %tr
                   %td{:width=>130} Calculation Type:&nbsp;
-                  %td= f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month"],@salary_group_detail.calc_type),  {:prompt => 'Select Type'}
+                  %td= f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month"],salary_group_detail.calc_type),  {:prompt => 'Select Type'}
                   %tr
                     %td{:width=>130} Calculation:&nbsp;
                     %td= f.text_area :calculation, :rows => 3, :cols => 30

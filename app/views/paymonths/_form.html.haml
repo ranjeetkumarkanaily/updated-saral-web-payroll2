@@ -1,11 +1,11 @@
-= form_for(@paymonth) do |f|
-  - if @paymonth.errors.any?
+= form_for(paymonth) do |f|
+  - if paymonth.errors.any?
     #error_explanation
       %h2
-        = pluralize(@paymonth.errors.count, "error")
+        = pluralize(paymonth.errors.count, "error")
         prohibited this Pay Month from being saved:
       %ul
-        - @paymonth.errors.full_messages.each do |msg|
+        - paymonth.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr

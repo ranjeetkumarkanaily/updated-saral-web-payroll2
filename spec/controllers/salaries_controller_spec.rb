@@ -91,7 +91,7 @@ describe SalariesController do
 
   describe "GET index" do
     before :each do
-      @pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+      #@pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
       paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
       pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
     end
@@ -169,7 +169,7 @@ describe SalariesController do
 
   describe "Salary Sheet" do
     before :each do
-      @pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
+      #@pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
       paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
       pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
     end

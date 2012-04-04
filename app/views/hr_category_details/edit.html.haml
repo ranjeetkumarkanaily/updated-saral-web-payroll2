@@ -4,4 +4,4 @@
 #right_content
   %h1
     Editing #{HrCategory.find_by_id(@hr_category_id).category_name}'s Label
-  = render 'form'
+  = render 'form', :hr_category_detail => @hr_category_detail, :hr_category_id => @hr_category_id

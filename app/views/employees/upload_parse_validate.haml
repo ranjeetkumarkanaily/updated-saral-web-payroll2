@@ -1,5 +1,6 @@
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to 'Back', employees_path
 #right_content
   - unless @errors.empty?
     %h1{:style => "background-color:#e9322d"} Failure

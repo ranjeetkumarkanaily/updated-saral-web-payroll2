@@ -19,14 +19,6 @@ describe StatesController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested state as @state" do
-      state = State.create! valid_attributes
-      get :show, :id => state.id
-      assigns(:state).should eq(state)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new state as @state" do
       get :new

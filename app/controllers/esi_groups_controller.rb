@@ -1,6 +1,6 @@
 class EsiGroupsController < ApplicationController
 
-  before_filter :find_esi_group, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_esi_group, :only => [:edit, :update, :destroy]
 
   def index
     @esi_groups = EsiGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,15 +8,6 @@ class EsiGroupsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @esi_groups }
-    end
-  end
-
-  def show
-    @esi_group = EsiGroup.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @esi_group }
     end
   end
 
@@ -37,7 +28,7 @@ class EsiGroupsController < ApplicationController
         format.html { redirect_to esi_groups_url, notice: 'Esi group was successfully created.' }
         format.json { render json: @esi_group, status: :created, location: @esi_group }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @esi_group.errors, status: :unprocessable_entity }
       end
     end
@@ -49,7 +40,7 @@ class EsiGroupsController < ApplicationController
         format.html { redirect_to esi_groups_url, notice: 'Esi group was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @esi_group.errors, status: :unprocessable_entity }
       end
     end

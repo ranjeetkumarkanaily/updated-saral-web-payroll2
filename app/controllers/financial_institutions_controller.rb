@@ -35,7 +35,7 @@ class FinancialInstitutionsController < ApplicationController
         format.html { redirect_to @financial_institution, notice: 'Financial institution was successfully created.' }
         format.json { render json: @financial_institution, status: :created, location: @financial_institution }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @financial_institution.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +47,7 @@ class FinancialInstitutionsController < ApplicationController
         format.html { redirect_to @financial_institution, notice: 'Financial institution was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @financial_institution.errors, status: :unprocessable_entity }
       end
     end
