@@ -14,7 +14,7 @@ class EsiGroupRatesController < ApplicationController
 
   def new
     @esi_group_rate = EsiGroupRate.new
-
+    @esi_group = EsiGroup.find(@param_esi_group_id).esi_group_name
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @esi_group_rate }

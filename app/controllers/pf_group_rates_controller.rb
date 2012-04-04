@@ -23,7 +23,7 @@ class PfGroupRatesController < ApplicationController
 
   def new
     @pf_group_rate = PfGroupRate.new
-
+    @pf_group = PfGroup.find(@param_pf_group_id).pf_group
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @pf_group_rate }

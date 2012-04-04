@@ -5,5 +5,5 @@
   %h1
     Editing Holiday
     = link_to image_tag('/assets/show.png',:title => "Show Holiday"), @holiday
-  = render 'form'
+  = render 'form', :holiday => @holiday
 

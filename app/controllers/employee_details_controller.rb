@@ -44,7 +44,6 @@ class EmployeeDetailsController < ApplicationController
 
   # GET /employee_details/1/edit
   def edit
-
     @paramempid = params[:param1]
     @employee_detail = EmployeeDetail.find(params[:id])
 

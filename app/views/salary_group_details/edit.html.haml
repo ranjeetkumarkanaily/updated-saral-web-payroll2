@@ -4,4 +4,4 @@
 #right_content
   %h1
     Editing #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}'s Configuration
-  = render 'form'
+  = render 'form', :salary_group_detail => @salary_group_detail, :param_sal_grp_id => @param_sal_grp_id

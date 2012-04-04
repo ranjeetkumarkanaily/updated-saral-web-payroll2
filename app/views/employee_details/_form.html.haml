@@ -20,14 +20,14 @@
     document.getElementById('employee_detail_pan').style.display = 'none';
     document.getElementById('employee_detail_pan').value = ''
   }
-= form_for(@employee_detail) do |f|
-  - if @employee_detail.errors.any?
+= form_for(employee_detail) do |f|
+  - if employee_detail.errors.any?
     #error_explanation
       %h2
-        = pluralize(@employee_detail.errors.count, "error")
+        = pluralize(employee_detail.errors.count, "error")
         prohibited this employee_details from being saved:
       %ul
-        - @employee_detail.errors.full_messages.each do |msg|
+        - employee_detail.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -43,16 +43,16 @@
                         %td{:width=>130} Effective From:&nbsp;
                         %td
                           = f.text_field :effective_date, :id=>"sed", :class=>"date_input"
-                          = f.hidden_field :employee_id, :value => @paramempid
+                          = f.hidden_field :employee_id, :value => paramempid
                       %tr
                         %td Salary Group:&nbsp;
-                        %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'created_at ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },@employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
+                        %td= f.select :salary_group_id, options_for_select(SalaryGroup.all(:order => 'created_at ASC').collect {|sg| [ sg.salary_group_name, sg.id ] },employee_detail.salary_group_id), {:prompt => 'Select Salary Group'}
                       %tr
                         %td Branch:&nbsp;
-                        %td= f.select :branch_id, options_for_select(Branch.all(:order => 'created_at ASC').collect {|branch| [ branch.branch_name, branch.id ] },@employee_detail.branch_id), {:prompt => 'Select Branch'}
+                        %td= f.select :branch_id, options_for_select(Branch.all(:order => 'created_at ASC').collect {|branch| [ branch.branch_name, branch.id ] },employee_detail.branch_id), {:prompt => 'Select Branch'}
                       %tr
                         %td Bank :&nbsp;
-                        %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.all(:order => 'created_at ASC').collect {|fi| [ fi.name, fi.id ] },@employee_detail.financial_institution_id), {:prompt => 'Select Financial Institution'}
+                        %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.all(:order => 'created_at ASC').collect {|fi| [ fi.name, fi.id ] },employee_detail.financial_institution_id), {:prompt => 'Select Financial Institution'}
 
                   %td.std_td
                     %table
@@ -64,7 +64,7 @@
                         %td= f.text_field :allotted_gross
                       %tr
                         %td Attn. Structure:&nbsp;
-                        %td= f.select :attendance_configuration_id , options_for_select(AttendanceConfiguration.all(:order => 'created_at ASC').collect {|att_config| [ att_config.attendance, att_config.id ] },@employee_detail.attendance_configuration_id), {:prompt => 'Select Attendance Configuration'},:editable => true
+                        %td= f.select :attendance_configuration_id , options_for_select(AttendanceConfiguration.all(:order => 'created_at ASC').collect {|att_config| [ att_config.attendance, att_config.id ] },employee_detail.attendance_configuration_id), {:prompt => 'Select Attendance Configuration'},:editable => true
                       %tr
                         %td Bank A/c No.:&nbsp;
                         %td= f.text_field :bank_account_number
@@ -73,8 +73,8 @@
                     %table
                       %tr
                         %td{:colspan=>2}
-                          - @classification_headings.each do |ch|
-                            = render :partial => 'classification', :locals => { :ch => ch }
+                          - classification_headings.each do |ch|
+                            = render 'classification', :ch => ch, :employee_detail => employee_detail
                       %tr
                         %td &nbsp;
                       %tr

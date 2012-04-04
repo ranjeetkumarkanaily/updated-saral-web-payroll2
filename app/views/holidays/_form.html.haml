@@ -1,11 +1,11 @@
-= form_for(@holiday) do |f|
-  - if @holiday.errors.any?
+= form_for(holiday) do |f|
+  - if holiday.errors.any?
     #error_explanation
       %h2
-        = pluralize(@holiday.errors.count, "error")
+        = pluralize(holiday.errors.count, "error")
         prohibited this Holiday from being saved:
       %ul
-        - @holiday.errors.full_messages.each do |msg|
+        - holiday.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -16,7 +16,7 @@
               %table
                 %tr
                   %td{:width=>130} Attendance:&nbsp;
-                  %td= f.select :attendance_configuration_id, options_for_select(AttendanceConfiguration.all(:order => 'created_at ASC').collect {|ac| [ ac.attendance, ac.id ] }, @holiday.attendance_configuration_id)
+                  %td= f.select :attendance_configuration_id, options_for_select(AttendanceConfiguration.all(:order => 'created_at ASC').collect {|ac| [ ac.attendance, ac.id ] }, holiday.attendance_configuration_id)
                 %tr
                   %td{:width=>130} Description:&nbsp;
                   %td= f.text_field :description, :size => '22'

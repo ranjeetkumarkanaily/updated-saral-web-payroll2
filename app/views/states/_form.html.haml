@@ -1,11 +1,11 @@
-= form_for(@state) do |f|
-  - if @state.errors.any?
+= form_for(state) do |f|
+  - if state.errors.any?
     #error_explanation
       %h2
-        = pluralize(@state.errors.count, "error")
+        = pluralize(state.errors.count, "error")
         prohibited this state from being saved:
       %ul
-        - @state.errors.full_messages.each do |msg|
+        - state.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr

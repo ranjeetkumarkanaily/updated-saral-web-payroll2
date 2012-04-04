@@ -30,7 +30,7 @@ describe EsiGroupRatesController do
 
   describe "GET new" do
     it "assigns a new esi_group_rate as @esi_group_rate" do
-      get :new, {}, valid_session
+      get :new, {:params1 => @esi_group.id}, valid_session
       assigns(:esi_group_rate).should be_a_new(EsiGroupRate)
     end
   end
