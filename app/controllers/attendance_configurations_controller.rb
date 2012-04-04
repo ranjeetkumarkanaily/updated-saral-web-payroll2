@@ -28,7 +28,7 @@ class AttendanceConfigurationsController < ApplicationController
         format.html { redirect_to attendance_configurations_url, notice: 'Attendance configuration was successfully created.' }
         format.json { render json: @attendance_configuration, status: :created, location: @attendance_configuration }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @attendance_configuration.errors, status: :unprocessable_entity }
       end
     end
@@ -40,7 +40,7 @@ class AttendanceConfigurationsController < ApplicationController
         format.html { redirect_to attendance_configurations_url, notice: 'Attendance configuration was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @attendance_configuration.errors, status: :unprocessable_entity }
       end
     end

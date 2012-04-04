@@ -19,7 +19,7 @@ class PtGroupRatesController < ApplicationController
         format.html { redirect_to pt_group_path(:id => @pt_group_rate.pt_group_id), notice: 'Pt group rate was successfully created.' }
         format.json { render json: @pt_group_rate, status: :created, location: @pt_group_rate }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @pt_group_rate.errors, status: :unprocessable_entity }
       end
     end

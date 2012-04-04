@@ -7,6 +7,9 @@ class HrMaster < ActiveRecord::Base
 
   validate :validates_presence
 
+  delegate :empname, :refno, :to => :employee, :prefix => true
+  delegate :category_name, :to => :hr_category, :prefix => true
+
   def validates_presence
     required_fields = HrCategoryDetail.select("name").where("required = 't' and hr_category_id = ?", hr_category_id)
     required_fields.each do |field|

@@ -23,7 +23,7 @@ class PaymonthsController < ApplicationController
             format.html {redirect_to paymonths_url, notice: 'Paymonth was successfully created.' }
             format.json { render json: @paymonth, status: :created, location: @paymonth }
           else
-            format.html { render action: "new" }
+            format.html { render 'new' }
             format.json { render json: @paymonth.errors, status: :unprocessable_entity }
           end
         end
@@ -31,14 +31,14 @@ class PaymonthsController < ApplicationController
         @paymonth = Paymonth.new
         @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be created. Next Month to be created is #{res[1]}")
         respond_to do |format|
-          format.html { render action: "new"}
+          format.html { render 'new'}
         end
       end
     else
       @paymonth = Paymonth.new
       @paymonth.errors.add(:paymonth, "is invalid.")
       respond_to do |format|
-        format.html { render action: "new" }
+        format.html { render 'new' }
       end
     end
   end
@@ -49,7 +49,7 @@ class PaymonthsController < ApplicationController
         format.html { redirect_to paymonths_url, notice: 'Paymonth was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @paymonth.errors, status: :unprocessable_entity }
       end
     end

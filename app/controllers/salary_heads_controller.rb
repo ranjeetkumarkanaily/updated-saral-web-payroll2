@@ -28,7 +28,7 @@ class SalaryHeadsController < ApplicationController
         format.html { redirect_to salary_heads_url, notice: 'Salary head was successfully created.' }
         format.json { render json: @salary_head, status: :created, location: @salary_head }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @salary_head.errors, status: :unprocessable_entity }
       end
     end
@@ -40,7 +40,7 @@ class SalaryHeadsController < ApplicationController
         format.html { redirect_to salary_heads_url, notice: 'Salary head was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @salary_head.errors, status: :unprocessable_entity }
       end
     end

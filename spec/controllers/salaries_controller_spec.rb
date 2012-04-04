@@ -10,19 +10,20 @@ describe SalariesController do
       before :each do
         @salary_head = FactoryGirl.create(:salary_head)
         @salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => @salary_head.id)
-        attendance_configuration = FactoryGirl.create(:attendance_configuration)
-        financial_institution = FactoryGirl.create(:financial_institution)
+        @attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        @financial_institution = FactoryGirl.create(:financial_institution)
         pf_group = FactoryGirl.create(:pf_group)
         @pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
         esi_group = FactoryGirl.create(:esi_group)
-        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
-        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        @branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
+
         pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => @pay_month.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
       end
 
       it "should give no of present days" do
         employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
         salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
@@ -31,6 +32,7 @@ describe SalariesController do
 
       it "should give no of present days" do
         employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
         salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
@@ -39,6 +41,7 @@ describe SalariesController do
 
       it "Count should be increases by one" do
         employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
         salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         expect {
@@ -48,6 +51,7 @@ describe SalariesController do
 
       it "redirects to salary index path" do
         employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
         salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'

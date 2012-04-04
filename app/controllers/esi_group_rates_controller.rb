@@ -34,7 +34,7 @@ class EsiGroupRatesController < ApplicationController
         format.html { redirect_to esi_group_rates_url(:params1 => @param_esi_group_id), notice: 'Esi group rate was successfully created.' }
         format.json { render json: @esi_group_rate, status: :created, location: @esi_group_rate }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @esi_group_rate.errors, status: :unprocessable_entity }
       end
     end
@@ -49,7 +49,7 @@ class EsiGroupRatesController < ApplicationController
         format.html { redirect_to esi_group_rates_url(:params1 => @param_esi_group_id), notice: 'Esi group rate was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @esi_group_rate.errors, status: :unprocessable_entity }
       end
     end

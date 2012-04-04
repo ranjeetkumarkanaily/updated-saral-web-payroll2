@@ -1,51 +1,51 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
-  resources :hr_masters
+  resources :hr_masters, :except => [:index, :show]
 
   resources :hr_category_details
 
-  resources :hr_categories
+  resources :hr_categories, :except => [:edit]
 
-  resources :financial_institutions
+  resources :financial_institutions, :except => [:edit]
 
-  resources :pt_group_rates
+  resources :pt_group_rates, :except => [:edit]
 
   resources :esi_group_rates
 
-  resources :branches
+  resources :branches, :except => [:edit]
 
   resources :pf_group_rates
 
-  resources :esi_groups
+  resources :esi_groups, :except => [:edit]
 
-  resources :pf_groups
+  resources :pf_groups, :except => [:edit]
 
   resources :classifications
 
-  resources :classification_headings
+  resources :classification_headings, :except => [:edit]
 
-  resources :holidays
+  resources :holidays, :except => [:edit]
 
-  resources :attendance_configurations
+  resources :attendance_configurations, :except => [:edit]
 
-  resources :pt_rates
+  resources :pt_rates, :except => [:edit]
 
-  resources :pt_groups
+  resources :pt_groups, :except => [:edit]
 
-  resources :pf_esi_rates
+  resources :pf_esi_rates, :only => [:new, :create, :update, :index]
 
-  resources :paymonths
+  resources :paymonths, :only => [:new, :create, :update, :destroy, :index]
 
   resources :salary_totals
 
 
   resources :default_values
 
-  resources :states
+  resources :states, :except => [:edit]
 
   resources :employee_details
 
-  resources :employees do
+  resources :employees, :except => [:edit] do
     get "upload",  :on => :collection
     post "upload_parse_validate",  :on => :collection
     post "save", :on => :collection
@@ -68,15 +68,15 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     get 'generate_sample_excel_template',  :on => :collection
   end
 
-  resources :companies
+  resources :companies, :except => [:show, :destroy]
 
   resources :salary_group_details
 
-  resources :salary_heads
+  resources :salary_heads, :except => [:edit]
 
-  resources :salary_groups
+  resources :salary_groups, :except => [:edit]
 
-  resources :salary_allotments do
+  resources :salary_allotments, :only => [:edit, :update, :index] do
     put :update, :on => :collection
 
     get 'upload', :on => :collection
@@ -94,7 +94,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     post 'file_upload', :on => :collection
   end
 
-  resources :sessions
+  resources :sessions, :only => [:new, :create, :destroy]
   resources :users
   resources :salaries, :only => [:index, :create, :new] do
     get 'edit', :on => :collection

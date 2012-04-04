@@ -35,7 +35,7 @@ class PtRatesController < ApplicationController
         format.html { redirect_to pt_rates_path(:paymonth_id =>  @pt_rate.paymonth_id, :pt_group_id => @pt_rate.pt_group_id), notice: 'Pt rate was successfully created.' } #@pt_rate redirect_to pt_group_path(:id => @pt_group_rate.pt_group_id)
         format.json { render json: @pt_rate, status: :created, location: @pt_rate }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @pt_rate.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +47,7 @@ class PtRatesController < ApplicationController
         format.html { redirect_to pt_rates_path(:paymonth_id =>  @pt_rate.paymonth_id, :pt_group_id => @pt_rate.pt_group_id), notice: 'Pt rate was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @pt_rate.errors, status: :unprocessable_entity }
       end
     end

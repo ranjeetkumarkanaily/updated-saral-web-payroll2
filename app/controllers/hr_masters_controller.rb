@@ -10,7 +10,7 @@ class HrMastersController < ApplicationController
     @hr_category = HrCategory.find_by_id(@hr_category_id)
     @hr_category_details = @hr_category.hr_category_details.order("created_at ASC")
     @hr_masters = HrMaster.find_all_by_employee_id_and_hr_category_id(@employee_id, @hr_category_id)
-
+    @employee = Employee.find(@employee_id)
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @hr_master }
@@ -18,8 +18,7 @@ class HrMastersController < ApplicationController
   end
 
   def edit
-    @employee_id = @hr_master.employee_id
-    @hr_category_id = @hr_master.hr_category_id
+
   end
 
   def create
@@ -41,7 +40,7 @@ class HrMastersController < ApplicationController
         format.html { redirect_to new_hr_master_path(:employee_id => params[:hr_master][:employee_id], :hr_category_id => params[:hr_master][:hr_category_id]), notice: 'Hr master was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @hr_master.errors, status: :unprocessable_entity }
       end
     end

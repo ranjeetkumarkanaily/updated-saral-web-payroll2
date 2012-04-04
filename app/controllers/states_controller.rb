@@ -28,7 +28,7 @@ class StatesController < ApplicationController
         format.html { redirect_to states_url, notice: 'State was successfully created.' }
         format.json { render json: @state, status: :created, location: @state }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @state.errors, status: :unprocessable_entity }
       end
     end
@@ -40,7 +40,7 @@ class StatesController < ApplicationController
         format.html { redirect_to states_url, notice: 'State was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @state.errors, status: :unprocessable_entity }
       end
     end

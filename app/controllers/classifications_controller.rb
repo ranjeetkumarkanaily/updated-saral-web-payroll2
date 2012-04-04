@@ -34,7 +34,7 @@ class ClassificationsController < ApplicationController
         format.html { redirect_to classifications_path(:params1 => @paramclassification_id), notice: 'Classification was successfully created.' }
         format.json { render json: @classification, status: :created, location: @classification }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @classification.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +47,7 @@ class ClassificationsController < ApplicationController
         format.html { redirect_to classifications_url(:params1 => @paramclassification_id), notice: 'Classification was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @classification.errors, status: :unprocessable_entity }
       end
     end

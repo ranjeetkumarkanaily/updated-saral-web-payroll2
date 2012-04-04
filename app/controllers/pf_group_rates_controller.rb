@@ -45,7 +45,7 @@ class PfGroupRatesController < ApplicationController
         format.html { redirect_to pf_group_rates_url(:params1 => @param_pf_group_id), notice: 'Pf group rate was successfully created.' }
         format.json { render json: @pf_group_rate, status: :created, location: @pf_group_rate }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @pf_group_rate.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +58,7 @@ class PfGroupRatesController < ApplicationController
         format.html { redirect_to pf_group_rates_url(:params1 => @param_pf_group_id), notice: 'Pf group rate was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @pf_group_rate.errors, status: :unprocessable_entity }
       end
     end

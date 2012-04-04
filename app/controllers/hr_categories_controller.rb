@@ -28,7 +28,7 @@ class HrCategoriesController < ApplicationController
         format.html { redirect_to hr_categories_path, notice: 'Hr category was successfully created.' }
         format.json { render json: @hr_category, status: :created, location: @hr_category }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @hr_category.errors, status: :unprocessable_entity }
       end
     end
@@ -40,7 +40,7 @@ class HrCategoriesController < ApplicationController
         format.html { redirect_to hr_categories_path, notice: 'Hr category was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @hr_category.errors, status: :unprocessable_entity }
       end
     end

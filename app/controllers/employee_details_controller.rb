@@ -126,7 +126,7 @@ class EmployeeDetailsController < ApplicationController
         format.html { redirect_to employee_details_path(:param1 => params[:employee_detail]['employee_id']), notice: 'Employee detail was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
       end
     end

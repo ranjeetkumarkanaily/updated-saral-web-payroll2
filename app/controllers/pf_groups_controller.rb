@@ -28,7 +28,7 @@ class PfGroupsController < ApplicationController
         format.html { redirect_to pf_groups_url, notice: 'Pf group was successfully created.' }
         format.json { render json: @pf_group, status: :created, location: @pf_group }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @pf_group.errors, status: :unprocessable_entity }
       end
     end
@@ -40,7 +40,7 @@ class PfGroupsController < ApplicationController
         format.html { redirect_to pf_groups_url, notice: 'Pf group was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @pf_group.errors, status: :unprocessable_entity }
       end
     end

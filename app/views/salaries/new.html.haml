@@ -43,9 +43,9 @@
                   = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
                   = hidden_field_tag "salary[][salary_group_detail_id]", sal_allot.salary_group_detail_id
                   %tr
-                    %td.table_grid_td= SalaryHead.find(sal_allot.salary_head_id).head_name
-                    %td.table_grid_td= SalaryHead.find(sal_allot.salary_head_id).short_name
-                    %td.table_grid_td= SalaryHead.find(sal_allot.salary_head_id).salary_type
+                    %td.table_grid_td= sal_allot.salary_head_head_name
+                    %td.table_grid_td= sal_allot.salary_head_short_name
+                    %td.table_grid_td= sal_allot.salary_head_salary_type
                     %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
                 %tr
                   %td

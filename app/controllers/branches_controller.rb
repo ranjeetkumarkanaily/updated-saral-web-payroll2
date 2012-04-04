@@ -35,7 +35,7 @@ class BranchesController < ApplicationController
         format.html { redirect_to @branch, notice: 'Branch was successfully created.' }
         format.json { render json: @branch, status: :created, location: @branch }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end
     end
@@ -47,7 +47,7 @@ class BranchesController < ApplicationController
         format.html { redirect_to @branch, notice: 'Branch was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end
     end
