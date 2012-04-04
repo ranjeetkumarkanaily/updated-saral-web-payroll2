@@ -4,7 +4,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :hr_category_details, :except => [:show]
 
-  resources :hr_categories, :except => [:edit]
+  resources :hr_categories
 
   resources :financial_institutions
 

@@ -11,4 +11,11 @@ class SalaryGroupDetail < ActiveRecord::Base
   delegate :salary_group_name, :to => :salary_group, :prefix => true
 
   validates_uniqueness_of :salary_group_id, :scope => :salary_head_id, :message => ": Salary Head have already taken"
+
+  scope :salary_group_details, lambda {
+    |sal_grp_id|
+    {
+        :conditions => ["salary_group_id = ?", sal_grp_id]
+    }
+  }
 end

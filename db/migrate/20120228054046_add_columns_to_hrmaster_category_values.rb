@@ -1,4 +1,4 @@
-class AddCategoryValues < ActiveRecord::Migration
+class AddColumnsToHrmasterCategoryValues < ActiveRecord::Migration
   def up
     add_column :hr_masters, :category_values, :hstore
   end
