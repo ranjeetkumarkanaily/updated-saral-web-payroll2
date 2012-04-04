@@ -36,14 +36,6 @@ class Employee < ActiveRecord::Base
 
   validate :dob_before_doj
 
-  #validates_presence_of :designation
-  #validates_presence_of :department
-  #validates_presence_of :grade
-
-
-
-
-
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then
       errors.add(:date_of_joining, "date of birth should be before date of joining")

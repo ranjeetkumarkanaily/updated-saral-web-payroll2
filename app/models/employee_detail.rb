@@ -22,16 +22,18 @@ class EmployeeDetail < ActiveRecord::Base
 
   validates :pan_effective_date, :presence => true, :if => :pan_present?
 
-  #validate :pan_effective_date_after_dob, :if => :pan_present?
+  validate :pan_effective_date_after_dob, :if => :pan_present?
 
   def pan_present?
     self.pan != 'PAN Applied' and self.pan != 'PAN Invalid' and self.pan != 'PAN Not Avbl'
   end
 
   def pan_effective_date_after_dob
-    dob = Employee.find(employee_id).date_of_birth
-    if !pan_effective_date.nil? and !dob.nil? and pan_effective_date > dob then
-      errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
+    if !Employee.find(employee_id).date_of_birth.nil?
+      dob = Employee.find(employee_id).date_of_birth
+      if !pan_effective_date.nil? and !dob.nil? and pan_effective_date > dob then
+        errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
+      end
     end
   end
   #attr_accessor :current_employee_id
