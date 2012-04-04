@@ -11,15 +11,17 @@ describe EmployeeDetail do
   it { should have_many(:salaries)}
 
   it "checks for the uniqueness of employee_id and effective_date" do
+    employee = FactoryGirl.create(:employee)
     attendance_configuration = FactoryGirl.create(:attendance_configuration)
     branch = FactoryGirl.create(:branch)
     financial_institution = FactoryGirl.create(:financial_institution)
     emp_detail = FactoryGirl.create(:employee_detail,:branch_id => branch.id,:financial_institution_id => financial_institution.id,:attendance_configuration_id => attendance_configuration.id )
-    duplicate_emp_detail = EmployeeDetail.new(:employee_id => 1, :effective_date => "2009-10-01", :salary_group_id =>2, :allotted_gross=>6000,:branch_id => branch.id,:financial_institution_id => financial_institution.id,:attendance_configuration_id => attendance_configuration.id )
+    duplicate_emp_detail = EmployeeDetail.new(:employee_id => employee.id, :effective_date => "2009-10-01", :salary_group_id =>2, :allotted_gross=>6000,:branch_id => branch.id,:financial_institution_id => financial_institution.id,:attendance_configuration_id => attendance_configuration.id )
     duplicate_emp_detail.should_not be_valid
   end
 
   it "should return branch detail for selected month and employee" do
+    employee = FactoryGirl.create(:employee)
     attendance_configuration = FactoryGirl.create(:attendance_configuration)
     branch = FactoryGirl.create(:branch)
     financial_institution = FactoryGirl.create(:financial_institution)
@@ -32,6 +34,7 @@ describe EmployeeDetail do
   end
 
   it "should return branch detail for selected month and employee" do
+    employee = FactoryGirl.create(:employee)
     attendance_configuration = FactoryGirl.create(:attendance_configuration)
     branch = FactoryGirl.create(:branch)
     financial_institution = FactoryGirl.create(:financial_institution)

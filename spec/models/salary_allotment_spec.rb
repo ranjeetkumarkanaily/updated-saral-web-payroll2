@@ -40,7 +40,7 @@ describe SalaryAllotment do
 
     it "should give nested formula" do
       salaryGrpDetDA = FactoryGirl.create(:salary_group_detail, salary_group_id: @salaryGrp.id, salary_head_id: @salHeadDA.id, calc_type: "Formula", calculation: "GROSS * 20/100")
-
+      employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail, salary_group_id: @salaryGrp.id,:branch_id => @branch.id,:financial_institution_id => @financial_institution.id,:attendance_configuration_id => @attendance_configuration.id)
       sal_allotHRA = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => @salaryGrpDetHRA.id, salary_head_id: @salHeadHRA.id, employee_detail_id: employee_detail.id)
       formula = sal_allotHRA.generation_formula
@@ -49,6 +49,7 @@ describe SalaryAllotment do
 
     it "should give 0 value in nested formula if calc_type of salary head is not formula" do
       salaryGrpDetDA = FactoryGirl.create(:salary_group_detail, salary_group_id: @salaryGrp.id, salary_head_id: @salHeadDA.id, calc_type: "Lumpsum", calculation: "")
+      employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail, salary_group_id: @salaryGrp.id,:branch_id => @branch.id,:financial_institution_id => @financial_institution.id,:attendance_configuration_id => @attendance_configuration.id)
       sal_allotHRA = FactoryGirl.create(:salary_allotment, :salary_group_detail_id => @salaryGrpDetHRA.id, salary_head_id: @salHeadHRA.id, employee_detail_id: employee_detail.id)
       formula = sal_allotHRA.generation_formula

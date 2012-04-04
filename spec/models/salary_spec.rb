@@ -72,6 +72,7 @@ describe Salary do
         pf_group = FactoryGirl.create(:pf_group)
         paymonth = FactoryGirl.create(:paymonth)
         branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id)
+        employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => paymonth.id)
 
@@ -90,6 +91,7 @@ describe Salary do
         financial_institution = FactoryGirl.create(:financial_institution)
         esi_group = FactoryGirl.create(:esi_group)
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
+        employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
@@ -105,6 +107,7 @@ describe Salary do
         financial_institution = FactoryGirl.create(:financial_institution)
         esi_group = FactoryGirl.create(:esi_group)
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
+        employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
@@ -119,6 +122,7 @@ describe Salary do
         attendance_configuration = FactoryGirl.create(:attendance_configuration)
         financial_institution = FactoryGirl.create(:financial_institution)
         branch = FactoryGirl.create(:branch,:esi_group_id => nil)
+        employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)

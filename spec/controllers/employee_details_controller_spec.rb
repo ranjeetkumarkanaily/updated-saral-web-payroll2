@@ -4,6 +4,7 @@ require 'spec_helper'
 describe EmployeeDetailsController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
+
     @branch = FactoryGirl.create(:branch)
     @financial_institution = FactoryGirl.create(:financial_institution)
     @attendance_configuration = FactoryGirl.create(:attendance_configuration)
@@ -25,6 +26,9 @@ describe EmployeeDetailsController do
   end
 
   describe "GET index" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
     it "assigns all employee_details as @employee_details" do
       employee_detail = EmployeeDetail.create! valid_attributes
       get :index
@@ -39,7 +43,9 @@ describe EmployeeDetailsController do
   end
 
   describe "GET show" do
+
     it "assigns the requested employee_detail as @employee_detail" do
+      employee = FactoryGirl.create(:employee)
       employee_detail = EmployeeDetail.create! valid_attributes
       get :show, :id => employee_detail.id
       assigns(:employee_detail).should eq(employee_detail)
@@ -54,7 +60,9 @@ describe EmployeeDetailsController do
   end
 
   describe "GET edit" do
+
     it "assigns the requested employee_detail as @employee_detail" do
+      employee = FactoryGirl.create(:employee)
       employee_detail = EmployeeDetail.create! valid_attributes
       get :edit, :id => employee_detail.id
       assigns(:employee_detail).should eq(employee_detail)
@@ -93,9 +101,7 @@ describe EmployeeDetailsController do
     end
 
     describe "with invalid params" do
-      before :each do
-        @employee = FactoryGirl.create(:employee)
-      end
+
       it "assigns a newly created but unsaved employee_detail as @employee_detail" do
         # Trigger the behavior that occurs when invalid params are submitted
         EmployeeDetail.any_instance.stub(:save).and_return(false)
@@ -138,7 +144,11 @@ describe EmployeeDetailsController do
   end
 
   describe "PUT update" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
     describe "with valid params" do
+
       it "updates the requested employee_detail" do
         employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
         EmployeeDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params','panoption' => "ADD PAN", "pan" => nil})
@@ -179,6 +189,9 @@ describe EmployeeDetailsController do
   end
 
   describe "DELETE destroy" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
     it "destroys the requested employee_detail" do
       employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
       expect {
