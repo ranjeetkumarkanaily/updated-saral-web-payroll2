@@ -100,13 +100,13 @@ class EmployeeDetailsController < ApplicationController
         else
           @paramempid = employee_id
           @classification_headings = ClassificationHeading.order('display_order')
-          format.html { render action: "new" }
+          format.html { render "new" }
           format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
         end
       else
         @paramempid = employee_id
         @classification_headings = ClassificationHeading.order('display_order')
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @employee_detail.errors, status: :unprocessable_entity }
 
       end

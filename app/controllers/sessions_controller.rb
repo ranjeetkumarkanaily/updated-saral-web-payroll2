@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       redirect_to welcome_path, :notice => "Logged in successfully."
     else
       flash.now[:alert] = "Invalid login or password."
-      render :action => 'new'
+      render 'new'
     end
   end
 
