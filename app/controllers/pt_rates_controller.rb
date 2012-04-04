@@ -1,6 +1,6 @@
 class PtRatesController < ApplicationController
 
-  before_filter :find_pt_rates, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_pt_rates, :only => [:edit, :update, :destroy]
 
   def index
     if params[:paymonth_id] && params[:pt_group_id]
@@ -14,13 +14,6 @@ class PtRatesController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @pt_rates }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @pt_rate }
     end
   end
 

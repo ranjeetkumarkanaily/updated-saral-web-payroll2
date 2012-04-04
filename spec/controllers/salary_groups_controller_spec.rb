@@ -26,14 +26,6 @@ describe SalaryGroupsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested salary_group as @salary_group" do
-      salary_group = SalaryGroup.create! valid_attributes
-      get :show, :id => salary_group.id
-      assigns(:salary_group).should eq(salary_group)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new salary_group as @salary_group" do
       get :new

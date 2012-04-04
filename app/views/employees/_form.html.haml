@@ -1,11 +1,11 @@
-= form_for(@employee) do |f|
-  - if @employee.errors.any?
+= form_for(employee) do |f|
+  - if employee.errors.any?
     #error_explanation
       %h2
-        = pluralize(@employee.errors.count, "error")
+        = pluralize(employee.errors.count, "error")
         prohibited this employee from being saved:
       %ul
-        - @employee.errors.full_messages.each do |msg|
+        - employee.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -22,7 +22,7 @@
                   %td= f.text_field :father_name, :size => '22'
                 %tr
                   %td Marital Status:&nbsp;
-                  %td= f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],@employee.marital_status), {:prompt => 'Select Marital Status'}
+                  %td= f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],employee.marital_status), {:prompt => 'Select Marital Status'}
                 %tr
                   %td Date of Birth:&nbsp;
                   %td= f.text_field :date_of_birth, :id=>"dob", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
@@ -36,7 +36,7 @@
                   %td= f.text_field :empname, :size => '22'
                 %tr
                   %td Gender:&nbsp;
-                  %td= f.select :gender, options_for_select(["Male", "Female"],@employee.gender), {:prompt => 'Select Gender'}
+                  %td= f.select :gender, options_for_select(["Male", "Female"],employee.gender), {:prompt => 'Select Gender'}
                 %tr
                   %td Spouse Name:&nbsp;
                   %td= f.text_field :spouse_name, :size => '22'
@@ -69,7 +69,7 @@
                   %td= f.text_field :present_locality, :size => '22'
                 %tr
                   %td{:width=>130} State:&nbsp;
-                  %td= f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] }, @employee.present_state_id), {:prompt => 'Select State'}
+                  %td= f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] }, employee.present_state_id), {:prompt => 'Select State'}
           %tr
             %td.std_td
               %table

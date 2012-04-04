@@ -22,14 +22,6 @@ describe HrCategoryDetailsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested hr_category_details as @hr_category_details" do
-      category_detail = HrCategoryDetail.create! valid_attributes
-      get :show, :id => category_detail.id
-      assigns(:hr_category_detail).should eq(category_detail)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new hr_category_details as @hr_category_details" do
       get :new

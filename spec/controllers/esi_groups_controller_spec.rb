@@ -24,14 +24,6 @@ describe EsiGroupsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested esi_group as @esi_group" do
-      esi_group = EsiGroup.create! valid_attributes
-      get :show, {:id => esi_group.to_param}
-      assigns(:esi_group).should eq(esi_group)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new esi_group as @esi_group" do
       get :new

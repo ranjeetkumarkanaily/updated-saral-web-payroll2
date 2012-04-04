@@ -1,9 +1,0 @@
-%ul
-  %li= link_to 'Listing Employees', employees_path
-  %li= link_to 'Add New Employee', new_employee_path
-  %li= link_to 'Excel Upload', upload_employees_path
-  - if @hr_categories
-    - @hr_categories.each do |hr_category|
-      %li= link_to hr_category.category_name, new_hr_master_path(:hr_category_id => hr_category.id, :employee_id => @employee.id)
-  %li= link_to 'Restrict PF Contribution', pf_contribution_restrict_employees_path
-

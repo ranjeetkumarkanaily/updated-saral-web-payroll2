@@ -22,14 +22,6 @@ describe AttendanceConfigurationsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested attendance_configuration as @attendance_configuration" do
-      attendance_configuration = AttendanceConfiguration.create! valid_attributes
-      get :show, {:id => attendance_configuration.to_param}
-      assigns(:attendance_configuration).should eq(attendance_configuration)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new attendance_configuration as @attendance_configuration" do
       get :new

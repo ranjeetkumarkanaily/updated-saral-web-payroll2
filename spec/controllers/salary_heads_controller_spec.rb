@@ -22,14 +22,6 @@ describe SalaryHeadsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested salary_head as @salary_head" do
-      salary_head = SalaryHead.create! valid_attributes
-      get :show, :id => salary_head.id
-      assigns(:salary_head).should eq(salary_head)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new salary_head as @salary_head" do
       get :new

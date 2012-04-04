@@ -1,6 +1,6 @@
 class ClassificationHeadingsController < ApplicationController
 
-  before_filter :find_classification_heading, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_classification_heading, :only => [:edit, :update, :destroy]
 
   def index
     @classification_headings = ClassificationHeading.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,15 +8,6 @@ class ClassificationHeadingsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @classification_headings }
-    end
-  end
-
-  def show
-    @classification_heading = ClassificationHeading.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @classification_heading }
     end
   end
 

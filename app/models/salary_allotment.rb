@@ -70,7 +70,7 @@ class SalaryAllotment < ActiveRecord::Base
         local_error = []
         emp.employee_details.first.salary_group.salary_group_details.each do |sal_grp_det|
           sal_head = sal_grp_det.salary_head
-          if (excel_first_row.include? sal_head.short_name) && (!row[excel_first_row.index(sal_head.short_name)].nil?) && (row[excel_first_row.index(sal_head.short_name)] > 0)
+          if (excel_first_row.include? sal_head.short_name) && (!row[excel_first_row.index(sal_head.short_name)].nil?) && (row[excel_first_row.index(sal_head.short_name)] >= 0)
             sal_allot = SalaryAllotment.new
             sal_allot.employee_id = emp[:id]
             sal_allot.employee_detail_id = emp.employee_details.first[:id]

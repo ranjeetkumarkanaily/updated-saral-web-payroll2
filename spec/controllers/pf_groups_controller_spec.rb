@@ -25,14 +25,6 @@ describe PfGroupsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested pf_group as @pf_group" do
-      pf_group = PfGroup.create! valid_attributes
-      get :show, {:id => pf_group.to_param}
-      assigns(:pf_group).should eq(pf_group)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new pf_group as @pf_group" do
       get :new

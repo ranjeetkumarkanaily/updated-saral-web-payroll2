@@ -11,7 +11,9 @@
     setFocus();
   });
 #left_content
-  = render 'left'
+  %ul
+    %li= link_to "Theoretical Salary Upload", upload_salary_allotments_path
+    %li= link_to "Generate Sample Template", generate_sample_excel_template_salary_allotments_path(:format => "xls")
 #right_content
   = hidden_field_tag "selected_tab", @param_selected_tab
   %h1 Employee's - Salary Rate

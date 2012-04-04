@@ -1,6 +1,6 @@
 class EsiGroupsController < ApplicationController
 
-  before_filter :find_esi_group, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_esi_group, :only => [:edit, :update, :destroy]
 
   def index
     @esi_groups = EsiGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,15 +8,6 @@ class EsiGroupsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @esi_groups }
-    end
-  end
-
-  def show
-    @esi_group = EsiGroup.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @esi_group }
     end
   end
 

@@ -1,11 +1,11 @@
-= form_for @pt_rate, :html => {:name => "pt_rate"}  do |f|
-  - if @pt_rate.errors.any?
+= form_for pt_rate, :html => {:name => "pt_rate"}  do |f|
+  - if pt_rate.errors.any?
     #error_explanation
       %h2
-        = pluralize(@pt_rate.errors.count, "error")
+        = pluralize(pt_rate.errors.count, "error")
         prohibited this pt_group from being saved:
       %ul
-        - @pt_rate.errors.full_messages.each do |msg|
+        - pt_rate.errors.full_messages.each do |msg|
           %li= msg
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -16,15 +16,15 @@
               %table
                 %tr
                   %td{:width => 160} PT Group
-                  %td= @pt_rate.pt_group_name
-                  = hidden_field_tag "pt_rate[pt_group_id]", @pt_rate.pt_group_id
+                  %td= pt_rate.pt_group_name
+                  = hidden_field_tag "pt_rate[pt_group_id]", pt_rate.pt_group_id
             %td.std_td
               %table
                 %tr
                   %td
                     %td{:width=>160} Effective Month
-                    %td= @pt_rate.paymonth_month_name
-                    = hidden_field_tag "pt_rate[paymonth_id]", @pt_rate.paymonth_id
+                    %td= pt_rate.paymonth_month_name
+                    = hidden_field_tag "pt_rate[paymonth_id]", pt_rate.paymonth_id
         %table
           %tr
             %td.std_td

@@ -13,11 +13,11 @@
       %td &nbsp;
     %tr
       %td.std_td
-        = render 'search'
+        = render 'search', :srchpath => @srchpath
     %tr
       %td.std_td
         %div{:id => "employees"}
-          =render 'employees'
+          =render 'employees', :employees => @employees
     %tr
       %td &nbsp;
 

@@ -1,6 +1,6 @@
 class StatesController < ApplicationController
 
-  before_filter :find_state, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_state, :only => [:edit, :update, :destroy]
 
   def index
     @states = State.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,13 +8,6 @@ class StatesController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @states }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @state }
     end
   end
 

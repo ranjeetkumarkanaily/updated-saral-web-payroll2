@@ -1,6 +1,6 @@
 class HrCategoryDetailsController < ApplicationController
 
-  before_filter :find_hr_category_detail, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_hr_category_detail, :only => [:edit, :update, :destroy]
 
   def index
     @hr_category_id = params[:param1]
@@ -8,14 +8,6 @@ class HrCategoryDetailsController < ApplicationController
     respond_to do |format|
       format.html # index.html.haml
       format.json { render json: @hr_category_details }
-    end
-  end
-
-  def show
-    @hr_category_id = @hr_category_detail.hr_category_id
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @hr_category_detail }
     end
   end
 

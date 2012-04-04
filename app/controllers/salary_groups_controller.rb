@@ -1,6 +1,6 @@
 class SalaryGroupsController < ApplicationController
 
-  before_filter :find_salary_groups, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_salary_groups, :only => [:edit, :update, :destroy]
 
   def index
     @salary_groups = SalaryGroup.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
@@ -8,13 +8,6 @@ class SalaryGroupsController < ApplicationController
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @salary_groups }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html # show.html.haml
-      format.json { render json: @salary_group }
     end
   end
 

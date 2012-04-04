@@ -4,5 +4,5 @@
 #right_content
   = render "breadcrumb"
   %h1 New Company
-  = render 'form'
+  = render 'form', :company => @company
   = link_to 'Back', companies_path
