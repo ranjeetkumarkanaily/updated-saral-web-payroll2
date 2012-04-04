@@ -26,7 +26,7 @@
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= employee_detail.effective_date
               %td.table_grid_td= employee_detail.effective_to != nil ? employee_detail.effective_to : 'Till Date'
-              %td.table_grid_td= employee_detail.salary_group.salary_group_name
+              %td.table_grid_td= employee_detail.salary_group_salary_group_name
               %td.table_grid_td= employee_detail.allotted_gross
               - if sl_no == 1
                 %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Employee Details"), edit_employee_detail_path(employee_detail,:param1=>@paramempid)
