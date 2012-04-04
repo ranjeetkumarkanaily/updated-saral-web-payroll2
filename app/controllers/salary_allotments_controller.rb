@@ -15,6 +15,7 @@ class SalaryAllotmentsController < ApplicationController
     @param_selected_tab = params[:param1]
 
     @allotSal = SalaryAllotment.row_for_salary_allotment params[:id]
+    @emp_name = Employee.find(params[:id]).empname
   end
 
   def update

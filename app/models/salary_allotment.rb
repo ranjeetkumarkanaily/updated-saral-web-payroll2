@@ -72,7 +72,7 @@ class SalaryAllotment < ActiveRecord::Base
         local_error = []
         emp.employee_details.first.salary_group.salary_group_details.each do |sal_grp_det|
           sal_head = sal_grp_det.salary_head
-          if (excel_first_row.include? sal_head.short_name) && (!row[excel_first_row.index(sal_head.short_name)].nil?) && (row[excel_first_row.index(sal_head.short_name)] > 0)
+          if (excel_first_row.include? sal_head.short_name) && (!row[excel_first_row.index(sal_head.short_name)].nil?)
             sal_allot = SalaryAllotment.new
             sal_allot.employee_id = emp[:id]
             sal_allot.employee_detail_id = emp.employee_details.first[:id]
@@ -98,6 +98,8 @@ class SalaryAllotment < ActiveRecord::Base
   def self.update_salary_allotments sal_allots
     sal_allots.each do |sal_allot|
       sal_allotment = SalaryAllotment.find_by_employee_id_and_employee_detail_id_and_effective_date_and_salary_head_id(sal_allot.employee_id, sal_allot.employee_detail_id, sal_allot.effective_date, sal_allot.salary_head_id)
+      #sal_allotment = SalaryAllotment.row_for_salary_allotment sal_allot.employee_id
+      #puts sal_allotment.inspect
       sal_allotment.update_attributes(:salary_allotment => sal_allot.salary_allotment)
     end
   end
