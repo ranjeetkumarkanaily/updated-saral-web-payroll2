@@ -10,4 +10,6 @@ class SalaryGroup < ActiveRecord::Base
                   :length   => {:maximum => 100},
                   :uniqueness => { :case_sensitive => true }
 
+  scope :salary_groups, :order => 'created_at ASC'
+
 end

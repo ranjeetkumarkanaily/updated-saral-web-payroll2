@@ -7,4 +7,6 @@ class FinancialInstitution < ActiveRecord::Base
   validates :pincode, :numericality => true
 
   has_many :employee_details
+
+  scope :financial_institutions, :order => 'created_at ASC'
 end

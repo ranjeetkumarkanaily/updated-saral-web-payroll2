@@ -29,4 +29,6 @@ class Paymonth < ActiveRecord::Base
     [result,next_paymonth]
   end
 
+  scope :months, :order => 'created_at DESC'
+
 end

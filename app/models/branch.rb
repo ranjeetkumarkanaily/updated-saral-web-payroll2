@@ -16,4 +16,6 @@ class Branch < ActiveRecord::Base
   validates :address, :presence => true
   validates :pf_group_id, :presence => true
   validates :pt_group_id, :presence => true
+
+  scope :branches, :order => 'created_at ASC'
 end

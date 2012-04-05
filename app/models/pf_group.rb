@@ -17,4 +17,5 @@ class PfGroup < ActiveRecord::Base
   validates :extension, :numericality => true,
             :length => {:maximum => 1}
 
+  scope :pf_groups, :order => 'created_at ASC'
 end

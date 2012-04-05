@@ -6,4 +6,6 @@ class LeaveDetail < ActiveRecord::Base
   validates_presence_of :leave_date, :employee_id
   validates_presence_of :employee, :message => " does not exists."
   validates_uniqueness_of :employee_id, :scope => :leave_date, :message => " Leave has already taken"
+
+  delegate :refno, :empname, :to => :employee, :prefix => true
 end

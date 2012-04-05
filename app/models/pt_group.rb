@@ -12,6 +12,7 @@ class PtGroup < ActiveRecord::Base
 
   delegate :state_name, :to => :state, :prefix => true
 
+  scope :pt_groups, :order => 'created_at ASC'
 
   def to_date(paymonth_id)
     next_row = next_row_on_pf_group_id paymonth_id

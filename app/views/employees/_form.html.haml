@@ -69,7 +69,7 @@
                   %td= f.text_field :present_locality, :size => '22'
                 %tr
                   %td{:width=>130} State:&nbsp;
-                  %td= f.select :present_state_id, options_for_select(State.all(:order => 'state_name ASC').collect {|sn| [ sn.state_name, sn.id ] }, employee.present_state_id), {:prompt => 'Select State'}
+                  %td= f.select :present_state_id, options_for_select(State.all_states.collect {|sn| [ sn.state_name, sn.id ] }, employee.present_state_id), {:prompt => 'Select State'}
           %tr
             %td.std_td
               %table

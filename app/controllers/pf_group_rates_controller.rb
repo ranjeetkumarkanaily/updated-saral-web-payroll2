@@ -5,7 +5,7 @@ class PfGroupRatesController < ApplicationController
 
   def index
     @pf_group_rates = PfGroupRate.where(:pf_group_id => @param_pf_group_id).order('paymonth_id DESC,created_at DESC').paginate(:page => params[:page], :per_page => 10)
-
+    @pf_group = PfGroup.find(@param_pf_group_id).pf_group
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @pf_group_rates }
@@ -32,6 +32,7 @@ class PfGroupRatesController < ApplicationController
 
   def edit
     @pf_group_rate = PfGroupRate.find(params[:id])
+    @month_name = Paymonth.find(@pf_group_rate.paymonth_id).month_name
   end
 
   def create

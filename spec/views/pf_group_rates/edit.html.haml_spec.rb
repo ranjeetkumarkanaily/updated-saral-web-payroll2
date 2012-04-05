@@ -9,6 +9,7 @@ describe "pf_group_rates/edit" do
       :paymonth_id => paymonth.id,
       :account_number_21 => 1.5
     ))
+    @month_name = assign(:month_name, paymonth.month_name)
   end
 
   it "renders the edit pf_group_rate form" do

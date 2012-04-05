@@ -16,8 +16,8 @@
           - @leave_details.each do |leave|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= leave.employee_id
-              %td.table_grid_td= Employee.find(leave.employee_id).refno
-              %td.table_grid_td= Employee.find(leave.employee_id).empname
+              %td.table_grid_td= leave.employee_refno
+              %td.table_grid_td= leave.employee_empname
               %td.table_grid_td= leave.leave_date
         %br/
         .digg_pagination

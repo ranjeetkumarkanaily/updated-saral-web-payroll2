@@ -7,4 +7,6 @@ class EsiGroup < ActiveRecord::Base
 
   has_many :branches
   has_many :esi_group_rates,:dependent => :destroy
+
+  scope :esi_groups, :order => 'created_at ASC'
 end

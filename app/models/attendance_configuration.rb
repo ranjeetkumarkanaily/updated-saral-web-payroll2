@@ -12,4 +12,6 @@ class AttendanceConfiguration < ActiveRecord::Base
   validates :salary_calendar_days,   :presence   => true
 
   has_many :holidays, :dependent => :destroy
+
+  scope :attendances, :order => 'created_at ASC'
 end

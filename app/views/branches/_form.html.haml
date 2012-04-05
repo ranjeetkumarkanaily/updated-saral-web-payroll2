@@ -27,13 +27,13 @@
                   %td= f.text_field :address, :size => '22',:onblur=>"calculate()"
                 %tr
                   %td{:width=>130} PF Group:&nbsp;
-                  %td= f.select :pf_group_id, options_for_select(PfGroup.all(:order => 'created_at ASC').collect {|pf| [ pf.pf_group, pf.id ] }, branch.pf_group_id),:prompt => 'Select PF Group'
+                  %td= f.select :pf_group_id, options_for_select(PfGroup.pf_groups.collect {|pf| [ pf.pf_group, pf.id ] }, branch.pf_group_id),:prompt => 'Select PF Group'
                 %tr
                   %td{:width=>130} ESI Applicable:&nbsp;
                   %td= f.check_box :esi_applicable,:onclick=>"enable(this.checked)"
                 %tr
                   %td{:width=>130} ESI Group:&nbsp;
-                  %td= f.select :esi_group_id, options_for_select(EsiGroup.all(:order => 'created_at ASC').collect {|esi| [ esi.esi_group_name, esi.id ] }, branch.esi_group_id),{:prompt => 'Select ESI Group'},:disabled=>!branch.esi_applicable
+                  %td= f.select :esi_group_id, options_for_select(EsiGroup.esi_groups.collect {|esi| [ esi.esi_group_name, esi.id ] }, branch.esi_group_id),{:prompt => 'Select ESI Group'},:disabled=>!branch.esi_applicable
             %td.std_td
               %table
                 %tr
@@ -43,7 +43,7 @@
                   %td &nbsp;
                 %tr
                   %td{:width=>130} PT Group:&nbsp;
-                  %td= f.select :pt_group_id, options_for_select(PtGroup.all(:order => 'created_at ASC').collect {|pt| [ pt.name, pt.id ] }, branch.pt_group_id),:prompt => 'Select PT Group'
+                  %td= f.select :pt_group_id, options_for_select(PtGroup.pt_groups.collect {|pt| [ pt.name, pt.id ] }, branch.pt_group_id),:prompt => 'Select PT Group'
                 %tr
                   %td &nbsp;
           %tr

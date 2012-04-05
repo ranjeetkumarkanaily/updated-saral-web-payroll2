@@ -5,7 +5,7 @@ class EsiGroupRatesController < ApplicationController
 
   def index
     @esi_group_rates = EsiGroupRate.where(:esi_group_id => @param_esi_group_id).order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
-
+    @esi_group_name = EsiGroup.find(@param_esi_group_id).esi_group_name
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @esi_group_rates }
