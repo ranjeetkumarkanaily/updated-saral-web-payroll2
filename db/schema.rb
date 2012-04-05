@@ -244,8 +244,6 @@ ActiveRecord::Schema.define(:version => 20120405084536) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "paymonths", ["month_year"], :name => "index_paymonths_on_month_year"
-
   create_table "pf_group_rates", :force => true do |t|
     t.integer  "pf_group_id"
     t.integer  "paymonth_id"
