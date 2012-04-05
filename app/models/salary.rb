@@ -1,5 +1,5 @@
 class Salary < ActiveRecord::Base
-  attr_accessible :effective_date, :salary_amount,:employee_id,:employee_detail_id,:salary_head_id, :created_at,:updated_at
+  attr_accessible :id,:effective_date, :salary_amount,:employee_id,:employee_detail_id,:salary_head_id,:salary_group_detail_id, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :salary_head

@@ -1,5 +1,5 @@
 class HrCategory < ActiveRecord::Base
-  attr_accessible :category_name, :created_at,:updated_at
+  attr_accessible :id,:category_name, :created_at,:updated_at
 
   acts_as_audited
 

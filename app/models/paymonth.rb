@@ -1,5 +1,5 @@
 class Paymonth < ActiveRecord::Base
-  attr_accessible :month_year, :number_of_days, :from_date, :to_date,:month_name, :created_at,:updated_at
+  attr_accessible :id,:month_year, :number_of_days, :from_date, :to_date,:month_name, :created_at,:updated_at
   acts_as_audited
 
   has_many :pt_rates, :dependent => :destroy
