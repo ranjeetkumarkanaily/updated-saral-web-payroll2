@@ -33,9 +33,9 @@ class EmployeeDetail < ActiveRecord::Base
   end
 
   def pan_effective_date_after_dob
-    if !Employee.find(employee_id).date_of_birth.nil?
+    if !Employee.find(employee_id).date_of_birth.nil? and !pan_effective_date.nil?
       dob = Employee.find(employee_id).date_of_birth
-      if !pan_effective_date.nil? and !dob.nil? and pan_effective_date > dob then
+      if pan_effective_date < dob then
         errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
       end
     end
