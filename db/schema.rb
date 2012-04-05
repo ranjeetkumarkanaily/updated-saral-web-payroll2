@@ -189,14 +189,6 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
 
   add_index "leave_details", ["employee_id"], :name => "index_leave_details_on_employee_id"
 
-  create_table "lops", :force => true do |t|
-    t.integer  "employee_id"
-    t.string   "month_year"
-    t.float    "lop"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "paymonths", :force => true do |t|
     t.integer  "month_year"
     t.integer  "number_of_days"
@@ -320,17 +312,6 @@ ActiveRecord::Schema.define(:version => 20120228053057) do
     t.string   "head_name"
     t.string   "short_name"
     t.string   "salary_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "salary_totals", :force => true do |t|
-    t.integer  "employee_id"
-    t.integer  "month_year_id"
-    t.decimal  "alloted_gross", :precision => 8, :scale => 2
-    t.decimal  "earned",        :precision => 8, :scale => 2
-    t.decimal  "deducted",      :precision => 8, :scale => 2
-    t.decimal  "net_salary",    :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
