@@ -11,6 +11,10 @@ class HrCategoriesController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def new
     @hr_category = HrCategory.new
 
