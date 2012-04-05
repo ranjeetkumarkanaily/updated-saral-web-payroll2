@@ -1,8 +1,5 @@
 class PaymonthsController < ApplicationController
 
-  before_filter :find_paymonth, :only => [:show, :update]
-
-
   def index
     @paymonths = Paymonth.order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
   end
@@ -12,6 +9,7 @@ class PaymonthsController < ApplicationController
   end
 
   def show
+    @paymonth = Paymonth.find(params[:id])
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @employee }
@@ -69,9 +67,4 @@ class PaymonthsController < ApplicationController
       end
     end
   end
-
-  protected
-    def find_paymonth
-      @paymonth = Paymonth.find(params[:id])
-    end
 end

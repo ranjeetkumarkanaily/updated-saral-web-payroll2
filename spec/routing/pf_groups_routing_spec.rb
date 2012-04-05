@@ -11,10 +11,6 @@ describe PfGroupsController do
       get("/pf_groups/new").should route_to("pf_groups#new")
     end
 
-    it "routes to #show" do
-      get("/pf_groups/1").should route_to("pf_groups#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/pf_groups/1/edit").should route_to("pf_groups#edit", :id => "1")
     end

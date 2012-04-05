@@ -11,6 +11,10 @@ class AttendanceConfigurationsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def new
     @attendance_configuration = AttendanceConfiguration.new
 

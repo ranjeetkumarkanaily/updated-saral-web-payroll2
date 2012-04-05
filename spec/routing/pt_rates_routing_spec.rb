@@ -11,10 +11,6 @@ describe PtRatesController do
       get("/pt_rates/new").should route_to("pt_rates#new")
     end
 
-    it "routes to #show" do
-      get("/pt_rates/1").should route_to("pt_rates#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/pt_rates/1/edit").should route_to("pt_rates#edit", :id => "1")
     end

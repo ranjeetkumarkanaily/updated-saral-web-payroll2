@@ -11,10 +11,6 @@ describe EsiGroupRatesController do
       get("/esi_group_rates/new").should route_to("esi_group_rates#new")
     end
 
-    it "routes to #show" do
-      get("/esi_group_rates/1").should route_to("esi_group_rates#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/esi_group_rates/1/edit").should route_to("esi_group_rates#edit", :id => "1")
     end

@@ -26,6 +26,10 @@ class PtRatesController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     @pt_rate = PtRate.new(params[:pt_rate])
 

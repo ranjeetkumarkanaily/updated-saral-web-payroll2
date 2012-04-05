@@ -11,10 +11,6 @@ describe SalaryGroupsController do
       get("/salary_groups/new").should route_to("salary_groups#new")
     end
 
-    it "routes to #show" do
-      get("/salary_groups/1").should route_to("salary_groups#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/salary_groups/1/edit").should route_to("salary_groups#edit", :id => "1")
     end

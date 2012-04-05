@@ -29,6 +29,10 @@ class EmployeesController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     @employee = Employee.new(params[:employee])
 

@@ -20,6 +20,10 @@ class SalaryHeadsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     @salary_head = SalaryHead.new(params[:salary_head])
 

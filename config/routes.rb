@@ -8,40 +8,33 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :financial_institutions
 
-  resources :pt_group_rates, :except => [:edit]
+  resources :pt_group_rates, :only => [:new, :create]
 
-  resources :esi_group_rates
+  resources :esi_group_rates, :except => [:show]
 
   resources :branches
 
   resources :pf_group_rates
 
-  resources :esi_groups
+  resources :esi_groups, :except => [:show]
 
-  resources :pf_groups
+  resources :pf_groups, :except => [:show]
 
-  resources :classifications
+  resources :classifications, :except => [:show]
 
-  resources :classification_headings
+  resources :classification_headings, :except => [:show]
 
   resources :holidays
 
-  resources :attendance_configurations
+  resources :attendance_configurations, :except => [:show]
 
-  resources :pt_rates
+  resources :pt_rates, :except => [:show]
 
   resources :pt_groups
 
-  resources :pf_esi_rates, :only => [:new, :create, :update, :index]
+  resources :paymonths, :except => [:edit, :update]
 
-  resources :paymonths
-
-  resources :salary_totals
-
-
-  resources :default_values
-
-  resources :states
+  resources :states, :except => [:show]
 
   resources :employee_details
 
@@ -72,9 +65,9 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :salary_group_details
 
-  resources :salary_heads
+  resources :salary_heads, :except => [:show]
 
-  resources :salary_groups
+  resources :salary_groups, :except => [:show]
 
   resources :salary_allotments, :only => [:edit, :update, :index] do
     put :update, :on => :collection

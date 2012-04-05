@@ -11,6 +11,10 @@ class PfGroupsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def new
     @pf_group = PfGroup.new
 

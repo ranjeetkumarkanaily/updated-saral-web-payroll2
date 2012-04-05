@@ -11,10 +11,6 @@ describe ClassificationHeadingsController do
       get("/classification_headings/new").should route_to("classification_headings#new")
     end
 
-    it "routes to #show" do
-      get("/classification_headings/1").should route_to("classification_headings#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/classification_headings/1/edit").should route_to("classification_headings#edit", :id => "1")
     end

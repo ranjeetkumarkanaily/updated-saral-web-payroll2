@@ -11,6 +11,10 @@ class EsiGroupsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def new
     @esi_group = EsiGroup.new
 
