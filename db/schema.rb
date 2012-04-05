@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120405070047) do
+ActiveRecord::Schema.define(:version => 20120405084536) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -371,6 +371,7 @@ ActiveRecord::Schema.define(:version => 20120405070047) do
 
   add_index "salaries", ["employee_detail_id"], :name => "index_salaries_on_employee_detail_id"
   add_index "salaries", ["employee_id"], :name => "index_salaries_on_employee_id"
+  add_index "salaries", ["salary_group_detail_id"], :name => "index_salaries_on_salary_group_detail_id"
   add_index "salaries", ["salary_head_id"], :name => "index_salaries_on_salary_head_id"
 
   create_table "salary_allotments", :force => true do |t|
