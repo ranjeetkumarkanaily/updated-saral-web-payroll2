@@ -20,6 +20,10 @@ class StatesController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     @state = State.new(params[:state])
 

@@ -28,6 +28,10 @@ class PtGroupsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     @pt_group = PtGroup.new(params[:pt_group])
 

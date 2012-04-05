@@ -11,6 +11,10 @@ class BranchesController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def show
     respond_to do |format|
       format.html # show.html.haml

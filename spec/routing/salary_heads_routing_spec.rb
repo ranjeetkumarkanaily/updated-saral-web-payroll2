@@ -11,10 +11,6 @@ describe SalaryHeadsController do
       get("/salary_heads/new").should route_to("salary_heads#new")
     end
 
-    it "routes to #show" do
-      get("/salary_heads/1").should route_to("salary_heads#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/salary_heads/1/edit").should route_to("salary_heads#edit", :id => "1")
     end

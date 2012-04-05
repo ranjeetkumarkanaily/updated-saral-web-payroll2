@@ -11,10 +11,6 @@ describe ClassificationsController do
       get("/classifications/new").should route_to("classifications#new")
     end
 
-    it "routes to #show" do
-      get("/classifications/1").should route_to("classifications#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/classifications/1/edit").should route_to("classifications#edit", :id => "1")
     end

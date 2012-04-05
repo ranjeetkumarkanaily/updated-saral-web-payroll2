@@ -20,6 +20,10 @@ class SalaryGroupsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def create
     @salary_group = SalaryGroup.new(params[:salary_group])
 

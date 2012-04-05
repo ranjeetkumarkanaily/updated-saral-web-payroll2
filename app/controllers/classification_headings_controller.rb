@@ -11,6 +11,10 @@ class ClassificationHeadingsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def new
     @classification_heading = ClassificationHeading.new
 

@@ -11,10 +11,6 @@ describe AttendanceConfigurationsController do
       get("/attendance_configurations/new").should route_to("attendance_configurations#new")
     end
 
-    it "routes to #show" do
-      get("/attendance_configurations/1").should route_to("attendance_configurations#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/attendance_configurations/1/edit").should route_to("attendance_configurations#edit", :id => "1")
     end

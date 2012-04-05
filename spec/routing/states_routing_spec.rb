@@ -11,10 +11,6 @@ describe StatesController do
       get("/states/new").should route_to("states#new")
     end
 
-    it "routes to #show" do
-      get("/states/1").should route_to("states#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/states/1/edit").should route_to("states#edit", :id => "1")
     end
