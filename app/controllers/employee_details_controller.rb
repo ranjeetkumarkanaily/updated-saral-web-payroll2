@@ -90,10 +90,6 @@ class EmployeeDetailsController < ApplicationController
         if ( effective_date_after_doj && effective_date_before_dol && effective_date_validation_with_saved_dates ) && @employee_detail.save then
             sal_gr_id = @employee_detail.salary_group_id
 
-            #SalaryGroupDetail.all(:conditions => [ "salary_group_id = ?", sal_gr_id]).each do |sgd|
-            #  SalaryAllotment.create!(:employee_id => employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
-            #end
-
             SalaryGroupDetail.salary_group_details(sal_gr_id).each do |sgd|
               SalaryAllotment.create!(:employee_id => employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
             end
