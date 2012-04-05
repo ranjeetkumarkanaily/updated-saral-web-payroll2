@@ -372,20 +372,6 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "updated_at",  :null => false
   end
 
-<<<<<<< HEAD
-  create_table "salary_totals", :force => true do |t|
-    t.integer  "employee_id"
-    t.integer  "month_year_id"
-    t.decimal  "alloted_gross", :precision => 8, :scale => 2
-    t.decimal  "earned",        :precision => 8, :scale => 2
-    t.decimal  "deducted",      :precision => 8, :scale => 2
-    t.decimal  "net_salary",    :precision => 8, :scale => 2
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
-  end
-
-=======
->>>>>>> ede07a23d2476358297d1eb5323d9932e7a39098
   create_table "states", :force => true do |t|
     t.string   "state_name"
     t.datetime "created_at", :null => false
