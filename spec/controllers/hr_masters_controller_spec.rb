@@ -27,7 +27,7 @@ describe HrMastersController do
   describe "POST create" do
     describe "with valid params" do
       before :each do
-        @hr_master = FactoryGirl.create(:hr_master)
+        @hr_master = FactoryGirl.build(:hr_master)
       end
       it "Count should be increases by one" do
         expect {

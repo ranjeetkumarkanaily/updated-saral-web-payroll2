@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120326084703) do
+ActiveRecord::Schema.define(:version => 20120405070047) do
 
   create_table "attendance_configurations", :force => true do |t|
     t.string   "attendance"
@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "updated_at",                :null => false
   end
 
+  add_index "classifications", ["classification_heading_id"], :name => "index_classifications_on_classification_heading_id"
+
   create_table "companies", :force => true do |t|
     t.string   "companyname"
     t.string   "responsible_person"
@@ -102,6 +104,18 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "departments", :force => true do |t|
+    t.string   "department"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "designations", :force => true do |t|
+    t.string   "designation"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "employee_details", :force => true do |t|
     t.integer  "employee_id"
     t.date     "effective_date"
@@ -118,6 +132,12 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.string   "pan"
     t.date     "pan_effective_date"
   end
+
+  add_index "employee_details", ["attendance_configuration_id"], :name => "index_employee_details_on_attendance_configuration_id"
+  add_index "employee_details", ["branch_id"], :name => "index_employee_details_on_branch_id"
+  add_index "employee_details", ["employee_id"], :name => "index_employee_details_on_employee_id"
+  add_index "employee_details", ["financial_institution_id"], :name => "index_employee_details_on_financial_institution_id"
+  add_index "employee_details", ["salary_group_id"], :name => "index_employee_details_on_salary_group_id"
 
   create_table "employees", :force => true do |t|
     t.string   "empname"
@@ -149,6 +169,8 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.boolean  "restrct_pf",          :default => false
   end
 
+  add_index "employees", ["present_state_id"], :name => "index_employees_on_present_state_id"
+
   create_table "esi_group_rates", :force => true do |t|
     t.integer  "esi_group_id"
     t.float    "employee_rate"
@@ -159,6 +181,8 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
+
+  add_index "esi_group_rates", ["esi_group_id"], :name => "index_esi_group_rates_on_esi_group_id"
 
   create_table "esi_groups", :force => true do |t|
     t.string   "esi_group_name"
@@ -182,6 +206,12 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "grades", :force => true do |t|
+    t.string   "grade"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "holidays", :force => true do |t|
     t.integer  "attendance_configuration_id"
     t.date     "holiday_date"
@@ -190,6 +220,8 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
+
+  add_index "holidays", ["attendance_configuration_id"], :name => "index_holidays_on_attendance_configuration_id"
 
   create_table "hr_categories", :force => true do |t|
     t.string   "category_name"
@@ -227,6 +259,14 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
   end
 
   add_index "leave_details", ["employee_id"], :name => "index_leave_details_on_employee_id"
+
+  create_table "lops", :force => true do |t|
+    t.integer  "employee_id"
+    t.string   "month_year"
+    t.float    "lop"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "paymonths", :force => true do |t|
     t.integer  "month_year"
@@ -268,6 +308,9 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.float    "cutoff"
     t.date     "effective_date"
   end
+
+  add_index "pf_group_rates", ["paymonth_id"], :name => "index_pf_group_rates_on_paymonth_id"
+  add_index "pf_group_rates", ["pf_group_id"], :name => "index_pf_group_rates_on_pf_group_id"
 
   create_table "pf_groups", :force => true do |t|
     t.string   "pf_group"
@@ -313,6 +356,7 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
   end
 
   add_index "pt_rates", ["paymonth_id"], :name => "index_pt_rates_on_paymonth_id"
+  add_index "pt_rates", ["pt_group_id"], :name => "index_pt_rates_on_pt_group_id"
 
   create_table "salaries", :force => true do |t|
     t.date     "effective_date"
@@ -339,6 +383,11 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.datetime "updated_at",                                           :null => false
     t.integer  "salary_group_detail_id"
   end
+
+  add_index "salary_allotments", ["employee_detail_id"], :name => "index_salary_allotments_on_employee_detail_id"
+  add_index "salary_allotments", ["employee_id"], :name => "index_salary_allotments_on_employee_id"
+  add_index "salary_allotments", ["salary_group_detail_id"], :name => "index_salary_allotments_on_salary_group_detail_id"
+  add_index "salary_allotments", ["salary_head_id"], :name => "index_salary_allotments_on_salary_head_id"
 
   create_table "salary_group_details", :force => true do |t|
     t.string   "calc_type"
@@ -370,6 +419,17 @@ ActiveRecord::Schema.define(:version => 20120326084703) do
     t.string   "salary_type"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "salary_totals", :force => true do |t|
+    t.integer  "employee_id"
+    t.integer  "month_year_id"
+    t.decimal  "alloted_gross", :precision => 8, :scale => 2
+    t.decimal  "earned",        :precision => 8, :scale => 2
+    t.decimal  "deducted",      :precision => 8, :scale => 2
+    t.decimal  "net_salary",    :precision => 8, :scale => 2
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "states", :force => true do |t|
