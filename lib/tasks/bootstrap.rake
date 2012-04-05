@@ -9,7 +9,6 @@ namespace :bootstrap do
     SalaryHead.create( :head_name => 'Basic', :short_name => 'BASIC', :salary_type => "Earnings" )
     SalaryHead.create( :head_name => 'PF', :short_name => 'PF', :salary_type => "Deductions" )
     SalaryHead.create( :head_name => 'ESI', :short_name => 'ESI', :salary_type => "Deductions" )
-    SalaryHead.create( :head_name => 'PT', :short_name => 'PT', :salary_type => "Deductions" )
   end
 
   desc "Add States"
