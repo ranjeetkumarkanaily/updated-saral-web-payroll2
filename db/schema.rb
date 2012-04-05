@@ -96,26 +96,6 @@ ActiveRecord::Schema.define(:version => 20120405084536) do
     t.integer  "photo_file_size"
   end
 
-  create_table "default_values", :force => true do |t|
-    t.string   "default_type"
-    t.string   "value"
-    t.integer  "value_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "departments", :force => true do |t|
-    t.string   "department"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "designations", :force => true do |t|
-    t.string   "designation"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "employee_details", :force => true do |t|
     t.integer  "employee_id"
     t.date     "effective_date"
@@ -206,12 +186,6 @@ ActiveRecord::Schema.define(:version => 20120405084536) do
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "grades", :force => true do |t|
-    t.string   "grade"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "holidays", :force => true do |t|
     t.integer  "attendance_configuration_id"
     t.date     "holiday_date"
@@ -260,14 +234,6 @@ ActiveRecord::Schema.define(:version => 20120405084536) do
 
   add_index "leave_details", ["employee_id"], :name => "index_leave_details_on_employee_id"
 
-  create_table "lops", :force => true do |t|
-    t.integer  "employee_id"
-    t.string   "month_year"
-    t.float    "lop"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "paymonths", :force => true do |t|
     t.integer  "month_year"
     t.integer  "number_of_days"
@@ -279,17 +245,6 @@ ActiveRecord::Schema.define(:version => 20120405084536) do
   end
 
   add_index "paymonths", ["month_year"], :name => "index_paymonths_on_month_year"
-
-  create_table "pf_esi_rates", :force => true do |t|
-    t.integer  "paymonth_id"
-    t.decimal  "pf_rate",           :precision => 8, :scale => 2
-    t.decimal  "pf_cutoff",         :precision => 8, :scale => 2
-    t.decimal  "esi_employee_rate", :precision => 8, :scale => 2
-    t.decimal  "esi_employer_rate", :precision => 8, :scale => 2
-    t.decimal  "esi_cutoff",        :precision => 8, :scale => 2
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
-  end
 
   create_table "pf_group_rates", :force => true do |t|
     t.integer  "pf_group_id"
@@ -420,17 +375,6 @@ ActiveRecord::Schema.define(:version => 20120405084536) do
     t.string   "salary_type"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "salary_totals", :force => true do |t|
-    t.integer  "employee_id"
-    t.integer  "month_year_id"
-    t.decimal  "alloted_gross", :precision => 8, :scale => 2
-    t.decimal  "earned",        :precision => 8, :scale => 2
-    t.decimal  "deducted",      :precision => 8, :scale => 2
-    t.decimal  "net_salary",    :precision => 8, :scale => 2
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "states", :force => true do |t|
