@@ -1,5 +1,5 @@
 class Branch < ActiveRecord::Base
-  attr_accessible :branch_name, :responsible_person, :address, :pf_group_id, :esi_group_id, :pt_group_id, :esi_applicable, :created_at,:updated_at
+  attr_accessible :id,:branch_name, :responsible_person, :address, :pf_group_id, :esi_group_id, :pt_group_id, :esi_applicable, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :pf_group

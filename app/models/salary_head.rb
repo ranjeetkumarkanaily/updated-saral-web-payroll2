@@ -1,5 +1,5 @@
 class SalaryHead < ActiveRecord::Base
-  attr_accessible :head_name, :short_name, :salary_type
+  attr_accessible :id,:head_name, :short_name, :salary_type,:created_at,:updated_at
   acts_as_audited
 
   has_many :salary_group_details

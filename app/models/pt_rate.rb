@@ -1,5 +1,5 @@
 class PtRate < ActiveRecord::Base
-  attr_accessible :pt_group_id, :paymonth_id,:min_sal_range,:max_sal_range,:pt, :created_at,:updated_at
+  attr_accessible :id,:pt_group_id, :paymonth_id,:min_sal_range,:max_sal_range,:pt, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :pt_group

@@ -1,5 +1,5 @@
 class EmployeeDetail < ActiveRecord::Base
-  #attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to, :created_at,:updated_at
+  attr_accessible :id,:employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to,:pan,:pan_effective_date, :created_at,:updated_at
   acts_as_audited
 
   serialize :classification,HstoreSerializer

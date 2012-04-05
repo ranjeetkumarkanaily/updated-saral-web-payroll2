@@ -1,5 +1,5 @@
 class HrMaster < ActiveRecord::Base
-
+  attr_accessible :id, :hr_category_id, :employee_id, :category_values, :created_at,:updated_at
   acts_as_audited
 
   serialize :category_values, HstoreSerializer

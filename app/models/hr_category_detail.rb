@@ -1,5 +1,5 @@
 class HrCategoryDetail < ActiveRecord::Base
-  attr_accessible :hr_category_id, :name, :data_type, :required, :created_at,:updated_at
+  attr_accessible :id,:hr_category_id, :name, :data_type, :required, :created_at,:updated_at
   acts_as_audited
 
   belongs_to :hr_category
