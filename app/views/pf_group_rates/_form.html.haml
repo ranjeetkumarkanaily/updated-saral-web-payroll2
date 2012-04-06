@@ -31,7 +31,7 @@
             -if pf_group_rate.id == nil
               %td= f.select :paymonth_id, options_for_select(Paymonth.months.collect {|pm| [ pm.month_name, pm.id ]}, pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
             -else
-              %td= @month_name
+              %td= month_name
           %tr
             %td EPF :&nbsp;
             %td= f.text_field :epf, :size => '22',:onchange=>"calculate()"

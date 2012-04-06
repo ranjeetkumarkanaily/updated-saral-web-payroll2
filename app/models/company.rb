@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  attr_accessible :companyname, :responsible_person, :address, :website, :dateofestablishment,:pf,:esi, :phonenumber1, :phonenumber2 , :address2, :address3, :email, :pt, :tds, :photo_file_name, :photo_content_type, :photo_file_size
+  attr_accessible :companyname, :responsible_person, :address, :website, :dateofestablishment,:pf,:esi, :phonenumber1, :phonenumber2 , :address2, :address3, :email, :pt, :tds, :photo
   acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
