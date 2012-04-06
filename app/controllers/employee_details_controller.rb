@@ -60,34 +60,24 @@ class EmployeeDetailsController < ApplicationController
       if @employee_detail.employee_id != nil
         effective_date = @employee_detail.effective_date
         employee_id = @employee_detail.employee_id
-        #EmployeeDetail.set_current_employee_id employee_id
+        EmployeeDetail.set_current_employee_id employee_id
         last_record_id = EmployeeDetail.find_last_record_id employee_id  if employee_id != nil
 
-        effective_date_after_doj = true
-        if effective_date < Employee.find(employee_id).date_of_joining then
-          @employee_detail.errors.add(:effective_date, "effective_date should be after date of joining")
-          effective_date_after_doj = false
-        end
+        result1 = EmployeeDetail.effective_date_after_doj? effective_date
+        effective_date_after_doj = result1[0]
+        @employee_detail.errors.add(:effective_date,result1[1]) if result1[1] != ''
 
-        effective_date_before_dol = true
-        if Employee.find(employee_id).date_of_leaving != nil then
-          if effective_date > Employee.find(employee_id).date_of_leaving then
-            @employee_detail.errors.add(:effective_date, "effective_date should be before date of leaving")
-            effective_date_before_dol = false
-          end
-        end
 
-        effective_date_validation_with_saved_dates = true
-        last_record_id = EmployeeDetail.find_last_record_id employee_id
-        if last_record_id != 0
-          last_effective_date = EmployeeDetail.find(last_record_id).effective_date
-          if effective_date < last_effective_date then
-            @employee_detail.errors.add(:effective_date, "effective_date should be after date of last saved Effective date")
-            effective_date_validation_with_saved_dates = false
-          end
-        end
+        result2 = EmployeeDetail.effective_date_before_dol? effective_date
+        effective_date_before_dol = result2[0]
+        @employee_detail.errors.add(:effective_date,result2[1]) if result2[1] != ''
 
-        if ( effective_date_after_doj && effective_date_before_dol && effective_date_validation_with_saved_dates ) && @employee_detail.save then
+
+        result3 = EmployeeDetail.effective_date_validation_with_saved_dates? effective_date
+        var_effective_date_validation_with_saved_dates = result3[0]
+        @employee_detail.errors.add(:effective_date,result3[1]) if result3[1] != ''
+
+        if ( effective_date_after_doj && effective_date_before_dol && var_effective_date_validation_with_saved_dates ) && @employee_detail.save then
             sal_gr_id = @employee_detail.salary_group_id
 
             SalaryGroupDetail.salary_group_details(sal_gr_id).each do |sgd|

@@ -1,5 +1,5 @@
 class Classification < ActiveRecord::Base
-  attr_accessible :id,:classification_heading_id,:classification_name, :created_at,:updated_at
+  attr_accessible :classification_heading_id,:classification_name
   acts_as_audited
 
   belongs_to :classification_heading
