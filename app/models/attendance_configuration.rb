@@ -1,5 +1,5 @@
 class AttendanceConfiguration < ActiveRecord::Base
-  attr_accessible :id,:attendance, :short_name, :salary_calendar_days, :created_at,:updated_at
+  attr_accessible :attendance, :short_name, :salary_calendar_days
   acts_as_audited
 
   validates :attendance,   :presence   => true,

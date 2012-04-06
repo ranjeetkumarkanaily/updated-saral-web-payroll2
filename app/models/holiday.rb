@@ -1,5 +1,5 @@
 class Holiday < ActiveRecord::Base
-  attr_accessible :id,:attendance_configuration_id, :holiday_date, :description, :national_holiday, :created_at,:updated_at
+  attr_accessible :attendance_configuration_id, :holiday_date, :description, :national_holiday
   acts_as_audited
 
   belongs_to :attendance_configuration
