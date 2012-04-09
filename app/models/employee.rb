@@ -76,4 +76,54 @@ class Employee < ActiveRecord::Base
 
     @employees
   end
+
+  def self.process_employee_excel_sheet employee_excel_sheet
+    employees = Hash.new
+    employees["employees"] = []
+    employees["errors"] = Hash.new
+    errors = Hash.new
+    counter = 0
+
+    excel_first_row = employee_excel_sheet.first
+
+    if duplicates_in_employee_columns? excel_first_row
+      errors["#{counter+1}"] = ["Duplication of Employee Columns"]
+    else
+      employee_excel_sheet.each 1 do |row|
+        counter+=1
+
+        e = Employee.new
+        e.refno = row[0]
+        e.empname = row[1]
+        e.father_name = row[2]
+        e.marital_status = row[3]
+        e.spouse_name = row[4]
+        e.gender = row[5]
+        e.date_of_birth = row[6]
+        e.date_of_joining = row[7]
+        e.date_of_leaving = row[8]
+        e.present_res_no = row[9]
+        e.present_res_name = row[10]
+        e.present_street = row[11]
+        e.present_locality = row[12]
+        e.present_city = row[13]
+        e.present_state = State.find_by_state_name(row[14])
+        e.email = row[15]
+        e.mobile = row[16].to_s
+
+        if e.valid?
+          employees["employees"] << e
+        else
+          errors["#{counter+1}"] = e.errors
+        end
+      end
+    end
+    employees["errors"] = errors
+    employees
+  end
+
+  def self.duplicates_in_employee_columns? employee_columns
+    employee_columns.size != employee_columns.uniq.size ? true : false
+  end
+
 end

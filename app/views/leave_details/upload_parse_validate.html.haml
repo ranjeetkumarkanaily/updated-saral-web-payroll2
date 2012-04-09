@@ -2,10 +2,10 @@
 #left_content
   = render "left"
 #right_content
-  - unless @errors.empty?
+  - unless @leaves["errors"].empty?
     %h1{:style => "background-color:#e9322d"} Failure
     %ul
-      - @errors.each do |error|
+      - @leaves["errors"].each do |error|
         %li
           Problems in line number #{error[0]}:
           - error[1].full_messages.each do |msg|
@@ -24,7 +24,7 @@
               %td.table_grid_header Ref. No.
               %td.table_grid_header Employee Name
               %td.table_grid_header Leave Date
-            - @leaves.each do |leave|
+            - @leaves["leave_details"].each do |leave|
               %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                 %td.table_grid_td= leave.employee_refno
                 %td.table_grid_td= leave.employee_empname
@@ -35,5 +35,5 @@
               %td &nbsp;
             %tr
               %td
-                - if @errors.empty?
+                - if @leaves["errors"].empty?
                   = submit_tag "Save Leaves"

@@ -38,6 +38,11 @@ describe EmployeesController do
       response.should be_success
     end
 
+    it "gives error for duplication of columns" do
+      excel_file = fixture_file_upload("spec/factories/Employee_Test_Hd_Dup.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should be_success
+    end
   end
 
   describe "GET index" do

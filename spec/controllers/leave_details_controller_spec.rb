@@ -30,6 +30,12 @@ describe LeaveDetailsController do
       response.should be_success
     end
 
+    it "gives error for duplication of columns" do
+      FactoryGirl.create(:leave_detail, :leave_date => '2011-02-01')
+      excel_file = fixture_file_upload("spec/factories/Leave_Details_Hd_Dup.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should be_success
+    end
 
     it "save" do
       leave_detail = FactoryGirl.build(:leave_detail)
