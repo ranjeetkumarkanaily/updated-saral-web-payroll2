@@ -2,10 +2,10 @@
   %ul
     %li= link_to 'Back', employees_path
 #right_content
-  - unless @errors.empty?
+  - unless @employees["errors"].empty?
     %h1{:style => "background-color:#e9322d"} Failure
     %ul
-      - @errors.each do |error|
+      - @employees["errors"].each do |error|
         %li
           Problems in line number #{error[0]}:
           - error[1].full_messages.each do |msg|

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessible :username, :password
   acts_as_audited
 
   validates_presence_of :username, :password

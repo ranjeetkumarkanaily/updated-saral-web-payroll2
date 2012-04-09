@@ -1,5 +1,5 @@
 class PfGroup < ActiveRecord::Base
-  attr_accessible :id,:pf_group, :pf_number, :db_file_code, :extension,:address, :created_at,:updated_at
+  attr_accessible :pf_group, :pf_number, :db_file_code, :extension,:address
   acts_as_audited
 
   has_many :pf_group_rates, :dependent => :destroy
