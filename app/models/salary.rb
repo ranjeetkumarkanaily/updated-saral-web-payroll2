@@ -85,7 +85,34 @@ class Salary < ActiveRecord::Base
   end
 
   def self.find_employees_leave from_date, to_date, employee_id
-    LeaveDetail.select("count(employee_id) as leave_count").where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" )
+    LeaveDetail.where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" ).count
+  end
+
+  def self.calculate_salary salary, pay_month
+    month_year = Date.strptime pay_month, '%b/%Y'
+    leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,salary[0]['employee_id']
+    no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
+    no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
+    employee_dol = Employee.chk_dol salary[0]['employee_id']
+    if employee_dol
+      no_of_day_if_dol_exist = employee_dol.day
+      @no_of_present_days = no_of_day_if_dol_exist - leave_count
+    else
+      @no_of_present_days = no_of_day_in_selected_month - leave_count
+    end
+
+    salary.each do |sal|
+      updated_salary_amount = sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month.to_f
+      Salary.create :effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id], :salary_group_detail_id => sal[:salary_group_detail_id]
+    end
+
+    pf_amount = get_pf_amount pay_month,salary[0]['employee_id']
+    Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id => salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil)
+
+    esi_amount = get_esi_amount pay_month,salary[0]['employee_id']
+    Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id =>salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => nil)
+
+    @no_of_present_days
   end
 
   def self.salary_sheet month_year
@@ -96,7 +123,6 @@ class Salary < ActiveRecord::Base
     i=0
     employee_list.each do |emp_salary_data|
       leave_count = find_employees_leave month_year_format.beginning_of_month, month_year_format.end_of_month,emp_salary_data.id.to_s
-      leave_count = leave_count[0]['leave_count'].to_i
       no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year_format.end_of_month}'")
       no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
 

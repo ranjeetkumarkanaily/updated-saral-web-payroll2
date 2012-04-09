@@ -25,7 +25,6 @@ class SalariesController < ApplicationController
       @employee = Employee.find(params[:employee_id])
       month_year = Date.strptime params[:month_year], '%b/%Y'
       leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,params[:employee_id]
-      leave_count = leave_count[0]['leave_count'].to_i
       @no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
       @no_of_day_in_selected_month = @no_of_day_in_selected_month[0]['number_of_days'].to_i
 
@@ -58,30 +57,7 @@ class SalariesController < ApplicationController
 
   def create
     if(params[:salary])
-      month_year = Date.strptime params[:month_year], '%b/%Y'
-      leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,params[:salary][0]['employee_id']
-      leave_count = leave_count[0]['leave_count'].to_i
-      no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
-      no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
-      employee_dol = Employee.chk_dol params[:salary][0]['employee_id']
-      if employee_dol
-        no_of_day_if_dol_exist = employee_dol.day
-        @no_of_present_days = no_of_day_if_dol_exist - leave_count
-      else
-        @no_of_present_days = no_of_day_in_selected_month - leave_count
-      end
-
-      params[:salary].each do |sal|
-        updated_salary_amount = sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month.to_f
-        Salary.create(:effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id], :salary_group_detail_id => sal[:salary_group_detail_id])
-      end
-
-      pf_amount = Salary.get_pf_amount params[:month_year],params[:salary][0]['employee_id']
-      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil)
-
-      esi_amount = Salary.get_esi_amount params[:month_year],params[:salary][0]['employee_id']
-      Salary.create(:effective_date => params[:salary][0]['effective_date'], :employee_detail_id => params[:salary][0]['employee_detail_id'], :employee_id => params[:salary][0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => nil)
-
+      Salary.calculate_salary params[:salary], params[:month_year]
       redirect_to salaries_path
     end
   end

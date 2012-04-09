@@ -21,24 +21,6 @@ describe SalariesController do
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
       end
 
-      it "should give no of present days" do
-        employee = FactoryGirl.create(:employee)
-        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
-        salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
-        assigns(:no_of_present_days).should eq(27)
-      end
-
-      it "should give no of present days" do
-        employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
-        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
-        salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
-        assigns(:no_of_present_days).should eq(14)
-      end
-
       it "Count should be increases by one" do
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
