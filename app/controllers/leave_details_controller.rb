@@ -14,23 +14,6 @@ class LeaveDetailsController < ApplicationController
     book = Spreadsheet.open "#{file.store_path}"
     sheet1 = book.worksheet 0
 
-    #@leaves = []
-    #@errors = Hash.new
-    #@counter = 0
-    #sheet1.each 1 do |row|
-    #  @counter+=1
-    #
-    #  l = LeaveDetail.new
-    #  l.employee_id = Employee.find_by_refno("#{row[0]}").id
-    #  l.leave_date = row[1]
-    #
-    #  if l.valid?
-    #    @leaves << l
-    #  else
-    #    @errors["#{@counter+1}"] = l.errors
-    #  end
-    #end
-
     @leaves = LeaveDetail.process_leaves_excel_sheet sheet1
 
     file.remove!
