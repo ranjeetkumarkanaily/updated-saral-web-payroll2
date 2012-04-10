@@ -49,7 +49,7 @@ describe Salary do
         get_leave_count.should eq(27)
       end
 
-      it "should give no of present days" do
+      it "should give no of present days with employee date" do
         employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
