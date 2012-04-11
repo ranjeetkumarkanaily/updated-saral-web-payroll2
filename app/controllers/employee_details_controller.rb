@@ -73,11 +73,11 @@ class EmployeeDetailsController < ApplicationController
         @employee_detail.errors.add(:effective_date,result2[1]) if result2[1] != ''
 
 
-        result3 = EmployeeDetail.effective_date_validation_with_saved_dates? effective_date
-        var_effective_date_validation_with_saved_dates = result3[0]
+        result3 = EmployeeDetail.effective_date_validation? effective_date
+        var_effective_date_validation = result3[0]
         @employee_detail.errors.add(:effective_date,result3[1]) if result3[1] != ''
 
-        if ( effective_date_after_doj && effective_date_before_dol && var_effective_date_validation_with_saved_dates ) && @employee_detail.save then
+        if ( effective_date_after_doj && effective_date_before_dol && var_effective_date_validation ) && @employee_detail.save then
           sal_gr_id = @employee_detail.salary_group_id
 
           SalaryGroupDetail.salary_group_details(sal_gr_id).each do |sgd|

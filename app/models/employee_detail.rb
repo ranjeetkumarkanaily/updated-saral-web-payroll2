@@ -51,34 +51,34 @@ class EmployeeDetail < ActiveRecord::Base
   def self.effective_date_after_doj? effective_date
     result = true
     if effective_date < Employee.find(@current_employee_id).date_of_joining then
-      errors = "effective_date should be after date of joining"
+      error = "effective_date should be after date of joining"
       result = false
     end
-    [result,errors]
+    [result,error]
   end
 
   def self.effective_date_before_dol? effective_date
     result = true
     if Employee.find(@current_employee_id).date_of_leaving != nil then
       if effective_date > Employee.find(@current_employee_id).date_of_leaving then
-        errors = "effective_date should be before date of leaving"
+        error = "effective_date should be before date of leaving"
         result = false
       end
     end
-    [result,errors]
+    [result,error]
   end
 
-  def self.effective_date_validation_with_saved_dates? effective_date
+  def self.effective_date_validation? effective_date
     result = true
-    last_record_id = find_last_record_id @current_employee_id
+    last_record_id = last_record @current_employee_id
     if last_record_id != 0
       last_effective_date = EmployeeDetail.find(last_record_id).effective_date
       if effective_date < last_effective_date then
-        errors = "effective_date should be after date of last saved Effective date"
+        error = "effective_date should be after date of last saved Effective date"
         result = false
       end
     end
-    [result,errors]
+    [result,error]
   end
 
   def self.update_last_record last_record_id,effective_date
@@ -87,7 +87,7 @@ class EmployeeDetail < ActiveRecord::Base
 
   end
 
-  def self.find_last_record_id employee_id
+  def self.last_record employee_id
     last_record_id = 0
     if EmployeeDetail.count(:conditions => "employee_id = #{employee_id}") > 0 then
       last_record_id = EmployeeDetail.where(:employee_id => employee_id).order('created_at desc')
