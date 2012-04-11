@@ -77,5 +77,12 @@ describe Paymonth do
 
   end
 
+  describe "should give next month" do
+    it "should give next month if any paymonth is created" do
+      paymonth = Paymonth.create(@attr)
+      next_month = Paymonth.next_paymonth
+      next_month.should eq("Feb/2011")
+    end
+  end
 
 end

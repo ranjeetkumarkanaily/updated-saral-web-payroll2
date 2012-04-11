@@ -6,6 +6,7 @@ class PaymonthsController < ApplicationController
 
   def new
     @paymonth = Paymonth.new
+    @next_month = Paymonth.next_paymonth if Paymonth.count > 0
   end
 
   def show
@@ -62,7 +63,7 @@ class PaymonthsController < ApplicationController
       end
     else
       respond_to do |format|
-        @paymonth.errors.add(:paymonth, "Out of sequence Month/Year can not be deleted.")
+        @paymonth.errors.add(:paymonth, "Out of sequence. Month/Year can not be deleted.")
         format.html { redirect_to paymonths_url, notice: "Out of sequence Month/Year can not be deleted." }
       end
     end

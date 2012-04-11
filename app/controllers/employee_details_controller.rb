@@ -61,7 +61,7 @@ class EmployeeDetailsController < ApplicationController
         effective_date = @employee_detail.effective_date
         employee_id = @employee_detail.employee_id
         EmployeeDetail.set_current_employee_id employee_id
-        last_record_id = EmployeeDetail.find_last_record_id employee_id  if employee_id != nil
+        last_record_id = EmployeeDetail.last_record employee_id  if employee_id != nil
 
         result1 = EmployeeDetail.effective_date_after_doj? effective_date
         effective_date_after_doj = result1[0]
@@ -127,7 +127,7 @@ class EmployeeDetailsController < ApplicationController
     @employee_detail = EmployeeDetail.find(params[:id])
     @paramempid = @employee_detail.employee_id
     @employee_detail.destroy
-    last_record_id = EmployeeDetail.find_last_record_id @paramempid
+    last_record_id = EmployeeDetail.last_record @paramempid
     EmployeeDetail.update_last_record last_record_id,nil if last_record_id != 0
     respond_to do |format|
       format.html { redirect_to employee_details_url(:param1 => @paramempid), notice: 'Employee detail was successfully Destroyed.' }

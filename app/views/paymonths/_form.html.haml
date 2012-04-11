@@ -17,7 +17,7 @@
                 %tr
                   %td Month Name:&nbsp;
                   %td
-                    = f.text_field :month_name, :size => '22'
+                    = f.text_field :month_name, :size => '22', :value => next_month != '' ? next_month : ''
                 %tr
                   %td &nbsp;
                   %td{:class => 'msg'} (e.g. "Jan/2012")
