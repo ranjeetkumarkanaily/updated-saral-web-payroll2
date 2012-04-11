@@ -51,8 +51,8 @@ class EmployeeDetail < ActiveRecord::Base
   def self.effective_date_after_doj? effective_date
     result = true
     if effective_date < Employee.find(@current_employee_id).date_of_joining then
-       errors = "effective_date should be after date of joining"
-       result = false
+      errors = "effective_date should be after date of joining"
+      result = false
     end
     [result,errors]
   end

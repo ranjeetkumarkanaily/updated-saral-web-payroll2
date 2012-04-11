@@ -7,9 +7,9 @@ class EmployeeDetailsController < ApplicationController
     @classification_headings = ClassificationHeading.order('display_order')
     @paramempid = params[:param1]
     if @paramempid
-    @employee_details = EmployeeDetail.where(:employee_id=>@paramempid).order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
+      @employee_details = EmployeeDetail.where(:employee_id=>@paramempid).order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
     else
-    @employee_details = EmployeeDetail.order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
+      @employee_details = EmployeeDetail.order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
     end
 
     respond_to do |format|
@@ -78,15 +78,15 @@ class EmployeeDetailsController < ApplicationController
         @employee_detail.errors.add(:effective_date,result3[1]) if result3[1] != ''
 
         if ( effective_date_after_doj && effective_date_before_dol && var_effective_date_validation_with_saved_dates ) && @employee_detail.save then
-            sal_gr_id = @employee_detail.salary_group_id
+          sal_gr_id = @employee_detail.salary_group_id
 
-            SalaryGroupDetail.salary_group_details(sal_gr_id).each do |sgd|
-              SalaryAllotment.create!(:employee_id => employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
-            end
+          SalaryGroupDetail.salary_group_details(sal_gr_id).each do |sgd|
+            SalaryAllotment.create!(:employee_id => employee_id, :employee_detail_id => @employee_detail.id, :effective_date => @employee_detail.effective_date, :salary_head_id => sgd.salary_head_id, :salary_group_detail_id => sgd.id, :salary_allotment =>0)
+          end
 
-            EmployeeDetail.update_last_record last_record_id,effective_date.yesterday if last_record_id != 0
-            format.html { redirect_to employee_details_path(:param1 => employee_id), notice: 'Employee detail was successfully created.' }
-            format.json { render json: @employee_detail, status: :created, location: @employee_detail }
+          EmployeeDetail.update_last_record last_record_id,effective_date.yesterday if last_record_id != 0
+          format.html { redirect_to employee_details_path(:param1 => employee_id), notice: 'Employee detail was successfully created.' }
+          format.json { render json: @employee_detail, status: :created, location: @employee_detail }
         else
           @paramempid = employee_id
           @classification_headings = ClassificationHeading.order('display_order')
