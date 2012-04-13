@@ -79,7 +79,8 @@ class Employee < ActiveRecord::Base
 
   def self.process_employee_excel_sheet employee_excel_sheet
     employees = Hash.new
-    employees["employees"] = []
+    employees["employees_save"] = []
+    employees["employees_update"] = []
     employees["errors"] = Hash.new
     errors = Hash.new
     counter = 0
@@ -93,7 +94,7 @@ class Employee < ActiveRecord::Base
         counter+=1
 
         e = Employee.new
-        e.refno = row[0]
+        e.refno = row[0].to_s
         e.empname = row[1]
         e.father_name = row[2]
         e.marital_status = row[3]
@@ -111,10 +112,14 @@ class Employee < ActiveRecord::Base
         e.email = row[15]
         e.mobile = row[16].to_s
 
-        if e.valid?
-          employees["employees"] << e
+        if(Employee.exists?(:refno => e.refno))
+          employees["employees_update"] << e
         else
-          errors["#{counter+1}"] = e.errors
+          if e.valid?
+            employees["employees_save"] << e
+          else
+            errors["#{counter+1}"] = e.errors
+          end
         end
       end
     end

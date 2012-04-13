@@ -84,7 +84,8 @@ class EmployeesController < ApplicationController
     @employees = Employee.process_employee_excel_sheet sheet1
 
     if @employees["errors"].empty?
-      save_employee @employees["employees"]
+      save_employee @employees["employees_save"]
+      update_employee @employees["employees_update"]
       redirect_to employees_path
     end
 
@@ -144,6 +145,13 @@ class EmployeesController < ApplicationController
     def save_employee employees
       employees.each do |employee|
         employee.save
+      end
+    end
+
+    def update_employee employees
+      employees.each do |employee|
+        emp = Employee.find_by_refno(employee.refno)
+        emp.update_attributes!(employee.attributes.except('id','refno','created_at','updated_at'))
       end
     end
 

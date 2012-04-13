@@ -31,8 +31,15 @@ describe EmployeesController do
       response.should redirect_to(employees_path)
     end
 
+    it "updates existing employee" do
+      emp = FactoryGirl.create(:employee, :refno => 1004)
+      excel_file = fixture_file_upload("spec/factories/Employee_Test_Update.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      Employee.find_by_refno(emp.refno.to_s).email.should eq('Ranjeet.kumar@relyonsoft.com')
+    end
+
     it "gives error" do
-      FactoryGirl.create(:employee, :refno => 1004)
+      emp = FactoryGirl.create(:employee, :refno => 1004)
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should be_success

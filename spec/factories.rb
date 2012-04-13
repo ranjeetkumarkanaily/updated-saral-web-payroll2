@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :employee do
     id 1
     refno 1001
-    email "test@test.com"
+    email "aditya.swaroop@relyonsoft.com"
     present_state_id "1"
     empname "XYZ"
     date_of_joining "2011-02-01"
