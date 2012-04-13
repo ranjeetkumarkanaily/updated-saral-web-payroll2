@@ -53,7 +53,7 @@ class EmployeeDetailsController < ApplicationController
   # POST /employee_details
   # POST /employee_details.json
   def create
-    params[:employee_detail][:pan] = params[:panoption] if params[:panoption] != "ADD PAN"
+
     @employee_detail = EmployeeDetail.new(params[:employee_detail])
 
     respond_to do |format|
@@ -106,7 +106,6 @@ class EmployeeDetailsController < ApplicationController
   # PUT /employee_details/1
   # PUT /employee_details/1.json
   def update
-    params[:employee_detail][:pan] = params[:panoption] if ( params[:panoption] != "ADD PAN"  and params[:panoption] != " " )
     @employee_detail = EmployeeDetail.find(params[:id])
     @paramempid = params[:employee_detail]['employee_id']
     @classification_headings = ClassificationHeading.order('display_order')
