@@ -9,6 +9,8 @@ FactoryGirl.define do
     date_of_joining "2011-02-01"
     date_of_leaving ""
     restrct_pf false
+    pan "aaaaa1234a"
+    pan_effective_date "2011-08-01"
   end
 
   factory :lop do
@@ -67,8 +69,7 @@ FactoryGirl.define do
     attendance_configuration_id  2
     bank_account_number 2316
     effective_to  ''
-    pan 'aaaaa1234a'
-    pan_effective_date "2012-03-01"
+
   end
 
   factory :state do

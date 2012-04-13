@@ -34,6 +34,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
+    params[:employee][:pan] = params[:panoption] if params[:panoption] != "ADD PAN"
     @employee = Employee.new(params[:employee])
 
     respond_to do |format|
@@ -48,6 +49,7 @@ class EmployeesController < ApplicationController
   end
 
   def update
+    params[:employee][:pan] = params[:panoption] if ( params[:panoption] != "ADD PAN"  and params[:panoption] != " " )
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }

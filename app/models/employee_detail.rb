@@ -1,6 +1,6 @@
 class EmployeeDetail < ActiveRecord::Base
 
-  attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to,:pan,:pan_effective_date
+  attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to
   acts_as_audited
 
   attr_accessor :current_employee_id
@@ -19,30 +19,12 @@ class EmployeeDetail < ActiveRecord::Base
 
   validates_uniqueness_of :employee_id, :scope => [:effective_date],:message => "Details already exist for the same date"
 
-  regex_for_pan = /([PAN Not Avbl]|[PAN Applied]|[PAN Invalid]|[a-z]{5}[d]{4}[a-z]{1})/i
 
-  validates :pan,   :presence   => true, :allow_blank => true,
-            :format     => { :with => regex_for_pan }
-
-  validates :pan_effective_date, :presence => true, :if => :pan_present?
-
-  validate :pan_effective_date_after_dob, :if => :pan_present?
 
   delegate :salary_group_name, :to => :salary_group, :prefix => true
   delegate :empname, :to => :employee, :prefix => true
 
-  def pan_present?
-    self.pan != 'PAN Applied' and self.pan != 'PAN Invalid' and self.pan != 'PAN Not Avbl'
-  end
 
-  def pan_effective_date_after_dob
-    if !Employee.find(employee_id).date_of_birth.nil? and !pan_effective_date.nil?
-      dob = Employee.find(employee_id).date_of_birth
-      if pan_effective_date < dob then
-        errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
-      end
-    end
-  end
 
 
   def self.set_current_employee_id employee_id

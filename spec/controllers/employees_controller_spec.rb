@@ -15,7 +15,9 @@ describe EmployeesController do
       :present_state_id => "1",
       :refno => "A1",
       :email => "ganny@gnaa.com",
-      :restrct_pf => false
+      :restrct_pf => false,
+      :pan => "aaaaa1234a",
+      :pan_effective_date => "2010-08-01"
     }
   end
 
@@ -97,18 +99,18 @@ describe EmployeesController do
       end
       it "Count should be increases by one" do
         expect {
-          post :create, :employee => @employee.attributes
+          post :create, :employee => @employee.attributes, :panoption=>"PAN Applied"
         }.to change(Employee, :count).by(1)
       end
 
       it "assigns a newly created employee as @employee" do
-        post :create, :employee => @employee.attributes
+        post :create, :employee => @employee.attributes, :panoption=>"PAN Applied"
         assigns(:employee).should be_a(Employee)
         assigns(:employee).should be_persisted
       end
 
       it "redirects to the created employee" do
-        post :create, :employee => @employee.attributes
+        post :create, :employee => @employee.attributes, :panoption=>"PAN Applied"
         response.should redirect_to(Employee.last)
       end
     end
@@ -136,17 +138,17 @@ describe EmployeesController do
         @employee = FactoryGirl.create(:employee)
       end
       it "updates the requested employee" do
-        Employee.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => @employee.id, :employee => {'these' => 'params'}
+        Employee.any_instance.should_receive(:update_attributes).with({'these' => 'params',"pan"=>nil})
+        put :update, :id => @employee.id, :employee => {'these' => 'params','pan'=>nil}
       end
 
       it "assigns the requested employee as @employee" do
-        put :update, :id => @employee.id, :employee => @employee.attributes
+        put :update, :id => @employee.id, :employee => @employee.attributes , :panoption=>"PAN Applied"
         assigns(:employee).should eq(@employee)
       end
 
       it "redirects to the employee" do
-        put :update, :id => @employee.id, :employee => @employee.attributes
+        put :update, :id => @employee.id, :employee => @employee.attributes, :panoption=>"PAN Applied"
         response.should redirect_to(@employee)
       end
     end

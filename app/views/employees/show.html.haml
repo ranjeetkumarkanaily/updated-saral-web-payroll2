@@ -10,7 +10,7 @@
         %li= link_to hr_category.category_name, new_hr_master_path(:hr_category_id => hr_category.id, :employee_id => @employee.id)
 #right_content
   %h1
-    Showing Employee
+    Employee Details
     = link_to image_tag('/assets/edit.png',:title => "Edit Employee"), edit_employee_path(@employee)
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
@@ -52,6 +52,16 @@
                 %tr
                   %td Date of Joining:&nbsp;
                   %td= l @employee.date_of_joining, :format => :default
+                %tr
+                  %td PAN:&nbsp;
+                  %td= @employee.pan
+                %tr
+                  %td PAN Effective Date:&nbsp;
+                  %td
+                  - if @employee.date_of_leaving != nil
+                    = l @employee.pan_effective_date, :format => :default
+                  - else
+                    = ""
           %tr
             %td.std_td
               %table

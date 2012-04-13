@@ -1,3 +1,33 @@
+:javascript
+  $(document).ready(function() {
+  if(document.getElementById('employee_refno').value.length > 0 )
+  {
+    pan = document.getElementById('employee_pan').value
+    document.getElementById('panoption').value = pan
+    if(pan == 'PAN Invalid' || pan == 'PAN Applied' || pan == 'PAN Not Avbl' || pan == '')
+      document.getElementById('employee_pan').style.display = 'none';
+    else
+      document.getElementById('employee_pan').style.display = '';
+  }
+  else
+  document.getElementById('employee_pan').style.display = 'none';
+  display_pandate(document.getElementById('employee_pan').style.display)
+  });
+  function display_field(val)
+  {
+    if(val.value == "ADD PAN")
+    document.getElementById('employee_pan').style.display = '';
+    else
+    document.getElementById('employee_pan').style.display = 'none';
+    document.getElementById('employee_pan').value = ''
+
+    display_pandate(document.getElementById('employee_pan').style.display)
+  }
+  function display_pandate(val)
+  {
+    document.getElementById('pan_ed').style.display = val
+    document.getElementById('pan_date').style.display = val
+  }
 = form_for(employee) do |f|
   - if employee.errors.any?
     #error_explanation
@@ -33,16 +63,24 @@
               %table
                 %tr
                   %td{:width=>130} Employee Name:&nbsp;
-                  %td= f.text_field :empname, :size => '22'
+                  %td{:colspan=>2}= f.text_field :empname, :size => '22'
                 %tr
                   %td Gender:&nbsp;
-                  %td= f.select :gender, options_for_select(["Male", "Female"],employee.gender), {:prompt => 'Select Gender'}
+                  %td{:colspan=>2}= f.select :gender, options_for_select(["Male", "Female"],employee.gender), {:prompt => 'Select Gender'}
                 %tr
                   %td Spouse Name:&nbsp;
-                  %td= f.text_field :spouse_name, :size => '22'
+                  %td{:colspan=>2}= f.text_field :spouse_name, :size => '22'
                 %tr
                   %td Date of Joining:&nbsp;
-                  %td= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                  %td{:colspan=>2}= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                %tr
+                  %td{:width => 130} PAN :&nbsp;
+                  %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "display_field(this)"
+                  %td= f.text_field :pan,:style=>"width:90px"
+                %tr
+                  %td#pan_date{:width => 130} Effective Date(For PAN) :&nbsp;
+                  %td{:colspan=>2}= f.text_field :pan_effective_date,:id=>"pan_ed", :class=>"date_input"
+
           %tr
             %td.std_td
               %table
