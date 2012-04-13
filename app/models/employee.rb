@@ -132,6 +132,7 @@ class Employee < ActiveRecord::Base
         e.present_state = State.find_by_state_name(row[14])
         e.email = row[15]
         e.mobile = row[16].to_s
+        e.pan = row[17]
 
         if(Employee.exists?(:refno => e.refno))
           employees["employees_update"] << e
