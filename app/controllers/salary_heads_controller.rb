@@ -3,8 +3,8 @@ class SalaryHeadsController < ApplicationController
   before_filter :find_salary_head, :only => [:edit, :update, :destroy]
 
   def index
-    @salary_heads = SalaryHead.where('id != 2 and id != 3').order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
-
+    @salary_head_earnings = SalaryHead.salary_heads_by_type("Earnings").paginate(:page => params[:page], :per_page => 10)
+    @salary_head_deductions = SalaryHead.salary_heads_by_type("Deductions").where('id != 2 and id != 3').paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # salary_sheet.html.haml
       format.json { render json: @salary_heads }
@@ -60,7 +60,7 @@ class SalaryHeadsController < ApplicationController
   end
 
   protected
-    def find_salary_head
-      @salary_head = SalaryHead.find(params[:id])
-    end
+  def find_salary_head
+    @salary_head = SalaryHead.find(params[:id])
+  end
 end

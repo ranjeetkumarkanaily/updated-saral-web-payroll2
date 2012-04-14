@@ -18,7 +18,7 @@ describe SalaryHeadsController do
     it "assigns all salary_heads as @salary_heads" do
       salary_head = SalaryHead.create! valid_attributes
       get :index
-      assigns(:salary_heads).should eq([salary_head])
+      assigns(:salary_head_earnings).should eq([salary_head])
     end
   end
 
