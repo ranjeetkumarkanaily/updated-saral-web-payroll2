@@ -34,6 +34,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
+    params[:employee][:pan] = params[:panoption] if params[:panoption] != "ADD PAN"
     @employee = Employee.new(params[:employee])
 
     respond_to do |format|
@@ -48,6 +49,7 @@ class EmployeesController < ApplicationController
   end
 
   def update
+    params[:employee][:pan] = params[:panoption] if ( params[:panoption] != "ADD PAN"  and params[:panoption] != " " )
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
         format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
@@ -84,7 +86,8 @@ class EmployeesController < ApplicationController
     @employees = Employee.process_employee_excel_sheet sheet1
 
     if @employees["errors"].empty?
-      save_employee @employees["employees"]
+      save_employee @employees["employees_save"]
+      update_employee @employees["employees_update"]
       redirect_to employees_path
     end
 
@@ -144,6 +147,13 @@ class EmployeesController < ApplicationController
     def save_employee employees
       employees.each do |employee|
         employee.save
+      end
+    end
+
+    def update_employee employees
+      employees.each do |employee|
+        emp = Employee.find_by_refno(employee.refno)
+        emp.update_attributes!(employee.attributes.except('id','refno','created_at','updated_at'))
       end
     end
 

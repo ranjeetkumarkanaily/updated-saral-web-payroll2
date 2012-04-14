@@ -54,7 +54,10 @@ namespace :bootstrap do
     FinancialInstitution.create( :name => "CASH", :address_line1 => "address", :address_line2 => "address", :address_line3 => "address", :address_line4 => "address", :pincode => 560076, :branch_code => "branch_code", :email => "email" )
   end
 
-
+  desc "Add Default Classification Designation"
+  task :classification_heading => :environment do
+    ClassificationHeading.create( :classification_heading_name => "Designation", :display_order => 1 )
+  end
 
   desc "Run all bootstrapping tasks"
   task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution]

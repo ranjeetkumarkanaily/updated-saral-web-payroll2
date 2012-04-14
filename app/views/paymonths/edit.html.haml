@@ -5,4 +5,4 @@
   %h1
     Editing Pay Month
     = link_to image_tag('/assets/show.png',:title => "Show Pay Month"), @paymonth
-  = render 'form', :paymonth => @paymonth
+  = render 'form', :paymonth => @paymonth,:next_month => @next_month

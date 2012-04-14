@@ -25,7 +25,7 @@ class ClassificationHeadingsController < ApplicationController
   end
 
   def create
-    @classification_heading = ClassificationHeading.new(params[:classification_heading])
+      @classification_heading = ClassificationHeading.new(params[:classification_heading])
 
     respond_to do |format|
       if @classification_heading.save

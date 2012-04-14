@@ -1,25 +1,3 @@
-:javascript
-  $(document).ready(function() {
-  if(document.getElementById('employee_detail_salary_group_id').value.length > 0 )
-  {
-    pan = document.getElementById('employee_detail_pan').value
-    document.getElementById('panoption').value = pan
-    if(pan == 'PAN Invalid' || pan == 'PAN Applied' || pan == 'PAN Not Avbl' )
-      document.getElementById('employee_detail_pan').style.display = 'none';
-    else
-      document.getElementById('employee_detail_pan').style.display = '';
-  }
-  else
-  document.getElementById('employee_detail_pan').style.display = 'none';
-  });
-  function display_field(val)
-  {
-    if(val.value == "ADD PAN")
-    document.getElementById('employee_detail_pan').style.display = '';
-    else
-    document.getElementById('employee_detail_pan').style.display = 'none';
-    document.getElementById('employee_detail_pan').value = ''
-  }
 = form_for(employee_detail) do |f|
   - if employee_detail.errors.any?
     #error_explanation
@@ -79,14 +57,5 @@
                         %td &nbsp;
                       %tr
                         %td{:colspan=>2}= f.submit
-                  %td.std_td
-                    %table
-                      %tr
-                        %td{:width => 130} PAN :&nbsp;
-                        %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "display_field(this)"
-                        %td= f.text_field :pan,:style=>"width:90px"
-                      %tr
-                        %td{:width => 130} Effective Date(For PAN) :&nbsp;
-                        %td{:colspan=>2}= f.text_field :pan_effective_date,:id=>"pan_ed", :class=>"date_input"
 
 

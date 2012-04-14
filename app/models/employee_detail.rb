@@ -1,6 +1,6 @@
 class EmployeeDetail < ActiveRecord::Base
 
-  attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to,:pan,:pan_effective_date
+  attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to
   acts_as_audited
 
   attr_accessor :current_employee_id
@@ -19,30 +19,12 @@ class EmployeeDetail < ActiveRecord::Base
 
   validates_uniqueness_of :employee_id, :scope => [:effective_date],:message => "Details already exist for the same date"
 
-  regex_for_pan = /([PAN Not Avbl]|[PAN Applied]|[PAN Invalid]|[a-z]{5}[d]{4}[a-z]{1})/i
 
-  validates :pan,   :presence   => true, :allow_blank => true,
-            :format     => { :with => regex_for_pan }
-
-  validates :pan_effective_date, :presence => true, :if => :pan_present?
-
-  validate :pan_effective_date_after_dob, :if => :pan_present?
 
   delegate :salary_group_name, :to => :salary_group, :prefix => true
   delegate :empname, :to => :employee, :prefix => true
 
-  def pan_present?
-    self.pan != 'PAN Applied' and self.pan != 'PAN Invalid' and self.pan != 'PAN Not Avbl'
-  end
 
-  def pan_effective_date_after_dob
-    if !Employee.find(employee_id).date_of_birth.nil? and !pan_effective_date.nil?
-      dob = Employee.find(employee_id).date_of_birth
-      if pan_effective_date < dob then
-        errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
-      end
-    end
-  end
 
 
   def self.set_current_employee_id employee_id
@@ -51,34 +33,34 @@ class EmployeeDetail < ActiveRecord::Base
   def self.effective_date_after_doj? effective_date
     result = true
     if effective_date < Employee.find(@current_employee_id).date_of_joining then
-       errors = "effective_date should be after date of joining"
-       result = false
+      error = "effective_date should be after date of joining"
+      result = false
     end
-    [result,errors]
+    [result,error]
   end
 
   def self.effective_date_before_dol? effective_date
     result = true
     if Employee.find(@current_employee_id).date_of_leaving != nil then
       if effective_date > Employee.find(@current_employee_id).date_of_leaving then
-        errors = "effective_date should be before date of leaving"
+        error = "effective_date should be before date of leaving"
         result = false
       end
     end
-    [result,errors]
+    [result,error]
   end
 
-  def self.effective_date_validation_with_saved_dates? effective_date
+  def self.effective_date_validation? effective_date
     result = true
-    last_record_id = find_last_record_id @current_employee_id
+    last_record_id = last_record @current_employee_id
     if last_record_id != 0
       last_effective_date = EmployeeDetail.find(last_record_id).effective_date
       if effective_date < last_effective_date then
-        errors = "effective_date should be after date of last saved Effective date"
+        error = "effective_date should be after date of last saved Effective date"
         result = false
       end
     end
-    [result,errors]
+    [result,error]
   end
 
   def self.update_last_record last_record_id,effective_date
@@ -87,7 +69,7 @@ class EmployeeDetail < ActiveRecord::Base
 
   end
 
-  def self.find_last_record_id employee_id
+  def self.last_record employee_id
     last_record_id = 0
     if EmployeeDetail.count(:conditions => "employee_id = #{employee_id}") > 0 then
       last_record_id = EmployeeDetail.where(:employee_id => employee_id).order('created_at desc')

@@ -29,6 +29,11 @@ class Paymonth < ActiveRecord::Base
     [result,next_paymonth]
   end
 
+  def self.next_paymonth
+      last_paymonth = Date.strptime Paymonth.last.month_name, "%b/%Y"
+      last_paymonth.next_month.strftime("%b/%Y")
+  end
+
   scope :months, :order => 'created_at DESC'
 
 end
