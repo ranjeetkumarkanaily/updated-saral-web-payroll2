@@ -2,6 +2,7 @@
   %ul
     %li= link_to 'Back', branches_path
     %li= link_to 'Edit Branch', edit_branch_path(@branch)
+    %li= link_to 'PF Group', new_branch_pf_detail_path(:branch_id => @branch.id)
 #right_content
   %h1
     Showing Branch
@@ -25,14 +26,14 @@
                   %td= @branch.address
                 %tr
                   %td{:width=>130} PF Group:&nbsp;
-                  %td= @branch.pf_group_pf_group
-                %tr
-                  %td{:width=>130} ESI Applicable:&nbsp;
-                  %td= (@branch.esi_applicable==true)?"Yes":"No"
-                -if @branch.esi_applicable == true
-                  %tr
-                    %td{:width=>130} ESI Group:&nbsp;
-                    %td= @branch.esi_group_esi_group_name
+                  %td= BranchPfDetail.find_all_by_branch_id(@branch.id, :order => 'created_at DESC').first.pf_group.pf_group
+                -#%tr
+                -#  %td{:width=>130} ESI Applicable:&nbsp;
+                -#  %td= (@branch.esi_applicable==true)?"Yes":"No"
+                -#-if @branch.esi_applicable == true
+                -#  %tr
+                -#    %td{:width=>130} ESI Group:&nbsp;
+                -#    %td= @branch.esi_group_esi_group_name
             %td.std_td
               %table
                 %tr
@@ -40,8 +41,8 @@
                   %td= @branch.responsible_person
                 %tr
                   %td &nbsp;
-                %tr
-                  %td{:width=>130} PT Group:&nbsp;
-                  %td= @branch.pt_group_name
+                -#%tr
+                -#  %td{:width=>130} PT Group:&nbsp;
+                -#  %td= @branch.pt_group_name
                 %tr
                   %td &nbsp;
