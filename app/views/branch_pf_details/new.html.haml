@@ -1,10 +1,10 @@
 #left_content
   %ul
-    %li= link_to 'Back', Branch.find(params[:branch_id])
+    %li= link_to 'Back', @branch
 #right_content
-  %h1= "Create new PF Group Details for Branch #{Branch.find(params[:branch_id]).branch_name}"
+  %h1= "Create new PF Group Details for Branch #{@branch.branch_name}"
   = form_for (@branch_pf_detail) do |f|
-    = hidden_field_tag 'branch_pf_detail[branch_id]', params[:branch_id]
+    = hidden_field_tag 'branch_pf_detail[branch_id]', @branch.id
     - if @branch_pf_detail.errors.any?
       #error_explanation
         %h2
@@ -39,6 +39,7 @@
               - if !@branch_pf_details.empty?
                 %td.table_grid_header= "PF Group"
                 %td.table_grid_header= "Effective From"
+                %td.table_grid_header= "Effective To"
                 %td.table_grid_header{:colspan => 2} Operations
                 - sl_no = 0
                 - @branch_pf_details.each do |branch_pf_detail|
@@ -46,6 +47,7 @@
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                     %td.table_grid_td= PfGroup.find(branch_pf_detail.pf_group_id).pf_group
                     %td.table_grid_td= branch_pf_detail.pf_effective_date
+                    %td.table_grid_td= branch_pf_detail.effective_to
                     - if sl_no == 1
                       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch PF Details"), edit_branch_pf_detail_path(branch_pf_detail) #edit_employee_detail_path(employee_detail,:param1=>@paramempid)
-                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PF Details"), "#" #employee_detail, confirm: 'Are you sure?', method: :delete
+                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PF Details"), branch_pf_detail, confirm: 'Are you sure?', method: :delete

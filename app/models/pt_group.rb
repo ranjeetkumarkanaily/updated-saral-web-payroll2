@@ -9,6 +9,7 @@ class PtGroup < ActiveRecord::Base
   has_many :branches
 
   has_many :pt_group_rates
+  has_many :branch_pt_details
 
   delegate :state_name, :to => :state, :prefix => true
 

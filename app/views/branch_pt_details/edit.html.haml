@@ -1,0 +1,32 @@
+#left_content
+  %ul
+    %li= link_to 'Back', @branch_pt_detail.branch
+#right_content
+  %h1= "Create new PT Group Details for Branch #{@branch_pt_detail.branch.branch_name}"
+  = form_for @branch_pt_detail do |f|
+    = hidden_field_tag 'branch_pt_detail[branch_id]',@branch_pt_detail.branch_id
+    - if @branch_pt_detail.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@branch_pt_detail.errors.count, "error")
+          prohibited this branch pt details from being saved:
+        %ul
+          - @branch_pt_detail.errors.full_messages.each do |msg|
+            %li= msg
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td
+          %table
+            %tr
+              %td.std_td
+                %table
+                  %tr
+                    %td{:width=>130} PT Group:&nbsp;
+                    %td= @branch_pt_detail.pt_group.name
+                  %tr
+                    %td{:width=> 130} Effective Date:&nbsp;
+                    %td= f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
+                  %tr
+                    %td &nbsp;
+                  %tr
+                    %td= submit_tag "Save"

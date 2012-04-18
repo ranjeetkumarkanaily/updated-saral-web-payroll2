@@ -1,5 +1,9 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+  resources :branch_esi_details
+
+  resources :branch_pt_details
+
   resources :branch_pf_details#, :only => [:new, :create, :edit]
 
   resources :hr_masters, :except => [:index, :show]
