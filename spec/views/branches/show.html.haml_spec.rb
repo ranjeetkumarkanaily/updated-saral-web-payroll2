@@ -26,10 +26,10 @@ describe "branches/show" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/Address/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Kar/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Karnataka/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Group/)
+    #rendered.should match(/Kar/)
+    ## Run the generator again with the --webrat flag if you want to use webrat matchers
+    #rendered.should match(/Karnataka/)
+    ## Run the generator again with the --webrat flag if you want to use webrat matchers
+    #rendered.should match(/Group/)
   end
 end

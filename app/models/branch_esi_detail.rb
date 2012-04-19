@@ -3,7 +3,7 @@ class BranchEsiDetail < ActiveRecord::Base
   belongs_to :esi_group
 
   validates :branch_id, :esi_group_id, :esi_effective_date, :presence => true
-  validates :esi_group_id, :uniqueness => true
+  validates_uniqueness_of :esi_group_id, :scope => [:branch_id, :esi_effective_date]
 
   def effective_to
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")

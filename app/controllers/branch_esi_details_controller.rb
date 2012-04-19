@@ -11,6 +11,8 @@ class BranchEsiDetailsController < ApplicationController
     @branch_esi_detail = BranchEsiDetail.new(params[:branch_esi_detail])
     @branch = @branch_esi_detail.branch
     if @branch_esi_detail.save
+      # updating Branch pt_group_id
+      @branch.update_esi_group
       redirect_to new_branch_esi_detail_path(:branch_id => @branch_esi_detail.branch_id), notice: 'Branch ESI Details was successfully updated.'
     else
       @branch_esi_details = BranchEsiDetail.find_all_by_branch_id(@branch.id,:order => 'created_at DESC')
@@ -26,6 +28,8 @@ class BranchEsiDetailsController < ApplicationController
     @branch_esi_detail = BranchEsiDetail.find(params[:id])
     respond_to do |format|
       if @branch_esi_detail.update_attributes(params[:branch_esi_detail])
+        # updating Branch pf_group_id
+        @branch_esi_detail.branch.update_esi_group
         format.html { redirect_to new_branch_esi_detail_path(:branch_id => @branch_esi_detail.branch_id),  notice: 'Branch ESI Details was successfully updated.' }
         format.json { head :ok }
       else
@@ -40,6 +44,7 @@ class BranchEsiDetailsController < ApplicationController
     @branch_esi_detail = BranchEsiDetail.find(params[:id])
     @branch_id = @branch_esi_detail.branch_id
     @branch_esi_detail.destroy
+    Branch.find(@branch_id).update_esi_group
     respond_to do |format|
       format.html { redirect_to new_branch_esi_detail_path(:branch_id => @branch_id) }
       format.json { head :ok }

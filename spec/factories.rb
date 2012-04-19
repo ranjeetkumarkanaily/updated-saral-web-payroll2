@@ -178,9 +178,9 @@ FactoryGirl.define do
     branch_name "Bangalore"
     responsible_person "rahul"
     address "Bangalore"
-    pf_group
-    esi_group
-    pt_group
+    #pf_group
+    #esi_group
+    #pt_group
     esi_applicable false
   end
 

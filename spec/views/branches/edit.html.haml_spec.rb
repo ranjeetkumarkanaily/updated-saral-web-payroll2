@@ -25,10 +25,10 @@ describe "branches/edit" do
       assert_select "input#branch_branch_name", :name => "branch[branch_name]"
       assert_select "input#branch_responsible_person", :name => "branch[responsible_person]"
       assert_select "input#branch_address", :name => "branch[address]"
-      assert_select "input#branch_esi_applicable", :name => "branch[esi_applicable]"
-      assert_select "select#branch_pf_group_id", :name => "branch[pf_group_id]"
-      assert_select "select#branch_esi_group_id", :name => "branch[esi_group_id]"
-      assert_select "select#branch_pt_group_id", :name => "branch[pt_group_id]"
+      #assert_select "input#branch_esi_applicable", :name => "branch[esi_applicable]"
+      #assert_select "select#branch_pf_group_id", :name => "branch[pf_group_id]"
+      #assert_select "select#branch_esi_group_id", :name => "branch[esi_group_id]"
+      #assert_select "select#branch_pt_group_id", :name => "branch[pt_group_id]"
     end
   end
 end

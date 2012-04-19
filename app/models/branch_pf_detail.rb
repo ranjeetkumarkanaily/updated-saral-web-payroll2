@@ -3,7 +3,7 @@ class BranchPfDetail < ActiveRecord::Base
   belongs_to :pf_group
 
   validates :branch_id, :pf_group_id, :pf_effective_date, :presence => true
-  validates :pf_group_id, :uniqueness => true
+  validates_uniqueness_of :pf_group_id, :scope => [:branch_id, :pf_effective_date]
 
   def effective_to
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")

@@ -25,7 +25,7 @@
                   %td= @branch.address
                 %tr
                   %td{:width=>130} PF Group:&nbsp;
-                  - pf_group_name = @branch.pf_group_name
+                  - pf_group_name = @branch.pf_detail
                   - if pf_group_name
                     %td= pf_group_name.pf_group.pf_group
                     %td= link_to 'Change PF Group', new_branch_pf_detail_path(:branch_id => @branch.id)
@@ -34,7 +34,7 @@
                     %td= link_to 'Assign PF Group', new_branch_pf_detail_path(:branch_id => @branch.id)
                 %tr
                   %td{:width=>130} ESI Group:&nbsp;
-                  - esi_group_name = @branch.esi_group_name
+                  - esi_group_name = @branch.esi_detail
                   - if esi_group_name
                     %td= esi_group_name.esi_group.esi_group_name
                     %td= link_to 'Change ESI Group', new_branch_esi_detail_path(:branch_id => @branch.id)
@@ -50,12 +50,12 @@
                   %td &nbsp;
                 %tr
                   %td{:width=>130} PT Group:&nbsp;
-                  - pt_group_name = @branch.pt_group_name
+                  - pt_group_name = @branch.pt_detail
                   - if pt_group_name
                     %td= pt_group_name.pt_group.name
-                    %td= link_to 'Change PF Group', new_branch_pt_detail_path(:branch_id => @branch.id)
+                    %td= link_to 'Change PT Group', new_branch_pt_detail_path(:branch_id => @branch.id)
                   - else
                     %td &nbsp;
-                    %td= link_to 'Assign PF Group', new_branch_pt_detail_path(:branch_id => @branch.id)
+                    %td= link_to 'Assign PT Group', new_branch_pt_detail_path(:branch_id => @branch.id)
                 %tr
                   %td &nbsp;

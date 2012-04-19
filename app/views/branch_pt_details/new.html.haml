@@ -9,7 +9,7 @@
       #error_explanation
         %h2
           = pluralize(@branch_pt_detail.errors.count, "error")
-          prohibited this employee_details from being saved:
+          prohibited this branch pt details from being saved:
         %ul
           - @branch_pt_detail.errors.full_messages.each do |msg|
             %li= msg

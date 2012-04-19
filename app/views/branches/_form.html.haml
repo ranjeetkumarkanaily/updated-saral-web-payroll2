@@ -41,9 +41,9 @@
                   %td= f.text_field :responsible_person, :size => '22'
                 %tr
                   %td &nbsp;
-                %tr
-                  %td{:width=>130} PT Group:&nbsp;
-                  %td= f.select :pt_group_id, options_for_select(PtGroup.pt_groups.collect {|pt| [ pt.name, pt.id ] }, branch.pt_group_id),:prompt => 'Select PT Group'
+                -#%tr
+                -#  %td{:width=>130} PT Group:&nbsp;
+                -#  %td= f.select :pt_group_id, options_for_select(PtGroup.pt_groups.collect {|pt| [ pt.name, pt.id ] }, branch.pt_group_id),:prompt => 'Select PT Group'
                 %tr
                   %td &nbsp;
           %tr
