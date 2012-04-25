@@ -1,0 +1,28 @@
+%table
+  %tr
+    %td.std_td
+      %table
+        %tr
+          %td{:width=>130} PAN:&nbsp;
+          %td{:width=>130}= ( statutory.pan.nil? or statutory.pan.empty? ) ? 'N/A' : statutory.pan
+        %tr
+          %td{:width=>130} PF No.:&nbsp;
+          %td{:width=>130}= ( statutory.pf_number.nil? or statutory.pf_number.empty? ) ? 'N/A' : statutory.pf_number
+        %tr
+          %td{:width=>130} ESI No.:&nbsp;
+          %td{:width=>130}= ( statutory.esi_number.nil? or statutory.esi_number.empty? ) ? 'N/A' : statutory.esi_number
+    %td.std_td
+      %table
+        %tr
+          %td{:width=>150} Effective Date(For PAN):&nbsp;
+          %td{:width=>130}= statutory.pan_effective_date
+        %tr
+          %td{:width=>150} Effective Date(For PF):&nbsp;
+          %td{:width=>130}= statutory.pf_effective_date
+        %tr
+          %td{:width=>150} Effective Date(For ESI):&nbsp;
+          %td{:width=>130}= statutory.esi_effective_date
+
+
+
+

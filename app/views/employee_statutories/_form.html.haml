@@ -1,0 +1,100 @@
+:javascript
+  $(document).ready(function()
+  {
+    pan = document.getElementById('employee_statutory_pan').value
+    document.getElementById('panoption').value = pan
+
+    if(pan == 'PAN Invalid' || pan == 'PAN Applied' || pan == 'PAN Not Avbl' || pan == '')
+      document.getElementById('employee_statutory_pan').style.display = 'none';
+    else
+      document.getElementById('employee_statutory_pan').style.display = '';
+
+    if(document.getElementById('employee_statutory_pf_number').value == '')
+    {
+      document.getElementById('pfdate').style.display = 'none';
+      document.getElementById('pf_ed').style.display = 'none';
+    }
+    else
+    {
+      document.getElementById('pfdate').style.display = '';
+      document.getElementById('pf_ed').style.display = '';
+    }
+
+    if(document.getElementById('employee_statutory_esi_number').value == '')
+    {
+      document.getElementById('esidate').style.display = 'none';
+      document.getElementById('esi_ed').style.display = 'none';
+    }
+    else
+    {
+      document.getElementById('esidate').style.display = '';
+      document.getElementById('esi_ed').style.display = '';
+    }
+
+  });
+  function display_field(val)
+  {
+    if(val.value == "ADD PAN")
+    document.getElementById('employee_statutory_pan').style.display = '';
+    else
+    document.getElementById('employee_statutory_pan').style.display = 'none';
+    document.getElementById('employee_statutory_pan').value = ''
+
+   }
+
+  }
+= form_for(employee_statutory) do |f|
+  - if employee_statutory.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(employee_statutory.errors.count, "error")
+        prohibited this employee statutory from being saved:
+      %ul
+        - employee_statutory.errors.full_messages.each do |msg|
+          %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}"
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td PAN:&nbsp;
+                  %td{:width=>130}= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "display_field(this)"
+                  %td= f.text_field :pan,:style=>"width:90px"
+                %tr
+                  %td PF No.:&nbsp;
+                  %td{:colspan=>2}= f.text_field :pf_number, :size => '25', :onchange => 'display_pfdate(this)'
+                %tr
+                  %td ESI No.:&nbsp;
+                  %td{:colspan=>2}= f.text_field :esi_number, :size => '25', :onchange => 'display_esidate(this)'
+            %td.std_td
+              %table
+                %tr
+                  %td#pandate Effective Date(PAN):&nbsp;
+                  %td= f.text_field :pan_effective_date, :id=>"pan_ed", :class=>"date_input"
+                %tr
+                  %td#pfdate Effective Date(PF):&nbsp;
+                  %td= f.text_field :pf_effective_date, :id=>"pf_ed" , :class=>"date_input"
+                %tr
+                  %td#esidate Effective Date(ESI):&nbsp;
+                  %td= f.text_field :esi_effective_date, :id=>"esi_ed", :class=>"date_input"
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit
+
+
+
+
+
+
+

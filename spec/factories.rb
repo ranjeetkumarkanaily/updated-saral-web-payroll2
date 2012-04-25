@@ -9,8 +9,6 @@ FactoryGirl.define do
     date_of_joining "2011-02-01"
     date_of_leaving ""
     restrct_pf false
-    pan "aaaaa1234a"
-    pan_effective_date "2011-08-01"
   end
 
   factory :lop do
@@ -224,6 +222,16 @@ FactoryGirl.define do
     cut_off 15000
     minimum_limit_dailywage 100
     round_off "Higher Rupees"
+  end
+
+  factory :employee_statutory do
+    employee
+    pan 'aaaaa1234a'
+    pan_effective_date '2012-01-01'
+    pf_number '1234'
+    pf_effective_date '2012-01-01'
+    esi_number 'a1234'
+    esi_effective_date '2012-01-01'
   end
 
 end

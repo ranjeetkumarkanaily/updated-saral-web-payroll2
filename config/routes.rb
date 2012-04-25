@@ -1,5 +1,7 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+  resources :employee_statutories, :except => [:index,:show,:destroy]
+
   resources :hr_masters, :except => [:index, :show]
 
   resources :hr_category_details, :except => [:show]
@@ -39,6 +41,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
   resources :employee_details
 
   resources :employees do
+    resource :employee_statutories
     get "upload",  :on => :collection
     post "upload_parse_validate",  :on => :collection
     post "save", :on => :collection
@@ -50,7 +53,12 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     put "pf_restrict_update", :on => :collection
 
     get 'generate_sample_excel_template',  :on => :collection
+
+    #get 'statutory',  :on => :collection
+    #
+    #post 'update_statutory', :on => :collection
   end
+
 
 
 
@@ -95,6 +103,11 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
     get "salary_sheet",  :on => :collection
   end
+
+  #resources :employee_statutories do
+  # # match 'employee_statutories/new/:id' => 'employee_statutories/new', :as => :new_employee_statutories
+  #end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

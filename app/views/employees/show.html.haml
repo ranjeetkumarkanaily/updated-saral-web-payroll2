@@ -3,11 +3,18 @@
     %li= link_to 'Back', employees_path
     %li= link_to 'Edit Employee', edit_employee_path(@employee)
   %hr
+  %ul
+    - if !@statutory.nil?
+      %li= link_to 'Statutory Details', edit_employee_statutory_path(:employee_id => @employee.id)
+    - else
+      %li= link_to 'Statutory Details', new_employee_employee_statutories_path(:employee_id => @employee.id)
+
   %p{:style=>"padding-left:5px;text-decoration:underline;"} HR Details
   %ul
     - if @hr_categories
       - @hr_categories.each do |hr_category|
         %li= link_to hr_category.category_name, new_hr_master_path(:hr_category_id => hr_category.id, :employee_id => @employee.id)
+
 #right_content
   %h1
     Employee Details
@@ -52,16 +59,6 @@
                 %tr
                   %td Date of Joining:&nbsp;
                   %td= l @employee.date_of_joining, :format => :default
-                %tr
-                  %td PAN:&nbsp;
-                  %td= @employee.pan
-                %tr
-                  %td PAN Effective Date:&nbsp;
-                  %td
-                  - if @employee.date_of_leaving != nil
-                    = l @employee.pan_effective_date, :format => :default
-                  - else
-                    = ""
           %tr
             %td.std_td
               %table
@@ -104,3 +101,16 @@
                 %tr
                   %td{:width=>130} Mobile Number:&nbsp;
                   %td= @employee.mobile
+  %br
+  - if !@statutory.nil?
+    %h1
+      Employee Statutory Details
+      = link_to image_tag('/assets/edit.png',:title => "Edit Employee Statutory Details"), edit_employee_statutory_path(:employee_id => @employee.id)
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td{:colspan=>4}
+          - flash.each do |name, msg|
+            = content_tag :div, msg, :id => "flash_#{name}"
+      %tr
+        %td
+          = render 'statutory', :statutory => @statutory

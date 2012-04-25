@@ -1,0 +1,42 @@
+%h1
+  Employee Statutory Details
+  = link_to image_tag('/assets/edit.png',:title => "Edit Employee Statutory Details"), edit_employee_statutory_path(:employee_id => @employee.id)
+%table.std_table{:cellpadding=>0,:cellspacing=>0}
+  %tr
+    %td
+      %table
+        %tr
+          %td.std_td
+            %table
+              %tr
+                %td PAN:&nbsp;
+                %td= @employee_statutory.pan
+              %tr
+                %td PF No.:&nbsp;
+                %td= (@employee_statutory.pf_number.nil? or @employee_statutory.pf_number.empty?) ? 'N/A' : @employee_statutory.pf_number
+              %tr
+                %td ESI No.:&nbsp;
+                %td= (@employee_statutory.esi_number.nil? or @employee_statutory.esi_number.empty?) ? 'N/A' : @employee_statutory.esi_number
+          %td.std_td
+            %table
+              %tr
+                %td PAN Effective Date:&nbsp;
+                %td
+                - if @employee_statutory.pan_effective_date != nil
+                  = l @employee_statutory.pan_effective_date, :format => :default
+                - else
+                  = ""
+              %tr
+                %td PF Effective Date:&nbsp;
+                %td
+                - if @employee_statutory.pf_effective_date != nil
+                  = l @employee_statutory.pf_effective_date, :format => :default
+                - else
+                  = ""
+              %tr
+                %td ESI Effective Date:&nbsp;
+                %td
+                - if @employee_statutory.esi_effective_date != nil
+                  = l @employee_statutory.esi_effective_date, :format => :default
+                - else
+                  = ""
