@@ -16,22 +16,6 @@ describe EmployeeStatutoriesController do
       :esi_effective_date => '2012-01-01'}
   end
 
-  describe "GET index" do
-    xit "assigns all employee_statutories as @employee_statutories" do
-      employee_statutory = EmployeeStatutory.create! valid_attributes
-      get :index, {}
-      assigns(:employee_statutories).should eq([employee_statutory])
-    end
-  end
-
-  describe "GET show" do
-    xit "assigns the requested employee_statutory as @employee_statutory" do
-      employee_statutory = EmployeeStatutory.create! valid_attributes
-      get :show, {:id => employee_statutory.to_param}
-      assigns(:employee_statutory).should eq(employee_statutory)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new employee_statutory as @employee_statutory" do
       get :new, {:employee_id => @employee.id}
@@ -124,19 +108,6 @@ describe EmployeeStatutoriesController do
     end
   end
 
-  describe "DELETE destroy" do
-    xit "destroys the requested employee_statutory" do
-      employee_statutory = EmployeeStatutory.create! valid_attributes
-      expect {
-        delete :destroy, {:id => employee_statutory.to_param}
-      }.to change(EmployeeStatutory, :count).by(-1)
-    end
 
-    xit "redirects to the employee_statutories list" do
-      employee_statutory = EmployeeStatutory.create! valid_attributes
-      delete :destroy, {:id => employee_statutory.to_param}
-      response.should redirect_to(employee_statutories_url)
-    end
-  end
 
 end
