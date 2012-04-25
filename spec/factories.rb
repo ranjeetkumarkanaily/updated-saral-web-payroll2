@@ -56,6 +56,8 @@ FactoryGirl.define do
     based_on "PayDays"
     pf_applicability true
     pf_percentage 100
+    esi_applicability true
+    esi_percentage 100
   end
 
   factory :employee_detail do
