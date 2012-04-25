@@ -226,4 +226,22 @@ FactoryGirl.define do
     round_off "Higher Rupees"
   end
 
+  factory :pf_detail do
+    branch
+    pf_group
+    pf_effective_date "2012-01-01"
+  end
+
+  factory :esi_detail do
+    branch
+    esi_group
+    esi_effective_date "2012-01-01"
+  end
+
+  factory :pt_detail do
+    branch
+    pt_group
+    pt_effective_date "2012-01-01"
+  end
+
 end

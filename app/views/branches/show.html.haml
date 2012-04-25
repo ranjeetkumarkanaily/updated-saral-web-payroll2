@@ -27,7 +27,7 @@
                   %td{:width=>130} PF Group:&nbsp;
                   - pf_group_name = @branch.pf_detail
                   - if pf_group_name
-                    %td= pf_group_name.pf_group.pf_group
+                    %td{:width=>100}= pf_group_name.pf_group.pf_group
                     %td= link_to 'Change PF Group', new_branch_pf_detail_path(:branch_id => @branch.id)
                   - else
                     %td &nbsp;
@@ -52,7 +52,7 @@
                   %td{:width=>130} PT Group:&nbsp;
                   - pt_group_name = @branch.pt_detail
                   - if pt_group_name
-                    %td= pt_group_name.pt_group.name
+                    %td{:width=>100}= pt_group_name.pt_group.name
                     %td= link_to 'Change PT Group', new_branch_pt_detail_path(:branch_id => @branch.id)
                   - else
                     %td &nbsp;

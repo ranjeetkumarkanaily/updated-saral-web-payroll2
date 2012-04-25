@@ -1,0 +1,51 @@
+#left_content
+  %ul
+    %li= link_to 'Back', @branch
+#right_content
+  %h1= "Create new PT Group Details for Branch #{@branch.branch_name}"
+  = form_for [@branch, @pt_detail] do |f|
+    - if @pt_detail.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@pt_detail.errors.count, "error")
+          prohibited this branch pt details from being saved:
+        %ul
+          - @pt_detail.errors.full_messages.each do |msg|
+            %li= msg
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td
+          %table
+            %tr
+              %td.std_td
+                %table
+                  %tr
+                    %td{:width=>130} PT Group:&nbsp;
+                    %td= f.select :pt_group_id, options_for_select(PtGroup.pt_groups.collect {|pt| [ pt.name, pt.id ] }, @pt_detail.pt_group_id),:prompt => 'Select PT Group'
+                  %tr
+                    %td{:width=> 130} Effective Date:&nbsp;
+                    %td= f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
+                  %tr
+                    %td &nbsp;
+                  %tr
+                    %td= submit_tag "Save"
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td.std_td
+          %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              - if !@pt_details.empty?
+                %td.table_grid_header= "PT Group"
+                %td.table_grid_header= "Effective From"
+                %td.table_grid_header= "Effective To"
+                %td.table_grid_header{:colspan => 2} Operations
+                - sl_no = 0
+                - @pt_details.each do |pt_detail|
+                - sl_no = sl_no + 1
+                  %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                    %td.table_grid_td= PtGroup.find(pt_detail.pt_group_id).name
+                    %td.table_grid_td= pt_detail.pt_effective_date
+                    %td.table_grid_td= pt_detail.effective_to
+                    - if sl_no == 1
+                      %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch PT Details"), edit_branch_pt_detail_path(@branch, pt_detail)
+                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PT Details"), [@branch, pt_detail], confirm: 'Are you sure?', method: :delete

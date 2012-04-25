@@ -1,0 +1,2 @@
+module EsiDetailsHelper
+end

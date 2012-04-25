@@ -1,11 +1,5 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
-  resources :branch_esi_details
-
-  resources :branch_pt_details
-
-  resources :branch_pf_details#, :only => [:new, :create, :edit]
-
   resources :hr_masters, :except => [:index, :show]
 
   resources :hr_category_details, :except => [:show]
@@ -18,7 +12,11 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :esi_group_rates, :except => [:show]
 
-  resources :branches
+  resources :branches do
+    resources :pt_details, :except => [:index, :show]
+    resources :pf_details, :except => [:index, :show]
+    resources :esi_details, :except => [:index, :show]
+  end
 
   resources :pf_group_rates
 

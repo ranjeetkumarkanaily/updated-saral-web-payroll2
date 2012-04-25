@@ -1,0 +1,2 @@
+module PtDetailsHelper
+end

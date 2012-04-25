@@ -2,9 +2,9 @@ class Branch < ActiveRecord::Base
   attr_accessible :branch_name, :responsible_person, :address, :pf_group_id, :esi_group_id, :pt_group_id, :esi_applicable
   acts_as_audited
 
-  has_many :branch_pf_details
-  has_many :branch_pt_details
-  has_many :branch_esi_details
+  has_many :pf_details, :dependent => :destroy
+  has_many :pt_details, :dependent => :destroy
+  has_many :esi_details, :dependent => :destroy
 
   validates :branch_name, :presence => true
   validates :responsible_person, :presence => true
@@ -13,15 +13,15 @@ class Branch < ActiveRecord::Base
   scope :branches, :order => 'created_at ASC'
 
   def pf_detail
-    self.branch_pf_details.order('created_at DESC').first
+    self.pf_details.order('created_at DESC').first
   end
 
   def pt_detail
-    self.branch_pt_details.order('created_at DESC').first
+    self.pt_details.order('created_at DESC').first
   end
 
   def esi_detail
-    self.branch_esi_details.order('created_at DESC').first
+    self.esi_details.order('created_at DESC').first
   end
 
   def update_pf_group
