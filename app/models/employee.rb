@@ -1,5 +1,5 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf,:pan,:pan_effective_date
+  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf
   acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -9,6 +9,7 @@ class Employee < ActiveRecord::Base
   has_many :leave_details, :dependent => :destroy
 
   has_many :salary_allotments
+  has_one :employee_statutory
 
   belongs_to :present_state, :class_name => "State"
   delegate :state_name, :to => :present_state, :prefix => true
@@ -31,26 +32,7 @@ class Employee < ActiveRecord::Base
 
   validate :dob_before_doj
 
-  regex_for_pan = /([PAN Not Avbl]|[PAN Applied]|[PAN Invalid]|[a-z]{5}[d]{4}[a-z]{1})/i
 
-  validates :pan,   :presence   => true, :allow_blank => true,
-            :format     => { :with => regex_for_pan }
-
-  validates :pan_effective_date, :presence => true, :if => :pan_present?
-
-  validate :pan_effective_date_after_dob, :if => :pan_present?
-
-  def pan_present?
-    pan != 'PAN Applied' and pan != 'PAN Invalid' and pan != 'PAN Not Avbl'
-  end
-
-  def pan_effective_date_after_dob
-    if !date_of_birth.nil? and !pan_effective_date.nil?
-      if pan_effective_date < date_of_birth then
-        errors.add(:pan_effective_date, "PAN effective date should be after date of Birth")
-      end
-    end
-  end
 
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then

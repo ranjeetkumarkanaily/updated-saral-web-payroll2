@@ -1,0 +1,7 @@
+#left_content
+  %ul
+    %li= link_to 'Back', employee_path(@employee_id)
+#right_content
+  %h1
+    Editing Employee Statutory
+  = render 'form', :employee_statutory => @employee_statutory

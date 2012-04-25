@@ -13,6 +13,7 @@ class EmployeesController < ApplicationController
 
   def show
     @hr_categories = HrCategory.all
+    @statutory = EmployeeStatutory.find_by_employee_id(params[:id])
 
     respond_to do |format|
       format.html # show.html.haml
@@ -34,9 +35,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    params[:employee][:pan] = params[:panoption] if params[:panoption] != "ADD PAN"
     @employee = Employee.new(params[:employee])
-
     respond_to do |format|
       if @employee.save
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
@@ -49,16 +48,15 @@ class EmployeesController < ApplicationController
   end
 
   def update
-    params[:employee][:pan] = params[:panoption] if ( params[:panoption] != "ADD PAN"  and params[:panoption] != " " )
-    respond_to do |format|
-      if @employee.update_attributes(params[:employee])
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render 'edit' }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+     respond_to do |format|
+        if @employee.update_attributes(params[:employee])
+          format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+          format.json { head :ok }
+        else
+          format.html { render 'edit' }
+          format.json { render json: @employee.errors, status: :unprocessable_entity }
+        end
       end
-    end
   end
 
   def destroy
@@ -142,6 +140,7 @@ class EmployeesController < ApplicationController
       end
     end
   end
+
 
   private
     def save_employee employees

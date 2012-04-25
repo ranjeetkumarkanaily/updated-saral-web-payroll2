@@ -55,20 +55,28 @@ class Salary < ActiveRecord::Base
   end
 
   def self.get_esi_amount  month_year, employee_id
-    gross_salary = get_gross_salary month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
+
+    esi_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+
+    @esi_applicable_sal = 0
+    esi_applicable_salary_amount.each do |esi_appli_sal|
+      @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_amount
+    end
+
     employee_branch = EmployeeDetail.employee_branch month_year,employee_id
     employee_esi_group = Branch.find(employee_branch[0]['branch_id']).esi_group_id
     if employee_esi_group != nil
       esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
-      if gross_salary <= esi_rate_value[:cut_off]
-        esi_amount = (gross_salary*(esi_rate_value[:employee_rate]/100)).round.to_f
+      if @esi_applicable_sal <= esi_rate_value[:cut_off]
+        esi_amount = (@esi_applicable_sal*(esi_rate_value[:employee_rate]/100)).round.to_f
       else
         esi_amount = 0
       end
     else
       esi_amount = 0
     end
+
   end
 
   def self.get_pt_amount month_year, employee_id

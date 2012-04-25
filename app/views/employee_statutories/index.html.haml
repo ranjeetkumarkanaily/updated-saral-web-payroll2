@@ -1,0 +1,27 @@
+%h1 Listing employee_statutories
+%table
+  %tr
+    %th Employee
+    %th Pan
+    %th Pan effective date
+    %th Pf number
+    %th Pf effective date
+    %th Esi
+    %th Esi effective date
+    %th
+    %th
+    %th
+  - @employee_statutories.each do |employee_statutory|
+    %tr
+      %td= employee_statutory.employee
+      %td= employee_statutory.pan
+      %td= employee_statutory.pan_effective_date
+      %td= employee_statutory.pf_number
+      %td= employee_statutory.pf_effective_date
+      %td= employee_statutory.esi
+      %td= employee_statutory.esi_effective_date
+      %td= link_to 'Show', employee_statutory
+      %td= link_to 'Edit', edit_employee_statutory_path(employee_statutory)
+      %td= link_to 'Destroy', employee_statutory, confirm: 'Are you sure?', method: :delete
+%br/
+= link_to 'New Employee statutory', new_employee_statutory_path

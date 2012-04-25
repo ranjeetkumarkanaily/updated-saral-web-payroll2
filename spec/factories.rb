@@ -1,4 +1,3 @@
-# By using the symbol ':employee', we get Factory Girl to simulate the Employee model.
 FactoryGirl.define do
   factory :employee do
     id 1
@@ -9,8 +8,6 @@ FactoryGirl.define do
     date_of_joining "2011-02-01"
     date_of_leaving ""
     restrct_pf false
-    pan "aaaaa1234a"
-    pan_effective_date "2011-08-01"
   end
 
   factory :lop do
@@ -56,6 +53,8 @@ FactoryGirl.define do
     based_on "PayDays"
     pf_applicability true
     pf_percentage 100
+    esi_applicability true
+    esi_percentage 100
   end
 
   factory :employee_detail do
@@ -178,9 +177,6 @@ FactoryGirl.define do
     branch_name "Bangalore"
     responsible_person "rahul"
     address "Bangalore"
-    #pf_group
-    #esi_group
-    #pt_group
     esi_applicable false
   end
 
@@ -242,6 +238,16 @@ FactoryGirl.define do
     branch
     pt_group
     pt_effective_date "2012-01-01"
+  end
+
+  factory :employee_statutory do
+    employee
+    pan 'aaaaa1234a'
+    pan_effective_date '2012-01-01'
+    pf_number '1234'
+    pf_effective_date '2012-01-01'
+    esi_number 'a1234'
+    esi_effective_date '2012-01-01'
   end
 
 end
