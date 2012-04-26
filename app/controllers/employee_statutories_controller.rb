@@ -24,8 +24,6 @@ class EmployeeStatutoriesController < ApplicationController
   def create
     @employee_statutory = EmployeeStatutory.new(params[:employee_statutory])
     @employee_id = @employee_statutory.employee_id
-    puts "hiiii"
-    puts @employee_id
     respond_to do |format|
       if @employee_statutory.save
         format.html { redirect_to employee_path(:id => @employee_id ), notice: 'Employee statutory was successfully created.' }
