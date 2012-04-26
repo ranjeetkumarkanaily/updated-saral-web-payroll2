@@ -27,21 +27,32 @@ class Salary < ActiveRecord::Base
   def self.get_pf_amount month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
 
-    pf_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("pf_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
-
-    @pf_applicable_sal = 0
-    pf_applicable_salary_amount.each do |pf_appli_sal|
-       @pf_applicable_sal = @pf_applicable_sal+pf_appli_sal.salary_amount
-    end
-
     employee_branch = EmployeeDetail.employee_branch month_year,employee_id
     employee_pf_group = Branch.find(employee_branch[0]['branch_id']).pf_group_id
-    pf_rate_value = PfGroupRate.pf_rate month_year,employee_pf_group
+    pf_effective_date_detail = PfDetail.effective_date employee_branch[0]['branch_id'],employee_pf_group
 
-    if(@pf_applicable_sal >= pf_rate_value[0]['cutoff'])
-      pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
+    if pf_effective_date_detail.empty?
+      pf_amount = 0
     else
-      pf_amount = ((@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)).round.to_f
+      pf_effective_date = pf_effective_date_detail[0]['pf_effective_date']
+      if pf_effective_date <= month_year.beginning_of_month
+        pf_rate_value = PfGroupRate.pf_rate month_year,employee_pf_group
+
+        pf_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("pf_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+
+        @pf_applicable_sal = 0
+        pf_applicable_salary_amount.each do |pf_appli_sal|
+           @pf_applicable_sal = @pf_applicable_sal+pf_appli_sal.salary_amount
+        end
+
+        if @pf_applicable_sal >= pf_rate_value[0]['cutoff']
+          pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
+        else
+          pf_amount = ((@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)).round.to_f
+        end
+      else
+        pf_amount = 0
+      end
     end
   end
 
@@ -57,39 +68,57 @@ class Salary < ActiveRecord::Base
   def self.get_esi_amount  month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
 
-    esi_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
-
-    @esi_applicable_sal = 0
-    esi_applicable_salary_amount.each do |esi_appli_sal|
-      @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_amount
-    end
-
     employee_branch = EmployeeDetail.employee_branch month_year,employee_id
     employee_esi_group = Branch.find(employee_branch[0]['branch_id']).esi_group_id
-    if employee_esi_group != nil
-      esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
-      if @esi_applicable_sal <= esi_rate_value[:cut_off]
-        esi_amount = (@esi_applicable_sal*(esi_rate_value[:employee_rate]/100)).round.to_f
+    esi_effective_date_detail = EsiDetail.effective_date employee_branch[0]['branch_id'],employee_esi_group
+
+    if esi_effective_date_detail.empty?
+      esi_amount = 0
+    else
+      esi_effective_date = esi_effective_date_detail[0]['esi_effective_date']
+      if esi_effective_date <= month_year.beginning_of_month
+        esi_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+
+        @esi_applicable_sal = 0
+        esi_applicable_salary_amount.each do |esi_appli_sal|
+          @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_amount
+        end
+
+        esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
+        if @esi_applicable_sal <= esi_rate_value[:cut_off]
+          esi_amount = (@esi_applicable_sal*(esi_rate_value[:employee_rate]/100)).round.to_f
+        else
+          esi_amount = 0
+        end
       else
         esi_amount = 0
       end
-    else
-      esi_amount = 0
     end
-
   end
 
   def self.get_pt_amount month_year, employee_id
     gross_salary = get_gross_salary month_year,employee_id
     month_year = Date.strptime month_year, '%b/%Y'
-    pt_amount = PtRate.select('pt').joins(:paymonth).where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
 
-    if pt_amount.count > 0
-      get_pt = pt_amount[0]['pt']
+    employee_branch = EmployeeDetail.employee_branch month_year,employee_id
+    employee_pt_group = Branch.find(employee_branch[0]['branch_id']).pt_group_id
+    pt_effective_date_detail = PtDetail.effective_date employee_branch[0]['branch_id'],employee_pt_group
+    if pt_effective_date_detail.empty?
+      pt_amount = 0
     else
-      get_pt = 0
-    end
+      pt_effective_date = pt_effective_date_detail[0]['pt_effective_date']
+      if pt_effective_date <= month_year.beginning_of_month
+        pt_amount_detail = PtRate.select('pt').joins(:paymonth).where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
 
+        if pt_amount_detail.count > 0
+          pt_amount = pt_amount_detail[0]['pt']
+        else
+          pt_amount = 0
+        end
+      else
+        pt_amount = 0
+      end
+    end
   end
 
   def self.find_employees_leave from_date, to_date, employee_id

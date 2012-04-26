@@ -89,7 +89,9 @@ class SalariesController < ApplicationController
       respond_to do |format|
         format.xls do
           render :xls => 'Salary Sheet',
-                 :template => 'salaries/salary_sheet.xls.haml'
+                 :handlers => [:haml],
+                 :formats => [:xls],
+                 :template => 'salaries/salary_sheet'
         end
       end
     end

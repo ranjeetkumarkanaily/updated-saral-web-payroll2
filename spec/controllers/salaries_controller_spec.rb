@@ -73,13 +73,18 @@ describe SalariesController do
 
   describe "GET index" do
     before :each do
-      #@pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
       paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
-      pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
+      @pt_group = FactoryGirl.create(:pt_group)
+      @branch = FactoryGirl.create(:branch,:pt_group_id => @pt_group.id)
+      pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id, :pt_group_id => @pt_group.id)
     end
 
     it "get salary earnings for the given employee" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
@@ -89,7 +94,11 @@ describe SalariesController do
     end
 
     it "get salary deductions for the given employee" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head,:salary_type => "Deductions")
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
@@ -100,7 +109,11 @@ describe SalariesController do
     end
 
     it "generates pdf output" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
@@ -110,7 +123,11 @@ describe SalariesController do
     end
 
     it "should give no of present days" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
@@ -120,7 +137,12 @@ describe SalariesController do
     end
 
     it "should give no of present days" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
+
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
@@ -151,28 +173,37 @@ describe SalariesController do
 
   describe "Salary Sheet" do
     before :each do
-      #@pf_esi_rate = FactoryGirl.create(:pf_esi_rate)
       paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
-      pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id)
+      @pt_group = FactoryGirl.create(:pt_group)
+      @branch = FactoryGirl.create(:branch,:pt_group_id => @pt_group.id)
+      pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id, :pt_group_id => @pt_group.id)
     end
     it "generates excel for salary sheet for employee whose data of leaving is not present" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
 
       get :salary_sheet, :month_year => "Feb/2011", :format => "xls"
-      response.should render_template('salaries/salary_sheet.xls')
+      response.should render_template('salaries/salary_sheet')
     end
 
     it "generates excel for salary sheet for employee whose data of leaving is present" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
 
       get :salary_sheet, :month_year => "Feb/2011", :format => "xls"
-      response.should render_template('salaries/salary_sheet.xls')
+      response.should render_template('salaries/salary_sheet')
     end
   end
 end

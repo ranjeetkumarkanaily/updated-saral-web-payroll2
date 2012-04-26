@@ -11,4 +11,10 @@ class EsiDetail < ActiveRecord::Base
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")
     next_row ? next_row.esi_effective_date - 1 : 'Till Date'
   end
+
+  scope :effective_date, lambda { |branch_id,esi_group_id|
+    {
+        :conditions => ["branch_id = ? and esi_group_id = ?", branch_id, esi_group_id]
+    }
+  }
 end

@@ -46,7 +46,7 @@
                       - gross_total =   gross_total + salary.salary_amount.to_f
               %td.std_td{:valign => 'top',:style=>"width:270px;"}
                 %table
-                  - if @pt_amount
+                  - if @pt_amount != 0
                     %tr
                       %td{:width=>170} PT
                       %td{:style=>"text-align:right;"}=  number_with_precision(@pt_amount, :precision => 2, :delimiter => ',')

@@ -89,7 +89,7 @@ describe SalaryAllotmentsController do
   describe "Generate Sample excel sheet template" do
     it "should render template excel sheet" do
       get :generate_sample_excel_template, :format => "xls"
-      response.should render_template('salary_allotments/generate_sample_excel_template.xls')
+      response.should render_template('salary_allotments/generate_sample_excel_template')
     end
   end
 

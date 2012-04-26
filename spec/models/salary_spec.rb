@@ -69,27 +69,67 @@ describe Salary do
 
     describe "get pt amount" do
       before(:each) do
+        @pt_group = FactoryGirl.create(:pt_group)
+        @branch = FactoryGirl.create(:branch,:pt_group_id => @pt_group.id)
         @salary_head = FactoryGirl.create(:salary_head)
         @salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => @salary_head.id)
       end
 
-      it "should give pt amount within range defined" do
+      it "should give pt amount within range defined with pt detail defined" do
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
         salary = FactoryGirl.create(:salary, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        pt_rate = FactoryGirl.create(:pt_rate)
+        pt_rate = FactoryGirl.create(:pt_rate,:pt_group_id => @pt_group.id)
+        pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
         get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
         get_pt.should eq(100.00)
       end
 
+      it "should give pt amount as 0 within range defined with pt detail defined after salary calculation date" do
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+        salary = FactoryGirl.create(:salary, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
+        pt_rate = FactoryGirl.create(:pt_rate,:pt_group_id => @pt_group.id)
+        pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-03-01')
+        get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
+        get_pt.should eq(0.0)
+      end
+
+      it "should give pt amount as 0 within range defined without pt detail defined" do
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+        salary = FactoryGirl.create(:salary, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
+        pt_rate = FactoryGirl.create(:pt_rate,:pt_group_id => @pt_group.id)
+        get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
+        get_pt.should eq(0.0)
+      end
+
       it "should give pt amount outside the range defined" do
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
         salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        pt_rate = FactoryGirl.create(:pt_rate,:min_sal_range => 15000.0, :max_sal_range => 25000, :pt=>250.0)
+        pt_rate = FactoryGirl.create(:pt_rate,:min_sal_range => 15000.0, :max_sal_range => 25000, :pt=>250.0,:pt_group_id => @pt_group.id)
+        pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
         get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
         get_pt.should eq(250.0)
       end
 
       it "should give pt amount outside the range defined" do
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
         salary = FactoryGirl.create(:salary,:salary_amount => 6000, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        pt_rate = FactoryGirl.create(:pt_rate,:min_sal_range => 7000.0)
+        pt_rate = FactoryGirl.create(:pt_rate,:min_sal_range => 7000.0,:pt_group_id => @pt_group.id)
+        pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
         get_pt = Salary.get_pt_amount "Feb/2011", salary.employee_id.to_s
         get_pt.should eq(0)
       end
@@ -112,8 +152,65 @@ describe Salary do
 
 
         salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        pf_detail = FactoryGirl.create(:pf_detail,:branch_id => branch.id,:pf_group_id => pf_group.id,:pf_effective_date => '2011-01-01')
         pf_amount = Salary.get_pf_amount "Feb/2011", 1
         pf_amount.should eq(780.0)
+      end
+
+      it "should give PF amount for selected employee and month" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        pf_group = FactoryGirl.create(:pf_group)
+        paymonth = FactoryGirl.create(:paymonth)
+        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => paymonth.id)
+
+
+        salary = FactoryGirl.create(:salary,:salary_amount => 6000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        pf_detail = FactoryGirl.create(:pf_detail,:branch_id => branch.id,:pf_group_id => pf_group.id,:pf_effective_date => '2011-01-01')
+        pf_amount = Salary.get_pf_amount "Feb/2011", 1
+        pf_amount.should eq(720.0)
+      end
+
+      it "should not give PF amount for selected employee and month if pf_detail is defined after salary calculation date" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        pf_group = FactoryGirl.create(:pf_group)
+        paymonth = FactoryGirl.create(:paymonth)
+        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => paymonth.id)
+
+
+        salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        pf_detail = FactoryGirl.create(:pf_detail,:branch_id => branch.id,:pf_group_id => pf_group.id,:pf_effective_date => '2011-03-01')
+        pf_amount = Salary.get_pf_amount "Feb/2011", 1
+        pf_amount.should eq(0.0)
+      end
+
+      it "should not give PF amount for selected employee and month if pf_detail is not defined" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        pf_group = FactoryGirl.create(:pf_group)
+        paymonth = FactoryGirl.create(:paymonth)
+        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => paymonth.id)
+
+
+        salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        pf_amount = Salary.get_pf_amount "Feb/2011", 1
+        pf_amount.should eq(0.0)
       end
     end
 
@@ -130,6 +227,7 @@ describe Salary do
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(0.0)
       end
@@ -146,8 +244,26 @@ describe Salary do
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(263.0)
+      end
+
+      it "should not give ESI amount for selected employee and month if esi group is defined after salary calculation date" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        esi_group = FactoryGirl.create(:esi_group)
+        branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+
+        salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-03-01')
+        esi_amount = Salary.get_esi_amount "Feb/2011", 1
+        esi_amount.should eq(0.0)
       end
 
       it "should give ESI amount as 0 for selected employee and month if esi group is not defined" do
@@ -158,6 +274,22 @@ describe Salary do
         branch = FactoryGirl.create(:branch,:esi_group_id => nil)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+
+        salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        esi_amount = Salary.get_esi_amount "Feb/2011", 1
+        esi_amount.should eq(0.0)
+      end
+
+      it "should not give ESI amount for selected employee and month if esi_detail is not defined" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        esi_group = FactoryGirl.create(:esi_group)
+        branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_amount = Salary.get_esi_amount "Feb/2011", 1

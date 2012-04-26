@@ -136,7 +136,9 @@ class EmployeesController < ApplicationController
     respond_to do |format|
       format.xls do
         render :xls => 'Employee Template',
-               :template => 'employees/generate_sample_excel_template.xls.haml'
+               :handlers => [:haml],
+               :format => [:xls],
+               :template => 'employees/generate_sample_excel_template'
       end
     end
   end

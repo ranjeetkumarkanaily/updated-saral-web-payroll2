@@ -11,4 +11,10 @@ class PtDetail < ActiveRecord::Base
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")
     next_row ? next_row.pt_effective_date - 1 : 'Till Date'
   end
+
+  scope :effective_date, lambda { |branch_id,pt_group_id|
+    {
+        :conditions => ["branch_id = ? and pt_group_id = ?", branch_id, pt_group_id]
+    }
+  }
 end
