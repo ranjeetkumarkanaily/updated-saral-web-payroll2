@@ -1,48 +1,41 @@
 :javascript
   $(document).ready(function()
   {
-    pan = document.getElementById('employee_statutory_pan').value
-    document.getElementById('panoption').value = pan
-
-    if(pan == 'PAN Invalid' || pan == 'PAN Applied' || pan == 'PAN Not Avbl' || pan == '')
-      document.getElementById('employee_statutory_pan').style.display = 'none';
-    else
-      document.getElementById('employee_statutory_pan').style.display = '';
-
-    if(document.getElementById('employee_statutory_pf_number').value == '')
-    {
-      document.getElementById('pfdate').style.display = 'none';
-      document.getElementById('pf_ed').style.display = 'none';
-    }
-    else
-    {
-      document.getElementById('pfdate').style.display = '';
-      document.getElementById('pf_ed').style.display = '';
-    }
-
-    if(document.getElementById('employee_statutory_esi_number').value == '')
-    {
-      document.getElementById('esidate').style.display = 'none';
-      document.getElementById('esi_ed').style.display = 'none';
-    }
-    else
-    {
-      document.getElementById('esidate').style.display = '';
-      document.getElementById('esi_ed').style.display = '';
-    }
-
+     pan = document.getElementById('employee_statutory_pan').value
+     document.getElementById('panoption').value = pan
+     pan_style_change(pan)
+     enabledisable('employee_statutory_pan','pan_ed')
+     enabledisable('employee_statutory_pf_number','pf_ed')
+     enabledisable('employee_statutory_esi_number','esi_ed')
   });
-  function display_field(val)
+
+  function pan_style_change(pan)
   {
-    if(val.value == "ADD PAN")
-    document.getElementById('employee_statutory_pan').style.display = '';
-    else
-    document.getElementById('employee_statutory_pan').style.display = 'none';
-    document.getElementById('employee_statutory_pan').value = ''
-
-   }
-
+    if(pan == 'PAN Invalid' || pan == 'PAN Applied' || pan == 'PAN Not Avbl' || pan == '')
+    {
+       document.getElementById('employee_statutory_pan').style.display = 'none';
+       document.getElementById('employee_statutory_pan').value = ''
+       enabledisable_pan('pan_ed',true)
+    }
+    else //if(pan == "ADD PAN" )
+    {
+       document.getElementById('employee_statutory_pan').style.display = ''
+       enabledisable_pan('pan_ed',false)
+    }
   }
+  function enabledisable_pan(inputid,val)
+  {
+    document.getElementById(inputid).disabled = val;
+  }
+
+  function enabledisable(inputvalue,inputid)
+  {
+    if(document.getElementById(inputvalue).value == '')
+      document.getElementById(inputid).disabled = true;
+    else
+      document.getElementById(inputid).disabled = false;
+  }
+
 = form_for(employee_statutory) do |f|
   - if employee_statutory.errors.any?
     #error_explanation
@@ -65,8 +58,9 @@
               %table
                 %tr
                   %td PAN:&nbsp;
-                  %td{:width=>130}= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "display_field(this)"
+                  %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "pan_style_change(this.value)"
                   %td= f.text_field :pan,:style=>"width:90px"
+                  %td= f.hidden_field :employee_id
                 %tr
                   %td PF No.:&nbsp;
                   %td{:colspan=>2}= f.text_field :pf_number, :size => '25', :onchange => 'display_pfdate(this)'
