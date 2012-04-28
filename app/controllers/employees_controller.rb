@@ -14,7 +14,7 @@ class EmployeesController < ApplicationController
   def show
     @hr_categories = HrCategory.all
     @statutory = EmployeeStatutory.find_by_employee_id(params[:id])
-
+    @employee_detail = EmployeeDetail.find_by_employee_id(params[:id])
     respond_to do |format|
       format.html # show.html.haml
       format.json { render json: @employee }

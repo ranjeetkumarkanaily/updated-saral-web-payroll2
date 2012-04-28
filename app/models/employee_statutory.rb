@@ -27,5 +27,11 @@ class EmployeeStatutory < ActiveRecord::Base
     pan != 'PAN Applied' and pan != 'PAN Invalid' and pan != 'PAN Not Avbl'
   end
 
+  def update_details
+    self.pf_effective_date = '' if self.pf_number.blank?
+    self.esi_effective_date = '' if self.esi_number.blank?
+    self.pan_effective_date = '' if !pan_present?
+    self.save
+  end
 
 end

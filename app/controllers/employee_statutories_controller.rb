@@ -42,6 +42,7 @@ class EmployeeStatutoriesController < ApplicationController
     @employee_statutory = EmployeeStatutory.find(params[:id])
     respond_to do |format|
       if @employee_statutory.update_attributes(params[:employee_statutory])
+        @employee_statutory.update_details
         format.html { redirect_to employee_path(:id => @employee_statutory.employee_id ), notice: 'Employee statutory was successfully updated.' }
         format.json { head :no_content }
       else

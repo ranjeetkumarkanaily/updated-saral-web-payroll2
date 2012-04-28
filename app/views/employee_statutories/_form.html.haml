@@ -15,6 +15,7 @@
     {
        document.getElementById('employee_statutory_pan').style.display = 'none';
        document.getElementById('employee_statutory_pan').value = ''
+       document.getElementById('pan_ed').value = ''
        enabledisable_pan('pan_ed',true)
     }
     else //if(pan == "ADD PAN" )
@@ -30,9 +31,12 @@
 
   function enabledisable(inputvalue,inputid)
   {
-    if(document.getElementById(inputvalue).value == '')
-      document.getElementById(inputid).disabled = true;
-    else
+     if(document.getElementById(inputvalue).value == '')
+     {
+       document.getElementById(inputid).value = '';
+       document.getElementById(inputid).disabled = true;
+     }
+     else
       document.getElementById(inputid).disabled = false;
   }
 
@@ -63,10 +67,10 @@
                   %td= f.hidden_field :employee_id
                 %tr
                   %td PF No.:&nbsp;
-                  %td{:colspan=>2}= f.text_field :pf_number, :size => '25', :onchange => 'display_pfdate(this)'
+                  %td{:colspan=>2}= f.text_field :pf_number, :size => '25', :onchange => 'enabledisable("employee_statutory_pf_number","pf_ed")'
                 %tr
                   %td ESI No.:&nbsp;
-                  %td{:colspan=>2}= f.text_field :esi_number, :size => '25', :onchange => 'display_esidate(this)'
+                  %td{:colspan=>2}= f.text_field :esi_number, :size => '25', :onchange => 'enabledisable("employee_statutory_esi_number","esi_ed")'
             %td.std_td
               %table
                 %tr
