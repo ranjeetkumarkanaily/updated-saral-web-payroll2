@@ -45,7 +45,8 @@ UpdatedSaralWebPayroll::Application.routes.draw do
   resources :employee_details
 
   resources :employees do
-    resource :employee_statutories
+    resource :employee_statutories, :only => [:new, :edit]
+    resource :employee_details, :only => [:new, :edit]
     get "upload",  :on => :collection
     post "upload_parse_validate",  :on => :collection
     post "save", :on => :collection

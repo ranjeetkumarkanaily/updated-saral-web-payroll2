@@ -23,7 +23,9 @@ class EmployeeStatutoriesController < ApplicationController
   # POST /employee_statutories.json
   def create
     @employee_statutory = EmployeeStatutory.new(params[:employee_statutory])
+    @employee_statutory.pan = params[:panoption] if ( params[:employee_statutory][:pan].blank? and !params[:panoption].blank? and params[:panoption] != "ADD PAN")
     @employee_id = @employee_statutory.employee_id
+
     respond_to do |format|
       if @employee_statutory.save
         format.html { redirect_to employee_path(:id => @employee_id ), notice: 'Employee statutory was successfully created.' }
