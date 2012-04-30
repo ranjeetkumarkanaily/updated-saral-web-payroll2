@@ -6,6 +6,7 @@ class EmployeeStatutoriesController < ApplicationController
     @employee = Employee.find(params[:employee_id])
     @employee_statutory =  @employee.build_employee_statutory
     @employee_id = params[:employee_id]
+    @display_panoption = true
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @employee_statutory }
@@ -14,9 +15,10 @@ class EmployeeStatutoriesController < ApplicationController
 
   # GET /employee_statutories/1/edit
   def edit
+    @display_panoption = false
     @employee_id = params[:employee_id]
     @employee_statutory = EmployeeStatutory.find_by_employee_id(params[:employee_id])
-
+    @display_panoption = true if !@employee_statutory.pan_present?
   end
 
   # POST /employee_statutories

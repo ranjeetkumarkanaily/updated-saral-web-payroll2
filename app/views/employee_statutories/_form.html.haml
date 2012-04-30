@@ -58,11 +58,13 @@
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
+            %td.msg{:style=>"padding:5px 0 0 13px"} Note : After creation of PAN, it can not be deleted.
+          %tr
             %td.std_td
               %table
                 %tr
                   %td PAN:&nbsp;
-                  - if new_record or employee_statutory.pan == "PAN Applied" or employee_statutory.pan == "PAN Invalid" or employee_statutory.pan == "PAN Not Avbl"
+                  - if display_panoption
                     %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "pan_style_change(this.value)"
                   %td= f.text_field :pan,:style=>"width:90px"
                   %td= f.hidden_field :employee_id

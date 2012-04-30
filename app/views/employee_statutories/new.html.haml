@@ -3,4 +3,4 @@
     %li= link_to 'Back',employee_path(:id => @employee_id)
 #right_content
   %h1 New Employee Statutory
-  = render 'form', :employee_statutory => @employee_statutory , :new_record => true
+  = render 'form', :employee_statutory => @employee_statutory , :display_panoption => @display_panoption
