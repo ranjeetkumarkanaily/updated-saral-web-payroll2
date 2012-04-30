@@ -2,11 +2,11 @@
   $(document).ready(function()
   {
      pan = document.getElementById('employee_statutory_pan').value
-     document.getElementById('panoption').value = pan
-     pan_style_change(pan)
      enabledisable('employee_statutory_pan','pan_ed')
      enabledisable('employee_statutory_pf_number','pf_ed')
      enabledisable('employee_statutory_esi_number','esi_ed')
+     document.getElementById('panoption').value = pan
+     pan_style_change(pan)
   });
 
   function pan_style_change(pan)
@@ -62,7 +62,8 @@
               %table
                 %tr
                   %td PAN:&nbsp;
-                  %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "pan_style_change(this.value)"
+                  - if new_record or employee_statutory.pan == "PAN Applied" or employee_statutory.pan == "PAN Invalid" or employee_statutory.pan == "PAN Not Avbl"
+                    %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "pan_style_change(this.value)"
                   %td= f.text_field :pan,:style=>"width:90px"
                   %td= f.hidden_field :employee_id
                 %tr

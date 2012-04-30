@@ -8,6 +8,7 @@
       %li= link_to 'Statutory Details', edit_employee_statutory_path(:employee_id => @employee.id)
     - else
       %li= link_to 'Statutory Details', new_employee_employee_statutories_path(:employee_id => @employee.id)
+    %li= link_to 'Add Employee Details', employee_details_path(:param1 => @employee.id)
 
   %p{:style=>"padding-left:5px;text-decoration:underline;"} HR Details
   %ul
