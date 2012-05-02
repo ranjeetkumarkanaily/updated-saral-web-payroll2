@@ -36,6 +36,7 @@ end
 
 group :test do
   gem 'cucumber-rails', :require => false
+  gem 'email_spec'
 end
 #gem 'cucumber-rails', require: false ,:group => :test
 
