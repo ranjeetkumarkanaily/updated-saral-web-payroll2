@@ -2,11 +2,11 @@
   $(document).ready(function()
   {
      pan = document.getElementById('employee_statutory_pan').value
-     document.getElementById('panoption').value = pan
-     pan_style_change(pan)
      enabledisable('employee_statutory_pan','pan_ed')
      enabledisable('employee_statutory_pf_number','pf_ed')
      enabledisable('employee_statutory_esi_number','esi_ed')
+     document.getElementById('panoption').value = pan
+     pan_style_change(pan)
   });
 
   function pan_style_change(pan)
@@ -15,6 +15,7 @@
     {
        document.getElementById('employee_statutory_pan').style.display = 'none';
        document.getElementById('employee_statutory_pan').value = ''
+       document.getElementById('pan_ed').value = ''
        enabledisable_pan('pan_ed',true)
     }
     else //if(pan == "ADD PAN" )
@@ -30,9 +31,12 @@
 
   function enabledisable(inputvalue,inputid)
   {
-    if(document.getElementById(inputvalue).value == '')
-      document.getElementById(inputid).disabled = true;
-    else
+     if(document.getElementById(inputvalue).value == '')
+     {
+       document.getElementById(inputid).value = '';
+       document.getElementById(inputid).disabled = true;
+     }
+     else
       document.getElementById(inputid).disabled = false;
   }
 
@@ -54,19 +58,22 @@
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
+            %td.msg{:style=>"padding:5px 0 0 13px"} Note : After creation of PAN, it can not be deleted.
+          %tr
             %td.std_td
               %table
                 %tr
                   %td PAN:&nbsp;
-                  %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "pan_style_change(this.value)"
+                  - if display_panoption
+                    %td= select_tag "panoption", options_for_select(["ADD PAN","PAN Applied", "PAN Invalid", "PAN Not Avbl"]),:prompt => 'Select', :onchange => "pan_style_change(this.value)"
                   %td= f.text_field :pan,:style=>"width:90px"
                   %td= f.hidden_field :employee_id
                 %tr
                   %td PF No.:&nbsp;
-                  %td{:colspan=>2}= f.text_field :pf_number, :size => '25', :onchange => 'display_pfdate(this)'
+                  %td{:colspan=>2}= f.text_field :pf_number, :size => '25', :onchange => 'enabledisable("employee_statutory_pf_number","pf_ed")'
                 %tr
                   %td ESI No.:&nbsp;
-                  %td{:colspan=>2}= f.text_field :esi_number, :size => '25', :onchange => 'display_esidate(this)'
+                  %td{:colspan=>2}= f.text_field :esi_number, :size => '25', :onchange => 'enabledisable("employee_statutory_esi_number","esi_ed")'
             %td.std_td
               %table
                 %tr

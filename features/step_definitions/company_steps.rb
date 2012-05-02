@@ -1,36 +1,16 @@
-Given /^no company created$/  do
-  Company.delete_all
+Given /^a valid user$/ do
+  User.create(:username => "admin", :password => "default")
+  #pending # express the regexp above with the code you wish you had
 end
 
-Given /^user on the new company creation page$/  do
-  visit path_to('company_new')
+Then /^I should have ([0-9]+) company$/ do |count|
+  Company.count.should == count.to_i
+  #pending # express the regexp above with the code you wish you had
 end
 
-Given /^user enters relyon as companyname$/ do
-   fill_in(:companyname, :with => "relyon")
-end
-
-Given /^user enter rahul as responsible_person$/ do
-   fill_in(:responsible_person, :with => "rahul")
-end
-
-Given /^user enters 2011-01-01 as dateofestablishment$/ do
-   fill_in(:dateofestablishment, :with => "2011-01-01")
-end
-
-Given /^user enters bangalore as address$/ do
-   fill_in(:address, :with => "bangalore")
-end
-
-When /^user click on create$/ do
-  #click_button('Create Company')
-end
-
-Then /^it should create company$/ do
- Company.create!(:companyname => "relyon" ,:responsible_person => "rahul", :address => "Bangalore",:dateofestablishment => "2010-01-01" )
-end
-
-
-Then /^it should load Web-SPP Companies index page$/ do
- visit path_to('company_list')
+Given /^I have company named Relyon$/ do
+  Company.create!(:companyname => "Relyon" ,:responsible_person => "rahul", :address => "Bangalore",:website => "www.mycompany.com",
+      :dateofestablishment => "2010-10-30",:pf => true,:esi => true,:phonenumber1 => "080201256",:phonenumber2 => "080201256" ,
+      :address2 => "My company address 2",:address3 => "My company address 3",:email => "mycomap@comp.com" )
+  #pending # express the regexp above with the code you wish you had
 end
