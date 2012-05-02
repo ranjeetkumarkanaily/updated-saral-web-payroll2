@@ -20,6 +20,7 @@ class SalariesController < ApplicationController
   end
 
   def index
+    flash[:notice] = ""
     if params[:month_year] && params[:employee_id]
       @company = Company.first
       @employee = Employee.find(params[:employee_id])
@@ -36,20 +37,29 @@ class SalariesController < ApplicationController
         @no_of_present_days = @no_of_day_in_selected_month - leave_count
       end
 
-
-
       @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id],0
       @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
 
       @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
-
-      respond_to do |format|
-        format.html
-        format.pdf do
-          render :pdf => 'Payslip',
-                 :handlers => [:haml],
-                 :formats => [:pdf],
-                 :template => 'salaries/index'
+      if params[:email] == "yes"
+        pdf = render_to_string :pdf => "Payslip", :template => 'salaries/index'
+        save_path = Rails.root.join('pdfs','payslip.pdf')
+        File.open(save_path, 'wb') do |file|
+          file << pdf
+        end
+        UserMailer.mail_payslip(@employee,params[:month_year]).deliver
+        UserMailer.cleanup
+        flash[:notice] = 'Email has been sent successfully!!!'
+        render :template => "salaries/index"
+      else
+        respond_to do |format|
+          format.html
+          format.pdf do
+            render :pdf => 'Payslip',
+                   :handlers => [:haml],
+                   :formats => [:pdf],
+                   :template => 'salaries/index'
+          end
         end
       end
     end
@@ -96,5 +106,4 @@ class SalariesController < ApplicationController
       end
     end
   end
-
 end

@@ -78,4 +78,6 @@
             %tr
               %td{:align=>'right'}= link_to 'Generate Payslip', salaries_path(:month_year => params[:month_year],:employee_id => params[:employee_id], :format => "pdf")
             %tr
+              %td{:align=>'right'}= link_to 'Generate Payslip & Send Email', salaries_path(:month_year => params[:month_year],:employee_id => params[:employee_id], :email => "yes", :format => "html")
+            %tr
               %td &nbsp;

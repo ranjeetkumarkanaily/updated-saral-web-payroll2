@@ -10,6 +10,14 @@ FactoryGirl.define do
     restrct_pf false
   end
 
+  factory :company do
+    companyname "Relyon"
+    responsible_person "Aditya"
+    address "123 Street"
+    email "info@relyon.com"
+    dateofestablishment "2011-01-01"
+  end
+
   factory :lop do
     employee
     month_year "Jan/2011"
