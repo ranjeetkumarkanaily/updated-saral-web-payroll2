@@ -1,6 +1,5 @@
 :javascript
-  $(document).ready(function()
-  {
+  $(document).ready(function() {
      pan = document.getElementById('employee_statutory_pan').value
      enabledisable('employee_statutory_pan','pan_ed')
      enabledisable('employee_statutory_pf_number','pf_ed')
@@ -9,8 +8,7 @@
      pan_style_change(pan)
   });
 
-  function pan_style_change(pan)
-  {
+  function pan_style_change(pan) {
     if(pan == 'PAN Invalid' || pan == 'PAN Applied' || pan == 'PAN Not Avbl' || pan == '')
     {
        document.getElementById('employee_statutory_pan').style.display = 'none';
