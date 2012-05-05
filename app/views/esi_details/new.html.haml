@@ -43,7 +43,7 @@
                 - @esi_details.each do |esi_detail|
                 - sl_no = sl_no + 1
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-                    %td.table_grid_td= EsiGroup.find(esi_detail.esi_group_id).esi_group_name
+                    %td.table_grid_td= esi_detail.esi_group_esi_group_name
                     %td.table_grid_td= esi_detail.esi_effective_date
                     %td.table_grid_td= esi_detail.effective_to
                     - if sl_no == 1

@@ -2,7 +2,7 @@
   %ul
     %li= link_to 'Back', @branch
 #right_content
-  %h1= "Create new PT Group Details for Branch #{@pt_detail.branch.branch_name}"
+  %h1= "Create new PT Group Details for Branch #{@pt_detail.branch_branch_name}"
   = form_for [@branch, @pt_detail] do |f|
     - if @pt_detail.errors.any?
       #error_explanation
@@ -21,7 +21,7 @@
                 %table
                   %tr
                     %td{:width=>130} PF Group:&nbsp;
-                    %td= @pt_detail.pt_group.name
+                    %td= @pt_detail.pt_group_name
                   %tr
                     %td{:width=> 130} Effective Date:&nbsp;
                     %td= f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010

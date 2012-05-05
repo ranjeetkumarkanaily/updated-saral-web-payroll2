@@ -1,8 +1,11 @@
 class PtDetailsController < ApplicationController
   # GET /pt_details/new
   # GET /pt_details/new.json
+
+  before_filter :find_branch, :only => [:new, :create, :destroy]
+  before_filter :find_pt_detail, :only => [:edit, :update, :destroy]
+
   def new
-    @branch = Branch.find(params[:branch_id])
     @pt_details = Branch.find(params[:branch_id]).pt_details.order("created_at DESC")
     @pt_detail = @branch.pt_details.build
 
@@ -14,14 +17,12 @@ class PtDetailsController < ApplicationController
 
   # GET /pt_details/1/edit
   def edit
-    @pt_detail = PtDetail.find(params[:id])
     @branch = @pt_detail.branch
   end
 
   # POST /pt_details
   # POST /pt_details.json
   def create
-    @branch = Branch.find(params[:branch_id])
     @pt_detail = @branch.pt_details.build(params[:pt_detail])
     respond_to do |format|
       if @pt_detail.save
@@ -31,7 +32,7 @@ class PtDetailsController < ApplicationController
         format.json { render json: @pt_detail, status: :created, location: @pt_detail }
       else
         @pt_details = Branch.find(params[:branch_id]).pt_details
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @pt_detail.errors, status: :unprocessable_entity }
       end
     end
@@ -40,8 +41,6 @@ class PtDetailsController < ApplicationController
   # PUT /pt_details/1
   # PUT /pt_details/1.json
   def update
-    @pt_detail = PtDetail.find(params[:id])
-
     respond_to do |format|
       if @pt_detail.update_attributes(params[:pt_detail])
         # updating Branch pf_group_id
@@ -50,7 +49,7 @@ class PtDetailsController < ApplicationController
         format.json { head :no_content }
       else
         @branch = @pt_detail.branch
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @pt_detail.errors, status: :unprocessable_entity }
       end
     end
@@ -59,8 +58,6 @@ class PtDetailsController < ApplicationController
   # DELETE /pt_details/1
   # DELETE /pt_details/1.json
   def destroy
-    @branch = Branch.find(params[:branch_id])
-    @pt_detail = PtDetail.find(params[:id])
     @pt_detail.destroy
     @branch.update_pt_group
 
@@ -69,4 +66,14 @@ class PtDetailsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  protected
+    def find_branch
+      @branch = Branch.find(params[:branch_id])
+    end
+
+    def find_pt_detail
+      @pt_detail = PtDetail.find(params[:id])
+    end
 end

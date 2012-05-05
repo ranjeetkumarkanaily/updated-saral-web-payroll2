@@ -1,8 +1,10 @@
 class EsiDetailsController < ApplicationController
   # GET /esi_details/new
   # GET /esi_details/new.json
+  before_filter :find_branch, :only => [:new, :create, :destroy]
+  before_filter :find_esi_detail, :only => [:edit, :update, :destroy]
+
   def new
-    @branch = Branch.find(params[:branch_id])
     @esi_details = Branch.find(params[:branch_id]).esi_details.order("created_at DESC")
     @esi_detail = @branch.esi_details.build
 
@@ -14,14 +16,12 @@ class EsiDetailsController < ApplicationController
 
   # GET /esi_details/1/edit
   def edit
-    @esi_detail = EsiDetail.find(params[:id])
     @branch = @esi_detail.branch
   end
 
   # POST /esi_details
   # POST /esi_details.json
   def create
-    @branch = Branch.find(params[:branch_id])
     @esi_detail = @branch.esi_details.build(params[:esi_detail])
     respond_to do |format|
       if @esi_detail.save
@@ -31,7 +31,7 @@ class EsiDetailsController < ApplicationController
         format.json { render json: @esi_detail, status: :created, location: @esi_detail }
       else
         @esi_details = Branch.find(params[:branch_id]).esi_details
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @esi_detail.errors, status: :unprocessable_entity }
       end
     end
@@ -40,8 +40,6 @@ class EsiDetailsController < ApplicationController
   # PUT /esi_details/1
   # PUT /esi_details/1.json
   def update
-    @esi_detail = EsiDetail.find(params[:id])
-
     respond_to do |format|
       if @esi_detail.update_attributes(params[:esi_detail])
         # updating Branch pf_group_id
@@ -50,7 +48,7 @@ class EsiDetailsController < ApplicationController
         format.json { head :no_content }
       else
         @branch = @esi_detail.branch
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @esi_detail.errors, status: :unprocessable_entity }
       end
     end
@@ -59,8 +57,6 @@ class EsiDetailsController < ApplicationController
   # DELETE /esi_details/1
   # DELETE /esi_details/1.json
   def destroy
-    @branch = Branch.find(params[:branch_id])
-    @esi_detail = EsiDetail.find(params[:id])
     @esi_detail.destroy
     @branch.update_esi_group
 
@@ -69,4 +65,14 @@ class EsiDetailsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  protected
+    def find_branch
+      @branch = Branch.find(params[:branch_id])
+    end
+
+    def find_esi_detail
+      @esi_detail = EsiDetail.find(params[:id])
+    end
 end
