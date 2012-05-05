@@ -39,8 +39,8 @@ describe EmployeeDetail do
     branch = FactoryGirl.create(:branch)
     financial_institution = FactoryGirl.create(:financial_institution)
 
-    emp_details = FactoryGirl.create(:employee_detail,:branch_id => branch.id,:financial_institution_id => financial_institution.id,:attendance_configuration_id => attendance_configuration.id )
-    month_year = Date.strptime "Nov/2009","%b/%Y"
+    emp_details = FactoryGirl.create(:employee_detail,:branch_id => branch.id,:financial_institution_id => financial_institution.id,:attendance_configuration_id => attendance_configuration.id, :effective_date => '2011-03-01')
+    month_year = Date.strptime "Mar/2011","%b/%Y"
     emp_branch_detail = EmployeeDetail.employee_branch month_year, 1
     emp_branch_detail[0][:branch_id].should eq(emp_details[:branch_id])
 

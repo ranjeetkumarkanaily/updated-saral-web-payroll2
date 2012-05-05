@@ -9,9 +9,10 @@ class PtGroup < ActiveRecord::Base
   has_many :branches
 
   has_many :pt_group_rates
-  has_many :branch_pt_details
+  has_many :pt_details
 
   delegate :state_name, :to => :state, :prefix => true
+  delegate :name, :to => :pt_group, :prefix => true
 
   scope :pt_groups, :order => 'created_at ASC'
 

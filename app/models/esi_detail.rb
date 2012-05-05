@@ -7,6 +7,10 @@ class EsiDetail < ActiveRecord::Base
   validates_uniqueness_of :esi_group_id, :scope => [:branch_id, :esi_effective_date]
 
 
+  delegate :esi_group_name, :to => :esi_group, :prefix => true
+  delegate :branch_name, :to => :branch, :prefix => true
+
+
   def effective_to
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")
     next_row ? next_row.esi_effective_date - 1 : 'Till Date'
@@ -17,4 +21,5 @@ class EsiDetail < ActiveRecord::Base
         :conditions => ["branch_id = ? and esi_group_id = ?", branch_id, esi_group_id]
     }
   }
+
 end

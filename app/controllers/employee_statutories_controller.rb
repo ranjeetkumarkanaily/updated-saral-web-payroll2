@@ -33,7 +33,7 @@ class EmployeeStatutoriesController < ApplicationController
         format.html { redirect_to employee_path(:id => @employee_id ), notice: 'Employee statutory was successfully created.' }
         format.json { render json: @employee_statutory, status: :created, location: @employee_statutory }
       else
-        format.html { render action: "new" ,@employee_id => @employee_id }
+        format.html { render "new" ,@employee_id => @employee_id }
         format.json { render json: @employee_statutory.errors, status: :unprocessable_entity }
       end
     end
@@ -50,7 +50,7 @@ class EmployeeStatutoriesController < ApplicationController
         format.html { redirect_to employee_path(:id => @employee_statutory.employee_id ), notice: 'Employee statutory was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render "edit" }
         format.json { render json: @employee_statutory.errors, status: :unprocessable_entity }
       end
     end

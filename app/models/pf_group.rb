@@ -5,7 +5,7 @@ class PfGroup < ActiveRecord::Base
   has_many :pf_group_rates, :dependent => :destroy
 
   has_many :branches
-  has_many :branch_pf_details
+  has_many :pf_details
 
   validates :pf_group,   :presence   => true,
             :uniqueness => { :case_sensitive => false }

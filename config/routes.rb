@@ -57,10 +57,6 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     put "pf_restrict_update", :on => :collection
 
     get 'generate_sample_excel_template',  :on => :collection
-
-    #get 'statutory',  :on => :collection
-    #
-    #post 'update_statutory', :on => :collection
   end
 
 
