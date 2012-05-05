@@ -21,8 +21,7 @@ describe EmployeeDetailsController do
     :attendance_configuration_id => @attendance_configuration.id,
     :bank_account_number => 2316,
     :effective_to => '',
-    :pan => 'aaaaa1234a',
-    :pan_effective_date => "2012-03-01" }
+    }
   end
 
   describe "GET index" do
@@ -193,7 +192,7 @@ describe EmployeeDetailsController do
       @employee = FactoryGirl.create(:employee)
     end
     it "destroys the requested employee_detail" do
-      employee_detail = EmployeeDetail.create! valid_attributes
+      employee_detail = EmployeeDetail.create! valid_attributes.merge(:employee_id => @employee.id)
       expect {
         delete :destroy, :id => employee_detail.id
       }.to change(EmployeeDetail, :count).by(-1)
@@ -201,7 +200,7 @@ describe EmployeeDetailsController do
 
     it "redirects to the employee_details list and updates the last record's effective date'" do
       employee_detail_first = FactoryGirl.create(:employee_detail,:branch_id => @branch.id,:financial_institution_id => @financial_institution.id,:attendance_configuration_id => @attendance_configuration.id)
-      employee_detail_second = EmployeeDetail.create! valid_attributes
+      employee_detail_second = EmployeeDetail.create! valid_attributes.merge(:employee_id => @employee.id)
       delete :destroy, :id => employee_detail_second.id
       response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id] ))
     end
