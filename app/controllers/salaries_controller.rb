@@ -50,7 +50,7 @@ class SalariesController < ApplicationController
         UserMailer.mail_payslip(@employee,params[:month_year]).deliver
         UserMailer.cleanup
         flash[:notice] = 'Email has been sent successfully!!!'
-        render :template => "salaries/index"
+        render "salaries/index"
       else
         respond_to do |format|
           format.html

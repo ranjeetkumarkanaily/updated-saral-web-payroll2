@@ -43,7 +43,7 @@
                 - @pt_details.each do |pt_detail|
                 - sl_no = sl_no + 1
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-                    %td.table_grid_td= PtGroup.find(pt_detail.pt_group_id).name
+                    %td.table_grid_td= pt_detail.pt_group_name
                     %td.table_grid_td= pt_detail.pt_effective_date
                     %td.table_grid_td= pt_detail.effective_to
                     - if sl_no == 1

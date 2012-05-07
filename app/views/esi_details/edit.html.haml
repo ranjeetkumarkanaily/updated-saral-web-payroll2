@@ -2,7 +2,7 @@
   %ul
     %li= link_to 'Back', @branch
 #right_content
-  %h1= "Create new ESI Group Details for Branch #{@esi_detail.branch.branch_name}"
+  %h1= "Create new ESI Group Details for Branch #{@esi_detail.branch_branch_name}"
   = form_for [@branch, @esi_detail] do |f|
     - if @esi_detail.errors.any?
       #error_explanation
@@ -21,7 +21,7 @@
                 %table
                   %tr
                     %td{:width=>130} PF Group:&nbsp;
-                    %td= @esi_detail.esi_group.esi_group_name
+                    %td= @esi_detail.esi_group_esi_group_name
                   %tr
                     %td{:width=> 130} Effective Date:&nbsp;
                     %td= f.text_field :esi_effective_date, :id=>"esi_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010

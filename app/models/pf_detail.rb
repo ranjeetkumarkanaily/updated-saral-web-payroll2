@@ -6,6 +6,8 @@ class PfDetail < ActiveRecord::Base
   validates :branch_id, :pf_group_id, :pf_effective_date, :presence => true
   validates_uniqueness_of :pf_group_id, :scope => [:branch_id, :pf_effective_date]
 
+  delegate :pf_group, :to => :pf_group, :prefix => true
+  delegate :branch_name, :to => :branch, :prefix => true
 
   def effective_to
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")
