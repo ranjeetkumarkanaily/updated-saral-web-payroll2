@@ -37,6 +37,7 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'email_spec'
+  gem 'ruby-prof', :git => 'git://github.com/wycats/ruby-prof.git'
 end
 #gem 'cucumber-rails', require: false ,:group => :test
 
