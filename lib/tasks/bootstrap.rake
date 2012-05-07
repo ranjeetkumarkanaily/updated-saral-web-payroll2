@@ -57,8 +57,13 @@ namespace :bootstrap do
   desc "Add Default Classification Designation"
   task :classification_heading => :environment do
     ClassificationHeading.create( :classification_heading_name => "Designation", :display_order => 1 )
+    ClassificationHeading.create( :classification_heading_name => "Occupation", :display_order => 2 )
+    ClassificationHeading.create( :classification_heading_name => "Department", :display_order => 3 )
+    ClassificationHeading.create( :classification_heading_name => "Division", :display_order => 4 )
+    ClassificationHeading.create( :classification_heading_name => "Grade", :display_order => 5 )
+    ClassificationHeading.create( :classification_heading_name => "Section", :display_order => 6 )
   end
 
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution]
+  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution, :classification_heading]
 end
