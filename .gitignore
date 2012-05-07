@@ -12,3 +12,4 @@ public/system/companies/*
 db/development_structure.sql
 db/structure.sql
 rails_best_practices_output.html
+pdfs/payslip.pdf
