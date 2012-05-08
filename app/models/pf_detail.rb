@@ -9,6 +9,12 @@ class PfDetail < ActiveRecord::Base
   delegate :pf_group, :to => :pf_group, :prefix => true
   delegate :branch_name, :to => :branch, :prefix => true
 
+  #scope :next_rows, lambda { |created_at|
+  #  {
+  #      :conditions => ["created_at > ?", created_at]
+  #  }
+  #}
+
   def effective_to
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")
     next_row ? next_row.pf_effective_date - 1 : 'Till Date'

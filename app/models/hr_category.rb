@@ -3,6 +3,6 @@ class HrCategory < ActiveRecord::Base
 
   acts_as_audited
 
-  has_many :hr_category_details
+  has_many :hr_category_details, :dependent => :destroy
   validates_uniqueness_of :category_name
 end
