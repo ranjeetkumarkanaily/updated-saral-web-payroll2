@@ -47,6 +47,7 @@ FactoryGirl.define do
   factory :salary do
     effective_date '2011-02-01'
     salary_amount 1000.00
+    actual_salary_amount 1000.00
     employee_id 1
     employee_detail_id 1
     salary_head
@@ -63,6 +64,8 @@ FactoryGirl.define do
     pf_percentage 100
     esi_applicability true
     esi_percentage 100
+    pt_applicability true
+    pt_percentage 100
   end
 
   factory :employee_detail do

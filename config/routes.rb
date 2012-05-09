@@ -1,5 +1,9 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+  resources :company_documents , :except => [:index, :show] do
+     get 'download', :on => :collection
+  end
+
   resources :employee_statutories, :except => [:index,:show,:destroy]
 
   resources :hr_masters, :except => [:index, :show]
@@ -69,7 +73,9 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     get 'generate_sample_excel_template',  :on => :collection
   end
 
-  resources :companies, :except => [:show, :destroy]
+  resources :companies, :except => [:show, :destroy] do
+    get 'documents_list', :on => :collection
+  end
 
   resources :salary_group_details
 

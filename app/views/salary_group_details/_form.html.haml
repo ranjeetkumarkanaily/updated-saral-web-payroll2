@@ -37,6 +37,13 @@
                 %tr
                   %td{:width=>130} PF Percentage(%):&nbsp;
                   %td= f.text_field :pf_percentage, :size => '22', :readonly => 'readonly'
+                %tr
+                  %td{:width=>130} PT Applicability:&nbsp;
+                  %td= f.check_box :pt_applicability, :onclick=> 'setPercentage("salary_group_detail_pt_applicability","salary_group_detail_pt_percentage")'
+                %tr
+                  %td{:width=>130} PT Percentage(%):&nbsp;
+                  %td= f.text_field :pt_percentage, :size => '22', :readonly => 'readonly'
+
             %td.std_td
               %table
                 %tr
