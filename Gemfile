@@ -1,10 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails'
-
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
 gem 'pg'
 
 # Gems used only for assets and not required
@@ -27,8 +23,6 @@ group :development, :test do
   gem 'guard-spork'
   gem 'guard-rspec'
   gem 'guard-bundler'
-  #gem 'rb-inotify'
-  #gem 'libnotify'
   gem 'simplecov'
   gem 'database_cleaner'
   gem 'activerecord-postgres-hstore'
@@ -37,9 +31,7 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'email_spec'
-  gem 'ruby-prof', :git => 'git://github.com/wycats/ruby-prof.git'
 end
-#gem 'cucumber-rails', require: false ,:group => :test
 
 gem "foreigner"
 gem 'ruby_parser'
@@ -47,10 +39,6 @@ gem 'hpricot'
 gem "haml"
 gem 'jquery-rails'
 gem 'fileutils'
-#gem 'prawn'
-#gem 'prawn-core'
-#gem 'prawn-layout'
-#gem "prawnto_2", :require => "prawnto"
 gem 'currency-in-words'
 gem "pdfkit"
 gem "wkhtmltopdf"
