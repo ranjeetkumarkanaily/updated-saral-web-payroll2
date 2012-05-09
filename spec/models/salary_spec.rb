@@ -246,7 +246,7 @@ describe Salary do
         salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
-        esi_amount.should eq(263.0)
+        esi_amount.should eq(262.5)
       end
 
       it "should not give ESI amount for selected employee and month if esi group is defined after salary calculation date" do

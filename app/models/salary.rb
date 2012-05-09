@@ -1,5 +1,5 @@
 class Salary < ActiveRecord::Base
-  attr_accessible :effective_date, :salary_amount,:employee_id,:employee_detail_id,:salary_head_id,:salary_group_detail_id
+  attr_accessible :effective_date, :salary_amount,:employee_id,:employee_detail_id,:salary_head_id,:salary_group_detail_id, :actual_salary_amount
   acts_as_audited
 
   belongs_to :salary_head
@@ -48,22 +48,13 @@ class Salary < ActiveRecord::Base
         if @pf_applicable_sal >= pf_rate_value[0]['cutoff']
           pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
         else
-          pf_amount = ((@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)).round.to_f
+          pf_amount = (@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)
         end
       else
         pf_amount = 0
       end
     end
   end
-
-  #def self.get_gross_salary month_year, employee_id
-  #  month_year = Date.strptime month_year, '%b/%Y'
-  #  condition = " employee_id  = #{employee_id} and salary_type = 'Earnings' and
-  #                  extract(month from effective_date) = #{month_year.month} and
-  #                  extract(year from effective_date) = #{month_year.year}"
-  #  gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins(:salary_head).where(condition)
-  #  gross_salary = gross_salary[0]['salary_amount']
-  #end
 
   def self.get_esi_amount  month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
@@ -86,7 +77,7 @@ class Salary < ActiveRecord::Base
 
         esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
         if @esi_applicable_sal <= esi_rate_value[:cut_off]
-          esi_amount = (@esi_applicable_sal*(esi_rate_value[:employee_rate]/100)).round.to_f
+          esi_amount = @esi_applicable_sal*(esi_rate_value[:employee_rate]/100)
         else
           esi_amount = 0
         end
@@ -145,15 +136,18 @@ class Salary < ActiveRecord::Base
     end
 
     salary.each do |sal|
-      updated_salary_amount = sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month.to_f
-      Salary.create :effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id], :salary_group_detail_id => sal[:salary_group_detail_id]
+      updated_salary_amount = (sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month).round.to_f
+      updated_actual_salary_amount = sal[:salary_amount].to_i * @no_of_present_days / no_of_day_in_selected_month
+      Salary.create :effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id], :salary_group_detail_id => sal[:salary_group_detail_id], :actual_salary_amount => updated_actual_salary_amount
     end
 
-    pf_amount = get_pf_amount pay_month,salary[0]['employee_id']
-    Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id => salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil)
+    pf_amount = (get_pf_amount pay_month,salary[0]['employee_id']).round.to_f
+    actual_pf_amount = get_pf_amount pay_month,salary[0]['employee_id']
+    Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id => salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil, :actual_salary_amount => actual_pf_amount)
 
-    esi_amount = get_esi_amount pay_month,salary[0]['employee_id']
-    Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id =>salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => nil)
+    esi_amount = (get_esi_amount pay_month,salary[0]['employee_id']).round.to_f
+    actual_esi_amount = get_esi_amount pay_month,salary[0]['employee_id']
+    Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id =>salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => nil, :actual_salary_amount => actual_esi_amount)
 
     @no_of_present_days
   end
