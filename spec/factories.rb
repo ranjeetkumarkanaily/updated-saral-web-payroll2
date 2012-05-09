@@ -63,6 +63,8 @@ FactoryGirl.define do
     pf_percentage 100
     esi_applicability true
     esi_percentage 100
+    pt_applicability true
+    pt_percentage 100
   end
 
   factory :employee_detail do

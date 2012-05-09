@@ -56,14 +56,14 @@ class Salary < ActiveRecord::Base
     end
   end
 
-  def self.get_gross_salary month_year, employee_id
-    month_year = Date.strptime month_year, '%b/%Y'
-    condition = " employee_id  = #{employee_id} and salary_type = 'Earnings' and
-                    extract(month from effective_date) = #{month_year.month} and
-                    extract(year from effective_date) = #{month_year.year}"
-    gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins(:salary_head).where(condition)
-    gross_salary = gross_salary[0]['salary_amount']
-  end
+  #def self.get_gross_salary month_year, employee_id
+  #  month_year = Date.strptime month_year, '%b/%Y'
+  #  condition = " employee_id  = #{employee_id} and salary_type = 'Earnings' and
+  #                  extract(month from effective_date) = #{month_year.month} and
+  #                  extract(year from effective_date) = #{month_year.year}"
+  #  gross_salary = Salary.select('sum(salary_amount) as salary_amount').joins(:salary_head).where(condition)
+  #  gross_salary = gross_salary[0]['salary_amount']
+  #end
 
   def self.get_esi_amount  month_year, employee_id
     month_year = Date.strptime month_year, '%b/%Y'
@@ -97,7 +97,6 @@ class Salary < ActiveRecord::Base
   end
 
   def self.get_pt_amount month_year, employee_id
-    gross_salary = get_gross_salary month_year,employee_id
     month_year = Date.strptime month_year, '%b/%Y'
 
     employee_branch = EmployeeDetail.employee_branch month_year,employee_id
@@ -108,7 +107,14 @@ class Salary < ActiveRecord::Base
     else
       pt_effective_date = pt_effective_date_detail[0]['pt_effective_date']
       if pt_effective_date <= month_year.beginning_of_month
-        pt_amount_detail = PtRate.select('pt').joins(:paymonth).where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{gross_salary.to_i})")
+        pt_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("pt_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+
+        @pt_applicable_sal = 0
+        pt_applicable_salary_amount.each do |pt_appli_sal|
+          @pt_applicable_sal = @pt_applicable_sal+pt_appli_sal.salary_amount
+        end
+
+        pt_amount_detail = PtRate.select('pt').joins(:paymonth).where("to_date <= '#{month_year.end_of_month}' and min_sal_range = (select max(min_sal_range) from pt_rates where min_sal_range < #{@pt_applicable_sal.to_i})")
 
         if pt_amount_detail.count > 0
           pt_amount = pt_amount_detail[0]['pt']
