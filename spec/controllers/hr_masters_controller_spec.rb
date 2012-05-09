@@ -69,15 +69,9 @@ describe HrMastersController do
       it "validates presence of Hr Category Details Required field" do
         hr_category = HrCategory.create(:category_name => "Education Details")
         hr_cat_det = HrCategoryDetail.create(:hr_category_id => hr_category.id, :name => "Degree", :required => true)
-        hr_master = FactoryGirl.build(:hr_master, :employee_id => 1, :hr_category_id => hr_category.id)
         post :create, {:hr_master => {:employee_id => 1, :hr_category_id => hr_category.id, :category_values => "{'Degree1 => '}"}}
-        response.should redirect_to(new_hr_master_path(:employee_id => 1, :hr_category_id => hr_category.id))
+        response.should redirect_to(new_hr_master_path(:employee_id => 1, :hr_category_id => hr_category.id, :errors => ["Hr master category values for \"Degree\" is required"]))
       end
-      #"category_values"=>{"Masrks"=>"", "Degree"=>""}}
-
-
-
-
     end
   end
 

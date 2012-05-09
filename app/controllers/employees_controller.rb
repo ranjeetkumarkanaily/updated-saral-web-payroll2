@@ -9,6 +9,11 @@ class EmployeesController < ApplicationController
     else
       @employees = Employee.order('created_at ASC').paginate(:page => params[:page], :per_page => 10)
     end
+
+    respond_to do |format|
+      format.html # show.html.haml
+      format.json { render json: @employees }
+    end
   end
 
   def show
