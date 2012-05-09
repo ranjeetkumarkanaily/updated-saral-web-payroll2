@@ -2,6 +2,7 @@
     - if @company
         %ul
             %li= link_to 'Edit Company', edit_company_path(@company.id)
+            %li= link_to 'Documents', documents_list_companies_path(:id => @company.id)
 #right_content
     = render "breadcrumb"
     - if @company

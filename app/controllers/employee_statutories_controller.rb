@@ -8,7 +8,7 @@ class EmployeeStatutoriesController < ApplicationController
     @employee_id = params[:employee_id]
     @display_panoption = true
     respond_to do |format|
-      format.html # new.html.erb
+      format.html # new.html.haml
       format.json { render json: @employee_statutory }
     end
   end
