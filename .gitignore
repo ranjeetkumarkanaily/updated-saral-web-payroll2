@@ -8,6 +8,7 @@ coverage/
 public/system/photos/*
 public/excel_uploaded_files/*
 public/system/companies/*
+public/system/company_documents/*
 !.gitignore
 db/development_structure.sql
 db/structure.sql
