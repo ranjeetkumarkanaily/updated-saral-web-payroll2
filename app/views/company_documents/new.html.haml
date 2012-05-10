@@ -12,7 +12,7 @@
       %td.std_td_mail &nbsp;
     %tr
       %td.std_td_mail
-        = form_for @company_document,:multipart => true do |docs|
+        = form_for @company_document do |docs|
           - if @company_document.errors.any?
             #error_explanation
               %h2

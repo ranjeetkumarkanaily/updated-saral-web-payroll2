@@ -14,8 +14,7 @@ class CompanyDocumentsController < ApplicationController
   # POST /company_documents.json
   def create
     @vars=params[:company_document]
-    @company=Company.find(@vars[:company_id])
-    @company_document=@company.company_documents.build(@vars)
+    @company_document = CompanyDocument.new(params[:company_document])
     respond_to do |format|
       if @company_document.save
         format.html { redirect_to documents_list_companies_path(:id => @vars[:company_id]), notice: 'Company document was successfully created.' }

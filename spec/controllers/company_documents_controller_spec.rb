@@ -7,14 +7,6 @@ describe CompanyDocumentsController do
      @company = FactoryGirl.create(:company,:photo => Rails.root.join("spec/factories/icon_a.png").open)
      @file_specs= FactoryGirl.create(:upload_file_type)
   end
-
-  def valid_attributes
-    {
-        :remarks=>"test",
-        :company_id => @company.id,
-        :file_path => Rails.root.join("spec/factories/Guide.doc").open
-    }
-  end
   
   describe "GET new" do
     it "assigns a new company_document as @company_document" do
@@ -27,12 +19,8 @@ describe CompanyDocumentsController do
       describe "with valid params" do
         it "creates a new CompanyDocument" do
           expect {
-            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => Rails.root.join("spec/factories/back.txt").open}
-
+            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => fixture_file_upload( 'spec/factories/back.txt')}
           }.to change(CompanyDocument, :count).by(1)
-
-          #FactoryGirl.create(:company_document, :file_path => Rails.root.join("spec/factories/paycss.text").open)
-
         end
       end
   end
