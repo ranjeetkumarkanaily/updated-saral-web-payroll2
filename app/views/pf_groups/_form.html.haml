@@ -35,6 +35,18 @@
             %td.std_td{:colspan=>2}
               %table
                 %tr
+                  %td{:colspan=>2}
+                    %h1 Eseva Login Details
+                %tr
+                  %td{:width=>130} User ID:&nbsp;
+                  %td= f.text_field :user_id, :size => '22'
+                %tr
+                  %td{:width=>130} Password:&nbsp;
+                  %td= f.password_field :password, :size => '22'
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
                   %td &nbsp;
                 %tr
                   %td{:colspan=>2}= f.submit
