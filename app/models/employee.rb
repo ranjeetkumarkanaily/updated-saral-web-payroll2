@@ -1,5 +1,5 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf
+  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf,:probation_period,:probation_complete_date,:confirmation_date,:salary_start_date,:retirement_date,:handicapped,:emergency_contact_number,:official_mail_id
   acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -14,38 +14,51 @@ class Employee < ActiveRecord::Base
   belongs_to :present_state, :class_name => "State"
   delegate :state_name, :to => :present_state, :prefix => true
 
-  validates :empname, :presence => true,
-                    :length   => {:maximum => 100}
+  #belongs_to :perm_state, :class_name => "State"
+  #delegate :state_name, :to => :perm_state, :prefix => true
+
+  validates :empname, :presence => true,:length   => {:maximum => 100}
   validates :present_state_id, :presence => true
-
   validates :date_of_joining, :presence => true
-
-  validates :refno,   :presence   => true,
-                    :uniqueness => { :case_sensitive => false }
-
-
-  validates :email,   :presence   => true,
-                    :format     => { :with => regex_for_email },
-                    :uniqueness => { :case_sensitive => false }
-
-  validate :doj_before_dol
-
-  validate :dob_before_doj
-
-
-
+  validates :refno,   :presence   => true,:uniqueness => { :case_sensitive => false }
+  validates :email, :presence   => true,:format     => { :with => regex_for_email },:uniqueness => { :case_sensitive => false }
+  validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then
       errors.add(:date_of_joining, "date of birth should be before date of joining")
     end
   end
 
-
   def doj_before_dol
     if !date_of_joining.nil? and !date_of_leaving.nil? and date_of_joining >= date_of_leaving then
       errors.add(:date_of_joining, "date of joining should be before date of leaving")
     end
   end
+
+  def confirmation_date_after_doj
+    if !date_of_joining.nil? and !confirmation_date.nil? and date_of_joining >= confirmation_date then
+      errors.add(:confirmation_date, "confirmation date should be after date of joining")
+    end
+  end
+
+  def probation_comp_date_after_doj
+    if !date_of_joining.nil? and !probation_complete_date.nil? and date_of_joining >= probation_complete_date then
+      errors.add(:probation_complete_date, "probation complete date should be after date of joining")
+    end
+  end
+
+  def salary_start_date_after_doj
+    if !date_of_joining.nil? and !salary_start_date.nil? and date_of_joining >= salary_start_date then
+      errors.add(:salary_start_date, "salary start date should be after date of joining")
+    end
+  end
+
+  def retirement_date_after_doj
+    if !date_of_joining.nil? and !retirement_date.nil? and date_of_joining >= retirement_date then
+      errors.add(:retirement_date, "retirement date should be after date of joining")
+    end
+  end
+
 
   def self.search(search)
     search_condition = "%" + search + "%"

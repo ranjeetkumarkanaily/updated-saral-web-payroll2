@@ -18,8 +18,9 @@ describe CompanyDocumentsController do
   describe "POST create" do
       describe "with valid params" do
         it "creates a new CompanyDocument" do
+          file_path = fixture_file_upload( 'spec/factories/docs.doc', 'application/msword')
           expect {
-            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => fixture_file_upload( 'spec/factories/back.txt')}
+            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
           }.to change(CompanyDocument, :count).by(1)
         end
       end

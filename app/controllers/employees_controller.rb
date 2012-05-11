@@ -138,6 +138,7 @@ class EmployeesController < ApplicationController
   end
 
   def generate_sample_excel_template
+
     respond_to do |format|
       format.xls do
         render :xls => 'Employee Template',
