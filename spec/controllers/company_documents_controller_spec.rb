@@ -38,7 +38,6 @@ describe CompanyDocumentsController do
   describe "DELETE destroy" do
     it "should delete the company document" do
       company_document=CompanyDocument.create! valid_attributes
-      puts company_document.inspect
       expect {
               delete :destroy, :id => company_document.id
             }.to change(CompanyDocument, :count).by(-1)

@@ -31,7 +31,6 @@ class CompanyDocumentsController < ApplicationController
   def destroy
 
     @company_document = CompanyDocument.find(params[:id])
-    #puts @company_document.inspect
     @company_document.destroy
 
     respond_to do |format|
