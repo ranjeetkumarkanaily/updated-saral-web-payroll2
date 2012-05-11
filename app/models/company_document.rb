@@ -8,7 +8,6 @@ class CompanyDocument < ActiveRecord::Base
   def file_size
     upld = UploadFileType.first
     validates_attachment_size :file_path, :less_than => upld.max_file_size.to_i.megabytes
-    puts file_content_type
   end
 
   def file_content_type
