@@ -19,7 +19,8 @@ describe CompanyDocumentsController do
       describe "with valid params" do
         it "creates a new CompanyDocument" do
           expect {
-            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => fixture_file_upload( 'spec/factories/back.txt')}
+            puts @file_specs.inspect
+            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => fixture_file_upload( 'spec/factories/docs.doc')}
           }.to change(CompanyDocument, :count).by(1)
         end
       end
