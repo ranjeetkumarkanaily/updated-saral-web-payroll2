@@ -14,31 +14,20 @@ class Employee < ActiveRecord::Base
   belongs_to :present_state, :class_name => "State"
   delegate :state_name, :to => :present_state, :prefix => true
 
-  belongs_to :perm_state, :class_name => "State"
-  delegate :state_name, :to => :perm_state, :prefix => true
+  #belongs_to :perm_state, :class_name => "State"
+  #delegate :state_name, :to => :perm_state, :prefix => true
 
-  validates :empname, :presence => true,
-                    :length   => {:maximum => 100}
+  validates :empname, :presence => true,:length   => {:maximum => 100}
   validates :present_state_id, :presence => true
-
   validates :date_of_joining, :presence => true
-
-  validates :refno,   :presence   => true,
-                    :uniqueness => { :case_sensitive => false }
-
-
-  validates :email, :presence   => true,
-                    :format     => { :with => regex_for_email },
-                    :uniqueness => { :case_sensitive => false }
-
+  validates :refno,   :presence   => true,:uniqueness => { :case_sensitive => false }
+  validates :email, :presence   => true,:format     => { :with => regex_for_email },:uniqueness => { :case_sensitive => false }
   validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
-
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then
       errors.add(:date_of_joining, "date of birth should be before date of joining")
     end
   end
-
 
   def doj_before_dol
     if !date_of_joining.nil? and !date_of_leaving.nil? and date_of_joining >= date_of_leaving then

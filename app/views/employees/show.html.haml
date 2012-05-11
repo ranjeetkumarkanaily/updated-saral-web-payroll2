@@ -122,7 +122,11 @@
                               %td= @employee.perm_locality
                             %tr
                               %td{:width=>130} State:&nbsp;
-                              %td= @employee.perm_state_state_name
+                              - if !@employee.perm_state_id.nil?
+                              - x= State.find(@employee.perm_state_id)
+                                %td= x.state_name
+                              - else
+                                %td
                 %div{:class=>'tabbertab',:id=>"contact_details"}
                   %h2 Contact Details
                   %div
