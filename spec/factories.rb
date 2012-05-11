@@ -261,4 +261,14 @@ FactoryGirl.define do
     esi_effective_date '2012-01-01'
   end
 
+  factory :upload_file_type do
+    max_file_size 2
+    file_type "application/pdf,application/msword"
+  end
+
+  factory :company_document do
+    company
+    remarks "Test"
+  end
+
 end

@@ -43,52 +43,135 @@
                 %tr
                   %td Date of Joining:&nbsp;
                   %td{:colspan=>2}= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
+
+        %table.std_table{:cellpadding=>0,:cellspacing=>0, :style=>"border:none;"}
           %tr
             %td.std_td
-              %table
-                %tr
-                  %td{:colspan=>2,:class=>'form_title'} Present Address
-                %tr
-                  %td{:width=>130} Residence No.:&nbsp;
-                  %td= f.text_field :present_res_no, :size => '22'
-                %tr
-                  %td{:width=>130} Street:&nbsp;
-                  %td= f.text_field :present_street, :size => '22'
-                %tr
-                  %td{:width=>130} City:&nbsp;
-                  %td= f.text_field :present_city, :size => '22'
-            %td.std_td
-              %table
-                %tr
-                  %td &nbsp
-                %tr
-                  %td{:width=>130} Residence Name.:&nbsp;
-                  %td= f.text_field :present_res_name, :size => '22'
-                %tr
-                  %td{:width=>130} Locality:&nbsp;
-                  %td= f.text_field :present_locality, :size => '22'
-                %tr
-                  %td{:width=>130} State:&nbsp;
-                  %td= f.select :present_state_id, options_for_select(State.all_states.collect {|sn| [ sn.state_name, sn.id ] }, employee.present_state_id), {:prompt => 'Select State'}
+              .tabber
+                %div{:class=>'tabbertab',:id=>"present_addrs"}
+                  %h2 Present Address
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp;
+                            %tr
+                              %td{:width=>130} Residence No.:&nbsp;
+                              %td= f.text_field :present_res_no, :size => '22'
+                            %tr
+                              %td{:width=>130} Street:&nbsp;
+                              %td= f.text_field :present_street, :size => '22'
+                            %tr
+                              %td{:width=>130} City:&nbsp;
+                              %td= f.text_field :present_city, :size => '22'
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp
+                            %tr
+                              %td{:width=>130} Residence Name.:&nbsp;
+                              %td= f.text_field :present_res_name, :size => '22'
+                            %tr
+                              %td{:width=>130} Locality:&nbsp;
+                              %td= f.text_field :present_locality, :size => '22'
+                            %tr
+                              %td{:width=>130} State:&nbsp;
+                              %td= f.select :present_state_id, options_for_select(State.all_states.collect {|sn| [ sn.state_name, sn.id ] }, employee.present_state_id), {:prompt => 'Select State'}
+                %div{:class=>'tabbertab',:id=>"permnt_addrs"}
+                  %h2 Permanent Address
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp;
+                            %tr
+                              %td{:width=>130} Residence No.:&nbsp;
+                              %td= f.text_field :perm_res_no, :size => '22'
+                            %tr
+                              %td{:width=>130} Street:&nbsp;
+                              %td= f.text_field :perm_street, :size => '22'
+                            %tr
+                              %td{:width=>130} City:&nbsp;
+                              %td= f.text_field :perm_city, :size => '22'
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp
+                            %tr
+                              %td{:width=>130} Residence Name.:&nbsp;
+                              %td= f.text_field :perm_res_name, :size => '22'
+                            %tr
+                              %td{:width=>130} Locality:&nbsp;
+                              %td= f.text_field :perm_locality, :size => '22'
+                            %tr
+                              %td{:width=>130} State:&nbsp;
+                              %td= f.select :perm_state_id, options_for_select(State.all_states.collect {|sn| [ sn.state_name, sn.id ] }, employee.present_state_id), {:prompt => 'Select State'}
+                %div{:class=>'tabbertab',:id=>"contact_details"}
+                  %h2 Contact Details
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp
+                            %tr
+                              %td{:width=>130} Official Email:&nbsp;
+                              %td= f.text_field :official_mail_id, :size => '22'
+                            %tr
+                              %td{:width=>130} Mobile No.:&nbsp;
+                              %td= f.text_field :present_locality, :size => '22'
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp
+                            %tr
+                              %td{:width=>130} Personal Email:&nbsp;
+                              %td= f.text_field :email, :size => '22'
+                            %tr
+                              %td{:width=>130} Emergency Contact No.:&nbsp;
+                              %td= f.text_field :emergency_contact_number, :size => '22'
+                %div{:class=>'tabbertab',:id=>"ext_details"}
+                  %h2 Ext Details
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp;
+                            %tr
+                              %td Probation Period:&nbsp;
+                              %td= f.text_field :probation_period, :size => '22', :onchange=>'cal_prob_complt_date(this.value)', :onblur=>'cal_prob_complt_date(this.value)'
+                            %tr
+                              %td Probation completion Date:&nbsp;
+                              %td{:colspan=>2}= f.text_field :probation_complete_date, :id=>"probtn_date", :class=>"date_input4", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                            %tr
+                              %td{:width=>130} Handicapped:&nbsp;
+                              %td= f.check_box :handicapped, :size => '22'
+                        %td.std_td
+                          %table
+                            %tr
+                              %td &nbsp;
+                            %tr
+                              %td Date of Salary:&nbsp;
+                              %td{:colspan=>2}= f.text_field :salary_start_date, :id=>"sal_date", :class=>"date_input3", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                            %tr
+                              %td Confirmation Date:&nbsp;
+                              %td= f.text_field :confirmation_date, :id=>"conf_date", :class=>"date_input5", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                            %tr
+                              %td Date of Retirement:&nbsp;
+                              %td= f.text_field :retirement_date, :id=>"ret_date", :class=>"date_input6", :include_blank => true,  :start_year => 2000, :end_year => 2014
+
+    %tr
+      %td.std_td{:colspan=>2}
+        %table
           %tr
-            %td.std_td
-              %table
-                %tr
-                  %td{:colspan=>2,:class=>'form_title'} Contact Information
-                %tr
-                  %td{:width=>130} Email:&nbsp;
-                  %td= f.text_field :email, :size => '22'
-            %td.std_td
-              %table
-                %tr
-                  %td &nbsp
-                %tr
-                  %td{:width=>130} Mobile Number:&nbsp;
-                  %td= f.text_field :mobile, :size => '22'
+            %td &nbsp;
           %tr
-            %td.std_td{:colspan=>2}
-              %table
-                %tr
-                  %td &nbsp;
-                %tr
-                  %td{:colspan=>2}= f.submit
+            %td{:colspan=>2}= f.submit
+

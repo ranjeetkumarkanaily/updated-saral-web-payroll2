@@ -31,6 +31,9 @@
                       %tr
                         %td Bank :&nbsp;
                         %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.financial_institutions.collect {|fi| [ fi.name, fi.id ] },employee_detail.financial_institution_id), {:prompt => 'Select Financial Institution'}
+                      %tr
+                        %td International Worker:&nbsp;
+                        %td= f.check_box :international_worker
 
                   %td.std_td
                     %table

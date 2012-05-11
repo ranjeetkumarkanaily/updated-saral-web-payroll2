@@ -17,6 +17,11 @@
         %li= link_to hr_category.category_name, new_hr_master_path(:hr_category_id => hr_category.id, :employee_id => @employee.id)
 
 #right_content
+  %table
+    %tr
+      %td{:colspan=>4}
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}"
   %h1
     Employee Details
     = link_to image_tag('/assets/edit.png',:title => "Edit Employee"), edit_employee_path(@employee)
@@ -38,7 +43,7 @@
                   %td= @employee.marital_status
                 %tr
                   %td Date of Birth:&nbsp;
-                  %td= l @employee.date_of_birth, :format => :default
+                  %td= @employee.date_of_birth
                 %tr
                   %td Date of Leaving:&nbsp;
                   %td
@@ -50,68 +55,129 @@
               %table
                 %tr
                   %td{:width=>130} Employee Name:&nbsp;
-                  %td= @employee.empname
+                  %td{:colspan=>2}= @employee.empname
                 %tr
                   %td Gender:&nbsp;
-                  %td= @employee.gender
+                  %td{:colspan=>2}= @employee.gender
                 %tr
                   %td Spouse Name:&nbsp;
-                  %td= @employee.spouse_name
+                  %td{:colspan=>2}= @employee.spouse_name
                 %tr
                   %td Date of Joining:&nbsp;
-                  %td= l @employee.date_of_joining, :format => :default
+                  %td{:colspan=>2}= @employee.date_of_joining
+        %table.std_table{:cellpadding=>0,:cellspacing=>0, :style=>"border:none;"}
           %tr
             %td.std_td
-              %table
-                %tr
-                  %td{:colspan=>2,:class=>'form_title'} Present Address
-                %tr
-                  %td{:width=>130} Residence No.:&nbsp;
-                  %td= @employee.present_res_no
-                %tr
-                  %td{:width=>130} Street:&nbsp;
-                  %td= @employee.present_street
-                %tr
-                  %td{:width=>130} City:&nbsp;
-                  %td= @employee.present_city
-            %td.std_td
-              %table
-                %tr
-                  %td &nbsp
-                %tr
-                  %td{:width=>130} Residence Name.:&nbsp;
-                  %td= @employee.present_res_name
-                %tr
-                  %td{:width=>130} Locality:&nbsp;
-                  %td= @employee.present_locality
-                %tr
-                  %td{:width=>130} State:&nbsp;
-                  %td= @employee.present_state_state_name
-          %tr
-            %td.std_td
-              %table
-                %tr
-                  %td{:colspan=>2,:class=>'form_title'} Contact Information
-                %tr
-                  %td{:width=>130} Email:&nbsp;
-                  %td= @employee.email
-            %td.std_td
-              %table
-                %tr
-                  %td &nbsp
-                %tr
-                  %td{:width=>130} Mobile Number:&nbsp;
-                  %td= @employee.mobile
+              .tabber
+                %div{:class=>'tabbertab',:id=>"present_addrs"}
+                  %h2 Present Address
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Residence No.:&nbsp;
+                              %td= @employee.present_res_no
+                            %tr
+                              %td{:width=>130} Street:&nbsp;
+                              %td= @employee.present_street
+                            %tr
+                              %td{:width=>130} City:&nbsp;
+                              %td= @employee.present_city
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Residence Name.:&nbsp;
+                              %td= @employee.present_res_name
+                            %tr
+                              %td{:width=>130} Locality:&nbsp;
+                              %td= @employee.present_locality
+                            %tr
+                              %td{:width=>130} State:&nbsp;
+                              %td= @employee.present_state_state_name
+                %div{:class=>'tabbertab',:id=>"permnt_addrs"}
+                  %h2 Permanent Address
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Residence No.:&nbsp;
+                              %td= @employee.perm_res_no
+                            %tr
+                              %td{:width=>130} Street:&nbsp;
+                              %td= @employee.perm_street
+                            %tr
+                              %td{:width=>130} City:&nbsp;
+                              %td= @employee.perm_city
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Residence Name.:&nbsp;
+                              %td= @employee.perm_res_name
+                            %tr
+                              %td{:width=>130} Locality:&nbsp;
+                              %td= @employee.perm_locality
+                            %tr
+                              %td{:width=>130} State:&nbsp;
+                              %td= @employee.perm_state_state_name
+                %div{:class=>'tabbertab',:id=>"contact_details"}
+                  %h2 Contact Details
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Official Email:&nbsp;
+                              %td= @employee.official_mail_id
+                            %tr
+                              %td{:width=>130} Mobile No.:&nbsp;
+                              %td= @employee.present_locality
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Personal Email:&nbsp;
+                              %td= @employee.email
+                            %tr
+                              %td{:width=>130} Emergency Contact No.:&nbsp;
+                              %td= @employee.emergency_contact_number
+                %div{:class=>'tabbertab',:id=>"ext_details"}
+                  %h2 Ext Details
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Probation Period:&nbsp;
+                              %td= @employee.probation_period
+                            %tr
+                              %td Probation completion Date:&nbsp;
+                              %td= @employee.probation_complete_date
+                            %tr
+                              %td{:width=>130} Handicapped:&nbsp;
+                              %td= @employee.handicapped == true ? "Yes" : "No"
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Date of Salary:&nbsp;
+                              %td{:colspan=>2}= @employee.salary_start_date
+                            %tr
+                              %td Confirmation Date:&nbsp;
+                              %td= @employee.confirmation_date
+                            %tr
+                              %td Date of Retirement:&nbsp;
+                              %td= @employee.retirement_date
+
   %br
   - if !@statutory.nil?
     %h1
       Employee Statutory Details
       = link_to image_tag('/assets/edit.png',:title => "Edit Employee Statutory Details"), edit_employee_statutory_path(:employee_id => @employee.id)
     %table.std_table{:cellpadding=>0,:cellspacing=>0}
-      %tr
-        %td{:colspan=>4}
-          - flash.each do |name, msg|
-            = content_tag :div, msg, :id => "flash_#{name}"
       %tr
         %td
           = render 'statutory', :statutory => @statutory
