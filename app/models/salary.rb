@@ -49,13 +49,12 @@ class Salary < ActiveRecord::Base
           pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
           epf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['employer_epf']/100
           eps_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['pension_fund']/100
-          PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => 0,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
         else
           pf_amount = (@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)
           epf_amount = (@pf_applicable_sal)*pf_rate_value[0]['employer_epf']/100
           eps_amount = (@pf_applicable_sal)*pf_rate_value[0]['pension_fund']/100
-          PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => 0,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
         end
+        PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => 0,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
       else
         pf_amount = 0
       end
@@ -85,6 +84,8 @@ class Salary < ActiveRecord::Base
         esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
         if @esi_applicable_sal <= esi_rate_value[:cut_off]
           esi_amount = @esi_applicable_sal*(esi_rate_value[:employee_rate]/100)
+          esi_employer_amount = @esi_applicable_sal*(esi_rate_value[:employer_rate]/100)
+          EsiCalculatedValue.create :esi_gross => @esi_applicable_sal, :esi_amount => esi_amount, :esi_employer_amount => esi_employer_amount,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
         else
           esi_amount = 0
         end
@@ -92,6 +93,7 @@ class Salary < ActiveRecord::Base
         esi_amount = 0
       end
     end
+    esi_amount
   end
 
   def self.get_pt_amount month_year, employee_id
@@ -152,8 +154,8 @@ class Salary < ActiveRecord::Base
     pf_amount = actual_pf_amount.round.to_f
     Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id => salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil, :actual_salary_amount => actual_pf_amount)
 
-    esi_amount = (get_esi_amount pay_month,salary[0]['employee_id']).round.to_f
     actual_esi_amount = get_esi_amount pay_month,salary[0]['employee_id']
+    esi_amount = actual_esi_amount.round.to_f
     Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id =>salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => esi_amount, :salary_head_id => 3, :salary_group_detail_id => nil, :actual_salary_amount => actual_esi_amount)
 
     @no_of_present_days
