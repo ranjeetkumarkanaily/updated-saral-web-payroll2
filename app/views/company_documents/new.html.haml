@@ -1,0 +1,33 @@
+#left_content
+  %ul
+    %li= link_to 'Back', documents_list_companies_path(:id => @company_document.company_id)
+#right_content
+  %h1 Upload New Document:
+  %table.std_table{:cellpadding=>0,:cellspacing=>0 , :width => "100%"}
+    %tr
+      %td{:colspan=>4}
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}"
+    %tr
+      %td.std_td_mail &nbsp;
+    %tr
+      %td.std_td_mail
+        = form_for @company_document do |docs|
+          - if @company_document.errors.any?
+            #error_explanation
+              %h2
+                = pluralize(@company_document.errors.count, "error")
+                prohibited this Document from being saved:
+              %ul
+                - @company_document.errors.full_messages.each do |msg|
+                  %li= msg
+          = docs.hidden_field :company_id
+          %table{:cellpadding=>0,:cellspacing=>0 , :width => "100%"}
+            %tr
+              %td
+                %b Select The File:
+                = docs.file_field :file_path
+              %td
+                %b Remarks
+                = docs.text_field :remarks
+          = submit_tag("Save File")

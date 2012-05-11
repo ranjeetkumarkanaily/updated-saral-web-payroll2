@@ -14,7 +14,7 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
 end
 
 guard 'rspec', :version => 2, :cli => "--color --format nested --fail-fast --drb" do
-  # --tag lib for running specific test by giving option in "it" function ", lib:true"
+  # --tag lib fo r running specific test by giving option in "it" function ", lib:true"
   # Rails example
   watch('spec/spec_helper.rb')                       { "spec" }
   watch('config/routes.rb')                          { "spec/routing" }

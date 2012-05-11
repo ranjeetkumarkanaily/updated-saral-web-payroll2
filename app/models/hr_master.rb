@@ -21,7 +21,7 @@ class HrMaster < ActiveRecord::Base
   end
 
   def validate name
-    category_values[name].nil?
+    !self["category_values"]["#{name}"].nil?
   end
 
 end

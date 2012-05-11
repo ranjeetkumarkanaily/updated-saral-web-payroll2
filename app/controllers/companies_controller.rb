@@ -41,4 +41,9 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def documents_list
+     @company=Company.find(params[:id])
+     @list=@company.company_documents
+  end
+
 end
