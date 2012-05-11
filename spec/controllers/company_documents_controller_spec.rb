@@ -7,7 +7,7 @@ describe CompanyDocumentsController do
      @company = FactoryGirl.create(:company,:photo => Rails.root.join("spec/factories/icon_a.png").open)
      @file_specs= FactoryGirl.create(:upload_file_type)
   end
-  
+
   describe "GET new" do
     it "assigns a new company_document as @company_document" do
       get :new, {:id => @company.id}
@@ -19,7 +19,6 @@ describe CompanyDocumentsController do
       describe "with valid params" do
         it "creates a new CompanyDocument" do
           expect {
-            puts @file_specs.inspect
             post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => fixture_file_upload( 'spec/factories/docs.doc')}
           }.to change(CompanyDocument, :count).by(1)
         end
