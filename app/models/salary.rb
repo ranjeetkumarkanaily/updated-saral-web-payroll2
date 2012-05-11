@@ -47,13 +47,20 @@ class Salary < ActiveRecord::Base
 
         if @pf_applicable_sal >= pf_rate_value[0]['cutoff']
           pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
+          epf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['employer_epf']/100
+          eps_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['pension_fund']/100
+          PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => 0,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
         else
           pf_amount = (@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)
+          epf_amount = (@pf_applicable_sal)*pf_rate_value[0]['employer_epf']/100
+          eps_amount = (@pf_applicable_sal)*pf_rate_value[0]['pension_fund']/100
+          PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => 0,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
         end
       else
         pf_amount = 0
       end
     end
+    pf_amount
   end
 
   def self.get_esi_amount  month_year, employee_id
@@ -141,8 +148,8 @@ class Salary < ActiveRecord::Base
       Salary.create :effective_date => sal[:effective_date], :employee_detail_id => sal[:employee_detail_id], :employee_id => sal[:employee_id], :salary_amount => updated_salary_amount, :salary_head_id => sal[:salary_head_id], :salary_group_detail_id => sal[:salary_group_detail_id], :actual_salary_amount => updated_actual_salary_amount
     end
 
-    pf_amount = (get_pf_amount pay_month,salary[0]['employee_id']).round.to_f
     actual_pf_amount = get_pf_amount pay_month,salary[0]['employee_id']
+    pf_amount = actual_pf_amount.round.to_f
     Salary.create(:effective_date => salary[0]['effective_date'], :employee_detail_id => salary[0]['employee_detail_id'], :employee_id => salary[0]['employee_id'], :salary_amount => pf_amount, :salary_head_id => 2, :salary_group_detail_id => nil, :actual_salary_amount => actual_pf_amount)
 
     esi_amount = (get_esi_amount pay_month,salary[0]['employee_id']).round.to_f
