@@ -8,6 +8,15 @@ describe CompanyDocumentsController do
      @file_specs= FactoryGirl.create(:upload_file_type)
   end
 
+  def valid_attributes
+      {
+          :id => 2,
+          :remarks=>"test",
+          :company_id => @company.id,
+          :file_path => fixture_file_upload( 'spec/factories/sdata.pdf')
+      }
+    end
+
   describe "GET new" do
     it "assigns a new company_document as @company_document" do
       get :new, {:id => @company.id}
@@ -24,5 +33,23 @@ describe CompanyDocumentsController do
           }.to change(CompanyDocument, :count).by(1)
         end
       end
+  end
+
+  describe "DELETE destroy" do
+    it "should delete the company document" do
+      company_document=CompanyDocument.create! valid_attributes
+      puts company_document.inspect
+      expect {
+              delete :destroy, :id => company_document.id
+            }.to change(CompanyDocument, :count).by(-1)
+    end
+  end
+
+  describe "GET download" do
+    it "should display the file" do
+      company_document=CompanyDocument.create! valid_attributes
+      get :download , :id => company_document.id
+      response.should be_success
+    end
   end
 end

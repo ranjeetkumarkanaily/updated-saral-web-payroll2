@@ -3,6 +3,7 @@ require 'spec_helper'
 describe CompaniesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    @file_specs= FactoryGirl.create(:upload_file_type)
   end
 
   def valid_attributes
@@ -105,6 +106,17 @@ describe CompaniesController do
         response.should render_template("edit")
       end
     end
+    end
+
+  describe "GET documents_list" do
+    before (:each)  do
+      @company = FactoryGirl.create(:company,:photo => Rails.root.join("spec/factories/icon_a.png").open)
+    end
+    it "should list all the Company Documents" do
+
+       get :documents_list, :id => @company.id
+       assigns(:list).should eq(@company.company_documents)
+     end
   end
 
 end
