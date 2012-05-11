@@ -106,7 +106,7 @@ describe CompaniesController do
         response.should render_template("edit")
       end
     end
-    end
+  end
 
   describe "GET documents_list" do
     before (:each)  do

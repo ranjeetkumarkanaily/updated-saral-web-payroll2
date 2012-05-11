@@ -9,13 +9,13 @@ describe CompanyDocumentsController do
   end
 
   def valid_attributes
-      {
-          :id => 2,
-          :remarks=>"test",
-          :company_id => @company.id,
-          :file_path => fixture_file_upload( 'spec/factories/sdata.pdf')
-      }
-    end
+    {
+        :id => 2,
+        :remarks=>"test",
+        :company_id => @company.id,
+        :file_path => fixture_file_upload( 'spec/factories/sdata.pdf')
+    }
+  end
 
   describe "GET new" do
     it "assigns a new company_document as @company_document" do
