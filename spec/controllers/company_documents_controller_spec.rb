@@ -13,7 +13,7 @@ describe CompanyDocumentsController do
         :id => 2,
         :remarks=>"test",
         :company_id => @company.id,
-        :file_path => fixture_file_upload( 'spec/factories/sdata.pdf')
+        :file_path => fixture_file_upload( 'spec/factories/sdata.pdf', 'application/pdf')
     }
   end
 
@@ -33,6 +33,15 @@ describe CompanyDocumentsController do
           }.to change(CompanyDocument, :count).by(1)
         end
       end
+
+    describe "with invalid params" do
+      it "should redirect to new company document page" do
+        file_path = fixture_file_upload( 'spec/factories/docs.doc')
+        post :create ,:company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
+        response.should render_template("new")
+      end
+    end
+
   end
 
   describe "DELETE destroy" do

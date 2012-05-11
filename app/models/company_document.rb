@@ -2,7 +2,7 @@ class CompanyDocument < ActiveRecord::Base
   attr_accessible :company_id,:file_path,:remarks
   belongs_to :company
   has_attached_file :file_path
-  validate :file_size #:file_content_type
+  validate :file_size ,:file_content_type
   validates :file_path_file_name, presence: true
 
   def file_size
