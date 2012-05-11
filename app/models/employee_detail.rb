@@ -1,6 +1,6 @@
 class EmployeeDetail < ActiveRecord::Base
 
-  attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to
+  attr_accessible :employee_id, :effective_date, :salary_group_id, :allotted_gross,:classification,:branch_id,:financial_institution_id,:attendance_configuration_id,:bank_account_number,:effective_to,:international_worker
   acts_as_audited
 
   attr_accessor :current_employee_id

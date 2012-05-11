@@ -109,10 +109,28 @@ describe Employee do
     Employee.employee_with_salary_allotted.should be_true
   end
 
-  #it "checks for the DOB validation with pan effective date given for the employee" do
-  #  employee = Employee.new(:empname => "Rahul",:date_of_joining => "2009-10-31",:date_of_leaving => "2010-11-30",:present_state_id => "1",:refno => "A1",:email => "gane@gane.com", :date_of_birth => "1986-01-01",:pan_effective_date => "1985-02-02")
-  #  employee.save
-  #  employee.errors.messages[:pan_effective_date].should eq(["PAN effective date should be after date of Birth"])
-  #end
+  it "checks for the DOJ validation with probation complete date given for the employee" do
+    employee = Employee.new(:empname => "Rahul",:date_of_joining => "2009-10-31",:present_state_id => "1",:refno => "A1",:email => "gane@gane.com", :date_of_birth => "1986-01-01",:probation_complete_date => "2009-10-23")
+    employee.save
+    employee.errors.messages[:probation_complete_date].should eq(["probation complete date should be after date of joining"])
+  end
+
+  it "checks for the DOJ validation with confirmation date given for the employee" do
+    employee = Employee.new(:empname => "Rahul",:date_of_joining => "2009-10-31",:present_state_id => "1",:refno => "A1",:email => "gane@gane.com", :date_of_birth => "1986-01-01",:confirmation_date => "2009-10-23")
+    employee.save
+    employee.errors.messages[:confirmation_date].should eq(["confirmation date should be after date of joining"])
+  end
+
+  it "checks for the DOJ validation with salary start date given for the employee" do
+    employee = Employee.new(:empname => "Rahul",:date_of_joining => "2009-10-31",:present_state_id => "1",:refno => "A1",:email => "gane@gane.com", :date_of_birth => "1986-01-01",:salary_start_date => "2009-10-23")
+    employee.save
+    employee.errors.messages[:salary_start_date].should eq(["salary start date should be after date of joining"])
+  end
+
+  it "checks for the DOJ validation with retirement date given for the employee" do
+    employee = Employee.new(:empname => "Rahul",:date_of_joining => "2009-10-31",:present_state_id => "1",:refno => "A1",:email => "gane@gane.com", :date_of_birth => "1986-01-01",:retirement_date => "2009-10-23")
+    employee.save
+    employee.errors.messages[:retirement_date].should eq(["retirement date should be after date of joining"])
+  end
 
 end
