@@ -27,7 +27,7 @@ class EmployeeStatutoriesController < ApplicationController
     @employee_statutory = EmployeeStatutory.new(params[:employee_statutory])
     @employee_statutory.pan = params[:panoption] if ( params[:employee_statutory][:pan].blank? and !params[:panoption].blank? and params[:panoption] != "ADD PAN")
     @employee_id = @employee_statutory.employee_id
-
+    params[:chk_vol_pf_pertg] ? @employee_statutory.vol_pf_percentage = params[:vol_pf_value] : @employee_statutory.vol_pf_amount = params[:vol_pf_value]
     respond_to do |format|
       if @employee_statutory.save
         format.html { redirect_to employee_path(:id => @employee_id ), notice: 'Employee statutory was successfully created.' }
@@ -43,6 +43,15 @@ class EmployeeStatutoriesController < ApplicationController
   # PUT /employee_statutories/1.json
   def update
     params[:employee_statutory][:pan] = params[:panoption] if ( params[:employee_statutory][:pan].blank? and !params[:panoption].blank? and params[:panoption] != "ADD PAN")
+    #puts params.inspect
+    if params[:chk_vol_pf_pertg]
+      params[:employee_statutory][:vol_pf_percentage] = params[:vol_pf_value]
+      params[:employee_statutory][:vol_pf_amount] = nil
+    else
+      params[:employee_statutory][:vol_pf_amount] = params[:vol_pf_value]
+      params[:employee_statutory][:vol_pf_percentage] = nil
+    end
+
     @employee_statutory = EmployeeStatutory.find(params[:id])
     respond_to do |format|
       if @employee_statutory.update_attributes(params[:employee_statutory])

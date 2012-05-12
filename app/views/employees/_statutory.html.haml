@@ -11,6 +11,16 @@
         %tr
           %td{:width=>130} ESI No.:&nbsp;
           %td{:width=>130}= ( statutory.esi_number.nil? or statutory.esi_number.empty? ) ? 'N/A' : statutory.esi_number
+        %tr
+          %td{:width=>130} Zero PT:&nbsp;
+          %td{:width=>130}= statutory.zero_pt == true ? 'Yes' : 'No'
+        %tr
+          %td{:width=>130} Vol PF:&nbsp;
+          %td{:width=>130}= statutory.vol_pf == true ? 'Yes' : 'No'
+          - if !statutory.vol_pf_percentage.nil?
+            %td= '% '+ statutory.vol_pf_percentage.to_s
+          - if !statutory.vol_pf_amount.nil?
+            %td= 'Amount '+ statutory.vol_pf_amount.to_s
     %td.std_td
       %table
         %tr
@@ -22,7 +32,9 @@
         %tr
           %td{:width=>150} Effective Date(For ESI):&nbsp;
           %td{:width=>130}= statutory.esi_effective_date
-
+        %tr
+          %td{:width=>150} Zero Pension:&nbsp;
+          %td{:width=>130}= statutory.zero_pension == true ? 'Yes' : 'No'
 
 
 
