@@ -59,10 +59,10 @@
                   %td{:style=>"width:80px"} Volunteer PF
                   %td{:style=>"width:20px"}= f.check_box :vol_pf, :onclick=>'check_vpf(this.id)'
                   %td#vpf_percent_lbl Percentage (%)
-                  %td= check_box_tag 'chk_vol_pf_pertg'
+                  %td= check_box_tag 'chk_vol_pf_pertg','',chk_pf_percentg
                   %td= f.hidden_field :vol_pf_percentage
                   %td= f.hidden_field :vol_pf_amount
-                  %td= text_field_tag :vol_pf_value, '', :width=>'50'
+                  %td= text_field_tag :vol_pf_value, vpf_value, :width=>'50'
           %tr
             %td.std_td{:colspan=>2}
               %table
