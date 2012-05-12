@@ -35,4 +35,28 @@ class EmployeeStatutory < ActiveRecord::Base
     self.save
   end
 
+  scope :zero_pension, lambda {|employee_id|
+    where("zero_pension = true and employee_id = #{employee_id}")
+  }
+
+  scope :vol_pf, lambda {|employee_id|
+    where("vol_pf = true and employee_id = #{employee_id}")
+  }
+
+  scope :vol_pf_percentage, lambda {|employee_id|
+    where("vol_pf_percentage IS NOT NULL and vol_pf_percentage > 0 and employee_id = #{employee_id}")
+  }
+
+  def self.get_vol_pf_amount employee_id, pf_applicable_amount
+    if (EmployeeStatutory.vol_pf employee_id).empty?
+      vol_pf_amount = 0
+    else
+      if (EmployeeStatutory.vol_pf_percentage employee_id).empty?
+        vol_pf_amount = EmployeeStatutory.select("vol_pf_amount").where("employee_id = #{employee_id}")[0].vol_pf_amount
+      else
+        volPF_percent = EmployeeStatutory.select("vol_pf_percentage").where("employee_id = #{employee_id}")[0].vol_pf_percentage
+        vol_pf_amount = (pf_applicable_amount * volPF_percent)/100
+      end
+    end
+  end
 end

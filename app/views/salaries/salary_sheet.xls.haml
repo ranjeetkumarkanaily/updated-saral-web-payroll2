@@ -68,11 +68,13 @@
           %td PT
           - @deduction_heads.each do |deduction_head|
             %td= deduction_head.head_name
+          %td Vol. PF
           %td
             %b Total Deductions
           %td
             %b Net Salary
         - grand_pt_amount = 0
+        - grand_vol_pf_amount = 0
         - grand_net_salary = 0
         -@employee_salary_detail.each do |employee|
           %tr
@@ -92,6 +94,9 @@
             -employee[0][:salary_deductions].each do |deduction|
               %td= deduction.salary_amount
               - total_deduction =   total_deduction + deduction.salary_amount.to_f
+            %td= employee[0][:vol_pf]
+            - grand_vol_pf_amount = grand_vol_pf_amount + employee[0][:vol_pf]
+            - total_deduction = total_deduction + employee[0][:vol_pf].to_f
             %td
               %b= total_deduction
             %td
@@ -113,7 +118,8 @@
             %td
               %b= salary_deduction_total.salary_amount
               - grand_total_deduction =   grand_total_deduction + salary_deduction_total.salary_amount.to_f
+          %td= grand_vol_pf_amount
           %td
-            %b= grand_total_deduction
+            %b= grand_total_deduction + grand_pt_amount + grand_vol_pf_amount
           %td
             %b= grand_net_salary

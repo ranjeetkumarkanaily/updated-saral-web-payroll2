@@ -114,6 +114,11 @@
                         %td{:width=>200,:class=>"table_text_left td_bdr_r"}= (salary.print_name != nil && salary.print_name != "")?salary.print_name : salary.salary_head_head_name
                         %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
                         - deduction_total = deduction_total + salary.salary_amount.to_f
+                    - if @vol_pf_amount != 0
+                      %tr
+                        %td{:width=>200,:class=>"table_text_left td_bdr_r"} Vol. PF
+                        %td{:width=>200,:class=>"table_text_right",:style=>"text-align:right;"}=  number_with_precision(@vol_pf_amount, :precision => 2, :delimiter => ',')
+                        - deduction_total = deduction_total + @vol_pf_amount.to_f
         %tr
           %td{:colspan=>4}
             %table{:width=>800, :cellpadding => 0, :cellspacing => 0, :class=>"td_bdr_lbr"}
