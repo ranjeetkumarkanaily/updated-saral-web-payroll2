@@ -27,7 +27,6 @@ class EmployeeStatutoriesController < ApplicationController
       @chk_pf_percentg = true if !@employee_statutory.vol_pf_percentage.nil?
       @employee_statutory.vol_pf_percentage.nil? ? @vpf_value = @employee_statutory.vol_pf_amount : @vpf_value = @employee_statutory.vol_pf_percentage
     end
-    puts @employee_statutory.inspect
   end
 
   # POST /employee_statutories
