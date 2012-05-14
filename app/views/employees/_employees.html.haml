@@ -6,7 +6,7 @@
     %td.table_grid_header DOJ
     %td.table_grid_header Email
     %td.table_grid_header{:colspan => 4} Operations
-  - employees.each do |employee|
+  - @employees.each do |employee|
     %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
       %td.table_grid_td= employee.refno
       %td.table_grid_td= employee.empname
