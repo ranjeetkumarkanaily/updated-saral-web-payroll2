@@ -48,13 +48,16 @@ class Salary < ActiveRecord::Base
         if @pf_applicable_sal >= pf_rate_value[0]['cutoff']
           pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
           epf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['employer_epf']/100
-          eps_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['pension_fund']/100
+          eps_amount = ((EmployeeStatutory.zero_pension employee_id).empty?)?((pf_rate_value[0]['cutoff'])*pf_rate_value[0]['pension_fund']/100):0
         else
           pf_amount = (@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)
           epf_amount = (@pf_applicable_sal)*pf_rate_value[0]['employer_epf']/100
-          eps_amount = (@pf_applicable_sal)*pf_rate_value[0]['pension_fund']/100
+          eps_amount = ((EmployeeStatutory.zero_pension employee_id).empty?)?((@pf_applicable_sal)*pf_rate_value[0]['pension_fund']/100):0
         end
-        PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => 0,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
+
+        vol_pf_amount = EmployeeStatutory.get_vol_pf_amount employee_id, @pf_applicable_sal
+
+        PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => vol_pf_amount,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
       else
         pf_amount = 0
       end
@@ -184,7 +187,9 @@ class Salary < ActiveRecord::Base
       salary_deduction = get_salary_on_salary_type "Deductions", month_year,emp_salary_data.id.to_s,1
       pt_amount = get_pt_amount month_year,emp_salary_data.id.to_s
 
-      employee_salary_detail[i] = [:refno=>emp_salary_data.refno,:empname=>emp_salary_data.empname,:paid_days=>no_of_present_days,:salary_earnings=>salary_earning,:pt=>pt_amount,:salary_deductions=>salary_deduction]
+      vol_pf_amount = PfCalculatedValue.vol_pf_amount month_year, emp_salary_data.id.to_s
+
+      employee_salary_detail[i] = [:refno=>emp_salary_data.refno,:empname=>emp_salary_data.empname,:paid_days=>no_of_present_days,:salary_earnings=>salary_earning,:pt=>pt_amount,:vol_pf=>vol_pf_amount,:salary_deductions=>salary_deduction]
       i=i+1
     end
 

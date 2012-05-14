@@ -260,6 +260,21 @@ FactoryGirl.define do
     pf_effective_date '2012-01-01'
     esi_number 'a1234'
     esi_effective_date '2012-01-01'
+    zero_pt true
+    zero_pension true
+    vol_pf true
+    vol_pf_percentage 20
+    vol_pf_amount 3000
+  end
+
+  factory :pf_calculated_value do
+    pf_earning 6500.0
+    pf_amount 780.0
+    epf_amount 540.0
+    eps_amount 230.0
+    vol_pf_amount 2000.0
+    employee
+    effective_date "2011-02-01"
   end
 
   factory :upload_file_type do

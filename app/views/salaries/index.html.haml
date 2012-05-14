@@ -56,6 +56,11 @@
                       %td{:width=>170}= salary.salary_head_head_name
                       %td{:style=>"text-align:right;"}= number_with_precision(salary.salary_amount, :precision => 2, :delimiter => ',')
                       - deduction_total = deduction_total + salary.salary_amount.to_f
+                  - if @vol_pf_amount != 0
+                    %tr
+                      %td{:width=>170} Vol. PF
+                      %td{:style=>"text-align:right;"}=  number_with_precision(@vol_pf_amount, :precision => 2, :delimiter => ',')
+                      - deduction_total = deduction_total + @vol_pf_amount.to_f
             %tr
               %td.std_td{:style=>"width:270px;"}
                 %table

@@ -9,7 +9,7 @@
       = check_box_tag "select_all"
       Select All
 
-  - employeesList.each do |employeeList|
+  - @employeesList.each do |employeeList|
     = hidden_field_tag "employee_data[][id]",employeeList.id
     %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
       %td.table_grid_td=  employeeList.refno

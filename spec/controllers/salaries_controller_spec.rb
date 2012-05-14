@@ -84,11 +84,14 @@ describe SalariesController do
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
       get :index, :month_year => "Feb/2011", :employee_id => salary.employee_id
+
 
       assigns(:salary_earning)[0].salary_amount.should eq(salary.salary_amount)
     end
@@ -98,13 +101,14 @@ describe SalariesController do
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head,:salary_type => "Deductions")
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary.employee_id
-
       assigns(:salary_deduction)[0].salary_amount.should eq(salary.salary_amount)
     end
 
@@ -113,10 +117,12 @@ describe SalariesController do
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary.employee_id, :format => "pdf"
       response.should render_template('salaries/index')
@@ -128,10 +134,12 @@ describe SalariesController do
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => salary.employee_id,:email => "yes", :format => "pdf"
       response.should render_template('salaries/index')
@@ -142,10 +150,12 @@ describe SalariesController do
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => employee.id
       assigns(:no_of_present_days).should eq(28)
@@ -156,11 +166,12 @@ describe SalariesController do
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
-
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :index, :month_year => "Feb/2011", :employee_id => employee.id
       assigns(:no_of_present_days).should eq(15)
