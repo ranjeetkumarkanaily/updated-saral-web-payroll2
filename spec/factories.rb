@@ -8,6 +8,7 @@ FactoryGirl.define do
     date_of_joining "2011-02-01"
     date_of_leaving ""
     restrct_pf false
+    leaving_reason ""
   end
 
   factory :company do

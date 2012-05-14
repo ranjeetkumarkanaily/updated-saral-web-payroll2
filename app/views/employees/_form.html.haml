@@ -43,6 +43,9 @@
                 %tr
                   %td Date of Joining:&nbsp;
                   %td{:colspan=>2}= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                %tr
+                  %td Reason for Leaving:&nbsp;
+                  %td{:colspan=>2}= f.select :leaving_reason, options_for_select(["Without Reason", "On Leave","Left Service","Retired","Out of Coverage","Expired","Non Implemented area","Compliance by Immediate Employer","Suspension of work","Strike/Lockout","Retrenchment","No Work","Doesn't Belong To This Employer"],employee.leaving_reason), {:prompt => 'Select Reason'}
 
         %table.std_table{:cellpadding=>0,:cellspacing=>0, :style=>"border:none;"}
           %tr

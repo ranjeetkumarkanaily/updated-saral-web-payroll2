@@ -50,7 +50,7 @@ describe Salary do
       end
 
       it "should give no of present days with employee's date of leaving" do
-        employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+        employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
         salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)

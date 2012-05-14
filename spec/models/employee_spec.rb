@@ -11,6 +11,7 @@ describe Employee do
       :present_state_id => "1",
       :refno => "A1",
       :email => "gane@gane.com",
+      :leaving_reason => "Without Reason"
     }
   end
 

@@ -62,7 +62,7 @@ describe SalariesController do
     end
 
     it "should redirect to new salary page if selected employee is already leave the company" do
-      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-28")
+      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-28",:leaving_reason => 'Without Reason')
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
       sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
@@ -154,7 +154,7 @@ describe SalariesController do
     it "should give no of present days" do
       attendance_configuration = FactoryGirl.create(:attendance_configuration)
       financial_institution = FactoryGirl.create(:financial_institution)
-      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
 
@@ -210,7 +210,7 @@ describe SalariesController do
     it "generates excel for salary sheet for employee whose data of leaving is present" do
       attendance_configuration = FactoryGirl.create(:attendance_configuration)
       financial_institution = FactoryGirl.create(:financial_institution)
-      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15")
+      employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
       employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id)
       pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
       salary_head = FactoryGirl.create(:salary_head)

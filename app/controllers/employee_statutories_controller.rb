@@ -20,6 +20,7 @@ class EmployeeStatutoriesController < ApplicationController
     @chk_pf_percentg = false
     @vpf_value = nil
     @display_panoption = false
+
     @employee_id = params[:employee_id]
     @employee_statutory = EmployeeStatutory.find_by_employee_id(params[:employee_id])
     @display_panoption = true if !@employee_statutory.pan_present?

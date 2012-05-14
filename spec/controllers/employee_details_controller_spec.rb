@@ -124,7 +124,7 @@ describe EmployeeDetailsController do
       end
 
       it "validation with date of leaving" do
-        employee = FactoryGirl.create(:employee,:date_of_leaving => '2011-03-03')
+        employee = FactoryGirl.create(:employee,:date_of_leaving => '2011-03-03',:leaving_reason => 'Without Reason')
         EmployeeDetail.any_instance.stub(:save).and_return(false)
         post :create, :employee_detail => valid_attributes.merge(:effective_date => '2011-04-01',:employee_id => employee.id)
         assigns(:employee_detail).should be_a_new(EmployeeDetail)

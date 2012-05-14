@@ -1,5 +1,5 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf,:probation_period,:probation_complete_date,:confirmation_date,:salary_start_date,:retirement_date,:handicapped,:emergency_contact_number,:official_mail_id
+  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf,:probation_period,:probation_complete_date,:confirmation_date,:salary_start_date,:retirement_date,:handicapped,:emergency_contact_number,:official_mail_id,:leaving_reason
   acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -22,7 +22,13 @@ class Employee < ActiveRecord::Base
   validates :date_of_joining, :presence => true
   validates :refno,   :presence   => true,:uniqueness => { :case_sensitive => false }
   validates :email, :presence   => true,:format     => { :with => regex_for_email },:uniqueness => { :case_sensitive => false }
+  validates :leaving_reason, :presence => true, :if => :date_of_leaving_present?
   validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
+
+  def date_of_leaving_present?
+    !date_of_leaving.nil? and !date_of_leaving.blank?
+  end
+
   def dob_before_doj
     if !date_of_birth.nil? and !date_of_joining.nil? and date_of_birth >= date_of_joining then
       errors.add(:date_of_joining, "date of birth should be before date of joining")
