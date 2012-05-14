@@ -204,7 +204,7 @@ describe SalariesController do
       @branch = FactoryGirl.create(:branch,:pt_group_id => @pt_group.id)
       pt_rate = FactoryGirl.create(:pt_rate, :paymonth_id => paymonth.id, :pt_group_id => @pt_group.id)
     end
-    it "generates excel for salary sheet for employee whose data of leaving is not present" do
+    it "generates excel for salary sheet for employee whose date of leaving is not present" do
       attendance_configuration = FactoryGirl.create(:attendance_configuration)
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee)
@@ -213,12 +213,13 @@ describe SalariesController do
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :salary_sheet, :month_year => "Feb/2011", :format => "xls"
       response.should render_template('salaries/salary_sheet')
     end
 
-    it "generates excel for salary sheet for employee whose data of leaving is present" do
+    it "generates excel for salary sheet for employee whose date of leaving is present" do
       attendance_configuration = FactoryGirl.create(:attendance_configuration)
       financial_institution = FactoryGirl.create(:financial_institution)
       employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
@@ -227,6 +228,7 @@ describe SalariesController do
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
 
       get :salary_sheet, :month_year => "Feb/2011", :format => "xls"
       response.should render_template('salaries/salary_sheet')
