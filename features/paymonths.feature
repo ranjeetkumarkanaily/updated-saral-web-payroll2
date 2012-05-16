@@ -12,7 +12,7 @@ Feature: Web-SPP – Paymonths
     Then User should see the text "Pay Months"
 
 
-  Scenario: Creating an new company
+  Scenario: Creating an new Paymonth
     When User follow "Pay Months" link
     Then User should see the text "Listing Pay Months"
     And User should see the text "Add New Pay Month"
