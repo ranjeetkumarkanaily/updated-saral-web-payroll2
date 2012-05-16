@@ -1,5 +1,7 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+  resources :option_settings, :only => [:index, :edit, :update]
+
   resources :company_documents , :except => [:index, :show] do
      get 'download', :on => :collection
   end

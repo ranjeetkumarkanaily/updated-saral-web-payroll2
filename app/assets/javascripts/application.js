@@ -15,4 +15,9 @@ $(function() {
     return false;
   });
 
+  $("#country_setting_country").change(function()
+  {
+    $.get($("#new_country_setting").attr("action"), $("#new_country_setting").serialize(), null, "script");
+  });
+
 });

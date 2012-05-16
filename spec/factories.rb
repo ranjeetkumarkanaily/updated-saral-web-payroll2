@@ -271,4 +271,9 @@ FactoryGirl.define do
     remarks "Test"
   end
 
+  factory :country do
+    name "India"
+    currency "Indian Rupee"
+  end
+
 end

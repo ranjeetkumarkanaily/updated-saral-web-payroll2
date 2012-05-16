@@ -1,0 +1,137 @@
+#left_content
+  %ul
+    %li= link_to 'Back', "#"
+#right_content
+  %h1
+    Listing Option Settings
+    = link_to image_tag('/assets/edit.png',:title => "Edit Option Settings"), edit_option_setting_path(@option_setting)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table.std_table{:cellpadding=>0,:cellspacing=>0, :style=>"border:none;"}
+          %tr
+            %td.std_td
+              .tabber
+                %div{:class=>'tabbertab',:id=>"country_settings"}
+                  %h2 Country Settings
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Country :&nbsp;
+                              %td= @option_setting.country_name
+                            %tr
+                              %td{:width=>130} Currency :&nbsp;
+                              %td= @option_setting.currency
+                        %td.std_td
+                          %table
+                            %tr
+                              %td{:width=>130} Time Zone :&nbsp;
+                              %td= @option_setting.time_zone
+                            %tr
+                              %td &nbsp;
+                %div{:class=>'tabbertab',:id=>"module_selection"}
+                  %h2 Module Selection
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Recruitment
+                              %td= @option_setting.recruitment
+                            %tr
+                              %td Leave Attendance Management
+                              %td= @option_setting.lv_atdn_mgmt
+                            %tr
+                              %td Appraisal
+                              %td= @option_setting.appraisal
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Training
+                              %td= @option_setting.training
+                            %tr
+                              %td Help_desk
+                              %td= @option_setting.help_desk
+                            %tr
+                              %td Travel_cummute
+                              %td= @option_setting.travel_cummute
+
+                %div{:class=>'tabbertab',:id=>"general_settings"}
+                  %h2 General Settings
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td PF Applicable
+                              %td= @option_setting.pf_applicable
+                            %tr
+                              %td ESI Applicable
+                              %td= @option_setting.esi_applicable
+                            %tr
+                              %td PT Applicable
+                              %td= @option_setting.pt_applicable
+                            %tr
+                              %td Multiple State PT
+                              %td= @option_setting.multi_state_pt
+                            %tr
+                              %td Multiple PT
+                              %td= @option_setting.multi_pt
+                            %tr
+                              %td TDS Applicable
+                              %td= @option_setting.tds_applicable
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Multi Branch
+                              %td= @option_setting.multi_branch
+                            %tr
+                              %td Multi HR
+                              %td= @option_setting.multi_hr
+                            %tr
+                              %td Salary Calculation
+                              %td= @option_setting.salary_calc
+                            %tr
+                              %td Allow Branch Admin
+                              %td= @option_setting.allow_brnch_admin
+                            %tr
+                              %td Approval Flow
+                              %td= @option_setting.approval_flow
+                            %tr
+                              %td Audit Trail
+                              %td= @option_setting.audit_trail
+                %div{:class=>'tabbertab',:id=>"sub_modules"}
+                  %h2 Sub Modules
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Reimbursement
+                              %td= @option_setting.remibursement
+                            %tr
+                              %td Bonus And Exgratia
+                              %td= @option_setting.bonus_and_exgratia
+                            %tr
+                              %td Gratuity
+                              %td= @option_setting.gratuity
+                            %tr
+                              %td Loans and Advance
+                              %td= @option_setting.loans_adv
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Arrears
+                              %td= @option_setting.arrears
+                            %tr
+                              %td Attendance Integration
+                              %td= @option_setting.attdn_intgration
+                            %tr
+                              %td Asset Tracker
+                              %td= @option_setting.asset_tracker
