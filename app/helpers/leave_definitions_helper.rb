@@ -1,0 +1,2 @@
+module LeaveDefinitionsHelper
+end
