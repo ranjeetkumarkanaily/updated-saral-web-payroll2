@@ -77,11 +77,17 @@ class Salary < ActiveRecord::Base
     else
       esi_effective_date = esi_effective_date_detail[0]['esi_effective_date']
       if esi_effective_date <= month_year.beginning_of_month
-        esi_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+        esi_applicable_salary = SalaryAllotment.select('salary_allotment').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+
+        if esi_applicable_salary.count > 0
+          esi_applicable_salary_amount = esi_applicable_salary
+        else
+          esi_applicable_salary_amount = SalaryAllotment.select('salary_allotment').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})")
+        end
 
         @esi_applicable_sal = 0
         esi_applicable_salary_amount.each do |esi_appli_sal|
-          @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_amount
+          @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_allotment
         end
 
         esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
