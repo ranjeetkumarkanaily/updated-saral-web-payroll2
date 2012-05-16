@@ -1,0 +1,29 @@
+#left_content
+  %ul
+    %li= link_to 'Back', leave_definitions_path
+    %li= link_to 'Edit Employee', edit_leave_definition_path(@leave_definition)
+#right_content
+  %table
+    %tr
+      %td{:colspan=>4}
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}"
+  %h1
+    Leave Definition
+    = link_to image_tag('/assets/edit.png',:title => "Edit Leave Definition"), edit_leave_definition_path(@leave_definition)
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Leave name:&nbsp;
+                  %td= @leave_definition.leave_name
+            %td.std_td
+              %table
+                %tr
+                  %td{:width=>130} Short name:&nbsp;
+                  %td= @leave_definition.short_name
+

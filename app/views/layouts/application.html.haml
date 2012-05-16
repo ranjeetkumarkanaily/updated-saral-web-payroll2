@@ -2,7 +2,7 @@
 %html
   %head
     %title #{Company.first.companyname if Company.exists?} Web Payroll
-    = javascript_include_tag "jquery-1.7.1.min"
+    = javascript_include_tag "jquery-1.7.2"
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = javascript_include_tag  "jquery.date_input"
@@ -36,7 +36,7 @@
           %li
             %a{:href => branches_path, :rel => "dropmenu2_b"} Master
           %li
-            %a{:href => leave_details_path} Leave
+            %a{:href => leave_details_path, :rel => "dropmenu5_b"} Leave
           %li
             %a{:href => new_salary_path, :rel => "dropmenu3_b"} Salary
           %li
@@ -71,6 +71,9 @@
       #dropmenu4_b.dropmenudiv_b
         %a{:href => report_employees_path} Employee Master Report
         %a{:href => salary_sheet_salaries_path} Salary Sheet
+      #dropmenu5_b.dropmenudiv_b
+        %a{:href => leave_definitions_path} Leave Definitions
+        %a{:href => leave_details_path} Leave Details
       :javascript
         //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
         tabdropdown.init("bluemenu")

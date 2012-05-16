@@ -13,7 +13,12 @@ describe EmployeeStatutoriesController do
       :pf_number => '1234',
       :pf_effective_date => '2012-01-01',
       :esi_number => 'a1234',
-      :esi_effective_date => '2012-01-01'}
+      :esi_effective_date => '2012-01-01',
+      :zero_pt => 'true',
+      :zero_pension => 'true',
+      :vol_pf => 'true',
+      :vol_pf_percentage => nil,
+      :vol_pf_amount => '3500.00'}
   end
 
   describe "GET new" do
@@ -70,10 +75,16 @@ describe EmployeeStatutoriesController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested employee_statutory" do
+      it "updates the requested employee_statutory with volunteer pf as amount" do
         employee_statutory = EmployeeStatutory.create! valid_attributes
-        EmployeeStatutory.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => employee_statutory.to_param, :employee_statutory => {'these' => 'params'}}
+        EmployeeStatutory.any_instance.should_receive(:update_attributes).with({'these' => 'params',"vol_pf_amount"=>nil, "vol_pf_percentage"=>nil})
+        put :update, {:id => employee_statutory.to_param, :employee_statutory => {'these' => 'params',"vol_pf_amount"=>nil, "vol_pf_percentage"=>nil}}
+      end
+
+      it "updates the requested employee_statutory with volunteer pf as percentage" do
+        employee_statutory = EmployeeStatutory.create! valid_attributes.merge(:vol_pf_percentage => '5',:vol_pf_amount => nil)
+        EmployeeStatutory.any_instance.should_receive(:update_attributes).with({'these' => 'params',"vol_pf_amount"=>nil, "vol_pf_percentage"=>nil})
+        put :update, {:id => employee_statutory.to_param, :employee_statutory => {'these' => 'params',"vol_pf_amount"=>nil, "vol_pf_percentage"=>nil},:chk_vol_pf_pertg=>'true'}
       end
 
       it "assigns the requested employee_statutory as @employee_statutory" do

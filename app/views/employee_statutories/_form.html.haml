@@ -32,6 +32,12 @@
                 %tr
                   %td ESI No.:&nbsp;
                   %td{:colspan=>2}= f.text_field :esi_number, :size => '25', :onchange => 'enabledisable("employee_statutory_esi_number","esi_ed")'
+                %tr
+                  %td Zero PT
+                  %td= f.check_box :zero_pt
+
+
+
             %td.std_td
               %table
                 %tr
@@ -43,6 +49,20 @@
                 %tr
                   %td#esidate Effective Date(ESI):&nbsp;
                   %td= f.text_field :esi_effective_date, :id=>"esi_ed", :class=>"date_input"
+                %tr
+                  %td Zero Pension
+                  %td= f.check_box :zero_pension
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td{:style=>"width:80px"} Volunteer PF
+                  %td{:style=>"width:20px"}= f.check_box :vol_pf, :onclick=>'check_vpf(this.id)'
+                  %td#vpf_percent_lbl Percentage (%)
+                  %td= check_box_tag 'chk_vol_pf_pertg','',chk_pf_percentg
+                  %td= f.hidden_field :vol_pf_percentage
+                  %td= f.hidden_field :vol_pf_amount
+                  %td= text_field_tag :vol_pf_value, vpf_value, :width=>'50'
           %tr
             %td.std_td{:colspan=>2}
               %table

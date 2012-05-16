@@ -5,7 +5,7 @@ describe CompanyDocumentsController do
   before :each do
      controller.stub(:logged_in?).and_return(true)
      @company = FactoryGirl.create(:company,:photo => Rails.root.join("spec/factories/icon_a.png").open)
-     @file_specs= FactoryGirl.create(:upload_file_type)
+     #@file_specs= FactoryGirl.create(:upload_file_type)
   end
 
   def valid_attributes
@@ -24,40 +24,58 @@ describe CompanyDocumentsController do
     end
   end
 
-  describe "POST create" do
-      describe "with valid params" do
-        it "creates a new CompanyDocument" do
-          file_path = fixture_file_upload( 'spec/factories/docs.doc', 'application/msword')
+  describe "with limited files" do
+    before :each do
+       @file_specs= FactoryGirl.create(:upload_file_type)
+    end
+
+    describe "POST create" do
+          describe "with valid params" do
+            it "creates a new CompanyDocument" do
+              file_path = fixture_file_upload( 'spec/factories/docs.doc', 'application/msword')
+              expect {
+                post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
+              }.to change(CompanyDocument, :count).by(1)
+            end
+          end
+          describe "with invalid params" do
+            it "should redirect to new company document page" do
+              file_path = fixture_file_upload('spec/factories/docs.doc')
+              post :create ,:company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
+              response.should render_template("new")
+            end
+          end
+      end
+
+      describe "DELETE destroy" do
+        it "should delete the company document" do
+          company_document=CompanyDocument.create! valid_attributes
           expect {
-            post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
-          }.to change(CompanyDocument, :count).by(1)
+                  delete :destroy, :id => company_document.id
+                }.to change(CompanyDocument, :count).by(-1)
         end
       end
 
-    describe "with invalid params" do
-      it "should redirect to new company document page" do
-        file_path = fixture_file_upload( 'spec/factories/docs.doc')
-        post :create ,:company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
-        response.should render_template("new")
+      describe "GET download" do
+        it "should display the file" do
+          company_document=CompanyDocument.create! valid_attributes
+          get :download , :id => company_document.id
+          response.should be_success
+        end
       end
-    end
-
   end
 
-  describe "DELETE destroy" do
-    it "should delete the company document" do
-      company_document=CompanyDocument.create! valid_attributes
+  describe "with all file types" do
+    before :each do
+       @file_specs= FactoryGirl.create(:upload_file_type, :file_type => "all")
+    end
+    it "creates a new CompanyDocument" do
+      file_path = fixture_file_upload( 'spec/factories/docs.doc')
       expect {
-              delete :destroy, :id => company_document.id
-            }.to change(CompanyDocument, :count).by(-1)
+        post :create, :company_document =>  {:remarks=>"test",:company_id => @company.id,:file_path => file_path}
+      }.to change(CompanyDocument, :count).by(1)
     end
   end
 
-  describe "GET download" do
-    it "should display the file" do
-      company_document=CompanyDocument.create! valid_attributes
-      get :download , :id => company_document.id
-      response.should be_success
-    end
-  end
+
 end

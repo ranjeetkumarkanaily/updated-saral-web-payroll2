@@ -1,0 +1,32 @@
+= form_for(leave_definition) do |f|
+  - if leave_definition.errors.any?
+    #error_explanation
+    %h2
+      = pluralize(leave_definition.errors.count, "error")
+      prohibited this leave definition from being saved:
+    %ul
+      - leave_definition.errors.full_messages.each do |msg|
+        %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table
+                %tr
+                  %td Leave Name:&nbsp;
+                  %td
+                    = f.text_field :leave_name, :size => '22'
+            %td.std_td
+              %table
+                %tr
+                  %td Short Name:&nbsp;
+                  %td= f.text_field :short_name, :size => '22'
+          %tr
+            %td.std_td{:colspan=>2}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>2}= f.submit

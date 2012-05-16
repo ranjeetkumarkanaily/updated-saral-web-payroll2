@@ -54,7 +54,7 @@ describe EmployeeDetail do
   end
 
   it "should give error if effective date is after date of leaving" do
-    employee = FactoryGirl.create(:employee,:date_of_leaving => '2011-05-02')
+    employee = FactoryGirl.create(:employee,:date_of_leaving => '2011-05-02',:leaving_reason => 'Without Reason')
     employee_detail = EmployeeDetail.new(:employee_id => employee.id,:effective_date => '2011-05-10',:salary_group_id => 2)
     employee_detail.save
     employee_detail.errors.messages[:effective_date].should eq(["should be before date of leaving"])

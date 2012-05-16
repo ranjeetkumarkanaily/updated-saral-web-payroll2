@@ -12,8 +12,8 @@ class CompanyDocument < ActiveRecord::Base
 
   def file_content_type
     upld = UploadFileType.first
-    if upld.file_type =="all"
-      validates_attachment_content_type :file_path
+    if upld.file_type == "all"
+      true
     else
       validates_attachment_content_type :file_path, :content_type => UploadFileType.validate_file_type(upld.file_type)
     end
