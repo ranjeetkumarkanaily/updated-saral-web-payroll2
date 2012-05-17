@@ -3,8 +3,6 @@ def path_to(page_name)
 
     when /the login page/
       root_path
-    when /Settings/
-      root_path
     when /company_list/
       companies_path
     #when /company_new/

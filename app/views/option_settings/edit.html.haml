@@ -2,13 +2,9 @@
   %ul
     %li= link_to 'Back', option_settings_path
 #right_content
-  %table
-    %tr
-      %td{:colspan=>4}
-        - flash.each do |name, msg|
-          = content_tag :div, msg, :id => "flash_#{name}"
-    %h1
-      Edit Option Settings
+  %h1
+    Edit Option Settings
+    = link_to image_tag('/assets/show.png',:title => "Show Option Settings"), option_settings_path
   = form_for(@option_setting) do |f|
     - if @option_setting.errors.any?
       #error_explanation
@@ -20,29 +16,33 @@
             %li= msg
     %table.std_table{:cellpadding=>0,:cellspacing=>0}
       %tr
-        %td
+        %td.std_td{:colspan=>4}
+          - flash.each do |name, msg|
+            = content_tag :div, msg, :id => "flash_#{name}"
+      %tr
+        %td.std_td
           %table.std_table{:cellpadding=>0,:cellspacing=>0, :style=>"border:none;"}
             %tr
-              %td.std_td
+              %td
                 .tabber
                   %div{:class=>'tabbertab',:id=>"country_settings"}
                     %h2 Country Settings
                     %div
                       %table
                         %tr
-                          %td.std_td
+                          %td.std_td{:style=>"width:55%"}
                             %table
                               %tr
-                                %td{:width=>130} Country :&nbsp;
+                                %td{:width=>130} Country:&nbsp;
                                 %td= f.select :country_id, options_for_select(Country.all.collect {|con| [ con.name, con.id ] },@option_setting.country_id), {:prompt => 'Select Country'}
                               %tr
-                                %td{:width=>130} Time Zone :&nbsp;
+                                %td{:width=>130} Time Zone:&nbsp;
                                 %td= f.select :time_zone, options_for_select(ActiveSupport::TimeZone.all.collect { |tym_zon| [tym_zon, tym_zon]},@option_setting.time_zone), {:prompt => 'Select Time Zone'}
                           %td.std_td
                             %table
                               %tr
-                                %td{:width=>130} Currency :&nbsp;
-                                %td= f.text_field :currency
+                                %td{:width=>130} Currency:&nbsp;
+                                %td= f.text_field :currency,:size => '25'
                               %tr
                                 %td &nbsp;
                   %div{:class=>'tabbertab',:id=>"module_selection"}
@@ -53,24 +53,24 @@
                           %td.std_td
                             %table
                               %tr
-                                %td Recruitment
+                                %td Recruitment:&nbsp;
                                 %td= f.check_box :recruitment
                               %tr
-                                %td Leave Attendance Management
+                                %td Leave Attendance Management:&nbsp;
                                 %td= f.check_box :lv_atdn_mgmt
                               %tr
-                                %td Appraisal
+                                %td Appraisal:&nbsp;
                                 %td= f.check_box :appraisal
                           %td.std_td
                             %table
                               %tr
-                                %td Training
+                                %td Training:&nbsp;
                                 %td= f.check_box :training
                               %tr
-                                %td Help_desk
+                                %td Help_desk:&nbsp;
                                 %td= f.check_box :help_desk
                               %tr
-                                %td Travel_cummute
+                                %td Travel_cummute:&nbsp;
                                 %td= f.check_box :travel_cummute
 
                   %div{:class=>'tabbertab',:id=>"general_settings"}
@@ -81,45 +81,45 @@
                           %td.std_td
                             %table
                               %tr
-                                %td PF Applicable
+                                %td PF Applicable:&nbsp;
                                 %td= f.check_box :pf_applicable
                               %tr
-                                %td ESI Applicable
+                                %td ESI Applicable:&nbsp;
                                 %td= f.check_box :esi_applicable
                               %tr
-                                %td PT Applicable
+                                %td PT Applicable:&nbsp;
                                 %td= f.check_box :pt_applicable
                               %tr
-                                %td Multiple State PT
+                                %td Multiple State PT:&nbsp;
                                 %td= f.check_box :multi_state_pt
                               %tr
-                                %td Multiple PT
+                                %td Multiple PT:&nbsp;
                                 %td= f.check_box :multi_pt
                               %tr
-                                %td TDS Applicable
+                                %td TDS Applicable:&nbsp;
                                 %td= f.check_box :tds_applicable
                           %td.std_td
                             %table
                               %tr
-                                %td Voluntary PF
+                                %td Voluntary PF:&nbsp;
                                 %td= f.check_box :voluntary_pf
                               %tr
-                                %td Multi Branch
+                                %td Multi Branch:&nbsp;
                                 %td= f.check_box :multi_branch
                               %tr
-                                %td Multi HR
+                                %td Multi HR:&nbsp;
                                 %td= f.check_box :multi_hr
                               %tr
-                                %td Salary Calculation
+                                %td Salary Calculation:&nbsp;
                                 %td= f.select :salary_calc, options_for_select(Paymonth.all.collect {|mon| [ mon.month_name, mon.id ]},@option_setting.salary_calc), {:prompt => 'Select Pay Month'}
                               %tr
-                                %td Allow Branch Admin
+                                %td Allow Branch Admin:&nbsp;
                                 %td= f.check_box :allow_brnch_admin
                               %tr
-                                %td Approval Flow
+                                %td Approval Flow:&nbsp;
                                 %td= f.check_box :approval_flow
                               %tr
-                                %td Audit Trail
+                                %td Audit Trail:&nbsp;
                                 %td= f.check_box :audit_trail
                   %div{:class=>'tabbertab',:id=>"sub_modules"}
                     %h2 Sub Modules
@@ -129,28 +129,33 @@
                           %td.std_td
                             %table
                               %tr
-                                %td Reimbursement
+                                %td Reimbursement:&nbsp;
                                 %td= f.check_box :remibursement
                               %tr
-                                %td Bonus And Exgratia
+                                %td Bonus And Exgratia:&nbsp;
                                 %td= f.check_box :bonus_and_exgratia
                               %tr
-                                %td Gratuity
+                                %td Gratuity:&nbsp;
                                 %td= f.check_box :gratuity
                               %tr
-                                %td Loans and Advance
+                                %td Loans and Advance:&nbsp;
                                 %td= f.check_box :loans_adv
                           %td.std_td
                             %table
                               %tr
-                                %td Arrears
+                                %td Arrears:&nbsp;
                                 %td= f.check_box :arrears
                               %tr
-                                %td Attendance Integration
+                                %td Attendance Integration:&nbsp;
                                 %td= f.check_box :attdn_intgration
                               %tr
-                                %td Asset Tracker
+                                %td Asset Tracker:&nbsp;
                                 %td= f.check_box :asset_tracker
-      %tr
-        %td= f.submit
+            %tr
+              %td &nbsp;
+            %tr
+              %td= f.submit
+            %tr
+              %td &nbsp;
+
 

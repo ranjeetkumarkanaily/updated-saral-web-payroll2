@@ -20,16 +20,17 @@
                         %td.std_td
                           %table
                             %tr
-                              %td{:width=>130} Country :&nbsp;
+                              %td{:width=>130} Country:&nbsp;
                               %td= @option_setting.country_name
                             %tr
-                              %td{:width=>130} Currency :&nbsp;
-                              %td= @option_setting.currency
+                              %td{:width=>130} Time Zone:&nbsp;
+                              %td= @option_setting.time_zone
+
                         %td.std_td
                           %table
                             %tr
-                              %td{:width=>130} Time Zone :&nbsp;
-                              %td= @option_setting.time_zone
+                              %td{:width=>130} Currency:&nbsp;
+                              %td= @option_setting.currency
                             %tr
                               %td &nbsp;
                 %div{:class=>'tabbertab',:id=>"module_selection"}
@@ -40,25 +41,25 @@
                         %td.std_td
                           %table
                             %tr
-                              %td Recruitment
-                              %td= @option_setting.recruitment
+                              %td Recruitment:&nbsp;
+                              %td= @option_setting.recruitment == true ? "Yes" : "No"
                             %tr
-                              %td Leave Attendance Management
-                              %td= @option_setting.lv_atdn_mgmt
+                              %td Leave Attendance Management:&nbsp;
+                              %td= @option_setting.lv_atdn_mgmt == true ? "Yes" : "No"
                             %tr
-                              %td Appraisal
-                              %td= @option_setting.appraisal
+                              %td Appraisal:&nbsp;
+                              %td= @option_setting.appraisal == true ? "Yes" : "No"
                         %td.std_td
                           %table
                             %tr
-                              %td Training
-                              %td= @option_setting.training
+                              %td Training:&nbsp;
+                              %td= @option_setting.training == true ? "Yes" : "No"
                             %tr
-                              %td Help_desk
-                              %td= @option_setting.help_desk
+                              %td Help_desk:&nbsp;
+                              %td= @option_setting.help_desk == true ? "Yes" : "No"
                             %tr
-                              %td Travel_cummute
-                              %td= @option_setting.travel_cummute
+                              %td Travel_cummute:&nbsp;
+                              %td= @option_setting.travel_cummute == true ? "Yes" : "No"
 
                 %div{:class=>'tabbertab',:id=>"general_settings"}
                   %h2 General Settings
@@ -68,43 +69,43 @@
                         %td.std_td
                           %table
                             %tr
-                              %td PF Applicable
-                              %td= @option_setting.pf_applicable
+                              %td PF Applicable:&nbsp;
+                              %td= @option_setting.pf_applicable == true ? "Yes" : "No"
                             %tr
-                              %td ESI Applicable
-                              %td= @option_setting.esi_applicable
+                              %td ESI Applicable:&nbsp;
+                              %td= @option_setting.esi_applicable == true ? "Yes" : "No"
                             %tr
-                              %td PT Applicable
-                              %td= @option_setting.pt_applicable
+                              %td PT Applicable:&nbsp;
+                              %td= @option_setting.pt_applicable == true ? "Yes" : "No"
                             %tr
-                              %td Multiple State PT
-                              %td= @option_setting.multi_state_pt
+                              %td Multiple State PT:&nbsp;
+                              %td= @option_setting.multi_state_pt == true ? "Yes" : "No"
                             %tr
-                              %td Multiple PT
-                              %td= @option_setting.multi_pt
+                              %td Multiple PT:&nbsp;
+                              %td= @option_setting.multi_pt == true ? "Yes" : "No"
                             %tr
-                              %td TDS Applicable
-                              %td= @option_setting.tds_applicable
+                              %td TDS Applicable:&nbsp;
+                              %td= @option_setting.tds_applicable == true ? "Yes" : "No"
                         %td.std_td
                           %table
                             %tr
-                              %td Multi Branch
-                              %td= @option_setting.multi_branch
+                              %td Multi Branch:&nbsp;
+                              %td= @option_setting.multi_branch == true ? "Yes" : "No"
                             %tr
-                              %td Multi HR
-                              %td= @option_setting.multi_hr
+                              %td Multi HR:&nbsp;
+                              %td= @option_setting.multi_hr == true ? "Yes" : "No"
                             %tr
-                              %td Salary Calculation
+                              %td Salary Calculation:&nbsp;
                               %td= @option_setting.salary_calc
                             %tr
-                              %td Allow Branch Admin
-                              %td= @option_setting.allow_brnch_admin
+                              %td Allow Branch Admin:&nbsp;
+                              %td= @option_setting.allow_brnch_admin == true ? "Yes" : "No"
                             %tr
-                              %td Approval Flow
-                              %td= @option_setting.approval_flow
+                              %td Approval Flow:&nbsp;
+                              %td= @option_setting.approval_flow == true ? "Yes" : "No"
                             %tr
-                              %td Audit Trail
-                              %td= @option_setting.audit_trail
+                              %td Audit Trail:&nbsp;
+                              %td= @option_setting.audit_trail == true ? "Yes" : "No"
                 %div{:class=>'tabbertab',:id=>"sub_modules"}
                   %h2 Sub Modules
                   %div
@@ -113,25 +114,25 @@
                         %td.std_td
                           %table
                             %tr
-                              %td Reimbursement
-                              %td= @option_setting.remibursement
+                              %td Reimbursement:&nbsp;
+                              %td= @option_setting.remibursement == true ? "Yes" : "No"
                             %tr
-                              %td Bonus And Exgratia
-                              %td= @option_setting.bonus_and_exgratia
+                              %td Bonus And Exgratia:&nbsp;
+                              %td= @option_setting.bonus_and_exgratia == true ? "Yes" : "No"
                             %tr
-                              %td Gratuity
-                              %td= @option_setting.gratuity
+                              %td Gratuity:&nbsp;
+                              %td= @option_setting.gratuity == true ? "Yes" : "No"
                             %tr
-                              %td Loans and Advance
-                              %td= @option_setting.loans_adv
+                              %td Loans and Advance:&nbsp;
+                              %td= @option_setting.loans_adv == true ? "Yes" : "No"
                         %td.std_td
                           %table
                             %tr
-                              %td Arrears
-                              %td= @option_setting.arrears
+                              %td Arrears:&nbsp;
+                              %td= @option_setting.arrears == true ? "Yes" : "No"
                             %tr
-                              %td Attendance Integration
-                              %td= @option_setting.attdn_intgration
+                              %td Attendance Integration:&nbsp;
+                              %td= @option_setting.attdn_intgration == true ? "Yes" : "No"
                             %tr
-                              %td Asset Tracker
-                              %td= @option_setting.asset_tracker
+                              %td Asset Tracker:&nbsp;
+                              %td= @option_setting.asset_tracker == true ? "Yes" : "No"

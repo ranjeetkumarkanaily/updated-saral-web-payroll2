@@ -7,8 +7,8 @@ Feature: Web-SPP – Classifications
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
     And User clicks "Sign In" button
-    Then User should see the text "Home"
-    When User follow "Settings" link
+    Then User should see the text "Settings"
+    When User follow "Master" link
     Then User should see the text "Classifications"
 
 

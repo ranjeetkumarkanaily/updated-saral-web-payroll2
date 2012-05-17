@@ -9,5 +9,6 @@ Given /^User have classification Family Detail created$/ do
 end
 
 Then /^User should go to the classifications page with id$/ do
-  visit path_to(classifications_path(:classification_heading_id => @cls.id))
+  visit path_to classifications_path
+  #current_path.should == classifications_path(:params1=>@cls.id)
 end
