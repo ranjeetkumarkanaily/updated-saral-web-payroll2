@@ -12,6 +12,12 @@ class OptionSettingsController < ApplicationController
 
   def edit
     @option_setting = OptionSetting.find(params[:id])
+
+    if params[:option_setting]
+      @currency = Country.find(params[:option_setting]["country_id"]).currency
+    else
+      @currency = @option_setting.currency
+    end
   end
 
   def update

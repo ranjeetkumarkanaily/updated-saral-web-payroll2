@@ -1,6 +1,8 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
-  resources :option_settings, :only => [:index, :edit, :update]
+  resources :option_settings, :only => [:index, :edit, :update] do
+    get 'currency', :on => :collection
+  end
 
   resources :leave_definitions
 
