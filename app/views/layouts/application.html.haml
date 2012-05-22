@@ -19,7 +19,34 @@
       $("input:checkbox").attr("checked", true);}
       else{
       $("input:checkbox").attr("checked",false);c=0}});
+
+      $("#option_setting_pf_applicable").click(function() {
+
+      if($("#option_setting_pf_applicable").attr('checked')) {
+      $("#option_setting_voluntary_pf").attr("disabled", false);
+      }
+      else
+      {
+      $("#option_setting_voluntary_pf").attr("disabled", true);
+      }
       });
+
+      $("#option_setting_pt_applicable").click(function() {
+
+      if($("#option_setting_pt_applicable").attr('checked')) {
+      $("#option_setting_multi_state_pt").attr("disabled", false);
+      $("#option_setting_multi_pt").attr("disabled", false);
+      }
+      else
+      {
+      $("#option_setting_multi_state_pt").attr("disabled", true);
+      $("#option_setting_multi_pt").attr("disabled", true);
+      }
+      });
+
+
+      });
+
   %body
     #header
       #header_left

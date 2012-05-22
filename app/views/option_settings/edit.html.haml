@@ -32,19 +32,14 @@
                         %tr
                           %td.std_td{:style=>"width:55%"}
                             %table
-                              %tr
-                                %td{:width=>130} Country:&nbsp;
-                                %td= f.select :country_id, options_for_select(Country.all.collect {|con| [ con.name, con.id ] },@option_setting.country_id), {:prompt => 'Select Country'}
+                              =form_for currency_option_settings_path, :id => "currency_form" do
+                                = render "country", :collection => @currency
                               %tr
                                 %td{:width=>130} Time Zone:&nbsp;
                                 %td= f.select :time_zone, options_for_select(ActiveSupport::TimeZone.all.collect { |tym_zon| [tym_zon, tym_zon]},@option_setting.time_zone), {:prompt => 'Select Time Zone'}
                           %td.std_td
-                            %table
-                              %tr
-                                %td{:width=>130} Currency:&nbsp;
-                                %td= f.text_field :currency,:size => '25'
-                              %tr
-                                %td &nbsp;
+                            %div{:id => "options"}
+                              = render "currency", :collection => @currency
                   %div{:class=>'tabbertab',:id=>"module_selection"}
                     %h2 Module Selection
                     %div
@@ -91,10 +86,10 @@
                                 %td= f.check_box :pt_applicable
                               %tr
                                 %td Multiple State PT:&nbsp;
-                                %td= f.check_box :multi_state_pt
+                                %td= f.check_box :multi_state_pt, :disabled => true
                               %tr
                                 %td Multiple PT:&nbsp;
-                                %td= f.check_box :multi_pt
+                                %td= f.check_box :multi_pt, :disabled => true
                               %tr
                                 %td TDS Applicable:&nbsp;
                                 %td= f.check_box :tds_applicable
@@ -102,7 +97,7 @@
                             %table
                               %tr
                                 %td Voluntary PF:&nbsp;
-                                %td= f.check_box :voluntary_pf
+                                %td= f.check_box :voluntary_pf, :disabled => true
                               %tr
                                 %td Multi Branch:&nbsp;
                                 %td= f.check_box :multi_branch
@@ -111,7 +106,7 @@
                                 %td= f.check_box :multi_hr
                               %tr
                                 %td Salary Calculation:&nbsp;
-                                %td= f.select :salary_calc, options_for_select(Paymonth.all.collect {|mon| [ mon.month_name, mon.id ]},@option_setting.salary_calc), {:prompt => 'Select Pay Month'}
+                                %td= f.text_field :salary_calc
                               %tr
                                 %td Allow Branch Admin:&nbsp;
                                 %td= f.check_box :allow_brnch_admin
