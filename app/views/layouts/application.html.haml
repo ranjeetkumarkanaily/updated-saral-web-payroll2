@@ -12,6 +12,11 @@
       $($.date_input.initialize);
     %script{:language => "JavaScript"}
       $(document).ready(function(){
+
+      if($("#option_setting_pf_applicable").attr('checked')) {
+      $("#option_setting_voluntary_pf").attr("disabled", false);
+      }
+
       var c=0;
       $("#select_all").click(function(){
       c++;
@@ -28,6 +33,7 @@
       else
       {
       $("#option_setting_voluntary_pf").attr("disabled", true);
+      $("#option_setting_voluntary_pf").attr("checked", false);
       }
       });
 
