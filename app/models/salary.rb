@@ -21,7 +21,7 @@ class Salary < ActiveRecord::Base
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year} #{zero_salary_amount}"
 
-    Salary.select('salaries.salary_head_id, sum(salary_amount) as salary_amount,salaries.salary_group_detail_id,print_name,print_order').joins(:salary_head).joins('LEFT OUTER JOIN "salary_group_details" ON "salary_group_details"."salary_head_id" = "salaries"."salary_head_id"').where(condition).group('salaries.salary_head_id, print_name, print_order, salaries.id, salary_group_details.id').order('print_order ASC')
+    Salary.select('DISTINCT(salaries.salary_head_id), sum(salary_amount) as salary_amount,salaries.salary_group_detail_id,print_name,print_order').joins(:salary_head).joins('LEFT OUTER JOIN "salary_group_details" ON "salary_group_details"."salary_head_id" = "salaries"."salary_head_id"').where(condition).group('salaries.salary_head_id, print_name, print_order, salaries.id, salary_group_details.id').order('print_order ASC')
   end
 
   def self.get_pf_amount month_year, employee_id

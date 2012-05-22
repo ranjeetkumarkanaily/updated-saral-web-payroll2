@@ -41,7 +41,7 @@ class SalariesController < ApplicationController
       @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
 
       @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
-      @vol_pf_amount = PfCalculatedValue.vol_pf_amount params[:month_year], params[:employee_id]
+      @vol_pf_amount = PfCalculatedValue.calculated_vol_pf_amount params[:month_year], params[:employee_id]
 
       if params[:email] == "yes"
         pdf = render_to_string :pdf => "Payslip", :template => 'salaries/index'

@@ -7,4 +7,12 @@ class PfCalculatedValue < ActiveRecord::Base
     PfCalculatedValue.select("vol_pf_amount").where("employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")[0].vol_pf_amount
   end
 
+  def self.calculated_vol_pf_amount month_year, employee_id
+    if (EmployeeStatutory.vol_pf employee_id).empty?
+      calc_vol_pf_amount = 0
+    else
+      calc_vol_pf_amount = vol_pf_amount month_year, employee_id
+    end
+  end
+
 end
