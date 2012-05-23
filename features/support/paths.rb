@@ -5,6 +5,9 @@ def path_to(page_name)
       root_path
     when /company_list/
       companies_path
+    when /the (.*?) classifications page/
+      classification_id = ClassificationHeading.find_by_classification_heading_name($1).id
+      classifications_path(:params1=>classification_id)
     #when /company_new/
     # new_company_path
     #when /login/

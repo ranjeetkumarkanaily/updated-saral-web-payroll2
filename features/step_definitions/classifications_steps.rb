@@ -1,14 +1,11 @@
-Given /^User have Classification Heading Hr Details created$/ do
-  @cls=ClassificationHeading.create(classification_heading_name: "Hr Details", display_order: 1)
+Given /^User have Classification Heading (.*?) created$/ do |heading_name|
+  ClassificationHeading.create(classification_heading_name: heading_name, display_order: 1)
   puts ClassificationHeading.all.inspect
 end
 
-Given /^User have classification Family Detail created$/ do
-  Classification.create(:classification_heading_id=> @cls.id, classification_name: "Family Details")
+Given /^User have classification (.*?) created under (.*?)$/ do |classification_name, heading_name|
+  classification_heading = ClassificationHeading.create(classification_heading_name: heading_name, display_order: 1)
+  Classification.create(:classification_heading_id=> classification_heading.id, classification_name: classification_name)
   puts Classification.all.inspect
 end
 
-Then /^User should go to the classifications page with id$/ do
-  visit path_to classifications_path(:params1=>@cls.id)
-  #current_path.should == classifications_path(:params1=>@cls.id)
-end
