@@ -55,10 +55,11 @@ class HrCategoryDetailsController < ApplicationController
   end
 
   def destroy
+    hr_cat_det_id = @hr_category_detail.hr_category_id
     @hr_category_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to hr_category_details_url }
+      format.html { redirect_to hr_category_details_url(:param1 => hr_cat_det_id) }
       format.json { head :ok }
     end
   end
