@@ -21,7 +21,7 @@ class Salary < ActiveRecord::Base
                   extract(month from effective_date) = #{month_year.month} and
                   extract(year from effective_date) = #{month_year.year} #{zero_salary_amount}"
 
-    Salary.select('DISTINCT(salaries.salary_head_id), sum(salary_amount) as salary_amount,salaries.salary_group_detail_id,print_name,print_order').joins(:salary_head).joins('LEFT OUTER JOIN "salary_group_details" ON "salary_group_details"."salary_head_id" = "salaries"."salary_head_id"').where(condition).group('salaries.salary_head_id, print_name, print_order, salaries.id, salary_group_details.id').order('print_order ASC')
+    Salary.select('DISTINCT(salaries.salary_head_id), sum(salary_amount) as salary_amount,salaries.salary_group_detail_id,print_name,print_order').joins(:salary_head).joins('LEFT OUTER JOIN "salary_group_details" ON "salary_group_details"."id" = "salaries"."salary_group_detail_id"').where(condition).group('salaries.salary_head_id, print_name, print_order, salaries.id, salary_group_details.id').order('print_order ASC')
   end
 
   def self.get_pf_amount month_year, employee_id
@@ -170,6 +170,11 @@ class Salary < ActiveRecord::Base
     @no_of_present_days
   end
 
+  def self.salary_on_salary_sheet salary_type, month_year, employee_id
+    month_year = Date.strptime month_year, '%b/%Y'
+    Salary.connection.execute("select * FROM salary_heads LEFT JOIN salaries ON salary_heads.id = salary_head_id and employee_id = '#{employee_id}' and extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} WHERE salary_type = '#{salary_type}'")
+  end
+
   def self.salary_sheet month_year
     month_year_format = Date.strptime month_year, '%b/%Y'
     employee_list = Employee.employees_list month_year_format
@@ -189,8 +194,8 @@ class Salary < ActiveRecord::Base
         no_of_present_days = no_of_day_in_selected_month - leave_count
       end
 
-      salary_earning = get_salary_on_salary_type "Earnings", month_year,emp_salary_data.id.to_s,1
-      salary_deduction = get_salary_on_salary_type "Deductions", month_year,emp_salary_data.id.to_s,1
+      salary_earning = salary_on_salary_sheet "Earnings", month_year,emp_salary_data.id.to_s
+      salary_deduction = salary_on_salary_sheet "Deductions", month_year,emp_salary_data.id.to_s
       pt_amount = get_pt_amount month_year,emp_salary_data.id.to_s
 
       vol_pf_amount = PfCalculatedValue.vol_pf_amount month_year, emp_salary_data.id.to_s

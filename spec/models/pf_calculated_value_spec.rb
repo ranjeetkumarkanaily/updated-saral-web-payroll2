@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe PfCalculatedValue do
 
+  it { should belong_to(:employee)}
+
   it "should give PF calculated value" do
     employee = FactoryGirl.create(:employee)
     employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)

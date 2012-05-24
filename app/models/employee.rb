@@ -8,8 +8,11 @@ class Employee < ActiveRecord::Base
 
   has_many :leave_details, :dependent => :destroy
 
-  has_many :salary_allotments
-  has_one :employee_statutory
+  has_many :salary_allotments, :dependent => :destroy
+  has_one :employee_statutory, :dependent => :destroy
+  has_many :pf_calculated_values, :dependent => :destroy
+  has_many :esi_calculated_values, :dependent => :destroy
+  has_many :hr_masters, :dependent => :destroy
 
   belongs_to :present_state, :class_name => "State"
   delegate :state_name, :to => :present_state, :prefix => true

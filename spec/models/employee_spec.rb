@@ -17,6 +17,18 @@ describe Employee do
 
   it { should have_many(:leave_details)}
 
+  it { should have_many(:employee_details)}
+
+  it { should have_many(:salary_allotments)}
+
+  it { should have_one(:employee_statutory)}
+
+  it { should have_many(:pf_calculated_values)}
+
+  it { should have_many(:esi_calculated_values)}
+
+  it { should have_many(:hr_masters)}
+
   it "should require a name" do
     no_name_employee = Employee.new(@attr.merge(:empname => ""))
     no_name_employee.should_not be_valid

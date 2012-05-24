@@ -35,23 +35,23 @@
                 %td.table_grid_header Short Name
                 %td.table_grid_header Salary Head Type
                 %td.table_grid_header Salary Allotment
-              - if @salary_allotments
-                - @salary_allotments.each do |sal_allot|
-                  = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
-                  = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
-                  = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
-                  = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
-                  = hidden_field_tag "salary[][salary_group_detail_id]", sal_allot.salary_group_detail_id
-                  %tr
-                    %td.table_grid_td= sal_allot.salary_head_head_name
-                    %td.table_grid_td= sal_allot.salary_head_short_name
-                    %td.table_grid_td= sal_allot.salary_head_salary_type
-                    %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
+              -#- if @salary_allotments
+              - @salary_allotments.each do |sal_allot|
+                = hidden_field_tag "salary[][employee_id]", sal_allot.employee_id
+                = hidden_field_tag "salary[][employee_detail_id]", sal_allot.employee_detail_id
+                = hidden_field_tag "salary[][effective_date]", sal_allot.effective_date
+                = hidden_field_tag "salary[][salary_head_id]", sal_allot.salary_head_id
+                = hidden_field_tag "salary[][salary_group_detail_id]", sal_allot.salary_group_detail_id
                 %tr
-                  %td
-                    &nbsp;
-                %tr
-                  %td= submit_tag "Generate Salary"
-              - else
-                %tr
-                  %td.table_grid_td{:style => "color:#FF0000",:colspan=>4} Salary already Generated for selected month !!!
+                  %td.table_grid_td= sal_allot.salary_head_head_name
+                  %td.table_grid_td= sal_allot.salary_head_short_name
+                  %td.table_grid_td= sal_allot.salary_head_salary_type
+                  %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal_allot.salary_allotment
+              %tr
+                %td
+                  &nbsp;
+              %tr
+                %td= submit_tag "Generate Salary"
+              -#- else
+              -#  %tr
+              -#    %td.table_grid_td{:style => "color:#FF0000",:colspan=>4} Salary already Generated for selected month !!!
