@@ -12,6 +12,11 @@
       $($.date_input.initialize);
     %script{:language => "JavaScript"}
       $(document).ready(function(){
+
+      if($("#option_setting_pf_applicable").attr('checked')) {
+      $("#option_setting_voluntary_pf").attr("disabled", false);
+      }
+
       var c=0;
       $("#select_all").click(function(){
       c++;
@@ -19,7 +24,35 @@
       $("input:checkbox").attr("checked", true);}
       else{
       $("input:checkbox").attr("checked",false);c=0}});
+
+      $("#option_setting_pf_applicable").click(function() {
+
+      if($("#option_setting_pf_applicable").attr('checked')) {
+      $("#option_setting_voluntary_pf").attr("disabled", false);
+      }
+      else
+      {
+      $("#option_setting_voluntary_pf").attr("disabled", true);
+      $("#option_setting_voluntary_pf").attr("checked", false);
+      }
       });
+
+      $("#option_setting_pt_applicable").click(function() {
+
+      if($("#option_setting_pt_applicable").attr('checked')) {
+      $("#option_setting_multi_state_pt").attr("disabled", false);
+      $("#option_setting_multi_pt").attr("disabled", false);
+      }
+      else
+      {
+      $("#option_setting_multi_state_pt").attr("disabled", true);
+      $("#option_setting_multi_pt").attr("disabled", true);
+      }
+      });
+
+
+      });
+
   %body
     #header
       #header_left
@@ -53,7 +86,7 @@
         %a{:href => classification_headings_path} Classifications
         %a{:href => hr_categories_path} HR Category
         %a{:href => attendance_configurations_path} Attendance Configuration
-        %a{:href => "#"} Option Settings
+        %a{:href => option_settings_path} Option Settings
       #dropmenu2_b.dropmenudiv_b
         %a{:href => branches_path} Branch
         %a{:href => pf_groups_path} PF Group

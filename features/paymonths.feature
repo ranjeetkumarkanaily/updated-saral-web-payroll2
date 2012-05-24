@@ -2,36 +2,41 @@ Feature: Web-SPP – Paymonths
 
   Background:
     Given a valid user
-    When I go to the login page
-    Then I should see "Sign In"
-    And I fill in "Username" with "admin"
-    And I fill in "Password" with "default"
-    And I press "Sign In"
-    Then I should see "Home"
-    When I follow "Settings"
-    Then I should see "Pay Months"
+    When User go to the login page
+    Then User should see the text "Sign In"
+    And User enters "Username" as "admin"
+    And User enters "Password" as "default"
+    And User clicks "Sign In" button
+    Then User should see the text "Home"
+    When User follow "Settings" link
+    Then User should see the text "Pay Months"
 
 
-  Scenario: Creating an new company
-    When I follow "Pay Months"
-    Then I should see "Listing Pay Months"
-    And I should see "Add New Pay Month"
-    When I follow "Add New Pay Month"
-    Then I should see "New Pay Month"
-    And I fill in "paymonth_month_name" with "Jan/2012"
-    And I press "Create Paymonth"
-    Then I should see "Jan/2012"
-#    And I should have 1 company
+  Scenario: Creating an new Paymonth
+    When User follow "Pay Months" link
+    Then User should see the text "Listing Pay Months"
+    And User should see the text "Add New Pay Month"
+    When User follow "Add New Pay Month" link
+    Then User should see the text "New Pay Month"
+    And User enters "paymonth_month_name" as "Jan/2012"
+    And User clicks "Create Paymonth" button
+    Then User should see the text "Jan/2012"
 
-#  Scenario: Editing Company Details
-#    Given I have company named Relyon
-#    When I follow "Company"
-#    Then I should see "Edit Company"
-#    When I follow "Edit Company"
-#    Then I should see "Editing Company"
-#    And I fill in "company_companyname" with "Relyonsoft"
-#    And I fill in "company_responsible_person" with "some"
-#    And I fill in "doe" with "2011-01-01"
-#    And I fill in "company_address" with "Tamilnadu"
-#    And I press "Update Company"
-#    Then I should see "Company Details"
+  Scenario: Viewing Paymonth Details
+    Given User have paymonth jan/2012 created
+    When User follow "Pay Months" link
+    Then User should see the text "Listing Pay Months"
+    And User should see the text "Operations"
+    When User follow "Show" link
+    Then User should see the text "Showing Pay Month"
+    And User should see paymonth "jan/2012" details
+
+  Scenario: Deleting an Paymonth
+    Given User have paymonth jan/2012 created
+    When User follow "Pay Months" link
+    Then User should see the text "Listing Pay Months"
+    And User should see the text "Operations"
+    When User follow "Delete" link
+    Then paymonth "jan/2012" should be deleted
+    And User should see the text "Paymonth was successfully Deleted."
+

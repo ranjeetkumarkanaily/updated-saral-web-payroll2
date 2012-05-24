@@ -8,13 +8,13 @@ class SalariesController < ApplicationController
         redirect_to new_salary_path, notice: 'Employee already left the Company'
       else
         allotted_salaries = SalaryAllotment.get_allotted_salaries params[:month_year], params[:employee_id]
-        if(!Salary.is_salary_generated? params[:month_year], params[:employee_id])
-          if allotted_salaries.count > 0
-            @salary_allotments = allotted_salaries
-          else
-            @salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date params[:month_year], params[:employee_id]
-          end
+        #if(!Salary.is_salary_generated? params[:month_year], params[:employee_id])
+        if allotted_salaries.count > 0
+          @salary_allotments = allotted_salaries
+        else
+          @salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date params[:month_year], params[:employee_id]
         end
+        #end
       end
     end
   end
@@ -41,10 +41,10 @@ class SalariesController < ApplicationController
       @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
 
       @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
-      @vol_pf_amount = PfCalculatedValue.vol_pf_amount params[:month_year], params[:employee_id]
+      @vol_pf_amount = PfCalculatedValue.calculated_vol_pf_amount params[:month_year], params[:employee_id]
 
       if params[:email] == "yes"
-        pdf = render_to_string :pdf => "Payslip", :template => 'salaries/index'
+        pdf = render_to_string :pdf => "Payslip", :template => 'salaries/index',:handlers => [:haml],:formats => [:pdf]
         save_path = Rails.root.join('pdfs','payslip.pdf')
         File.open(save_path, 'wb') do |file|
           file << pdf

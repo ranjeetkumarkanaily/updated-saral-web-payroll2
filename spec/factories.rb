@@ -272,7 +272,7 @@ FactoryGirl.define do
     pf_amount 780.0
     epf_amount 540.0
     eps_amount 230.0
-    vol_pf_amount 2000.0
+    vol_pf_amount 3000.0
     employee
     effective_date "2011-02-01"
   end
@@ -297,6 +297,11 @@ FactoryGirl.define do
     employee
     leave_definition
     opening_balance 2
+  end
+
+  factory :country do
+    name "India"
+    currency "Indian Rupee"
   end
 
 end

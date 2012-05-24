@@ -90,9 +90,8 @@ describe SalariesController do
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id)
       salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
       pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
+
       get :index, :month_year => "Feb/2011", :employee_id => salary.employee_id
-
-
       assigns(:salary_earning)[0].salary_amount.should eq(salary.salary_amount)
     end
 

@@ -229,7 +229,7 @@ describe Salary do
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
-        salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(0.0)
@@ -246,7 +246,24 @@ describe Salary do
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
-        salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
+        esi_amount = Salary.get_esi_amount "Feb/2011", 1
+        esi_amount.should eq(262.5)
+      end
+
+      it "should give ESI amount for selected employee and month in which salary allotment not happen" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        esi_group = FactoryGirl.create(:esi_group)
+        branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id, :effective_date => '2011-01-01')
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(262.5)
@@ -263,7 +280,7 @@ describe Salary do
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
-        salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-03-01')
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(0.0)
@@ -278,7 +295,7 @@ describe Salary do
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
 
-        salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(0.0)
       end
@@ -294,7 +311,7 @@ describe Salary do
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
         esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
 
-        salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_amount = Salary.get_esi_amount "Feb/2011", 1
         esi_amount.should eq(0.0)
       end

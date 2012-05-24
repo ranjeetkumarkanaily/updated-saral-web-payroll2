@@ -1,8 +1,13 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+
   resources :leave_opening_balances do
     get "upload", :on => :collection
     post "save_uploaded_data", :on => :collection
+  end
+  resources :option_settings, :only => [:index, :edit, :update] do
+    get 'currency', :on => :collection
+
   end
 
   resources :leave_definitions

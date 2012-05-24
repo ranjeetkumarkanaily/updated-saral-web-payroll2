@@ -15,4 +15,10 @@ $(function() {
     return false;
   });
 
+  $("#option_setting_country_id").change(function()
+  {
+    $.get($("#currency_form").attr("action"), $("#option_setting_country_id").serialize(), null, "script");
+    return false;
+  });
+
 });
