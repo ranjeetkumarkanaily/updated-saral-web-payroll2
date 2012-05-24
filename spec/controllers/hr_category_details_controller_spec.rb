@@ -128,8 +128,9 @@ describe HrCategoryDetailsController do
 
     it "redirects to the employee_details list" do
       category_detail = HrCategoryDetail.create! valid_attributes
+      hr_cat_det_id = category_detail.hr_category_id
       delete :destroy, :id => category_detail.id
-      response.should redirect_to(hr_category_details_url(:param1 => valid_attributes[:employee_id] ))
+      response.should redirect_to(hr_category_details_url(:param1 => hr_cat_det_id))
     end
   end
 

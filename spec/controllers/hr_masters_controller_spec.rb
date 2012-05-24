@@ -57,6 +57,7 @@ describe HrMastersController do
         HrMaster.any_instance.stub(:save).and_return(false)
         post :create, :hr_master => {}
         assigns(:hr_master).should be_a_new(HrMaster)
+
       end
 
       it "re-renders the 'new' template" do
@@ -70,7 +71,7 @@ describe HrMastersController do
         hr_category = HrCategory.create(:category_name => "Education Details")
         hr_cat_det = HrCategoryDetail.create(:hr_category_id => hr_category.id, :name => "Degree", :required => true)
         post :create, {:hr_master => {:employee_id => 1, :hr_category_id => hr_category.id, :category_values => "{'Degree1 => '}"}}
-        response.should redirect_to(new_hr_master_path(:employee_id => 1, :hr_category_id => hr_category.id, :errors => ["Hr master category values for \"Degree\" is required"]))
+        response.should redirect_to(new_hr_master_path(:employee_id => 1, :hr_category_id => hr_category.id))
       end
     end
   end

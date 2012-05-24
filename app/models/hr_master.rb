@@ -21,7 +21,7 @@ class HrMaster < ActiveRecord::Base
   end
 
   def validate name
-    self["category_values"]["#{name}"].empty?
+    self["category_values"]["#{name}"].blank?
   end
 
 end

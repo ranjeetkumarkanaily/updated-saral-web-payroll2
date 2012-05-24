@@ -10,13 +10,11 @@ describe OptionSettingsController do
     {
         :country_id => 1,
         :time_zone => "(GMT+05:30) Kolkata",
-        :currency => "rupee"
+        :currency => "rupee",
+        :salary_calc => "Jan/2012"
     }
   end
   
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # OptionSettingsController. Be sure to keep this updated too.
   def valid_session
     {}
   end
@@ -35,16 +33,19 @@ describe OptionSettingsController do
       get :edit, {:id => option_setting.to_param}, valid_session
       assigns(:option_setting).should eq(option_setting)
     end
+
+    it "assigns the requested option_setting as @option_setting with @currency" do
+      option_setting = OptionSetting.create! valid_attributes
+      country = FactoryGirl.create(:country)
+      get :edit, {:id => option_setting.to_param, :option_setting => {"country_id" => country.id}}, valid_session
+      assigns(:option_setting).should eq(option_setting)
+    end
   end
 
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested option_setting" do
         option_setting = OptionSetting.create! valid_attributes
-        # Assuming there are no other option_settings in the database, this
-        # specifies that the OptionSetting created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         OptionSetting.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, {:id => option_setting.to_param, :option_setting => {'these' => 'params'}}, valid_session
       end

@@ -42,7 +42,7 @@ Spork.prefork do
 
     # for database cleaner -- start --
     config.before(:suite) do
-      DatabaseCleaner.strategy = :truncation, {:except => %w[salary_heads]}
+      DatabaseCleaner.strategy = :truncation, {:except => %w[salary_heads leave_opening_balance]}
       DatabaseCleaner.clean_with(:truncation)
     end
 

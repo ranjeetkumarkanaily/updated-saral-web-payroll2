@@ -1,0 +1,33 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Excel Upload
+  = form_tag '/leave_opening_balances/save_uploaded_data', :method => :post, :multipart => true do
+    - if @opbal.errors.any?
+      #error_explanation
+      %h2
+        = pluralize(@opbal.errors.count, "error")
+        prohibited this leave Opening Balance from being saved:
+      %ul
+        - @opbal.errors.full_messages.each do |msg|
+          %li= msg
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td
+          %table
+            %tr
+              %td{:colspan=>4}
+                - flash.each do |name, msg|
+                  = content_tag :div, msg, :id => "flash_#{name}"
+            %tr
+              %td
+                %table
+                  %tr
+                    %td{:width=>150} Select File to Upload
+                    %td= file_field_tag 'excel_file'
+                  %tr
+                    %td &nbsp;
+                  %tr
+                    %td{:colspan=>2}= submit_tag "Upload File"
+                  %tr
+                    %td &nbsp;
