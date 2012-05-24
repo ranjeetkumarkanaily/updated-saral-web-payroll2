@@ -3,7 +3,7 @@ class LeaveDefinition < ActiveRecord::Base
 
   validates :leave_name, :presence => true , :uniqueness => true
 
-  validates :short_name, :presence => true ,:uniqueness => true , :length => {:minimum => 1 , :maximum => 2}
+  validates :short_name, :presence => true ,:uniqueness => true , :length => {:minimum => 1 , :maximum => 3}
 
 
 end
