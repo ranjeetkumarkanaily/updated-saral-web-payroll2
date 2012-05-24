@@ -49,9 +49,12 @@
                 %tr
                   %td{:width=>130} Calculation Type:&nbsp;
                   %td= f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month"],salary_group_detail.calc_type),  {:prompt => 'Select Type'}
-                  %tr
-                    %td{:width=>130} Calculation:&nbsp;
-                    %td= f.text_area :calculation, :rows => 4, :cols => 30
+                %tr
+                  %td{:width=>130} Calculation:&nbsp;
+                  %td= f.text_area :calculation, :rows => 2, :cols => 30
+                %tr
+                  %td{:width=>130} Effective Month:&nbsp;
+                  %td= f.select :paymonth_id, options_from_collection_for_select(Paymonth.order('created_at DESC'),'id','month_name', salary_group_detail.paymonth_id),:prompt => 'Select Pay Month'
                 %tr
                   %td{:width=>130} ESI Applicability:&nbsp;
                   %td= f.check_box :esi_applicability, :onclick=> 'setPercentage("salary_group_detail_esi_applicability","salary_group_detail_esi_percentage")'
