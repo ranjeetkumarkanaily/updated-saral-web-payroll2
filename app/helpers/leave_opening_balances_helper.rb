@@ -1,0 +1,2 @@
+module LeaveOpeningBalancesHelper
+end

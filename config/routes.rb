@@ -1,5 +1,10 @@
 UpdatedSaralWebPayroll::Application.routes.draw do
 
+  resources :leave_opening_balances do
+    get "upload", :on => :collection
+    post "save_uploaded_data", :on => :collection
+  end
+
   resources :leave_definitions
 
   resources :company_documents , :except => [:index, :show] do

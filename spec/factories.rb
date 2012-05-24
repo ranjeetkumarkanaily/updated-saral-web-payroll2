@@ -287,4 +287,16 @@ FactoryGirl.define do
     remarks "Test"
   end
 
+  factory :leave_definition do
+    id 1
+    leave_name "Sick Leave"
+    short_name "SL"
+  end
+
+  factory :leave_opening_balance do
+    employee
+    leave_definition
+    opening_balance 2
+  end
+
 end
