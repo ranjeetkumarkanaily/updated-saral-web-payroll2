@@ -31,7 +31,6 @@ When /^(?:|User )clicks "([^\"]*)"(?: within "([^\"]*)")? button$/ do |button, s
 end
 
 When /^(?:|User )follow "([^\"]*)"(?: within "([^\"]*)")? link$/ do |link, selector|
-  print page.html if link == "Settings"
   with_scope(selector) do
     click_link(link)
   end
