@@ -84,6 +84,19 @@ def path_to(page_name)
       puts employee_id.employee_statutory.inspect
       edit_employee_statutory_path(:employee_id => employee_id.id)
 
+    when /the (.*?) employee salary for (.*?) month/
+      employee_id=Employee.find_by_empname($1).id
+      sal_emp_id=Salary.find_by_employee_id(employee_id).employee_id
+      new_salary_path(:month_year => $2, :employee_id => sal_emp_id)
+
+    when /the (.*?) employee salary page for (.*?) month/
+      employee_id=Employee.find_by_empname($1).id
+      salary=Salary.find_by_employee_id(employee_id)
+      salaries_path(:month_year => $2, :salary => salary)
+
+    when /salaries/
+      salaries_path
+
 
     #when /company_new/
     # new_company_path
