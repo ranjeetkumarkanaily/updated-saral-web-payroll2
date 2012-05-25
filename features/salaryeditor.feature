@@ -11,12 +11,13 @@ Feature: Web-SPP – Salary Editor
 
   Scenario: Generate the salary for employee
     Given User have Employee Shivarudraiah created
-    And User have paymonth jan/2012 created
+    #And User have paymonth jan/2012 created
     And user have required details created
     And User follow "Salary Editor" link
     And User select "Shivarudraiah" from "employee_id"
     And User select "jan/2012" from "month_year"
     And User clicks "Get Salary" button
+    Then User should see the text "Allowance"
 
 #  Scenario: Viewing PF Group details
 #    Given User have PF Group Rate 12 created under Kerala

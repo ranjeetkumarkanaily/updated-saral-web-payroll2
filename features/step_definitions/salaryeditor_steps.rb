@@ -5,6 +5,13 @@ end
 Given /^user have required details created$/ do
   sal_head=SalaryHead.create(:head_name=> "Allowance", :short_name=> "ALLOW", salary_type: "Earnings")
   sal_grp=SalaryGroup.create(:salary_group_name=> "Manager", :based_on_gross=> true)
+  paymonth=Paymonth.create!(:month_year=> 24145, :number_of_days=> 31, :from_date=> "2010-12-01", :to_date=> "2010-12-31", :month_name=> "jan/2012")
+  pf_grp=PfGroup.create(:pf_group=> "Karnataka", :pf_number=> "1234", :db_file_code=> "", :extension=> 1, :address=> "Bangalore",:user_id=> "test", :password=> "test123")
+  esi_grp=EsiGroup.create(:esi_group_name=> "Karnataka", :address=> "Bangalore", :esi_no=> 123, :esi_local_office=> "Bangalore", :user_id=> "test", :password=> "test123")
+  Branch.create(:branch_name=> "Bangalore", :responsible_person=> "HSN", :address=> "Rajajinagara", :pf_group_id=> pf_grp.id, :esi_group_id=> esi_grp.id, :pt_group_id=> nil)
   bank=FinancialInstitution.create(:name=> "State Bank", :address_line1=> "Bangalore", :address_line2=> "JP Nagara", :address_line3=> "1st Cross", :address_line4=> "1st main", pincode: 560040, :branch_code=> 2, :email=> "statebank@bangalore.com")
-  sal_grp_detail=SalaryGroupDetail.create(calc_type: "Lumpsum", calculation: "", based_on: "Pay Days", salary_group_id: sal_grp.id, salary_head_id: sal_head.id, pf_applicability: nil, pf_percentage: nil, print_name: nil, print_order: nil, esi_applicability: nil, esi_percentage: nil, pt_applicability: nil, pt_percentage: nil, paymonth_id: nil)
+  attn_config=AttendanceConfiguration.create(:attendance=> "First Shift", short_name: "FS", salary_calendar_days: "Actual Days / Month")
+  sal_grp_detail=SalaryGroupDetail.create(calc_type: "Lumpsum", calculation: "", based_on: "Pay Days", salary_group_id: sal_grp.id, salary_head_id: sal_head.id, pf_applicability: true, pf_percentage: 100, print_name: nil, print_order: nil, esi_applicability: true, esi_percentage: 100, pt_applicability: true, pt_percentage: 100, paymonth_id: paymonth.id)
+  pf_grp_rate=PfGroupRate.create(pf_group_id: pf_grp.id, paymonth_id: paymonth.id, account_number_21: 11.0, pension_fund: 10.0, epf: 2.0, account_number_02: 12.0, account_number_22: 12.0, round_off: "Higher Rupee", restrict_employer_share: false, restrict_employee_share_to_employer_share: false, employer_epf: -8.0, cutoff: 12.0, effective_date: "2012-02-01")
+  esi_grp_rate=EsiGroupRate.create(esi_group_id: esi_grp.id, employee_rate: 10.0, employer_rate: 2.0, cut_off: 3.0, minimum_limit_dailywage: 12.0, round_off: "Higher Rupee")
 end
