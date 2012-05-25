@@ -32,3 +32,7 @@ Given /^employee detail salary group (.*?) created under employee (.*?)$/ do |sa
 
   EmployeeDetail.create(employee_id: emp.id, effective_date: "2012-04-03", salary_group_id: sal_grp.id, allotted_gross: 20000, classification: {"Designation"=>"Developer"}, branch_id: branch.id, financial_institution_id: bank.id, attendance_configuration_id: atten_config.id, bank_account_number: "", effective_to: nil, pan: "PAN Applied", pan_effective_date: nil, international_worker: nil)
 end
+
+When /^User upload the employees excel file$/ do
+  attach_file(:excel_file, File.join(Rails.root.to_s, 'spec', 'factories', 'Employee_Test.xls'))
+end
