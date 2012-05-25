@@ -5,5 +5,6 @@ end
 Given /^user have required details created$/ do
   sal_head=SalaryHead.create(:head_name=> "Allowance", :short_name=> "ALLOW", salary_type: "Earnings")
   sal_grp=SalaryGroup.create(:salary_group_name=> "Manager", :based_on_gross=> true)
+  bank=FinancialInstitution.create(:name=> "State Bank", :address_line1=> "Bangalore", :address_line2=> "JP Nagara", :address_line3=> "1st Cross", :address_line4=> "1st main", pincode: 560040, :branch_code=> 2, :email=> "statebank@bangalore.com")
   sal_grp_detail=SalaryGroupDetail.create(calc_type: "Lumpsum", calculation: "", based_on: "Pay Days", salary_group_id: sal_grp.id, salary_head_id: sal_head.id, pf_applicability: nil, pf_percentage: nil, print_name: nil, print_order: nil, esi_applicability: nil, esi_percentage: nil, pt_applicability: nil, pt_percentage: nil, paymonth_id: nil)
 end
