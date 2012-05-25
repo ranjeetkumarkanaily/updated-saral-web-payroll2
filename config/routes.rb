@@ -78,7 +78,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
 
 
-  resources :leave_details, :only => [:index] do
+  resources :leave_details do
     get 'upload', :on => :collection
     post 'upload_parse_validate', :on => :collection
     post 'save', :on => :collection

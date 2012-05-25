@@ -1,9 +1,9 @@
 class LeaveDetail < ActiveRecord::Base
-  attr_accessible :employee_id, :leave_date
+  attr_accessible :employee_id, :leave_date,:leave_definition_id
   acts_as_audited
 
   belongs_to :employee, :validate => true
-  validates_presence_of :leave_date, :employee_id
+  validates_presence_of :leave_date, :employee_id , :leave_definition_id
   validates_presence_of :employee, :message => " does not exists."
   validates_uniqueness_of :employee_id, :scope => :leave_date, :message => " Leave has already taken"
 
@@ -26,6 +26,7 @@ class LeaveDetail < ActiveRecord::Base
         liv = LeaveDetail.new
         liv.employee_id = Employee.find_by_refno("#{row[0]}").id
         liv.leave_date = row[1]
+        liv.leave_definition_id = LeaveDefinition.find_by_short_name("#{row[2]}").id
 
         if liv.valid?
           leaves_details["leave_details"] << liv
@@ -41,4 +42,7 @@ class LeaveDetail < ActiveRecord::Base
   def self.duplicates_in_leave_columns? leave_columns
     leave_columns.size != leave_columns.uniq.size ? true : false
   end
+
+
+
 end

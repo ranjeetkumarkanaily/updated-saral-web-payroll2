@@ -88,9 +88,16 @@ FactoryGirl.define do
     state_name "Karnataka"
   end
 
+  factory :leave_definition do
+    id 1
+    leave_name "Sick Leave"
+    short_name "SL"
+  end
+
   factory :leave_detail do
     employee
     leave_date '2011-01-01'
+    leave_definition_id 1
   end
 
  factory :paymonth do
@@ -288,11 +295,6 @@ FactoryGirl.define do
     remarks "Test"
   end
 
-  factory :leave_definition do
-    id 1
-    leave_name "Sick Leave"
-    short_name "SL"
-  end
 
   factory :leave_opening_balance do
     employee

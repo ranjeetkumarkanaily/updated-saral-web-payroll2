@@ -146,4 +146,10 @@ describe Employee do
     employee.errors.messages[:retirement_date].should eq(["retirement date should be after date of joining"])
   end
 
+  it "should concatenate employee name and ref numbere and return" do
+    employee = FactoryGirl.create(:employee)
+    value = employee.empname+'('+employee.refno.to_s+')'
+    employee.empname_and_refno.should eq(value)
+  end
+
 end

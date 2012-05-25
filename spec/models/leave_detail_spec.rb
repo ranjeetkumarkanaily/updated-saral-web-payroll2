@@ -23,8 +23,10 @@ describe LeaveDetail do
     end
 
     it "checks for the uniqueness of employee_id and leave_date" do
-      leave_detail = FactoryGirl.create(:leave_detail)
-      dup_leave_detail = LeaveDetail.new(:employee_id => leave_detail.employee_id, :leave_date => leave_detail.leave_date)
+      employee = FactoryGirl.create(:employee)
+      leave_definition = FactoryGirl.create(:leave_definition)
+      leave_detail = FactoryGirl.create(:leave_detail,:employee_id=>employee.id,:leave_definition_id=>leave_definition.id,:leave_date=>'2012-05-01')
+      dup_leave_detail = LeaveDetail.new(:employee_id => leave_detail.employee_id, :leave_date => leave_detail.leave_date,:leave_definition_id=>leave_detail.leave_definition_id)
       dup_leave_detail.should_not be_valid
     end
   end

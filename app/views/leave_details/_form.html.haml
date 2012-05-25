@@ -1,0 +1,30 @@
+= form_for(leave_detail) do |f|
+  - if leave_detail.errors.any?
+    #error_explanation
+    %h2
+      = pluralize(leave_detail.errors.count, "error")
+      prohibited this leave detail from being saved:
+    %ul
+      - leave_detail.errors.full_messages.each do |msg|
+        %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td{:style=>"width:100%"}
+              %table
+                %tr
+                  %td Employee:&nbsp;
+                  %td{:style=>"width:150px"}= f.select :employee_id, options_for_select(Employee.employees.collect{|em| [em.empname_and_refno,em.id]},leave_detail.employee_id),{:prompt => 'Select'}
+                  %td Leave type:&nbsp;
+                  %td{:style=>"width:120px"}= f.select :leave_definition_id, options_from_collection_for_select(LeaveDefinition.order('created_at DESC'),'id','short_name',leave_detail.leave_definition_id),{:prompt => 'Select'}
+                  %td Leave Date:&nbsp
+                  %td= f.text_field :leave_date, :id=>"leave_date", :class=>"date_input"
+          %tr
+            %td.std_td{:colspan=>3}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>3}= f.submit
