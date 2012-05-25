@@ -1,0 +1,9 @@
+Given /^User have salary Employee (.*?) created$/ do |employee|
+  Employee.create(:empname=> employee, :date_of_joining=> "2004-04-04", :date_of_leaving=> nil, :date_of_birth=> "1980-04-01", :marital_status=>"Single", father_name: "xyz", spouse_name: "", gender: "Male", present_res_no: "", present_res_name: "", present_street: "#411, 3rd main, 2nd stage, 9th", present_locality: "", present_city: "Bangalore", present_state_id: @state.id, perm_res_no: nil, perm_res_name: nil, perm_street: nil, perm_locality: nil, perm_city: nil, perm_state_id: nil, perm_sameas_present: nil, email: "shivugowda84@gmail.com", mobile: "919986928734", refno: "V2040402", designation_id: 30, department_id: 1, grade_id: 4, branch_id: 1, financial_institution_id: 1, bank_account_number: "08751050014908", restrct_pf: false, probation_period: nil, probation_complete_date: nil, confirmation_date: nil, salary_start_date: nil, retirement_date: nil, handicapped: nil, emergency_contact_number: nil, official_mail_id: nil, leaving_reason: nil)
+end
+
+Given /^user have required details created$/ do
+  sal_head=SalaryHead.create(:head_name=> "Allowance", :short_name=> "ALLOW", salary_type: "Earnings")
+  sal_grp=SalaryGroup.create(:salary_group_name=> "Manager", :based_on_gross=> true)
+  sal_grp_detail=SalaryGroupDetail.create(calc_type: "Lumpsum", calculation: "", based_on: "Pay Days", salary_group_id: sal_grp.id, salary_head_id: sal_head.id, pf_applicability: nil, pf_percentage: nil, print_name: nil, print_order: nil, esi_applicability: nil, esi_percentage: nil, pt_applicability: nil, pt_percentage: nil, paymonth_id: nil)
+end
