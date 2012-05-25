@@ -96,7 +96,7 @@ Feature: Web-SPP – Branches
     And User clicks "Save" button
     Then User should see the text "2012-05-24"
 
-  Scenario: Editing Assigned PF Group for branch
+  Scenario: Editing Assigned PT Group for branch
     Given Branch Bangalore created under PT Group Karnataka
     When User follow "Branch" link
     And User follow "Show" link

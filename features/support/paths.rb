@@ -65,6 +65,26 @@ def path_to(page_name)
       sal_grp_detail = SalaryGroupDetail.find_by_salary_head_id(sal_head_id)
       edit_salary_group_detail_path(sal_grp_detail,:param1=>sal_grp_id)
 
+
+    when /the employee (.*?) details page/
+      employee_id=Employee.find_by_empname($1).id
+      employee_details_path(:param1=>employee_id)
+
+    when /the employee (.*?) details new page/
+      employee_id=Employee.find_by_empname($1).id
+      new_employee_detail_path(:param1 => employee_id)
+
+    when /the employee (.*?) details edit page/
+      employee_id=Employee.find_by_empname($1).id
+      emp_detail=EmployeeDetail.find_by_employee_id(employee_id)
+      edit_employee_detail_path(emp_detail,:param1 => employee_id)
+
+    when /the (.*?) Statutory Details edit page/
+      employee_id=Employee.find_by_empname($1)
+      puts employee_id.employee_statutory.inspect
+      edit_employee_statutory_path(:employee_id => employee_id.id)
+
+
     #when /company_new/
     # new_company_path
     #when /login/
