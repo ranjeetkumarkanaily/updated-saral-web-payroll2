@@ -22,9 +22,9 @@ Given /^user have required details created$/ do
   sal_head=SalaryHead.create(:head_name=> "Allowance", :short_name=> "ALLOW", salary_type: "Earnings")
   LeaveDetail.create(employee_id: emp.id, leave_date: "'2012-03-01'")
   sal_grp_detail=SalaryGroupDetail.create(calc_type: "Lumpsum", calculation: "", based_on: "Pay Days", salary_group_id: sal_grp.id, salary_head_id: sal_head.id, pf_applicability: true, pf_percentage: 100, print_name: nil, print_order: nil, esi_applicability: true, esi_percentage: 100, pt_applicability: true, pt_percentage: 100, paymonth_id: paymonth.id)
-  salary=Salary.create(effective_date: "2012-02-01", salary_amount: 10000, employee_id: emp.id, employee_detail_id: emp_detail.id, salary_head_id: sal_head.id,salary_group_detail_id: sal_grp_detail.id, actual_salary_amount: 10000)
-  PfCalculatedValue.create(:pf_earning=> 6500.0,:pf_amount=> 780.0, :epf_amount=> 540.0, :eps_amount=> 230.0, :vol_pf_amount=> 3000.0,:employee_id=>emp.id,:effective_date=> "2011-02-01")
-  SalaryAllotment.create(employee_id: emp.id, employee_detail_id: emp_detail.id, effective_date: "2012-03-21", salary_head_id: sal_head.id, salary_allotment: 10000, salary_group_detail_id: sal_grp_detail.id)
+  salary=Salary.create(effective_date: "2012-01-01", salary_amount: 10000, employee_id: emp.id, employee_detail_id: emp_detail.id, salary_head_id: sal_head.id,salary_group_detail_id: sal_grp_detail.id, actual_salary_amount: 10000)
+  PfCalculatedValue.create(:pf_earning=> 6500.0,:pf_amount=> 780.0, :epf_amount=> 540.0, :eps_amount=> 230.0, :vol_pf_amount=> 3000.0,:employee_id=>emp.id,:effective_date=> "2012-01-01")
+  SalaryAllotment.create(employee_id: emp.id, employee_detail_id: emp_detail.id, effective_date: "2012-01-01", salary_head_id: sal_head.id, salary_allotment: 10000, salary_group_detail_id: sal_grp_detail.id)
 end
 
 Then /^User should redirect to salaries index path$/ do

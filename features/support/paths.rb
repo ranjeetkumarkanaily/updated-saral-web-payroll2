@@ -105,6 +105,11 @@ def path_to(page_name)
       salary=Salary.find_by_employee_id(employee_id)
       salaries_path(:month_year => $2, :salary => salary)
 
+    when/the (.*?) salary pdf for (.*?) month page/
+      employee_id=Employee.find_by_empname($1).id
+      sal_emp_id=Salary.find_by_employee_id(employee_id).employee_id
+      salaries_path(:month_year => $2, :employee_id => sal_emp_id,:format => "pdf")
+
     when /salaries/
       salaries_path
 
