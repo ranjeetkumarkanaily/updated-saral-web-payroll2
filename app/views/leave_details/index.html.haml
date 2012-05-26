@@ -13,12 +13,15 @@
             %td.table_grid_header Ref. No.
             %td.table_grid_header Employee Name
             %td.table_grid_header Leave Date
+            %td.table_grid_header{:colspan =>2} Operations
           - @leave_details.each do |leave|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= leave.employee_id
               %td.table_grid_td= leave.employee_refno
               %td.table_grid_td= leave.employee_empname
               %td.table_grid_td= leave.leave_date
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Detail"), edit_leave_detail_path(leave)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Detail"), leave, confirm: 'Are you sure?', method: :delete
         %br/
         .digg_pagination
           .page_info

@@ -24,7 +24,8 @@ describe SalariesController do
       it "Count should be increases by one" do
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        leave_definition = FactoryGirl.create(:leave_definition)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
         salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         expect {
           post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
@@ -34,7 +35,8 @@ describe SalariesController do
       it "redirects to salary index path" do
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        leave_definition = FactoryGirl.create(:leave_definition)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
         salary = FactoryGirl.build(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         post :create, :salary => [salary.attributes],:month_year=>'Feb/2011'
         response.should redirect_to salaries_path

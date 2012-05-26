@@ -4,21 +4,68 @@ Feature: Web-SPP – PF Group
     Given a valid user
     And User have PF Group Tamilnadu created
     When User go to the login page
-    Then User should see the text "Sign In"
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
     And User clicks "Sign In" button
-    Then User should see the text "Home"
-    When User follow "Master" link
-    Then User should see the text "PF Group"
+    And User follow "Master" link
+
+  Scenario: Viewing PF Group details
+    Given User have PF Group Rate 12 created under Kerala
+    When User follow "PF Group" link
+    And User follow "Details" link
+    When User go to the Kerala PF Group rate page
+    Then User should see the text "12"
+
+  Scenario: Adding new pf rate rate for PF Group
+    Given User have PF Group Tamilnadu created
+    And valid Feb/2012 month is created
+    When User follow "PF Group" link
+    And User follow "Details" link
+    When User go to the Tamilnadu PF Group page
+    And User follow "Add New PF Group Rate" link
+    And User select "Feb/2012" from "pf_group_rate_paymonth_id"
+    And User enters "pf_group_rate_epf" as "12"
+    And User enters "pf_group_rate_cutoff" as "1.23"
+    And User enters "pf_group_rate_account_number_22" as "12  "
+    And User enters "pf_group_rate_account_number_21" as "1.2"
+    And User enters "pf_group_rate_account_number_02" as "12"
+    And User enters "pf_group_rate_pension_fund" as "1.2"
+    And User select "Higher Rupee" from "pf_group_rate_round_off"
+    And User uncheck "pf_group_rate_restrict_employer_share"
+    And User uncheck "pf_group_rate_restrict_employee_share_to_employer_share"
+    And User clicks "Create Pf group rate" button
+    Then User should see the text "Pf group rate was successfully created."
+
+  Scenario: Editing PF Group rate details
+    Given User have PF Group Rate 12 created under Kerala
+    When User follow "PF Group" link
+    And User follow "Details" link
+    When User go to the Kerala PF Group rate page
+    And User follow "Edit" link
+    And User enters "pf_group_rate_epf" as "12"
+    And User enters "pf_group_rate_cutoff" as "1.23"
+    And User enters "pf_group_rate_account_number_22" as "12  "
+    And User enters "pf_group_rate_account_number_21" as "1.2"
+    And User enters "pf_group_rate_account_number_02" as "12"
+    And User enters "pf_group_rate_pension_fund" as "1.2"
+    And User select "Higher Rupee" from "pf_group_rate_round_off"
+    And User uncheck "pf_group_rate_restrict_employer_share"
+    And User uncheck "pf_group_rate_restrict_employee_share_to_employer_share"
+    And User clicks "Update Pf group rate" button
+    Then User should see the text "Pf group rate was successfully updated."
+
+  Scenario: Deleting PF Group Rate details
+    Given User have PF Group Rate 12 created under Kerala
+    When User follow "PF Group" link
+    And User follow "Details" link
+    When User go to the Kerala PF Group rate page
+    And follow "Delete" link
+    Then User should see the text "Pf group rate was successfully Destroyed."
 
 
   Scenario: Creating an new PF Group
     When User follow "PF Group" link
-    Then User should see the text "Listing PF Groups"
-    And User should see the text "Add New PF Group"
-    When User follow "Add New PF Group" link
-    Then User should see the text "New PF Group"
+    And User follow "Add New PF Group" link
     And User enters "pf_group_pf_group" as "Karnataka"
     And User enters "pf_group_db_file_code" as "123"
     And User enters "pf_group_address" as "Bangalore"
@@ -31,9 +78,7 @@ Feature: Web-SPP – PF Group
 
   Scenario: Editing  PF Group
     When User follow "PF Group" link
-    Then User should see the text "Listing PF Groups"
-    And User should see the text "Operations"
-    When User follow "Edit" link
+    And User follow "Edit" link
     And User enters "pf_group_pf_group" as "Karnataka"
     And User enters "pf_group_db_file_code" as "1234"
     And User enters "pf_group_address" as "Bangalore"
@@ -46,7 +91,6 @@ Feature: Web-SPP – PF Group
 
   Scenario: Deleting an PF Group
     When User follow "PF Group" link
-    Then User should see the text "Listing PF Groups"
     And User should see the text "Operations"
     When User follow "Delete" link
     Then PF Group "Tamilnadu" should be deleted

@@ -11,7 +11,13 @@ describe Paymonth do
     }
   end
 
+  it { should have_many(:pt_rates)}
+
   it { should have_many(:pf_group_rates)}
+
+  it { should have_many(:pt_group_rates)}
+
+  it { should have_many(:salary_group_details)}
 
   it "should require a month_name" do
     no_name_month = Paymonth.new(@attr.merge(:month_name => ""))

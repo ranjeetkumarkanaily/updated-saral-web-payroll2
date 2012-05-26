@@ -156,4 +156,10 @@ class Employee < ActiveRecord::Base
     employee_columns.size != employee_columns.uniq.size ? true : false
   end
 
+  scope :employees, :order => 'created_at DESC'
+
+  def empname_and_refno
+    empname+'('+refno.to_s+')'
+  end
+
 end

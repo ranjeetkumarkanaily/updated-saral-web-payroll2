@@ -1,11 +1,12 @@
 class SalaryGroupDetail < ActiveRecord::Base
-  attr_accessible :calc_type, :calculation,:based_on,:salary_group_id,:salary_head_id,:pf_applicability,:pf_percentage,:print_name,:print_order,:esi_applicability,:esi_percentage,:pt_applicability,:pt_percentage
+  attr_accessible :calc_type, :calculation,:based_on,:salary_group_id,:salary_head_id,:pf_applicability,:pf_percentage,:print_name,:print_order,:esi_applicability,:esi_percentage,:pt_applicability,:pt_percentage,:paymonth_id
   acts_as_audited
 
   belongs_to :salary_group
   belongs_to :salary_head
   has_many :salary_allotments
   has_many :salaries
+  belongs_to :paymonth
 
   delegate :head_name, :to => :salary_head, :prefix => true
   delegate :salary_group_name, :to => :salary_group, :prefix => true
