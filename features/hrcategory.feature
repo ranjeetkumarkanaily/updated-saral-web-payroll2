@@ -8,7 +8,6 @@ Feature: Web-SPP – Hr Category
     And User clicks "Sign In" button
     And User follow "Settings" within "div.bluetabs" link
 
-
   Scenario: Creating an new Hr Category
     When User follow "HR Category" link
     And User follow "Add New HR Category" link

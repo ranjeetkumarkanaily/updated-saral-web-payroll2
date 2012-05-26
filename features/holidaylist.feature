@@ -9,17 +9,11 @@ Feature: Web-SPP – Holiday Lists
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
     And User clicks "Sign In" button
-    Then User should see the text "Home"
-    When User follow "Master" link
-    Then User should see the text "Holiday Lists"
-
+    And User follow "Master" link
 
   Scenario: Creating an new Holiday Lists
     When User follow "Holiday Lists" link
-    Then User should see the text "Listing Holidays"
-    And User should see the text "Add New Holiday"
-    When User follow "Add New Holiday" link
-    Then User should see the text "New Holiday"
+    And User follow "Add New Holiday" link
     And User select "Normal Shift" from "holiday_attendance_configuration_id"
     And User enters "holiday_description" as "test"
     And User enters "hdd" as "2012-05-12"
@@ -30,7 +24,6 @@ Feature: Web-SPP – Holiday Lists
 
   Scenario: Viewing Holiday Lists Details
     When User follow "Holiday Lists" link
-    Then User should see the text "Listing Holidays"
     And User should see the text "Attendance"
     Then User select "Normal Shift" from "attendance_configuration"
     And User clicks "Get List" button
@@ -42,7 +35,6 @@ Feature: Web-SPP – Holiday Lists
 
   Scenario: Editing Holiday Lists Detail
     When User follow "Holiday Lists" link
-    Then User should see the text "Listing Holidays"
     And User should see the text "Attendance"
     Then User select "Normal Shift" from "attendance_configuration"
     And User clicks "Get List" button

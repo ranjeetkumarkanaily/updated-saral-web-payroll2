@@ -116,6 +116,13 @@ def path_to(page_name)
     when /the (.*?) company documents page/
       comp_id=Company.find_by_companyname($1).id
 
+    when /the employees (.*?) report with date of joining/
+      employee=Employee.find_by_empname($1)
+      report_employees_path(:report_type => 'date_of_joining',:report=>{"classification"=>{"Department"=>""}})
+
+    when /report/
+      report_employees_path
+
 
     # Add more page name => path mappings here
 
