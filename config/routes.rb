@@ -13,7 +13,7 @@ UpdatedSaralWebPayroll::Application.routes.draw do
   resources :leave_definitions
 
   resources :company_documents , :except => [:index, :show] do
-     get 'download', :on => :collection
+    get 'download', :on => :collection
   end
 
   resources :employee_statutories, :except => [:index,:show,:destroy]
@@ -87,6 +87,9 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :companies, :except => [:show, :destroy] do
     get 'documents_list', :on => :collection
+    get 'backup', :on => :collection
+    get 'upload', :on => :collection
+    post 'restore', :on => :collection
   end
 
   resources :salary_group_details

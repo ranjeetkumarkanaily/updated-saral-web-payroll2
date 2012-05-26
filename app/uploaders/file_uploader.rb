@@ -36,7 +36,7 @@ class FileUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    ["xls"]
+    ["xls", "db"]
   end
 
   # Override the filename of the uploaded files:

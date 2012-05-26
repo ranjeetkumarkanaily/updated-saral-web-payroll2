@@ -23,4 +23,20 @@ class Company < ActiveRecord::Base
 
   #validates :website, :format => /^(((h|H?)(t|T?)(t|T?)(p|P?)(s|S?))\://)?(www.|[a-zA-Z0-9].)[a-zA-Z0-9\-\.]+\.[a-zA-Z]*$/
 
+  def self.backup_db
+    config = ActiveRecord::Base.configurations[Rails.env]
+    latest_dump = "#{Rails.root}/public/system/Backup-#{Time.now.strftime('%d-%m-%Y-%Hh%Mm%Ss')}.db"
+    file = File.new(latest_dump, "w")
+    #pg_dump --data-only --host=localhost --port=5432 --username=postgres --no-password -Fc DocUpload_development > dump_docupload.db
+    system("pg_dump --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
+    file
+  end
+
+  def self.restore_db file_path
+    config = ActiveRecord::Base.configurations[Rails.env]
+    #pg_restore --host=localhost --port=5432 --username=postgres --no-password -d DocUpload_development dump_docupload.db
+    pg_db_restore = "pg_restore --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -d #{config['database']} #{file_path}"
+    system("#{pg_db_restore}")
+  end
+
 end
