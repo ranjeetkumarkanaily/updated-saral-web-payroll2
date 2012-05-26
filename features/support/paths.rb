@@ -92,6 +92,15 @@ def path_to(page_name)
     when /the sample template page/
       generate_sample_excel_template_employees_path(:format => "xls")
 
+    when /the salary allotment sample template page/
+          generate_sample_excel_template_salary_allotments_path(:format => "xls")
+
+    when /salary allotment sample excel/
+      generate_sample_excel_template_salary_allotments_path
+
+    when /salary allotment index page/
+      salary_allotments_path
+
     when /employees excel sample/
       generate_sample_excel_template_employees_path
 
