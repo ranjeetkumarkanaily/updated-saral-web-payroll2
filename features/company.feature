@@ -8,7 +8,6 @@ Feature: Web-SPP – Company Creation
       And User clicks "Sign In" button
       And User follow "Settings" link
 
-
     Scenario: Creating an new company
       When User follow "Company" link
       And User follow "Create a new Company" link
