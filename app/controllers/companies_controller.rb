@@ -52,6 +52,7 @@ class CompaniesController < ApplicationController
                :filename => "Backup-#{Time.now.strftime('%d-%m-%Y-%Hh%Mm%Ss')}.db",
                :type => File.ftype(file_path),
                :disposition => 'attachment'
+    FileUtils.rm_r(file_path.path)
   end
 
   def upload
