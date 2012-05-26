@@ -34,5 +34,14 @@ Given /^employee detail salary group (.*?) created under employee (.*?)$/ do |sa
 end
 
 When /^User upload the employees excel file$/ do
-  attach_file(:excel_file, File.join(Rails.root.to_s, 'spec', 'factories', 'Employee_Test.xls'))
+  visit path_to("employees_upload")
+  attach_file("excel_file", File.join(Rails.root.to_s, 'spec', 'factories', 'Employee_Test.xls'))
+end
+
+Then /^User should redirect to employees index page$/ do
+  visit path_to("employees")
+end
+
+Then /^User should redirect to generate_sample_excel_template$/ do
+  visit path_to("employees excel sample")
 end

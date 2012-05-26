@@ -25,7 +25,6 @@ def path_to(page_name)
       edit_esi_group_rate_path(esi_grp_rate,:params1 => esi_grp)
 
 
-
     when /the (.*?) PF Group rate page/
       pf_grp_id = PfGroup.find_by_pf_group($1).id
       pf_group_rates_path(:params1 => pf_grp_id)
@@ -84,6 +83,18 @@ def path_to(page_name)
       puts employee_id.employee_statutory.inspect
       edit_employee_statutory_path(:employee_id => employee_id.id)
 
+    when /employees_upload/
+      upload_employees_path
+
+    when /employees/
+      employees_path
+
+    when /the sample template page/
+      generate_sample_excel_template_employees_path(:format => "xls")
+
+    when /employees excel sample/
+      generate_sample_excel_template_employees_path
+
     when /the (.*?) employee salary for (.*?) month/
       employee_id=Employee.find_by_empname($1).id
       sal_emp_id=Salary.find_by_employee_id(employee_id).employee_id
@@ -97,11 +108,10 @@ def path_to(page_name)
     when /salaries/
       salaries_path
 
+    when /the (.*?) company documents page/
+      comp_id=Company.find_by_companyname($1).id
 
-    #when /company_new/
-    # new_company_path
-    #when /login/
-    #  login_path
+
     # Add more page name => path mappings here
 
   else
