@@ -34,3 +34,16 @@ Feature: Web-SPP – Leave Definition
     When User follow "Leave Details" link
     When User follow "Delete" link
     Then leave detail count should decreased by 1
+
+  Scenario: Uploading leave opening balance
+    When User follow "Leave Details" link
+    And User follow "Upload Leave Opening Balance" link
+    And User upload the leave opening balance excel file
+    And User clicks "Upload File" button
+    Then User should see the text "Leave opening balance was successfully uploaded."
+
+  Scenario: leaves excel sample file
+    When User follow "Leave Details" link
+    And User follow "Generate Sample Template" link
+    When User go to the leave sample template page
+    Then User should redirect to leaves generate_sample_excel_template

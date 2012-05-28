@@ -132,6 +132,12 @@ def path_to(page_name)
     when /report/
       report_employees_path
 
+    when /the leave sample template page/
+      generate_sample_excel_template_leave_details_path(:format => "xls")
+
+    when /leave excel sample page/
+      generate_sample_excel_template_leave_details_path
+
 
     # Add more page name => path mappings here
 

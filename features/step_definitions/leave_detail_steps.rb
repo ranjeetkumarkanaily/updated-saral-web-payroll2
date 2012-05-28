@@ -11,3 +11,13 @@ end
 Then /^leave detail count should decreased by (\d+)$/ do |arg1|
   LeaveDetail.count.should == arg1.to_i-1
 end
+
+When /^User upload the leave opening balance excel file$/ do
+  FactoryGirl.create(:employee)
+  FactoryGirl.create(:leave_definition)
+  attach_file("excel_file", File.join(Rails.root.to_s, 'spec', 'factories', 'Leave_opening_balance.xls'))
+end
+
+Then /^User should redirect to leaves generate_sample_excel_template$/ do
+  visit path_to("leave excel sample page")
+end
