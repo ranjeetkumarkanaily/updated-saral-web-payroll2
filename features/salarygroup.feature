@@ -59,20 +59,21 @@ Feature: Web-SPP – Salary Group
     And User clicks "Create Salary group detail" button
     Then User should see the text "Salary group detail was successfully created."
 
-  Scenario: Editing the salary group detail
-    Given User have salary detail ESI created under Salary Group Manager
-    When User follow "Salary Group" link
-    And User follow "Settings" link
-    When User go to the Manager group salary page
-    And User follow "Edit" link
-    When User go to the Manager group ESI salary detail
-    And User select "ESI" from "salary_group_detail_salary_head_id"
-    And User enters "salary_group_detail_print_name" as "Basic"
-    And User enters "salary_group_detail_print_order" as "2"
-    And User select "Pay Days" from "salary_group_detail_based_on"
-    And User uncheck "salary_group_detail_pf_applicability"
-    And User uncheck "salary_group_detail_pt_applicability"
-    And User select "Lumpsum" from "salary_group_detail_calc_type"
-    And User uncheck "salary_group_detail_esi_applicability"
-    And User clicks "Update Salary group detail" button
-    Then User should see the text "Salary group detail was successfully updated."
+#  Scenario: Editing the salary group detail
+#    Given User have salary detail ESI created under Salary Group Manager
+#    When User follow "Salary Group" link
+#    And User follow "Settings" link
+#    When User go to the Manager group salary page
+#    And User follow "Edit" link
+#    When User go to the Manager group ESI salary detail
+#    And User select "ESI" from "salary_group_detail_salary_head_id"
+#    And User enters "salary_group_detail_print_name" as "Basic"
+#    And User enters "salary_group_detail_print_order" as "2"
+#    And User select "Pay Days" from "salary_group_detail_based_on"
+#    And User uncheck "salary_group_detail_pf_applicability"
+#    And User uncheck "salary_group_detail_pt_applicability"
+#    And User enters "salary_group_detail_effective_month" as "2012-01-01"
+#    And User select "Lumpsum" from "salary_group_detail_calc_type"
+#    And User uncheck "salary_group_detail_esi_applicability"
+#    And User clicks "Update Salary group detail" button
+#    Then User should see the text "Salary group detail was successfully updated."
