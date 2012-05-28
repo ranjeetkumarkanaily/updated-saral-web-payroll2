@@ -16,7 +16,7 @@ Feature: Web-SPP – Company Creation
       And User enters "doe" as "2011-01-01"
       And User enters "company_address" as "Bangalore"
       And User clicks "Create Company" button
-      Then User should see the text "Relyon"
+      Then Company count should increase by 1
 
     Scenario: Editing Company Details
       Given User have company named Relyon
