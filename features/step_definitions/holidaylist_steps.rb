@@ -9,3 +9,7 @@ end
 Then /^Holiday "(.*?)" should be deleted$/ do |value|
   Holiday.delete(value)
 end
+
+Then /^Holiday list count should increse by (\d+)$/ do |count|
+  Holiday.count.should == count.to_i
+end
