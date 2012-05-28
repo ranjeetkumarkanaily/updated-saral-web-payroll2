@@ -13,7 +13,7 @@ Feature: Web-SPP – Hr Category
     And User follow "Add New HR Category" link
     And User enters "hr_category_category_name" as "Family Details"
     And User clicks "Create Hr category" button
-    Then User should see the text "Family Details"
+    Then HR category count should get increased by 1
 
   Scenario: Editing Hr Category Detail
     Given User have HR Category Family Details created
@@ -40,7 +40,7 @@ Feature: Web-SPP – Hr Category
     And User enters "hr_category_detail_name" as "Leave Details"
     And User uncheck "hr_category_detail_required"
     And  User clicks "Create Hr category detail" button
-    Then User should see the text "Leave Details"
+    Then Hr category details count should increse by 1
 
   Scenario: Editing HR category Detail
     Given User have Hr category Family Details created under HR Category
