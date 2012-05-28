@@ -45,3 +45,11 @@ end
 Then /^User should redirect to generate_sample_excel_template$/ do
   visit path_to("employees excel sample")
 end
+
+Then /^Employee count should increase by (\d+)$/ do |count|
+  Employee.count.should == count.to_i
+end
+
+Then /^Employee "(.*?)" should be deleted$/ do |employee|
+  Employee.delete(employee)
+end

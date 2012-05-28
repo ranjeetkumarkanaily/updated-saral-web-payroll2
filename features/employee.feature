@@ -24,7 +24,7 @@ Feature: Web-SPP – Employee
     And User enters "employee_email" as "test@company.com"
     And User enters "employee_emergency_contact_number" as "100"
     And User clicks "Create Employee" button
-    Then User should see the text "ABC"
+    Then Employee count should increase by 1
 
   Scenario: Viewing Employee Detail
    Given User have Employee Shivarudraiah created
@@ -100,7 +100,7 @@ Feature: Web-SPP – Employee
    Given User have Employee Shivarudraiah created
     When User follow "Employees" link
     And User follow "Delete" link
-    Then Salary Head "Shivarudraiah .D" should be deleted
+    Then Employee "Shivarudraiah .D" should be deleted
     And User should not see "Shivarudraiah .D"
 
   Scenario: Adding New Details for Employee Details
