@@ -14,7 +14,7 @@ Feature: Web-SPP – Salary Group
     And User enters "salary_group_salary_group_name" as "WDO"
     And User check "salary_group_based_on_gross"
     And User clicks "Create Salary group" button
-    Then User should see the text "WDO"
+    Then salary group count should get increased by 1
 
   Scenario: Editing Salary Head Group
     Given User have Salary Group  Manager created
