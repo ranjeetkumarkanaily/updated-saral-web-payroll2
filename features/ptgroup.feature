@@ -19,7 +19,7 @@ Feature: Web-SPP – PT Group
     And User enters "pt_group_pto_circle_no" as "123456"
     And User select "Monthly" from "pt_group_return_period"
     And User clicks "Save PT Group" button
-    Then User should see the text "Karnakata"
+    Then Pt group count should get increased by 1
 
   Scenario: Editing PT Group Detail
     Given User have PT Group Karnakata created
@@ -55,7 +55,7 @@ Feature: Web-SPP – PT Group
     When User go to the new PT Rate for Karnataka PT Group
     And User select "Feb/2012" from "pt_group_rate_paymonth_id"
     And User clicks "Save PT Group Rates" button
-    Then User should see the text "2012-02-01"
+    Then PT group rate count should get increased by 1
 
   Scenario: Defining PT Rate for PT Group Month
     Given User have PT Group month Feb/2012 created under PT Group Karnataka

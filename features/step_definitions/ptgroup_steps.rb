@@ -28,3 +28,12 @@ Then /^PtRates count decreased by (\d+)$/ do |arg1|
   PtRate.count.should == arg1.to_i-1
 end
 
+Then /^Pt group count should get increased by (\d+)$/ do |count|
+  PtGroup.count.should == count.to_i
+end
+
+Then /^PT group rate count should get increased by (\d+)$/ do |count|
+  PtGroupRate.count.should == count.to_i
+end
+
+
