@@ -5,3 +5,7 @@ end
 Then /^Attendance Configuration "(.*?)" should be deleted$/ do |value|
   AttendanceConfiguration.delete(value)
 end
+
+Then /^AttendanceConfiguration count should increase by (\d+)$/ do |count|
+  AttendanceConfiguration.count.should == count.to_i
+end
