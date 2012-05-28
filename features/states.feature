@@ -13,7 +13,7 @@ Feature: Web-SPP – States
     And User follow "Add New State" link
     And User enters "state_state_name" as "Karnataka"
     And User clicks "Create State" button
-    Then User should see the text "Karnataka"
+    Then state count should get increased by 1
 
   Scenario: Editing State Detail
     Given User have state Tamilnadu created
