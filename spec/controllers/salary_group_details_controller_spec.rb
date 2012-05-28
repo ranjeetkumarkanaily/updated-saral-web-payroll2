@@ -92,10 +92,6 @@ describe SalaryGroupDetailsController do
     describe "with valid params" do
       it "updates the requested salary_group_detail" do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
-        # Assuming there are no other salary_group_details in the database, this
-        # specifies that the SalaryGroupDetail created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         SalaryGroupDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => salary_group_detail.id, :salary_group_detail => {'these' => 'params'}
       end

@@ -28,6 +28,13 @@
                 %tr
                   %td{:width=>130} PF Percentage(%):&nbsp;
                   %td= @salary_group_detail.pf_percentage
+                %tr
+                  %td{:width=>130} PT Applicability:&nbsp;
+                  %td= (@salary_group_detail.pt_applicability == true)?"Yes":"No"
+                %tr
+                  %td{:width=>130} PT Percentage(%):&nbsp;
+                  %td= @salary_group_detail.pt_percentage
+
             %td.std_td
               %table
                 %tr
@@ -36,23 +43,44 @@
                 %tr
                   %td{:width=>130} Calculation:&nbsp;
                   %td= @salary_group_detail.calculation
+                %tr
+                  %td{:width=>130} Effective From:&nbsp;
+                  %td= @salary_group_detail.effective_month
+                %tr
+                  %td{:width=>130} Effective To:&nbsp;
+                  %td Till Date
+                %tr
+                  %td{:width=>130} ESI Applicability:&nbsp;
+                  %td= (@salary_group_detail.esi_applicability == true)?"Yes":"No"
+                %tr
+                  %td{:width=>130} ESI Percentage(%):&nbsp;
+                  %td= @salary_group_detail.esi_percentage
+    %tr
+      %td &nbsp;
+    %tr
+      %td
+        %h1{:style=>"width:300px; background:none;color:#054A87"}
+          Previous Configuration(s):
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td
+              %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+                %tr
+                  %td.table_grid_header Salary Head
+                  %td.table_grid_header Calculation Type
+                  %td.table_grid_header Effective From
+                  %td.table_grid_header Effective To
+                  %td.table_grid_header Based On
+                  %td.table_grid_header Operations
+                - @previous_salary_group_details.each do |pre_salary_group_detail|
+                  %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                    %td.table_grid_td= pre_salary_group_detail.salary_head_head_name
+                    %td.table_grid_td= pre_salary_group_detail.calc_type
+                    %td.table_grid_td= pre_salary_group_detail.effective_month
+                    %td.table_grid_td= l pre_salary_group_detail.effective_to_month, :format => :type2
+                    %td.table_grid_td= pre_salary_group_detail.based_on
+                    %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Salary Group Configuration"), salary_group_detail_path(pre_salary_group_detail,:param1=>@param_sal_grp_id )
 
 
--#%p
--#  %b Salary Group:
--#  = @salary_group_detail.salary_group.salary_group_name
--#%p
--#  %b Salary Head:
--#  = @salary_group_detail.salary_head.head_name
--#%p
--#  %b Calculation Type:
--#  = @salary_group_detail.calc_type
--#%p
--#  %b Calculation:
--#  = @salary_group_detail.calculation
--#%p
--#  %b Based on:
--#  = @salary_group_detail.based_on
--#= link_to 'Edit', edit_salary_group_detail_path(@salary_group_detail)
--#|
--#\#{link_to 'Back', salary_group_details_path}

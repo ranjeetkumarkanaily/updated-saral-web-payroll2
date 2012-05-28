@@ -17,16 +17,16 @@
           %tr
             %td.table_grid_header Salary Head
             %td.table_grid_header Calculation Type
-            %td.table_grid_header PF Applicability
-            %td.table_grid_header PF Percentage
+            %td.table_grid_header Effective From
+            %td.table_grid_header Effective To
             %td.table_grid_header Based On
             %td.table_grid_header{:colspan => 3} Operations
           - @salary_group_details.each do |salary_group_detail|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= salary_group_detail.salary_head_head_name
               %td.table_grid_td= salary_group_detail.calc_type
-              %td.table_grid_td= (salary_group_detail.pf_applicability==true)?"Yes":"No"
-              %td.table_grid_td= salary_group_detail.pf_percentage
+              %td.table_grid_td= salary_group_detail.effective_month
+              %td.table_grid_td Till Date
               %td.table_grid_td= salary_group_detail.based_on
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Salary Group Configuration"), salary_group_detail_path(salary_group_detail,:param1=>@param_sal_grp_id )
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(salary_group_detail,:param1=>@param_sal_grp_id)
