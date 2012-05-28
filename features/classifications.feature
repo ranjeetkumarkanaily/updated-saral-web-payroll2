@@ -14,7 +14,7 @@ Feature: Web-SPP – Classifications
     And User enters "classification_heading_classification_heading_name" as "Grade"
     And User enters "classification_heading_display_order" as "1"
     And User clicks "Create Classification heading" button
-    Then User should see the text "Grade"
+    Then ClassificationHeading count should increase by 1
 
   Scenario: Editing Classification Heading
     Given User have Classification Heading Designation created
@@ -57,8 +57,8 @@ Feature: Web-SPP – Classifications
     And User follow "Delete" link
     Then User should see the text "Classification was successfully Destroyed."
 
-  Scenario: Editing Classification Heading
+  Scenario: Delete Classification Heading
     Given User have Classification Heading Designation created
     When User follow "Classifications" link
     And User follow "Delete" link
-    Then User should not see "Designation"
+    Then ClassificationHeading count should decrease by 1
