@@ -15,3 +15,8 @@ Then /^ESI Group Rate count decreased by (\d+)$/ do |arg1|
   EsiGroupRate.count.should == arg1.to_i-1
 end
 
+Then /^ESI group count should get increased by (\d+)$/ do |count|
+   EsiGroup.count.should == count.to_i
+end
+
+
