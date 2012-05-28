@@ -2,7 +2,6 @@ Feature: Web-SPP – Financial Institutions
 
   Background:
     Given a valid user
-    And valid Financial institution State Bank Created
     When User go to the login page
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
@@ -21,15 +20,17 @@ Feature: Web-SPP – Financial Institutions
     And User enters "financial_institution_branch_code" as "12"
     And User enters "financial_institution_email" as "hdfc@bangalore.com"
     And User clicks "Create Financial institution" button
-    Then User should see the text "HDFC"
+    Then financial institution count should be increased by 1
 
   Scenario: Viewing Financial Institution Details
+    Given valid Financial institution State Bank Created
     When User follow "Financial Institution (Bank)" link
     And User follow "Show" link
     Then User should see the text "Showing Financial Institution (Bank)"
     And User should see the text "State Bank"
 
   Scenario: Editing Financial Institution Detail
+    Given valid Financial institution State Bank Created
     When User follow "Financial Institution (Bank)" link
     And User follow "Edit" link
     And User enters "financial_institution_name" as "HDFC"
@@ -44,6 +45,7 @@ Feature: Web-SPP – Financial Institutions
     Then User should see the text "Financial institution was successfully updated."
 
   Scenario: Deleting an Financial Institution
+    Given valid Financial institution State Bank Created
     When User follow "Financial Institution (Bank)" link
     And User follow "Delete" link
     Then Financial Institution "State Bank" should be deleted

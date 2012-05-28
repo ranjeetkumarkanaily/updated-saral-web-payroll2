@@ -5,3 +5,7 @@ end
 Then /^Financial Institution "(.*?)" should be deleted$/ do |value|
   FinancialInstitution.delete(value)
 end
+
+Then /^financial institution count should be increased by (\d+)$/ do |count|
+  FinancialInstitution.count.should == count.to_i
+end
