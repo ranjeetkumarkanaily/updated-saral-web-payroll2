@@ -42,8 +42,9 @@ describe Salary do
 
       it "should give no of present days" do
         employee = FactoryGirl.create(:employee)
+        leave_definition = FactoryGirl.create(:leave_definition)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
         salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         get_leave_count = Salary.calculate_salary [salary],"Feb/2011"
         get_leave_count.should eq(27)
@@ -51,8 +52,9 @@ describe Salary do
 
       it "should give no of present days with employee's date of leaving" do
         employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
+        leave_definition = FactoryGirl.create(:leave_definition)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
         salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
         get_leave_count = Salary.calculate_salary [salary],"Feb/2011"
         get_leave_count.should eq(14)
@@ -61,7 +63,9 @@ describe Salary do
 
     describe "find employee Leave" do
       it "should find employee leave" do
-        leave_detail = FactoryGirl.create(:leave_detail)
+        employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
+        leave_definition = FactoryGirl.create(:leave_definition)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-01-01", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
         getleave = Salary.find_employees_leave '2011-01-01', '2011-01-31', leave_detail.employee_id.to_s
         getleave.should eq(1)
       end

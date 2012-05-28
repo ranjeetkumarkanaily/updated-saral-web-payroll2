@@ -1,5 +1,5 @@
-Given /^User have paymonth jan\/(\d+) created$/ do |arg1|
-  Paymonth.create!(:month_year=> 24145, :number_of_days=> 31, :from_date=> "2010-12-01", :to_date=> "2010-12-31", :month_name=> "jan/2012")
+Given /^User have paymonth (.*?) created$/ do |arg1|
+  Paymonth.create!(:month_year=> 24145, :number_of_days=> 31, :from_date=> "2010-12-01", :to_date=> "2010-12-31", :month_name=> arg1)
 end
 
 And /^User should see paymonth "(.*?)" details$/ do |text|

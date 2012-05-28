@@ -5,5 +5,6 @@ class LeaveDefinition < ActiveRecord::Base
 
   validates :short_name, :presence => true ,:uniqueness => true , :length => {:minimum => 1 , :maximum => 3}
 
+  scope :definitions, :order => 'created_at DESC'
 
 end

@@ -46,4 +46,32 @@ class CompaniesController < ApplicationController
      @list=@company.company_documents
   end
 
+  def backup
+    file_path = Company.backup_db
+    send_file  file_path.path,
+               :filename => "Backup-#{Time.now.strftime('%d-%m-%Y-%Hh%Mm%Ss')}.db",
+               :type => File.ftype(file_path),
+               :disposition => 'attachment'
+    FileUtils.rm_r(file_path.path)
+  end
+
+  def upload
+
+  end
+
+  def restore
+    dump_file = params[:dump_file]
+    file = FileUploader.new
+    file.store!(dump_file)
+    delete_all_tables
+    Company.restore_db file.path
+    file.remove!
+    redirect_to companies_path
+  end
+  private
+    def delete_all_tables
+      conn = ActiveRecord::Base.connection
+      tables = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';").map { |r| r["table_name"] }
+      tables.each { |t| conn.execute("DROP TABLE IF EXISTS #{t} CASCADE")}
+    end
 end

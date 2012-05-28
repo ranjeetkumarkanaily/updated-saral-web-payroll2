@@ -3,6 +3,8 @@
         %ul
             %li= link_to 'Edit Company', edit_company_path(@company.id)
             %li= link_to 'Documents', documents_list_companies_path(:id => @company.id)
+            %li= link_to 'Backup', backup_companies_path
+            %li= link_to "Restore Backup", upload_companies_path
 #right_content
     = render "breadcrumb"
     - if @company

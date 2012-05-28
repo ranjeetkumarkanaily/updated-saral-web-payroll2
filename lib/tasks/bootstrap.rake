@@ -405,7 +405,7 @@ namespace :bootstrap do
  end
   desc "Add default option settings"
   task :option_settings => :environment do
-    OptionSetting.create(:country_id => "120", :time_zone => "(GMT+05:30) Kolkata", :currency => "Rupee", :recruitment => false, :lv_atdn_mgmt => true, :appraisal => true, :training => false, :help_desk => false, :travel_cummute => false, :pf_applicable => true, :esi_applicable => true, :pt_applicable => true, :multi_state_pt => false, :multi_pt => false, :tds_applicable => false, :multi_branch => false, :multi_hr => false, :salary_calc => "Jan/2012", :allow_brnch_admin => false, :approval_flow => false, :audit_trail => true, :remibursement => false, :bonus_and_exgratia => false, :gratuity => false, :loans_adv => false, :arrears => true, :attdn_intgration => false, :asset_tracker => false)
+    OptionSetting.create(:country_id => "120", :time_zone => "(GMT+05:30) Kolkata", :currency => "Rupee", :recruitment => false, :lv_atdn_mgmt => true, :appraisal => true, :training => false, :help_desk => false, :travel_cummute => false, :pf_applicable => true, :esi_applicable => true, :pt_applicable => true, :multi_state_pt => false, :multi_pt => false, :tds_applicable => false, :multi_branch => false, :multi_hr => false, :salary_calc => 'Jan/2012', :allow_brnch_admin => false, :approval_flow => false, :audit_trail => true, :remibursement => false, :bonus_and_exgratia => false, :gratuity => false, :loans_adv => false, :arrears => true, :attdn_intgration => false, :asset_tracker => false)
   end
 
   desc "Run all bootstrapping tasks"

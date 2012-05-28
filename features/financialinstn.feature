@@ -4,21 +4,14 @@ Feature: Web-SPP – Financial Institutions
     Given a valid user
     And valid Financial institution State Bank Created
     When User go to the login page
-    Then User should see the text "Sign In"
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
     And User clicks "Sign In" button
-    Then User should see the text "Home"
-    When User follow "Master" link
-    Then User should see the text "Financial Institution (Bank)"
-
+    And User follow "Master" link
 
   Scenario: Creating an new Financial Institution
     When User follow "Financial Institution (Bank)" link
-    Then User should see the text "Listing Financial Institutions (Banks)"
-    And User should see the text "Add New Financial Inst."
-    When User follow "Add New Financial Inst." link
-    Then User should see the text "New Financial Institution (Bank)"
+    And User follow "Add New Financial Inst." link
     And User enters "financial_institution_name" as "HDFC"
     And User enters "financial_institution_address_line1" as "Bangalore"
     And User enters "financial_institution_address_line2" as "Rajajinagara"
@@ -32,18 +25,13 @@ Feature: Web-SPP – Financial Institutions
 
   Scenario: Viewing Financial Institution Details
     When User follow "Financial Institution (Bank)" link
-    Then User should see the text "Listing Financial Institutions (Banks)"
-    And User should see the text "Operations"
-    When User follow "Show" link
+    And User follow "Show" link
     Then User should see the text "Showing Financial Institution (Bank)"
     And User should see the text "State Bank"
 
   Scenario: Editing Financial Institution Detail
     When User follow "Financial Institution (Bank)" link
-    Then User should see the text "Listing Financial Institutions (Banks)"
-    And User should see the text "Operations"
-    When User follow "Edit" link
-    Then User should see the text "Editing Financial Institution (Bank)"
+    And User follow "Edit" link
     And User enters "financial_institution_name" as "HDFC"
     And User enters "financial_institution_address_line1" as "Bangalore"
     And User enters "financial_institution_address_line2" as "Rajajinagara"
@@ -57,8 +45,6 @@ Feature: Web-SPP – Financial Institutions
 
   Scenario: Deleting an Financial Institution
     When User follow "Financial Institution (Bank)" link
-    Then User should see the text "Listing Financial Institutions (Banks)"
-    And User should see the text "Operations"
-    When User follow "Delete" link
+    And User follow "Delete" link
     Then Financial Institution "State Bank" should be deleted
     And User should not see "State Bank"

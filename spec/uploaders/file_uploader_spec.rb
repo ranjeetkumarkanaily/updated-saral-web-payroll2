@@ -17,7 +17,7 @@ describe FileUploader do
 
   describe '#extension_white_list' do
     it "should [xls]" do
-      @uploader.extension_white_list.should == ["xls"]
+      @uploader.extension_white_list.should == ["xls", "db"]
     end
   end
 end
