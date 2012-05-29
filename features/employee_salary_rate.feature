@@ -24,7 +24,7 @@ Feature: Web-SPP – Employee Salary Rate
     Then User should redirect to salary allotment index page
 
   Scenario: Edit Alloted the salary for Employee
-    Given Salary rate alloted for employee Shivarudraiah defined
+    Given Salary rate alloted for employee XYZ defined
     When User follow "Employee's - Salary Rate" link
     And User clicks on the Listing Employee Salary Allotted tab
     And User follow "Edit" link
