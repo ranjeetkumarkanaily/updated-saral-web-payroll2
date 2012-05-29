@@ -10,12 +10,12 @@ Feature: Web-SPP – Employee Salary Rate
     And User follow "Settings" link
 
   Scenario: Viewing employee salary rate
-    Given Salary rate for employee Shivarudraiah defined
+    Given Salary rate for employee XYZ defined
     When User follow "Employee's - Salary Rate" link
-    Then User should see the text "Shivarudraiah"
+    Then User should see the text "XYZ"
 
   Scenario: Allot the salary for Employee
-    Given Salary rate for employee Shivarudraiah defined
+    Given Salary rate for employee XYZ defined
     When User follow "Employee's - Salary Rate" link
     And User clicks on the Listing Employee Salary not Allotted tab
     And User follow "Allot Salary" link
