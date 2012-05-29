@@ -13,12 +13,12 @@ end
 
 
 Given /^User have required details created$/ do
-  branch=Branch.create(:branch_name=> "Bangalore", :responsible_person=> "HSN", :address=> "Rajajinagara", :pf_group_id=> nil, :esi_group_id=> nil, :pt_group_id=> nil)
-  sal_grp=SalaryGroup.create(:salary_group_name=> "Manager", :based_on_gross=> true)
-  bank=FinancialInstitution.create(:name=> "State Bank", :address_line1=> "Bangalore", :address_line2=> "JP Nagara", :address_line3=> "1st Cross", :address_line4=> "1st main", pincode: 560040, :branch_code=> 2, :email=> "statebank@bangalore.com")
-  classification_heading = ClassificationHeading.create(classification_heading_name: "Designation", display_order: 1)
-  classification=Classification.create(:classification_heading_id=> classification_heading.id, classification_name: "Developer")
-  AttendanceConfiguration.create(:attendance=> "First Shift", short_name: "FS", salary_calendar_days: "Actual Days / Month")
+  FactoryGirl.create(:branch)
+  FactoryGirl.create(:financial_institution)
+  FactoryGirl.create(:attendance_configuration)
+  FactoryGirl.create(:salary_group)
+  classification_heading=FactoryGirl.create(:classification_heading)
+  FactoryGirl.create(:classification,:classification_heading_id=> classification_heading.id)
 end
 
 Given /^employee detail salary group (.*?) created under employee (.*?)$/ do |sal_grp,employee|
