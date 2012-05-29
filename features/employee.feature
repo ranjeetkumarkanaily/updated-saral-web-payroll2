@@ -138,7 +138,7 @@ Feature: Web-SPP – Employee
     And User enters "employee_detail_allotted_gross" as "2000"
     And User select "Karnataka" from "employee_detail_attendance_configuration_id"
     And User enters "employee_detail_bank_account_number" as "123456789"
-    And User select "Developer" from "employee_detail_classification_Designation"
+    And User select "WDO" from "employee_detail_classification_Department"
     And User clicks "Update Employee detail" button
     Then User should see the text "Employee detail was successfully updated."
 
