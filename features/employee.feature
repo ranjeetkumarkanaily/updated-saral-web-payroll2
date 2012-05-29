@@ -136,7 +136,7 @@ Feature: Web-SPP – Employee
     And User select "State Bank" from "employee_detail_financial_institution_id"
     And User uncheck "employee_detail_international_worker"
     And User enters "employee_detail_allotted_gross" as "2000"
-    And User select "First Shift" from "employee_detail_attendance_configuration_id"
+    And User select "Karnataka" from "employee_detail_attendance_configuration_id"
     And User enters "employee_detail_bank_account_number" as "123456789"
     And User select "Developer" from "employee_detail_classification_Designation"
     And User clicks "Update Employee detail" button
