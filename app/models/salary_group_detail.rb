@@ -33,7 +33,6 @@ class SalaryGroupDetail < ActiveRecord::Base
 
   def effective_to_month
     next_row = self.class.first(:conditions => ["created_at > ? and salary_head_id = ? and salary_group_id = ?", created_at, salary_head_id, salary_group_id ], :order => "created_at ASC")
-    puts next_row
     effective_month_db = next_row.effective_month
     parse_effective_month = Date.strptime effective_month_db, '%b/%Y'
     parse_effective_month - 1
