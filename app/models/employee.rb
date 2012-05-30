@@ -30,7 +30,17 @@ class Employee < ActiveRecord::Base
   validates :leaving_reason, :presence => true, :if => :date_of_leaving_present?
   validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
 
-  validates_numericality_of :notice_period, :probation_period
+  validates_numericality_of :notice_period, :if => :notice_period_present?
+
+  validates_numericality_of :probation_period, :if => :probation_period_present?
+
+  def probation_period_present?
+     !probation_period.nil? and !probation_period.blank?
+  end
+
+  def notice_period_present?
+     !notice_period.nil? and !notice_period.blank?
+  end
 
   def date_of_leaving_present?
     !date_of_leaving.nil? and !date_of_leaving.blank?
