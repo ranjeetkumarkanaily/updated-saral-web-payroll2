@@ -30,7 +30,7 @@ describe SalaryGroupDetailsController do
   end
 
   describe "GET show" do
-    it "assigns the requested salary_group_detail as @salary_group_detail" do
+   it "assigns the requested salary_group_detail as @salary_group_detail" do
       salary_group_detail = SalaryGroupDetail.create! valid_attributes
       get :show, :id => salary_group_detail.id
       assigns(:salary_group_detail).should eq(salary_group_detail)
@@ -110,6 +110,20 @@ describe SalaryGroupDetailsController do
         effective_month_exist = SalaryGroupDetail.chk_effective_month salary_group_detail.effective_month, salary_group_detail.id
         put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
         response.should redirect_to(salary_group_details_path(:param1 => valid_attributes[:salary_group_id]))
+      end
+
+      it "should create new record" do
+        salary_group_detail = SalaryGroupDetail.create! valid_attributes
+        expect {
+          put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes.merge(:effective_month=>"Feb/2012")
+        }.to change(SalaryGroupDetail, :count).by(1)
+      end
+
+      it "re-renders the 'new' template" do
+        salary_group_detail = SalaryGroupDetail.create! valid_attributes
+        SalaryGroupDetail.any_instance.stub(:save).and_return(false)
+        put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes.merge(:effective_month=>"Feb/2012")
+        response.should redirect_to(new_salary_group_detail_path(:param1 => valid_attributes[:salary_group_id]))
       end
     end
 
