@@ -24,7 +24,7 @@ class Employee < ActiveRecord::Base
   validates :present_state_id, :presence => true
   validates :date_of_joining, :presence => true
   validates :refno,   :presence   => true,:uniqueness => { :case_sensitive => false }
-  validates :email, :presence   => true,:format     => { :with => regex_for_email },:uniqueness => { :case_sensitive => false }
+  validates :email, :format     => { :with => regex_for_email }
   validates :leaving_reason, :presence => true, :if => :date_of_leaving_present?
   validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
 
@@ -57,8 +57,8 @@ class Employee < ActiveRecord::Base
   end
 
   def salary_start_date_after_doj
-    if !date_of_joining.nil? and !salary_start_date.nil? and date_of_joining >= salary_start_date then
-      errors.add(:salary_start_date, "salary start date should be after date of joining")
+    if !date_of_joining.nil? and !salary_start_date.nil? and date_of_joining > salary_start_date then
+      errors.add(:salary_start_date, " should be after date of joining")
     end
   end
 
@@ -67,7 +67,6 @@ class Employee < ActiveRecord::Base
       errors.add(:retirement_date, "retirement date should be after date of joining")
     end
   end
-
 
   def self.search(search)
     search_condition = "%" + search + "%"
@@ -134,8 +133,35 @@ class Employee < ActiveRecord::Base
         e.present_locality = row[12]
         e.present_city = row[13]
         e.present_state = State.find_by_state_name(row[14])
-        e.email = row[15]
-        e.mobile = row[16].to_s
+        e.perm_sameas_present = row[15] == "Yes" ? true : false
+
+        if(e.perm_sameas_present)
+          e.perm_res_no = e.present_res_no
+          e.perm_res_name = e.present_res_name
+          e.perm_street = e.present_street
+          e.perm_locality = e.present_locality
+          e.perm_city = e.present_city
+          e.perm_state_id = e.present_state.id
+        else
+          e.perm_res_no = row[16]
+          e.perm_res_name = row[17]
+          e.perm_street = row[18]
+          e.perm_locality = row[19]
+          e.perm_city = row[20]
+          e.perm_state_id = State.find_by_state_name(row[21])
+        end
+        e.email = row[22]
+        e.mobile = row[23].to_s
+        e.restrct_pf = row[24]
+        e.probation_period = row[25]
+        e.probation_complete_date = row[26]
+        e.confirmation_date = row[27]
+        e.salary_start_date = row[28]
+        e.retirement_date = row[29]
+        e.handicapped = row[30]
+        e.emergency_contact_number = row[31]
+        e.official_mail_id = row[32]
+        e.leaving_reason = row[33]
 
         if(Employee.exists?(:refno => e.refno))
           employees["employees_update"] << e

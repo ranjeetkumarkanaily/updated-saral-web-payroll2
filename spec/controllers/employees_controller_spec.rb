@@ -26,7 +26,6 @@ describe EmployeesController do
     end
 
     it "save_parse_validate" do
-
       excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
       post :upload_parse_validate, :excel_file => excel_file
       response.should redirect_to(employees_path)
@@ -40,9 +39,9 @@ describe EmployeesController do
     end
 
     it "gives error" do
-      emp = FactoryGirl.create(:employee, :refno => 1004)
-      excel_file = fixture_file_upload("spec/factories/Employee_Test.xls")
+      excel_file = fixture_file_upload("spec/factories/Employee_widout_empname.xls")
       post :upload_parse_validate, :excel_file => excel_file
+
       response.should be_success
     end
 

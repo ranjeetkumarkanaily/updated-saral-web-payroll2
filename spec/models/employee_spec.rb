@@ -137,7 +137,7 @@ describe Employee do
   it "checks for the DOJ validation with salary start date given for the employee" do
     employee = Employee.new(:empname => "Rahul",:date_of_joining => "2009-10-31",:present_state_id => "1",:refno => "A1",:email => "gane@gane.com", :date_of_birth => "1986-01-01",:salary_start_date => "2009-10-23")
     employee.save
-    employee.errors.messages[:salary_start_date].should eq(["salary start date should be after date of joining"])
+    employee.errors.messages[:salary_start_date].should eq([" should be after date of joining"])
   end
 
   it "checks for the DOJ validation with retirement date given for the employee" do

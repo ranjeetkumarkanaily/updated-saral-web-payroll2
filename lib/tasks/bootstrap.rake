@@ -408,6 +408,11 @@ namespace :bootstrap do
     OptionSetting.create(:country_id => "120", :time_zone => "(GMT+05:30) Kolkata", :currency => "Rupee", :recruitment => false, :lv_atdn_mgmt => true, :appraisal => true, :training => false, :help_desk => false, :travel_cummute => false, :pf_applicable => true, :esi_applicable => true, :pt_applicable => true, :multi_state_pt => false, :multi_pt => false, :tds_applicable => false, :multi_branch => false, :multi_hr => false, :salary_calc => 'Jan/2012', :allow_brnch_admin => false, :approval_flow => false, :audit_trail => true, :remibursement => false, :bonus_and_exgratia => false, :gratuity => false, :loans_adv => false, :arrears => true, :attdn_intgration => false, :asset_tracker => false)
   end
 
+  desc "Company document's file upload Type "
+  task :upload_file_type => :environment do
+    UploadFileType.create(:max_file_size => 5120, :file_type => "application/pdf,application/doc")
+  end
+
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution, :classification_heading, :hr_category, :country, :option_settings]
+  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution, :classification_heading, :hr_category, :country, :option_settings, :upload_file_type]
 end
