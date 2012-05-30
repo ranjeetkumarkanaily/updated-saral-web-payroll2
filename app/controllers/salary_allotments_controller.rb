@@ -39,7 +39,6 @@ class SalaryAllotmentsController < ApplicationController
     theoretical_salary_sheet = book.worksheet 0
 
     @sal_allotments = SalaryAllotment.process_salary_excel_sheet theoretical_salary_sheet
-
     if @sal_allotments["errors"].empty?
       SalaryAllotment.update_salary_allotments @sal_allotments["salary_allotments"]
       redirect_to salary_allotments_path(:param1 => "allotted"), notice: 'Salary Allotted successfully'

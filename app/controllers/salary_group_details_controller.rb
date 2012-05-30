@@ -52,21 +52,19 @@ class SalaryGroupDetailsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      effective_month_existence = SalaryGroupDetail.chk_effective_month params[:salary_group_detail]["effective_month"],params[:id]
-      if effective_month_existence.empty?
-        @salary_group_detail = SalaryGroupDetail.new(params[:salary_group_detail])
-        if @salary_group_detail.save
-          redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully created.'
-        else
-          redirect_to new_salary_group_detail_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary Head has already been taken'
-        end
+    effective_month_existence = SalaryGroupDetail.chk_effective_month params[:salary_group_detail]["effective_month"],params[:id]
+    if effective_month_existence.empty?
+      @salary_group_detail = SalaryGroupDetail.new(params[:salary_group_detail])
+      if @salary_group_detail.save
+        redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully created.'
       else
-        if @salary_group_detail.update_attributes(params[:salary_group_detail])
-          redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully updated.'
-        else
-          redirect_to edit_salary_group_detail_path(:param1 => params[:salary_group_detail]['salary_group_id'])
-        end
+        redirect_to new_salary_group_detail_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary Head has already been taken'
+      end
+    else
+      if @salary_group_detail.update_attributes(params[:salary_group_detail])
+        redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully updated.'
+      else
+        redirect_to edit_salary_group_detail_path(:param1 => params[:salary_group_detail]['salary_group_id'])
       end
     end
   end
