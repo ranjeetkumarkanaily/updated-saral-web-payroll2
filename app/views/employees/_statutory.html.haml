@@ -3,22 +3,25 @@
     %td.std_td
       %table
         %tr
-          %td{:width=>120} PAN:&nbsp;
-          %td{:width=>120}= ( statutory.pan.nil? or statutory.pan.empty? ) ? 'N/A' : statutory.pan
+          %td{:width=>100} PAN:&nbsp;
+          %td{:width=>100}= ( statutory.pan.nil? or statutory.pan.empty? ) ? 'N/A' : statutory.pan
         %tr
-          %td{:width=>120} PF No.:&nbsp;
-          %td{:width=>120}= ( statutory.pf_number.nil? or statutory.pf_number.empty? ) ? 'N/A' : statutory.pf_number
+          %td{:width=>100} PF No.:&nbsp;
+          %td{:width=>100}= ( statutory.pf_number.nil? or statutory.pf_number.empty? ) ? 'N/A' : statutory.pf_number
         %tr
-          %td{:width=>120} ESI No.:&nbsp;
-          %td{:width=>120}= ( statutory.esi_number.nil? or statutory.esi_number.empty? ) ? 'N/A' : statutory.esi_number
+          %td{:width=>100} ESI No.:&nbsp;
+          %td{:width=>100}= ( statutory.esi_number.nil? or statutory.esi_number.empty? ) ? 'N/A' : statutory.esi_number
         %tr
-          %td{:width=>120} Zero PT:&nbsp;
-          %td{:width=>120}= statutory.zero_pt == true ? 'Yes' : 'No'
+          %td{:width=>100} Zero PT:&nbsp;
+          %td{:width=>100}= statutory.zero_pt == true ? 'Yes' : 'No'
         %tr
-          %td{:width=>120} Vol PF:&nbsp;
-          %td{:width=>120}= statutory.vol_pf == true ? 'Yes' : 'No'
+          %td{:width=>100} Vol PF:&nbsp;
+          %td{:width=>100}= statutory.vol_pf == true ? 'Yes' : 'No'
           - if !statutory.vol_pf_percentage.nil?
-            %td= statutory.vol_pf_percentage.to_s+'%'
+            -if statutory.based_on.to_s == 'basedon_pf'
+              %td= statutory.vol_pf_percentage.to_s+'% Based on PF'
+            - else
+              %td= statutory.vol_pf_percentage.to_s+' % Based on Gross'
           - if !statutory.vol_pf_amount.nil?
             %td= 'Amount: '+ statutory.vol_pf_amount.to_s
     %td.std_td

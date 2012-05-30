@@ -5,8 +5,9 @@ $(document).ready(function() {
     enabledisable('employee_statutory_pf_number','pf_ed')
     enabledisable('employee_statutory_esi_number','esi_ed')
     document.getElementById('panoption').value = pan
+    check_based_on('chk_vol_pf_pertg')
     pan_style_change(pan)
-
+    document.getElementById('based_on_'+document.getElementById('employee_statutory_based_on').value).checked = true
 });
 
 function pan_style_change(pan) {
@@ -40,20 +41,53 @@ function enabledisable(inputvalue,inputid){
 function check_vpf(vpf){
     if(!document.getElementById(vpf).checked)
     {
-        vpf_style_change('vpf_percent_lbl','none')
-        vpf_style_change('chk_vol_pf_pertg','none')
-        vpf_style_change('vol_pf_value','none')
+        style_change('vpf_percent_lbl','none')
+        style_change('chk_vol_pf_pertg','none')
+        style_change('vol_pf_value','none')
     }
     else
     {
-        vpf_style_change('vpf_percent_lbl','')
-        vpf_style_change('chk_vol_pf_pertg','')
-        vpf_style_change('vol_pf_value','')
+        style_change('vpf_percent_lbl','')
+        style_change('chk_vol_pf_pertg','')
+        style_change('vol_pf_value','')
     }
 }
 
-function vpf_style_change(inputid,val){
+function style_change(inputid,val){
     document.getElementById(inputid).style.display = val;
+}
+
+function check_based_on(val){
+    chnage_baased_on_style(val)
+    if(!document.getElementById(val).checked)
+    {
+        document.getElementById('based_on_basedon_gross').checked = false
+        document.getElementById('based_on_basedon_pf').checked = false
+    }
+    else
+    {
+        document.getElementById('based_on_basedon_gross').checked = true
+
+    }
+
+}
+
+function chnage_baased_on_style(val){
+    if(!document.getElementById(val).checked)
+    {
+        style_change('based_on_grs_lbl','none')
+        style_change('based_on_basedon_gross','none')
+        style_change('based_on_pf_lbl','none')
+        style_change('based_on_basedon_pf','none')
+    }
+    else
+    {
+        style_change('based_on_grs_lbl','')
+        style_change('based_on_basedon_gross','')
+        style_change('based_on_pf_lbl','')
+        style_change('based_on_basedon_pf','')
+    }
+
 }
 //
 //function check_percentage(val){

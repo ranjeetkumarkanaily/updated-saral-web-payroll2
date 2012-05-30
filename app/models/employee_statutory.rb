@@ -2,7 +2,7 @@ class EmployeeStatutory < ActiveRecord::Base
 
   belongs_to :employee
 
-  attr_accessible :employee_id, :esi_effective_date, :esi_number, :pan, :pan_effective_date, :pf_effective_date, :pf_number,:zero_pt,:zero_pension,:vol_pf,:vol_pf_percentage,:vol_pf_amount
+  attr_accessible :employee_id, :esi_effective_date, :esi_number, :pan, :pan_effective_date, :pf_effective_date, :pf_number,:zero_pt,:zero_pension,:vol_pf,:vol_pf_percentage,:vol_pf_amount,:based_on
 
 
   regex_for_pan = /(PAN Not Avbl)|(PAN Applied)|(PAN Invalid)|([a-z]{5}[0-9]{4}[a-z]{1})/i
