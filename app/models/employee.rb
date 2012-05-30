@@ -26,7 +26,7 @@ class Employee < ActiveRecord::Base
   validates :present_state_id, :presence => true
   validates :date_of_joining, :presence => true
   validates :refno,   :presence   => true,:uniqueness => { :case_sensitive => false }
-  validates :email, :format     => { :with => regex_for_email }
+  validates :email, :format => { :with => regex_for_email }, :if => :email_present?
   validates :leaving_reason, :presence => true, :if => :date_of_leaving_present?
   validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
 
@@ -44,6 +44,10 @@ class Employee < ActiveRecord::Base
 
   def date_of_leaving_present?
     !date_of_leaving.nil? and !date_of_leaving.blank?
+  end
+
+  def email_present?
+    !email.nil? and !email.blank?
   end
 
   def dob_before_doj
