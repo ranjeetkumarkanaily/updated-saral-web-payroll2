@@ -1,5 +1,5 @@
 class SalaryGroupDetail < ActiveRecord::Base
-  attr_accessible :calc_type, :calculation,:based_on,:salary_group_id,:salary_head_id,:pf_applicability,:pf_percentage,:print_name,:print_order,:esi_applicability,:esi_percentage,:pt_applicability,:pt_percentage,:effective_month
+  attr_accessible :calc_type, :calculation,:based_on,:salary_group_id,:salary_head_id,:pf_applicability,:print_name,:print_order,:esi_applicability,:pt_applicability,:effective_month,:calc_priority_no
   acts_as_audited
 
   belongs_to :salary_group
