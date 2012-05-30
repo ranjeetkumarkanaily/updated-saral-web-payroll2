@@ -16,7 +16,6 @@ Feature: Web-SPP – Branches
     And User enters "branch_responsible_person" as "HSN"
     And User clicks "Create Branch" button
     Then User should see the text "Branch was successfully created."
-    Then User should see the text "Rajajinagara"
 
   Scenario: Editing Branch Details
     Given User have Branch Bangalore created

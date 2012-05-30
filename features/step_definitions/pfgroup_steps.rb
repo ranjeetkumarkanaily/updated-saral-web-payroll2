@@ -15,3 +15,11 @@ end
 Given /^valid (.*?) month is created$/ do |month|
   Paymonth.create(:month_name => month)
 end
+
+Then /^PF Group rate count should get increased by (\d+)$/ do |count|
+  PfGroupRate.count.should == count.to_i
+end
+
+Then /^PF Group count should get incresed by (\d+)$/ do |count|
+  PfGroup.count.should == count.to_i
+end

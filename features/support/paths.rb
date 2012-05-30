@@ -132,6 +132,18 @@ def path_to(page_name)
     when /report/
       report_employees_path
 
+    when /the leave sample template page/
+      generate_sample_excel_template_leave_details_path(:format => "xls")
+
+    when /leave excel sample page/
+      generate_sample_excel_template_leave_details_path
+
+    when /the upload parse excel page/
+      excel_file = File.join(Rails.root.to_s, 'spec', 'factories', 'Template_Theoretical_Salary.xls')
+      upload_salary_allotments_path(:excel_file => excel_file)
+
+    when /salary allotments path/
+      salary_allotments_path(:param1 => "allotted")
 
     # Add more page name => path mappings here
 

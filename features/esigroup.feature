@@ -18,7 +18,7 @@ Feature: Web-SPP – ESI Group
     And User enters "esi_group_user_id" as "test"
     And User enters "esi_group_password" as "test123"
     And User clicks "Save ESI Group" button
-    Then User should see the text "Karnataka"
+    Then ESI group count should get increased by 1
 
   Scenario: Editing ESI Group
     Given User have ESI Group Karnakata created

@@ -14,7 +14,7 @@ Feature: Web-SPP – Paymonths
     Then User should see the text "New Pay Month"
     And User enters "paymonth_month_name" as "Jan/2012"
     And User clicks "Create Paymonth" button
-    Then User should see the text "Jan/2012"
+    Then paymonth count should get increased by 1
 
   Scenario: Viewing Paymonth Details
     Given User have paymonth jan/2012 created

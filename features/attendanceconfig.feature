@@ -15,7 +15,7 @@ Feature: Web-SPP – Attendance Configuration
     And User enters "attendance_configuration_short_name" as "NS"
     And  User choose "attendance_configuration_salary_calendar_days_actual_days__month"
     And User clicks "Create Attendance configuration" button
-    Then User should see the text "NS"
+    Then AttendanceConfiguration count should increase by 1
 
   Scenario: Editing Attendance Configuration
     Given User have Attendance Configuration First Shift created

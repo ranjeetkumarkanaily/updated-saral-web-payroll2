@@ -6,3 +6,4 @@ class AddEffectiveMonthSalaryGroupDetails < ActiveRecord::Migration
 
   end
 end
+

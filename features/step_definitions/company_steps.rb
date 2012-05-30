@@ -32,3 +32,7 @@ Then /^Company Document count should get decrement by (\d+)$/ do |arg1|
   CompanyDocument.count.should == arg1.to_i-1
 end
 
+Then /^Company count should increase by (\d+)$/ do |count|
+  Company.count.should == count.to_i
+end
+

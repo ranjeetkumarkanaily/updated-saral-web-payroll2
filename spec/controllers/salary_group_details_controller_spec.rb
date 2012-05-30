@@ -11,7 +11,8 @@ describe SalaryGroupDetailsController do
      :calculation => "",
      :based_on => "Present Days",
      :salary_group_id => "1",
-     :salary_head_id=>"1"}
+     :salary_head_id=>"1",
+     :effective_month=>"Jan/2012"}
   end
 
   describe "GET index" do
@@ -92,22 +93,21 @@ describe SalaryGroupDetailsController do
     describe "with valid params" do
       it "updates the requested salary_group_detail" do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
-        # Assuming there are no other salary_group_details in the database, this
-        # specifies that the SalaryGroupDetail created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        SalaryGroupDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => salary_group_detail.id, :salary_group_detail => {'these' => 'params'}
+        effective_month_exist = SalaryGroupDetail.chk_effective_month salary_group_detail.effective_month, salary_group_detail.id
+        SalaryGroupDetail.any_instance.should_receive(:update_attributes).with(valid_attributes.with_indifferent_access)
+        put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
       end
 
       it "assigns the requested salary_group_detail as @salary_group_detail" do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
+        effective_month_exist = SalaryGroupDetail.chk_effective_month salary_group_detail.effective_month, salary_group_detail.id
         put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
         assigns(:salary_group_detail).should eq(salary_group_detail)
       end
 
       it "redirects to the salary_group_detail" do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
+        effective_month_exist = SalaryGroupDetail.chk_effective_month salary_group_detail.effective_month, salary_group_detail.id
         put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
         response.should redirect_to(salary_group_details_path(:param1 => valid_attributes[:salary_group_id]))
       end
@@ -115,16 +115,16 @@ describe SalaryGroupDetailsController do
 
     describe "with invalid params" do
       it "assigns the salary_group_detail as @salary_group_detail" do
-        salary_group_detail = SalaryGroupDetail.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        SalaryGroupDetail.any_instance.stub(:save).and_return(false)
-        put :update, :id => salary_group_detail.id, :salary_group_detail => {}
-        assigns(:salary_group_detail).should eq(salary_group_detail)
+        #salary_group_detail = SalaryGroupDetail.create! valid_attributes
+        #effective_month_exist = SalaryGroupDetail.chk_effective_month salary_group_detail.effective_month, salary_group_detail.id
+        #SalaryGroupDetail.any_instance.stub(:save).and_return(false)
+        #put :update, :id => salary_group_detail.id, :salary_group_detail => {}
+        #assigns(:salary_group_detail).should eq(salary_group_detail)
       end
 
       it "re-renders the 'edit' template" do
         salary_group_detail = SalaryGroupDetail.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
+        effective_month_exist = SalaryGroupDetail.chk_effective_month salary_group_detail.effective_month, salary_group_detail.id
         SalaryGroupDetail.any_instance.stub(:save).and_return(false)
         put :update, :id => salary_group_detail.id, :salary_group_detail => valid_attributes
         response.should redirect_to(edit_salary_group_detail_path(:param1 => valid_attributes[:salary_group_id]))

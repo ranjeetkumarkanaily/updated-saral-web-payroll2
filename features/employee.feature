@@ -24,7 +24,7 @@ Feature: Web-SPP – Employee
     And User enters "employee_email" as "test@company.com"
     And User enters "employee_emergency_contact_number" as "100"
     And User clicks "Create Employee" button
-    Then User should see the text "ABC"
+    Then Employee count should increase by 1
 
   Scenario: Viewing Employee Detail
    Given User have Employee Shivarudraiah created
@@ -100,7 +100,7 @@ Feature: Web-SPP – Employee
    Given User have Employee Shivarudraiah created
     When User follow "Employees" link
     And User follow "Delete" link
-    Then Salary Head "Shivarudraiah .D" should be deleted
+    Then Employee "Shivarudraiah .D" should be deleted
     And User should not see "Shivarudraiah .D"
 
   Scenario: Adding New Details for Employee Details
@@ -117,9 +117,9 @@ Feature: Web-SPP – Employee
     And User select "State Bank" from "employee_detail_financial_institution_id"
     And User uncheck "employee_detail_international_worker"
     And User enters "employee_detail_allotted_gross" as "2000"
-    And User select "First Shift" from "employee_detail_attendance_configuration_id"
+    And User select "Karnataka" from "employee_detail_attendance_configuration_id"
     And User enters "employee_detail_bank_account_number" as "123456789"
-    And User select "Developer" from "employee_detail_classification_Designation"
+    And User select "WDO" from "employee_detail_classification_Department"
     And User clicks "Create Employee detail" button
     Then User should see the text "Employee detail was successfully created."
 
@@ -136,9 +136,9 @@ Feature: Web-SPP – Employee
     And User select "State Bank" from "employee_detail_financial_institution_id"
     And User uncheck "employee_detail_international_worker"
     And User enters "employee_detail_allotted_gross" as "2000"
-    And User select "First Shift" from "employee_detail_attendance_configuration_id"
+    And User select "Karnataka" from "employee_detail_attendance_configuration_id"
     And User enters "employee_detail_bank_account_number" as "123456789"
-    And User select "Developer" from "employee_detail_classification_Designation"
+    And User select "WDO" from "employee_detail_classification_Department"
     And User clicks "Update Employee detail" button
     Then User should see the text "Employee detail was successfully updated."
 

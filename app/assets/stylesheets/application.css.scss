@@ -167,7 +167,7 @@ width: 100%;
 #left_content {
   float:left;
   width:200px;
-  background : #D3E3E2;
+  background : #CEE0DF;
   min-height: 581px;
   ul {
     margin:10px 0;
@@ -930,6 +930,121 @@ ul.tabbernav li.tabberactive a:hover
  overflow:auto;
 }
 /* End of Code */
+
+/* Calendar */
+
+img {border:0;}
+#containerMonthYear
+{
+  position:absolute;
+  display:none;
+  width:125px;
+  background-color:#fff;
+  left:750px;
+  top:248px;
+}
+#containerMonth
+{
+  border:1px solid #054A87;
+  padding:4px;
+}
+#containerMonth:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#containerMonth div
+{
+  float:left;
+  width:30px;
+  padding:4px;
+  text-align:center;
+  cursor:pointer;
+  font-size:0.9em;
+}
+#containerMonth div:hover
+{
+  background-color:#054A87;
+  color:#fff;
+}
+
+#containerYear
+{
+  border:1px solid #054A87;
+  width:123px;
+  border-bottom:0;
+}
+#containerYear:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#containerYear a
+{
+  font-size:0.9em;
+  text-decoration:none;
+  color:#000;
+}
+#containerYear a:hover
+{
+  text-decoration:underline;
+}
+#containerYear div
+{
+
+  font-weight:bolder;
+  vertical-align:text-top;
+  float:left;
+  margin:2px;
+}
+
+#pre
+{
+  cursor:pointer;
+  background-image:url('pre.png');
+  background-repeat:no-repeat;
+  width:18px;
+  height:18px;
+  float:left;
+}
+#next
+{
+  cursor:pointer;
+  background-image:url('next.png');
+  background-repeat:no-repeat;
+  width:18px;
+  height:18px;
+  float:left;
+}
+
+#currentYear
+{
+  width:75px;
+  text-align:center;
+  padding-top:2px;
+}
+
+.selectedMonth
+{
+  background-color:#054A87;
+  color:#fff;
+}
+
+#calendarIcon
+{
+  background-image:url('calendar.png');
+  background-repeat:no-repeat;
+  width:24px;
+  height:24px;
+  float:left;
+  cursor:pointer;
+}
+/* End of Code*/
+
 
 #attendance_configuration {
   width:200px;

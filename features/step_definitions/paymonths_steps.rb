@@ -12,3 +12,7 @@ end
 Then /^paymonth "(.*?)" should be deleted$/ do |value|
   Paymonth.delete(value)
 end
+
+Then /^paymonth count should get increased by (\d+)$/ do |count|
+  Paymonth.count.should == count.to_i
+end

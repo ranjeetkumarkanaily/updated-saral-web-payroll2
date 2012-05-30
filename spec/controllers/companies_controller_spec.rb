@@ -127,7 +127,7 @@ describe CompaniesController do
   end
 
   describe "GET Restore" do
-    xit "should restore backup file" do
+    it "should restore backup file" do
       dump_file = fixture_file_upload("spec/factories/Backup-26-05-2012.db")
       post :restore, :dump_file => dump_file
       response.should redirect_to companies_path

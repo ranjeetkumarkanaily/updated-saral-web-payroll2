@@ -18,9 +18,9 @@
           %td{:width=>120} Vol PF:&nbsp;
           %td{:width=>120}= statutory.vol_pf == true ? 'Yes' : 'No'
           - if !statutory.vol_pf_percentage.nil?
-            %td= '% '+ statutory.vol_pf_percentage.to_s
+            %td= statutory.vol_pf_percentage.to_s+'%'
           - if !statutory.vol_pf_amount.nil?
-            %td= 'Amount '+ statutory.vol_pf_amount.to_s
+            %td= 'Amount: '+ statutory.vol_pf_amount.to_s
     %td.std_td
       %table
         %tr

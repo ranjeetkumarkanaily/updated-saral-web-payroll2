@@ -1,8 +1,10 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf,:probation_period,:probation_complete_date,:confirmation_date,:salary_start_date,:retirement_date,:handicapped,:emergency_contact_number,:official_mail_id,:leaving_reason
+  attr_accessible :empname, :date_of_joining, :date_of_leaving, :date_of_birth, :marital_status, :father_name, :spouse_name , :gender, :present_res_no, :present_res_name, :present_street, :present_locality, :present_city, :present_state_id, :perm_res_no, :perm_res_name, :perm_street, :perm_locality, :perm_city, :perm_state_id, :perm_sameas_present , :email, :mobile, :refno, :restrct_pf,:probation_period,:probation_complete_date,:confirmation_date,:salary_start_date,:retirement_date,:handicapped,:emergency_contact_number,:official_mail_id,:leaving_reason,:resignation_date,:notice_period,:remarks
   acts_as_audited
 
   regex_for_email = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  regex_for_number = /[0-9]/
 
   has_many :employee_details, :dependent => :destroy
 
@@ -27,6 +29,18 @@ class Employee < ActiveRecord::Base
   validates :email, :format     => { :with => regex_for_email }
   validates :leaving_reason, :presence => true, :if => :date_of_leaving_present?
   validate :doj_before_dol,:dob_before_doj, :probation_comp_date_after_doj,:confirmation_date_after_doj,:salary_start_date_after_doj,:retirement_date_after_doj
+
+  validates_numericality_of :notice_period, :if => :notice_period_present?
+
+  validates_numericality_of :probation_period, :if => :probation_period_present?
+
+  def probation_period_present?
+     !probation_period.nil? and !probation_period.blank?
+  end
+
+  def notice_period_present?
+     !notice_period.nil? and !notice_period.blank?
+  end
 
   def date_of_leaving_present?
     !date_of_leaving.nil? and !date_of_leaving.blank?
@@ -85,7 +99,7 @@ class Employee < ActiveRecord::Base
     date_of_leaving = Employee.find(emp_id).date_of_leaving
   end
 
-  scope:employees_list, lambda {|month_year|
+  scope :employees_list, lambda {|month_year|
     where("date_of_leaving IS NULL OR (EXTRACT(MONTH FROM date_of_leaving)=#{month_year.month} AND EXTRACT(YEAR FROM date_of_leaving)=#{month_year.year})").order("created_at ASC")
   }
 

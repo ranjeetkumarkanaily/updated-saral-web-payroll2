@@ -19,3 +19,4 @@ en:
     formats:
       default: "%d-%m-%Y"
       type1: "%d/%m/%Y"
+      type2: "%b/%Y"

@@ -2,7 +2,6 @@ Feature: Web-SPP – PF Group
 
   Background:
     Given a valid user
-    And User have PF Group Tamilnadu created
     When User go to the login page
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
@@ -34,6 +33,7 @@ Feature: Web-SPP – PF Group
     And User uncheck "pf_group_rate_restrict_employer_share"
     And User uncheck "pf_group_rate_restrict_employee_share_to_employer_share"
     And User clicks "Create Pf group rate" button
+    Then PF Group rate count should get increased by 1
     Then User should see the text "Pf group rate was successfully created."
 
   Scenario: Editing PF Group rate details
@@ -74,9 +74,11 @@ Feature: Web-SPP – PF Group
     And User enters "pf_group_user_id" as "test"
     And User enters "pf_group_password" as "123456"
     And User clicks "Create Pf group" button
+    Then PF Group count should get incresed by 1
     Then User should see the text "Karnataka"
 
   Scenario: Editing  PF Group
+    Given User have PF Group Tamilnadu created
     When User follow "PF Group" link
     And User follow "Edit" link
     And User enters "pf_group_pf_group" as "Karnataka"
@@ -90,6 +92,7 @@ Feature: Web-SPP – PF Group
     Then User should see the text "1234"
 
   Scenario: Deleting an PF Group
+    Given User have PF Group Tamilnadu created
     When User follow "PF Group" link
     And User should see the text "Operations"
     When User follow "Delete" link

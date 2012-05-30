@@ -2,7 +2,6 @@ Feature: Web-SPP – Leave Definition
 
   Background:
     Given a valid user
-    And a valid leave definition Compensatory Work Created
     When User go to the login page
     And User enters "Username" as "admin"
     And User enters "Password" as "default"
@@ -17,9 +16,10 @@ Feature: Web-SPP – Leave Definition
     And User enters "leave_definition_short_name" as "LP"
     And User clicks "Create Leave definition" button
     Then User should see the text "Leave definition was successfully created."
-    And User should see the text "Loss Of Pay"
+    And Leave definition count should get increase by 1
 
   Scenario: Editing Leave Definition Detail
+    Given a valid leave definition Compensatory Work Created
     When User follow "Leave Definitions" link
     And User follow "Edit" link
     And User enters "leave_definition_leave_name" as "Compensatory Work"
@@ -28,6 +28,7 @@ Feature: Web-SPP – Leave Definition
     Then User should see the text "Leave definition was successfully updated."
 
   Scenario: Deleting an Leave Definition
+    Given a valid leave definition Compensatory Work Created
     When User follow "Leave Definitions" link
     And User follow "Delete" link
     Then Leave definition "Compensatory Work" should be deleted

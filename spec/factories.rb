@@ -67,7 +67,7 @@ FactoryGirl.define do
     esi_percentage 100
     pt_applicability true
     pt_percentage 100
-    paymonth
+    effective_month "Feb/2011"
   end
 
   factory :employee_detail do
