@@ -27,14 +27,14 @@ Feature: Web-SPP – Employee
     Then Employee count should increase by 1
 
   Scenario: Viewing Employee Detail
-   Given User have Employee Shivarudraiah created
+   Given User have Employee XYZ created
     When User follow "Employees" link
     And User should see the text "Operations"
     And User follow "Show" link
-    Then User should see the text "Shivarudraiah"
+    Then User should see the text "XYZ"
 
   Scenario: Adding statutory Details
-    Given User have Employee Shivarudraiah created
+    Given User have Employee XYZ created
     When User follow "Employees" link
     And User follow "Show" link
     And User follow "Statutory Details" link
@@ -80,7 +80,7 @@ Feature: Web-SPP – Employee
 
 
   Scenario: Editing Employee Detail
-    Given User have Employee Shivarudraiah created
+    Given User have Employee XYZ created
     When User follow "Employees" link
     And User follow "Edit" link
     And User enters "employee_refno" as "test12345"
@@ -97,20 +97,20 @@ Feature: Web-SPP – Employee
     Then User should see the text "Employee was successfully updated."
 
   Scenario: Deleting an Employee
-   Given User have Employee Shivarudraiah created
+   Given User have Employee XYZ created
     When User follow "Employees" link
     And User follow "Delete" link
-    Then Employee "Shivarudraiah .D" should be deleted
-    And User should not see "Shivarudraiah .D"
+    Then Employee "XYZ" should be deleted
+    And User should not see "XYZ"
 
   Scenario: Adding New Details for Employee Details
-    Given User have Employee Shivarudraiah created
+    Given User have Employee XYZ created
     And User have required details created
     When User follow "Employees" link
     And User follow "Details" link
-    When User go to the employee Shivarudraiah details page
-    And User follow "Add New Detail" link
-    When User go to the employee Shivarudraiah details new page
+    When User go to the employee XYZ details page
+    And User follow "Add New Classification" link
+    When User go to the employee XYZ details new page
     And User enters "sed" as "2012-04-02"
     And User select "Manager" from "employee_detail_salary_group_id"
     And User select "Bangalore" from "employee_detail_branch_id"
@@ -124,12 +124,12 @@ Feature: Web-SPP – Employee
     Then User should see the text "Employee detail was successfully created."
 
   Scenario: Editing Employee details for Employee
-    Given employee detail salary group Manager created under employee Shivarudraiah
+    Given employee detail salary group Manager created under employee XYZ
     When User follow "Employees" link
     And User follow "Details" link
-    When User go to the employee Shivarudraiah details page
+    When User go to the employee XYZ details page
     And User follow "Edit" link
-    When User go to the employee Shivarudraiah details edit page
+    When User go to the employee XYZ details edit page
     And User enters "sed" as "2012-05-02"
     And User select "Manager" from "employee_detail_salary_group_id"
     And User select "Bangalore" from "employee_detail_branch_id"
@@ -143,15 +143,15 @@ Feature: Web-SPP – Employee
     Then User should see the text "Employee detail was successfully updated."
 
   Scenario: Deleting Employee details for Employee
-    Given employee detail salary group Manager created under employee Shivarudraiah
+    Given employee detail salary group Manager created under employee XYZ
     When User follow "Employees" link
     And User follow "Details" link
-    When User go to the employee Shivarudraiah details page
+    When User go to the employee XYZ details page
     And User follow "Delete" link
     Then User should see the text "Employee detail was successfully Destroyed."
 
   Scenario: Restrict employee PF contribution
-    Given User have Employee Shivarudraiah created
+    Given User have Employee XYZ created
     When User follow "Employees" link
     And User follow "Restrict PF Contribution" link
     And User check "employee_data__pf"
@@ -159,6 +159,7 @@ Feature: Web-SPP – Employee
     Then User should see the text "true"
 
   Scenario: Employees excel upload
+    Given Given valid state Karnataka created
     When User follow "Employees" link
     And User follow "Excel Upload" link
     And User upload the employees excel file

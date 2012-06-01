@@ -62,12 +62,10 @@ FactoryGirl.define do
     calculation ""
     based_on "PayDays"
     pf_applicability true
-    pf_percentage 100
     esi_applicability true
-    esi_percentage 100
     pt_applicability true
-    pt_percentage 100
     effective_month "Feb/2011"
+    calc_priority_no 1
   end
 
   factory :employee_detail do

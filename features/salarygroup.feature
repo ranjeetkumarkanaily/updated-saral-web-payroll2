@@ -49,7 +49,6 @@ Feature: Web-SPP – Salary Group
     When User go to the Manager group salary page
     And User follow "Add New Configuration" link
     And User select "Basic" from "salary_group_detail_salary_head_id"
-    And User enters "salary_group_detail_print_name" as "Basic"
     And User enters "salary_group_detail_print_order" as "2"
     And User select "Pay Days" from "salary_group_detail_based_on"
     And User uncheck "salary_group_detail_pf_applicability"

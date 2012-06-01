@@ -49,10 +49,9 @@ class SalariesController < ApplicationController
         File.open(save_path, 'wb') do |file|
           file << pdf
         end
-        #UserMailer.mail_payslip(@employee,params[:month_year]).deliver
-        #UserMailer.cleanup
+        UserMailer.mail_payslip(@employee,params[:month_year]).deliver
+        UserMailer.cleanup
         flash[:notice] = 'Email has been sent successfully!!!'
-        render :text => "sss"
       else
         respond_to do |format|
           format.html
