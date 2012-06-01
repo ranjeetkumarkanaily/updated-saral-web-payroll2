@@ -23,20 +23,46 @@ class Company < ActiveRecord::Base
 
   #validates :website, :format => /^(((h|H?)(t|T?)(t|T?)(p|P?)(s|S?))\://)?(www.|[a-zA-Z0-9].)[a-zA-Z0-9\-\.]+\.[a-zA-Z]*$/
 
-  def self.backup_db
+  def self.backup_db option
     config = ActiveRecord::Base.configurations[Rails.env]
     latest_dump = "#{Rails.root}/public/system/Backup-#{Time.now.strftime('%d-%m-%Y-%Hh%Mm%Ss')}.db"
     file = File.new(latest_dump, "w")
-    #pg_dump --data-only --host=localhost --port=5432 --username=postgres --no-password -Fc DocUpload_development > dump_docupload.db
-    system("pg_dump --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
+    case option
+      when "Schema"
+        system("pg_dump --schema-only --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
+
+      when "Skeleton"
+        schema_file = File.new("schema","w")
+        system("pg_dump --schema-only  --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{schema_file.path}")
+        data_file = File.new("data","w")
+        #tables = ["countries", "companies", "company_documents", "classification_headings", "classifications", "hr_categories", "hr_category_details","leave_definitions", "states", "upload_file_types", "users"]
+        pg_dump_skltn = "pg_dump --data-only --table=countries --table=companies --table=company_documents --table=classification_headings --table=classifications --table=hr_categories --table=hr_category_details --table=leave_definitions --table=states --table=upload_file_types --table=users --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{data_file.path}"
+        system("#{pg_dump_skltn}")
+        merged_two_files schema_file, data_file, latest_dump
+
+      when "Schema with data"
+        system("pg_dump --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
+
+      when "Data Only"
+        system("pg_dump --data-only --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
+    end
     file
   end
 
   def self.restore_db file_path
     config = ActiveRecord::Base.configurations[Rails.env]
-    #pg_restore --host=localhost --port=5432 --username=postgres --no-password -d DocUpload_development dump_docupload.db
     pg_db_restore = "pg_restore --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -d #{config['database']} #{file_path}"
     system("#{pg_db_restore}")
   end
 
+  def self.merged_two_files file1, file2, result_file
+    fyl1 = File.readlines(file1.path)
+    fyl2 = File.readlines(file2.path)
+
+    File.open(result_file, "w") do |merged_file|
+      merged_file.puts fyl1 + fyl2
+    end
+    FileUtils.rm_r(file1.path)
+    FileUtils.rm_r(file2.path)
+  end
 end

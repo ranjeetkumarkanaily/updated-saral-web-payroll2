@@ -121,7 +121,28 @@ describe CompaniesController do
 
   describe "GET Backup" do
     it "should display the file" do
+      company = FactoryGirl.create(:company)
       get :backup
+      assigns(:company).should eq(company)
+      response.should be_success
+    end
+  end
+
+  describe "POST backup_option" do
+    it "backups only schema" do
+      post :backup_option, :backup_option => "Schema"
+      response.should be_success
+    end
+    it "backups Skeleton" do
+      post :backup_option, :backup_option => "Skeleton"
+      response.should be_success
+    end
+    it "backups Schema with data" do
+      post :backup_option, :backup_option => "Schema with data"
+      response.should be_success
+    end
+    it "backups Data only" do
+      post :backup_option, :backup_option => "Data Only"
       response.should be_success
     end
   end
