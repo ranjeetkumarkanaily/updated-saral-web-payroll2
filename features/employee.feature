@@ -159,6 +159,7 @@ Feature: Web-SPP – Employee
     Then User should see the text "true"
 
   Scenario: Employees excel upload
+    Given Given valid state Karnataka created
     When User follow "Employees" link
     And User follow "Excel Upload" link
     And User upload the employees excel file
