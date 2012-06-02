@@ -1,0 +1,21 @@
+#left_content
+  = render "left"
+#right_content
+  %h1 Excel Upload
+  = form_tag '/leave_takens/upload_parse_validate', :method => :post, :multipart => true do
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td
+          %table
+            %tr
+              %td
+                %table
+                  %tr
+                    %td{:width=>150} Select File to Upload
+                    %td= file_field_tag 'excel_file'
+                  %tr
+                    %td &nbsp;
+                  %tr
+                    %td{:colspan=>2}= submit_tag "Upload File"
+                  %tr
+                    %td &nbsp;

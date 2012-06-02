@@ -1,0 +1,31 @@
+#left_content
+  = render 'left'
+#right_content
+  %h1 Listing Leave takens
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td &nbsp;
+    %tr
+      %td.std_td
+        %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+          %tr
+            %td.table_grid_header Employee
+            %td.table_grid_header From date
+            %td.table_grid_header Todate
+            %td.table_grid_header Count
+            %td.table_grid_header{:colspan =>2} Operations
+          - @leave_takens.each do |leave_taken|
+            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+              %td.table_grid_td= leave_taken.employee_id
+              %td.table_grid_td= leave_taken.from_date
+              %td.table_grid_td= leave_taken.set_to_date
+              %td.table_grid_td= leave_taken.count
+              %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Detail"), edit_leave_taken_path(leave_taken)
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Detail"), leave_taken, confirm: 'Are you sure?', method: :delete
+        %br/
+        .digg_pagination
+          .page_info
+            = page_entries_info @leave_takens
+          = will_paginate @leave_takens, :container => false
+    %tr
+      %td &nbsp;

@@ -1,0 +1,34 @@
+= form_for(leave_taken) do |f|
+  - if leave_taken.errors.any?
+    #error_explanation
+    %h2
+      = pluralize(leave_taken.errors.count, "error")
+      prohibited this leave from being saved:
+    %ul
+      - leave_taken.errors.full_messages.each do |msg|
+        %li= msg
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td
+        %table
+          %tr
+            %td.std_td{:style=>"width:100%"}
+              %table
+                %tr
+                  %td Employee:&nbsp;
+                  %td{:style=>"width:150px"}= f.select :employee_id, options_for_select(Employee.employees.collect{|em| [em.empname_and_refno,em.id]},leave_taken.employee_id),{:prompt => 'Select'}
+                  %td Count:&nbsp
+                  %td= f.text_field :count,:onchange=>'set_to_date()'
+                %tr
+                  %td From Date:&nbsp
+                  %td= f.text_field :from_date, :id=>"leave_from_date", :class=>"date_input",:onblur=>'set_to_date()',:onchange=>'set_to_date()'
+                  %td To Date:&nbsp
+                  %td= text_field_tag 'todate','',:disabled => true
+
+          %tr
+            %td.std_td{:colspan=>3}
+              %table
+                %tr
+                  %td &nbsp;
+                %tr
+                  %td{:colspan=>3}= f.submit
