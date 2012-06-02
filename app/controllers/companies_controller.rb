@@ -47,9 +47,13 @@ class CompaniesController < ApplicationController
   end
 
   def backup
-    file_path = Company.backup_db
+    @company = Company.count ==0 ? nil : Company.first
+  end
+
+  def backup_option
+    file_path = Company.backup_db params[:backup_option]
     send_file  file_path.path,
-               :filename => "Backup-#{Time.now.strftime('%d-%m-%Y-%Hh%Mm%Ss')}.db",
+               :filename => File.basename(file_path),
                :type => File.ftype(file_path),
                :disposition => 'attachment'
     FileUtils.rm_r(file_path.path)
