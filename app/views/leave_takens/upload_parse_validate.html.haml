@@ -1,0 +1,40 @@
+
+#left_content
+  = render "left"
+#right_content
+  - unless @leaves["errors"].empty?
+    %h1{:style => "background-color:#e9322d"} Failure
+    %ul
+      - @leaves["errors"].each do |error|
+        %li
+          Problems in line number #{error[0]}:
+          - error[1].full_messages.each do |msg|
+            %p
+              = msg
+  - else
+    %h1 Success
+  = form_tag save_leave_takens_path do
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td &nbsp;
+      %tr
+        %td.std_td
+          %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td.table_grid_header Ref. No.
+              %td.table_grid_header Employee Name
+              %td.table_grid_header Leave Date
+            - @leaves["leaves_takens"].each do |leave|
+              %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                %td.table_grid_td= leave.employee_id
+                %td.table_grid_td= leave.from_date
+                %td.table_grid_td= leave.count
+                %input{:name => "leaves_takens[][employee_id]", :value => leave.employee_id, :type => "hidden"}
+                %input{:name => "leaves_takens[][from_date]", :value => leave.from_date, :type => "hidden"}
+                %input{:name => "leaves_takens[][count]", :value => leave.count, :type => "hidden"}
+            %tr
+              %td &nbsp;
+            %tr
+              %td
+                - if @leaves["errors"].empty?
+                  = submit_tag "Save Leaves"

@@ -1,7 +1,7 @@
 #left_content
   %ul
-    %li= link_to 'Back', leave_definitions_path
-    %li= link_to 'Edit Employee', edit_leave_definition_path(@leave_definition)
+    %li= link_to 'Back', leave_details_path
+    %li= link_to 'Edit ', edit_leave_detail_path(@leave_detail)
 #right_content
   %table
     %tr
@@ -9,8 +9,8 @@
         - flash.each do |name, msg|
           = content_tag :div, msg, :id => "flash_#{name}"
   %h1
-    Leave Definition
-    = link_to image_tag('/assets/edit.png',:title => "Edit Leave Definition"), edit_leave_definition_path(@leave_definition)
+    Leave Details
+    = link_to image_tag('/assets/edit.png',:title => "Edit Leave Detail"), edit_leave_detail_path(@leave_detail)
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
@@ -19,11 +19,15 @@
             %td.std_td
               %table
                 %tr
-                  %td{:width=>130} Leave name:&nbsp;
-                  %td= @leave_definition.leave_name
+                  %td{:width=>130} employee_id:&nbsp;
+                  %td= @leave_detail.employee_id
+                %tr
+                  %td{:width=>130} leave_date:&nbsp;
+                  %td= @leave_detail.leave_date
             %td.std_td
               %table
                 %tr
-                  %td{:width=>130} Short name:&nbsp;
-                  %td= @leave_definition.short_name
+                  %td{:width=>130} leave_definition_id:&nbsp;
+                  %td= @leave_detail.leave_definition_id
+
 
