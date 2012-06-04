@@ -46,6 +46,7 @@ class Company < ActiveRecord::Base
       when "Data Only"
         system("pg_dump --data-only --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
     end
+    BackupUtility.create!(:backup_date => Time.now.strftime('%d-%m-%Y'), :file_hash => file.hash, :employees_count => Employee.count, :last_sal_calculated => Salary.maximum(:effective_date), :backup_option => option, :file_name => File.basename(file))
     file
   end
 

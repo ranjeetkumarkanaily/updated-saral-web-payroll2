@@ -48,6 +48,7 @@ class CompaniesController < ApplicationController
 
   def backup
     @company = Company.count ==0 ? nil : Company.first
+    @backup_utils = BackupUtility.all
   end
 
   def backup_option
@@ -65,11 +66,17 @@ class CompaniesController < ApplicationController
 
   def restore
     dump_file = params[:dump_file]
-    file = FileUploader.new
-    file.store!(dump_file)
+    @bkup_util = BackupUtility.find_by_file_name(dump_file.original_filename)
+    if @bkup_util
+      @file = FileUploader.new
+      @file.store!(dump_file)
+    end
+  end
+  def restore_backup
+    file = params[:file]
     delete_all_tables
-    Company.restore_db file.path
-    file.remove!
+    Company.restore_db file
+    FileUtils.remove_file(file, force = true)
     redirect_to companies_path
   end
   private

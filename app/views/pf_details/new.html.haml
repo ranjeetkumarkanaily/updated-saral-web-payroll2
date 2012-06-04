@@ -1,6 +1,7 @@
 #left_content
   %ul
     %li= link_to 'Back', @branch
+    %li= link_to 'PF Group', pf_groups_path
 #right_content
   %h1= "Create new PF Group Details for Branch #{@branch.branch_name}"
   = form_for [@branch, @pf_detail] do |f|

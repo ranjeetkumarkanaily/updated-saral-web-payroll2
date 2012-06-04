@@ -149,8 +149,17 @@ describe CompaniesController do
 
   describe "GET Restore" do
     it "should restore backup file" do
-      dump_file = fixture_file_upload("spec/factories/Backup-26-05-2012.db")
+      FactoryGirl.create(:employee)
+      dump_file = fixture_file_upload("spec/factories/Backup-04-06-2012-11h56m09s.db")
+      BackupUtility.create!(:backup_date => Time.now.strftime('%d-%m-%Y'), :file_hash => dump_file.hash, :employees_count => Employee.count, :last_sal_calculated => "01-01-12", :backup_option => "Schema", :file_name => dump_file.original_filename)
       post :restore, :dump_file => dump_file
+      response.should be_success
+    end
+  end
+
+  describe "POST restore_backup" do
+    it "restores backup file into db" do
+      post :restore_backup, :file => "/home/ranjeet/railsProjects/updated-saral-web-payroll/public/excel_uploaded_files/Backup-04-06-2012-11h56m09s.db"
       response.should redirect_to companies_path
     end
   end

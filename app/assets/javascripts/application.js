@@ -22,3 +22,8 @@ $(function() {
   });
 
 });
+
+function alertTest()
+{
+    alert("kanaily");
+}
