@@ -6,6 +6,7 @@
   -if @bkup_util
     = form_tag(:controller => "companies", :action => "restore_backup") do |f|
       = hidden_field_tag "file", @file.path
+      = hidden_field_tag "backup_option", @bkup_util.backup_option
       %table.std_table{:cellpadding=>0,:cellspacing=>0}
         %tr
           %td

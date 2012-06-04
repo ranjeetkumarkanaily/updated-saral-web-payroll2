@@ -74,15 +74,9 @@ class CompaniesController < ApplicationController
   end
   def restore_backup
     file = params[:file]
-    delete_all_tables
-    Company.restore_db file
+    bkup_optn = params[:backup_option]
+    Company.restore_db file, bkup_optn
     FileUtils.remove_file(file, force = true)
     redirect_to companies_path
   end
-  private
-    def delete_all_tables
-      conn = ActiveRecord::Base.connection
-      tables = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';").map { |r| r["table_name"] }
-      tables.each { |t| conn.execute("DROP TABLE IF EXISTS #{t} CASCADE")}
-    end
 end
