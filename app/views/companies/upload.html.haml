@@ -2,7 +2,7 @@
   %ul
     %li= link_to 'Back', companies_path
 #right_content
-  %h1 Excel Upload
+  %h1 Restore
   = form_tag '/companies/restore', :method => :post, :multipart => true do
     %table.std_table{:cellpadding=>0,:cellspacing=>0}
       %tr
@@ -12,11 +12,11 @@
               %td
                 %table
                   %tr
-                    %td{:width=>150} Select dump file to restore
+                    %td{:width=>150} Select file to restore
                     %td= file_field_tag 'dump_file'
                   %tr
                     %td &nbsp;
                   %tr
-                    %td{:colspan=>2}= submit_tag "Upload File"
+                    %td{:colspan=>2}= submit_tag "Restore"
                   %tr
                     %td &nbsp;
