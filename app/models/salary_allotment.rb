@@ -41,18 +41,20 @@ class SalaryAllotment < ActiveRecord::Base
     basic_formula
   end
 
-  def self.get_allotted_salaries month_year, employee_id
+  def self.get_allotted_salaries month_year, employee_id, every_month=0
     month_year = Date.strptime month_year, '%b/%Y'
-    SalaryAllotment.where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id}").order("salary_head_id ASC")
+    condition = (every_month==0)?"AND calc_type != 'Every Month'":" AND calc_type = 'Every Month'"
+    SalaryAllotment.joins(:salary_group_detail).where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id} #{condition}").order("salary_head_id ASC")
   end
 
-  def self.get_allotted_salaries_for_max_effective_date month_year, employee_id
+  def self.get_allotted_salaries_for_max_effective_date month_year, employee_id, every_month=0
     month_year = Date.strptime month_year, '%b/%Y'
-    SalaryAllotment.select("id, employee_id, employee_detail_id,date_trunc('month', date('#{month_year.year}-#{month_year.month}-01')) as effective_date, salary_head_id, salary_allotment, salary_group_detail_id").where("employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order("salary_head_id ASC")
+    condition = (every_month==0)?"AND calc_type != 'Every Month'":" AND calc_type = 'Every Month'"
+    SalaryAllotment.joins(:salary_group_detail).select("salary_allotments.id, employee_id, employee_detail_id,date_trunc('month', date('#{month_year.year}-#{month_year.month}-01')) as effective_date, salary_allotments.salary_head_id, salary_allotment, salary_group_detail_id").where("employee_id = #{employee_id} #{condition} and salary_allotments.effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order("salary_allotments.salary_head_id ASC")
   end
 
-  def self.row_for_salary_allotment employee_id
-    SalaryAllotment.where("employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
+  def self.row_for_salary_allotment employee_id, salary_type
+    SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
   end
 
   def self.process_salary_excel_sheet salary_rate_sheet

@@ -1,8 +1,31 @@
+%script
+  $(document).ready(function(){
+  $(".salAllotEarn").each(function() {
+  $(this).keyup(function(){
+  calculateSum(".salAllotEarn", "#earning_total");
+  });
+  });
+  $(".salAllotDeduct").each(function() {
+  $(this).keyup(function(){
+  calculateSum(".salAllotDeduct", "#deduction_total");
+  });
+  });
+  });
+
+  function calculateSum(field_class,sum_id) {
+  var sum = 0;
+  $(field_class).each(function() {
+  if(!isNaN(this.value) && this.value.length!=0) {
+  sum += parseFloat(this.value);
+  }
+  });
+  $(sum_id).val(sum.toFixed(2));
+  }
 #left_content
   %ul
     %li= link_to "Back", salary_allotments_path
 #right_content
-  %h1 Salary Allotment for #{@emp_name}
+  %h1 Salary Rate for #{@emp_name}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td
@@ -12,27 +35,55 @@
         = form_tag salary_allotments_path, :method => :put do
           %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
             %tr
-              %td.table_grid_header Salary Heads
-              %td.table_grid_header Short Name
-              %td.table_grid_header Salary Head Type
-              %td.table_grid_header Salary Allotment
-            - @allotSal.each do |allotSal|
-              = hidden_field_tag "salAllotment[][id]", allotSal.id
+              %td.table_grid_header{:style=>"width:180px"} Salary Heads
+              %td.table_grid_header{:style=>"width:180px"} Short Name
+              %td.table_grid_header{:style=>"width:180px"} Salary Head Type
+              %td.table_grid_header{:style=>"width:180px"} Salary Allotment
+            - @allotSal_earnings.each do |allotSal_earn|
+              = hidden_field_tag "salAllotment[][id]", allotSal_earn.id
               %tr
-                %td.table_grid_td= allotSal.salaryHead
-                %td.table_grid_td= allotSal.shortName
-                %td.table_grid_td= allotSal.salaryHeadType
-                -if allotSal.salary_group_detail.calc_type == "Formula"
-                  - values = {:GROSS => allotSal.employee_detail.allotted_gross}
-                  - f = allotSal.generation_formula
+                %td.table_grid_td= allotSal_earn.salaryHead
+                %td.table_grid_td= allotSal_earn.shortName
+                %td.table_grid_td= allotSal_earn.salaryHeadType
+                -if allotSal_earn.salary_group_detail.calc_type == "Formula" || allotSal_earn.salary_group_detail.calc_type == "Every Month"
+                  - values = {:GROSS => allotSal_earn.employee_detail.allotted_gross}
+                  - f = allotSal_earn.generation_formula
                   - calc_value = Evaluator.formula f,values
 
                   %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]',calc_value,:readonly=>"readonly"
                 -else
-                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', allotSal.salary_allotment
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', number_with_precision(allotSal_earn.salary_allotment, :precision => 2),:onblur=>"calculate_value(this.id)",:class=>"salAllotEarn"
             %tr
               %td
-                &nbsp;
+              %td
+              %td{:colspan=>2}
+                %table
+                  %tr
+                    %td{:style=>"padding-left:2px;font-weight:bold;width:180px"} Earnings Total:
+                    %td.table_grid_td= text_field_tag 'earning_total'
+            - @allotSal_deductions.each do |allotSal_deduct|
+              = hidden_field_tag "salAllotment[][id]", allotSal_deduct.id
+              %tr
+                %td.table_grid_td= allotSal_deduct.salaryHead
+                %td.table_grid_td= allotSal_deduct.shortName
+                %td.table_grid_td= allotSal_deduct.salaryHeadType
+                -if allotSal_deduct.salary_group_detail.calc_type == "Formula" || allotSal_deduct.salary_group_detail.calc_type == "Every Month"
+                  - values = {:GROSS => allotSal_deduct.employee_detail.allotted_gross}
+                  - f = allotSal_deduct.generation_formula
+                  - calc_value = Evaluator.formula f,values
+
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]',calc_value,:readonly=>"readonly"
+                -else
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', number_with_precision(allotSal_deduct.salary_allotment, :precision => 2),:class=>"salAllotDeduct"
+            - if @allotSal_deductions.count != 0
+              %tr
+                %td
+                %td
+                %td{:colspan=>2}
+                  %table
+                    %tr
+                      %td{:style=>"padding-left:2px;font-weight:bold;width:180px"} Deductions Total:
+                      %td.table_grid_td= text_field_tag 'deduction_total'
             %tr
               %td
                 = submit_tag "Save"

@@ -19,6 +19,10 @@ class SalaryGroupDetail < ActiveRecord::Base
     }
   }
 
+  scope :based_on, lambda { |sal_grp_det_id|
+     select("based_on").where("id = ?",sal_grp_det_id)
+  }
+
   scope :all_salary_group_details, lambda { |sal_grp_id|
     select("DISTINCT ON (salary_head_id) id, salary_head_id, calc_type, effective_month, based_on").where("salary_group_id = #{sal_grp_id}").order("salary_head_id, created_at DESC")
   }

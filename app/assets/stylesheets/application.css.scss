@@ -194,6 +194,21 @@ width: 100%;
   }
 }
 
+#table_wrappper {
+  overflow-x:scroll;
+  overflow-y:scroll;
+  height:200px;
+  width:757px;
+  white-space:nowrap;
+  margin-bottom:5px;
+}
+
+#inner_table_wrapper {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+
 #breadcrumb {
   font-size: 11px;
   margin: 0 0 10px 0;
@@ -293,6 +308,10 @@ width: 100%;
 .table_grid_td {
     padding-left: 7px;
     padding-right: 7px;
+
+    input {
+      width:100px
+    }
 }
 
 .table_grid_icon {

@@ -29,9 +29,6 @@
                         %td Branch:&nbsp;
                         %td= f.select :branch_id, options_for_select(Branch.branches.collect {|branch| [ branch.branch_name, branch.id ] },employee_detail.branch_id), {:prompt => 'Select Branch'}
                       %tr
-                        %td Bank :&nbsp;
-                        %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.financial_institutions.collect {|fi| [ fi.name, fi.id ] },employee_detail.financial_institution_id), {:prompt => 'Select Financial Institution'}
-                      %tr
                         %td International Worker:&nbsp;
                         %td= f.check_box :international_worker
 
@@ -40,12 +37,15 @@
                       %tr
                         %td{:width => 130} Effective To:&nbsp;
                         %td= f.text_field :effective_to, :disabled => true, :value => 'Till Date'
-                      %tr
-                        %td Allotted Gross:&nbsp;
-                        %td= f.text_field :allotted_gross
+                      -#%tr
+                      -#  %td Allotted Gross:&nbsp;
+                      -#  %td= f.text_field :allotted_gross
                       %tr
                         %td Attn. Structure:&nbsp;
                         %td= f.select :attendance_configuration_id , options_for_select(AttendanceConfiguration.attendances.collect {|att_config| [ att_config.attendance, att_config.id ] },employee_detail.attendance_configuration_id), {:prompt => 'Select Attendance Configuration'},:editable => true
+                      %tr
+                        %td Bank :&nbsp;
+                        %td= f.select :financial_institution_id, options_for_select(FinancialInstitution.financial_institutions.collect {|fi| [ fi.name, fi.id ] },employee_detail.financial_institution_id), {:prompt => 'Select Financial Institution'}
                       %tr
                         %td Bank A/c No.:&nbsp;
                         %td= f.text_field :bank_account_number

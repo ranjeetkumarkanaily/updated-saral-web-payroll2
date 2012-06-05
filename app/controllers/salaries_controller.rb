@@ -1,47 +1,21 @@
 class SalariesController < ApplicationController
   def new
-    if(params[:month_year] && params[:employee_id])
-      month_year = Date.strptime params[:month_year], '%b/%Y'
-      start_date = month_year.beginning_of_month
-      employee_dol = Employee.chk_dol params[:employee_id]
-      if employee_dol && employee_dol < start_date
-        redirect_to new_salary_path, notice: 'Employee already left the Company'
-      else
-        allotted_salaries = SalaryAllotment.get_allotted_salaries params[:month_year], params[:employee_id]
-        #if(!Salary.is_salary_generated? params[:month_year], params[:employee_id])
-        if allotted_salaries.count > 0
-          @salary_allotments = allotted_salaries
-        else
-          @salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date params[:month_year], params[:employee_id]
-        end
-        #end
-      end
+    if params[:month_year] && params[:salary_group]
+      @employee_salary_calc_header = Salary.emp_salary_calc_header params[:salary_group]
+      @employee_salary_calc = Salary.employees_salary_calculation params[:month_year], params[:salary_group]
     end
   end
 
   def index
     flash[:notice] = ""
-    if params[:month_year] && params[:employee_id]
-      @company = Company.first
-      @employee = Employee.find(params[:employee_id])
-      month_year = Date.strptime params[:month_year], '%b/%Y'
-      leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,params[:employee_id]
-      @no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
-      @no_of_day_in_selected_month = @no_of_day_in_selected_month[0]['number_of_days'].to_i
+    if params[:month_year] && params[:salary_group]
+      @earning_det_head = Salary.employee_salary_det_header params[:salary_group],'Earnings'
+      @deduction_det_head = Salary.employee_salary_det_header params[:salary_group],'Deductions'
+      @employee_salary_det = Salary.employee_salary_detail params[:month_year], params[:salary_group]
 
-      employee_dol = Employee.chk_dol params[:employee_id]
-      if employee_dol
-        no_of_day_if_dol_exist = employee_dol.day
-        @no_of_present_days = no_of_day_if_dol_exist - leave_count
-      else
-        @no_of_present_days = @no_of_day_in_selected_month - leave_count
+      if params[:employee_id]
+        @employee_payslip = Salary.employee_payslip params[:month_year], params[:employee_id]
       end
-
-      @salary_earning = Salary.get_salary_on_salary_type "Earnings", params[:month_year], params[:employee_id],0
-      @salary_deduction = Salary.get_salary_on_salary_type "Deductions", params[:month_year], params[:employee_id],0
-
-      @pt_amount = Salary.get_pt_amount params[:month_year], params[:employee_id]
-      @vol_pf_amount = PfCalculatedValue.calculated_vol_pf_amount params[:month_year], params[:employee_id]
 
       if params[:email] == "yes"
         pdf = render_to_string :pdf => "Payslip", :template => 'salaries/index',:handlers => [:haml],:formats => [:pdf]

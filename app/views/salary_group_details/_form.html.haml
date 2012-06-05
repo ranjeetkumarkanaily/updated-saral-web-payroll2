@@ -49,9 +49,9 @@
                 %tr
                   %td{:width=>160} Calculation:&nbsp;
                   %td{:colspan=>2}= f.text_area :calculation, :rows => 2, :cols => 30
-                %tr
-                  %td{:width=>160} Calculation Priority No.:&nbsp;
-                  %td{:colspan=>2}= f.text_field :calc_priority_no, :style=>"width:100px"
+                -#%tr
+                -#  %td{:width=>160} Calculation Priority No.:&nbsp;
+                -#  %td{:colspan=>2}= f.text_field :calc_priority_no, :style=>"width:100px"
                 %tr
                   %td{:width=>160} Effective Month:&nbsp;
                   %td= f.text_field :effective_month, :readonly => 'readonly',:style=>"width:178px"

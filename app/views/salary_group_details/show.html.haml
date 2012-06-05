@@ -26,14 +26,17 @@
                   %td{:width=>130} PF Applicability:&nbsp;
                   %td= (@salary_group_detail.pf_applicability == true)?"Yes":"No"
                 %tr
-                  %td{:width=>130} PF Percentage(%):&nbsp;
-                  %td= @salary_group_detail.pf_percentage
+                  %td{:width=>130} ESI Applicability:&nbsp;
+                  %td= (@salary_group_detail.esi_applicability == true)?"Yes":"No"
+                -#%tr
+                -#  %td{:width=>130} PF Percentage(%):&nbsp;
+                -#  %td= @salary_group_detail.pf_percentage
                 %tr
                   %td{:width=>130} PT Applicability:&nbsp;
                   %td= (@salary_group_detail.pt_applicability == true)?"Yes":"No"
-                %tr
-                  %td{:width=>130} PT Percentage(%):&nbsp;
-                  %td= @salary_group_detail.pt_percentage
+                -#%tr
+                -#  %td{:width=>130} PT Percentage(%):&nbsp;
+                -#  %td= @salary_group_detail.pt_percentage
 
             %td.std_td
               %table
@@ -49,12 +52,9 @@
                 %tr
                   %td{:width=>130} Effective To:&nbsp;
                   %td Till Date
-                %tr
-                  %td{:width=>130} ESI Applicability:&nbsp;
-                  %td= (@salary_group_detail.esi_applicability == true)?"Yes":"No"
-                %tr
-                  %td{:width=>130} ESI Percentage(%):&nbsp;
-                  %td= @salary_group_detail.esi_percentage
+                -#%tr
+                -#  %td{:width=>130} ESI Percentage(%):&nbsp;
+                -#  %td= @salary_group_detail.esi_percentage
     %tr
       %td &nbsp;
     %tr
