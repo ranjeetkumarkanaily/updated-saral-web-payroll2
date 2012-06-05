@@ -2,8 +2,8 @@
   %ul
     %li= link_to 'Back', upload_companies_path
 #right_content
-  %h1 Backup File Details
   -if @bkup_util
+    %h1 Backup File Details
     = form_tag(:controller => "companies", :action => "restore_backup") do |f|
       = hidden_field_tag "file", @file.path
       = hidden_field_tag "backup_option", @bkup_util.backup_option
@@ -13,13 +13,11 @@
             %table
               %tr
                 %td.table_grid_header Backup On
-                %td.table_grid_header File Hash
                 %td.table_grid_header Employees Count
                 %td.table_grid_header Last Salary Calculated On
                 %td.table_grid_header Backup Option
               %tr
                 %td.table_grid_td=l @bkup_util.backup_date, :format => :default
-                %td.table_grid_td= @bkup_util.file_hash
                 %td.table_grid_td= @bkup_util.employees_count
                 %td.table_grid_td=l @bkup_util.last_sal_calculated, :format => :type2
                 %td.table_grid_td= @bkup_util.backup_option
@@ -28,4 +26,4 @@
               %tr
                 %td{:colspan=>2}= submit_tag "Restore Backup"
   -else
-    %h2 Backup File is Invalid
+    %h1{:style => "background-color:#e9322d"} Backup File is Invalid
