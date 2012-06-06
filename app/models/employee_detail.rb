@@ -49,7 +49,6 @@ class EmployeeDetail < ActiveRecord::Base
   end
 
   def date_validation_on_update
-    puts "hi"
     last_record = EmployeeDetail.where(:employee_id=>employee_id).order('created_at desc').second
     if !last_record.nil?
       errors.add(:effective_date, "should be after date of last saved Effective date") if effective_date < last_record.effective_date
