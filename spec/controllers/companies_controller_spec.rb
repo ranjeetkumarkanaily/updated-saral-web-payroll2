@@ -129,20 +129,12 @@ describe CompaniesController do
   end
 
   describe "POST backup_option" do
-    it "backups only schema" do
-      post :backup_option, :backup_option => "Schema"
-      response.should be_success
-    end
     it "backups Skeleton" do
       post :backup_option, :backup_option => "Skeleton"
       response.should be_success
     end
     it "backups Schema with data" do
-      post :backup_option, :backup_option => "Schema with data"
-      response.should be_success
-    end
-    it "backups Data only" do
-      post :backup_option, :backup_option => "Data Only"
+      post :backup_option, :backup_option => "Data Backup"
       response.should be_success
     end
   end
@@ -162,11 +154,11 @@ describe CompaniesController do
     it "should restore data only backup file" do
       FactoryGirl.create(:employee)
       dump_file = fixture_file_upload("spec/factories/Backup-04-06-2012-12h43m09s.db")
-      BackupUtility.create!(:backup_date => Time.now.strftime('%d-%m-%Y'), :file_hash => dump_file.hash, :employees_count => Employee.count, :last_sal_calculated => "01-01-12", :backup_option => "Schema", :file_name => dump_file.original_filename)
+      BackupUtility.create!(:backup_date => Time.now.strftime('%d-%m-%Y'), :file_hash => dump_file.hash, :employees_count => Employee.count, :last_sal_calculated => "01-01-12", :backup_option => "Data Backup", :file_name => dump_file.original_filename)
       post :restore, :dump_file => dump_file
       response.should be_success
 
-      post :restore_backup, :file => "/home/ranjeet/railsProjects/updated-saral-web-payroll/public/excel_uploaded_files/Backup-04-06-2012-12h43m09s.db", :backup_option => "Data Only"
+      post :restore_backup, :file => "/home/ranjeet/railsProjects/updated-saral-web-payroll/public/excel_uploaded_files/Backup-04-06-2012-12h43m09s.db", :backup_option => "Data Backup"
       response.should redirect_to companies_path
     end
 
