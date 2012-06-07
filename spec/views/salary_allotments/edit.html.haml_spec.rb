@@ -16,7 +16,7 @@ describe "salary_allotments/edit" do
                                           :attendance_configuration_id=>attendance_configuration.id,
                                           :branch_id=>branch.id,
                                           :financial_institution_id=>financial_institution.id)
-    salAllot = FactoryGirl.create(:salary_allotment, :employee_id => employee.id, :salary_group_detail_id => salary_group_detail.id,:salary_head_id=>salary_head.id)
+    salAllot = FactoryGirl.create(:salary_allotment, :employee_id => employee.id, :employee_detail_id => employee_details.id,:salary_group_detail_id => salary_group_detail.id,:salary_head_id=>salary_head.id)
     view.stub!(:params).and_return :id => salAllot.employee_id
 
     assign(:allotSal_earnings, [stub_model(SalaryAllotment,
