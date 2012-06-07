@@ -59,7 +59,7 @@ class EmployeeDetailsController < ApplicationController
       if @employee_detail.employee_id != nil
         if @employee_detail.save then
           @employee_detail.employee_salary_allotment
-          @employee_detail.update_last_record
+          @employee_detail.do_update_after_save
           format.html { redirect_to employee_details_path(:param1 => @employee_detail.employee_id), notice: 'Employee detail was successfully created.' }
           format.json { render json: @employee_detail, status: :created, location: @employee_detail }
         else
@@ -97,7 +97,7 @@ class EmployeeDetailsController < ApplicationController
     @employee_detail = EmployeeDetail.find(params[:id])
     @paramempid = @employee_detail.employee_id
     @employee_detail.destroy
-    @employee_detail.update_last_record @paramempid
+    @employee_detail.do_update_after_delete
     respond_to do |format|
       format.html { redirect_to employee_details_url(:param1 => @paramempid), notice: 'Employee detail was successfully Destroyed.' }
       format.json { head :ok }

@@ -11,6 +11,7 @@ class EmployeesController < ApplicationController
     end
 
     respond_to do |format|
+      format.js
       format.html # show.html.haml
       format.json { render json: @employees }
     end

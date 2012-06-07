@@ -10,6 +10,7 @@ public/excel_uploaded_files/*
 public/system/Backup*
 public/system/companies/*
 public/system/company_documents/*
+public/templates/changed.txt
 !.gitignore
 db/development_structure.sql
 db/structure.sql

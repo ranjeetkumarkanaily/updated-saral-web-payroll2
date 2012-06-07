@@ -61,12 +61,15 @@ describe EmployeeDetail do
   end
 
   it "should give error if effective date is before last saved effective date" do
+
     employee = FactoryGirl.create(:employee)
     employee_detail = EmployeeDetail.create(:employee_id => employee.id,:effective_date => '2011-03-01',:salary_group_id => 2)
     employee_details_second = EmployeeDetail.new(:employee_id => employee.id,:effective_date => '2011-02-10',:salary_group_id => 2)
     employee_details_second.save
     employee_details_second.errors.messages[:effective_date].should eq(["should be after date of last saved Effective date"])
   end
+
+
 
 
 end
