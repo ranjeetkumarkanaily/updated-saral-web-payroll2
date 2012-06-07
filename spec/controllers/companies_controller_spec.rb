@@ -147,7 +147,7 @@ describe CompaniesController do
       post :restore, :dump_file => dump_file
       response.should be_success
 
-      post :restore_backup, :file => "/home/ranjeet/railsProjects/updated-saral-web-payroll/public/excel_uploaded_files/Backup-04-06-2012-11h56m09s.db"
+      post :restore_backup, :file => "public/excel_uploaded_files/Backup-04-06-2012-11h56m09s.db"
       response.should redirect_to companies_path
     end
 
@@ -158,7 +158,7 @@ describe CompaniesController do
       post :restore, :dump_file => dump_file
       response.should be_success
 
-      post :restore_backup, :file => "/home/ranjeet/railsProjects/updated-saral-web-payroll/public/excel_uploaded_files/Backup-04-06-2012-12h43m09s.db", :backup_option => "Data Backup"
+      post :restore_backup, :file => "public/excel_uploaded_files/Backup-04-06-2012-12h43m09s.db", :backup_option => "Data Backup"
       response.should redirect_to companies_path
     end
 
