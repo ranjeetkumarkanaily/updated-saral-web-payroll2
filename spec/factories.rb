@@ -305,4 +305,10 @@ FactoryGirl.define do
     currency "Indian Rupee"
   end
 
+  factory :leave_taken do
+    employee_id 1
+    from_date '2012-01-01'
+    count 2
+  end
+
 end

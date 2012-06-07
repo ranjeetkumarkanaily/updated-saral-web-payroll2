@@ -97,6 +97,15 @@ describe EmployeeDetailsController do
         post :create, :employee_detail => valid_attributes
         response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id]))
       end
+
+      it "creates new details, upadte last saved effective to date to present effective from date " do
+        employee_details_first = FactoryGirl.create(:employee_detail, :employee_id => @employee.id,:financial_institution_id=>@financial_institution.id,:branch_id=>@branch.id,:attendance_configuration_id=>@attendance_configuration.id)
+
+        post :create, :employee_detail => valid_attributes.merge(:employee_id => @employee.id)
+
+      end
+
+
     end
 
     describe "with invalid params" do
@@ -149,13 +158,14 @@ describe EmployeeDetailsController do
     describe "with valid params" do
 
       it "updates the requested employee_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes, :panoption => "ADD PAN"
+        employee_detail =  EmployeeDetail.create! valid_attributes
         EmployeeDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => employee_detail.id, :employee_detail => {'these' => 'params'}
       end
 
       it "assigns the requested employee_detail as @employee_detail" do
-        employee_detail = EmployeeDetail.create! valid_attributes
+        employee_detail_first =  EmployeeDetail.create! valid_attributes
+        employee_detail = EmployeeDetail.create! valid_attributes.merge(:effective_date=>'2012-03-03')
         put :update, :id => employee_detail.id, :employee_detail => valid_attributes
         assigns(:employee_detail).should eq(employee_detail)
       end
@@ -210,6 +220,16 @@ describe EmployeeDetailsController do
       delete :destroy, :id => employee_detail.id
       response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id] ))
     end
+
+    it "should update last record effective_to date as nill/till date when any record is deleted" do
+      employee_detail_first = EmployeeDetail.create! valid_attributes
+      employee_details_second = EmployeeDetail.create! valid_attributes.merge(:effective_date=>'2012-02-01')
+      employee_details_third = EmployeeDetail.create! valid_attributes.merge(:effective_date=>'2012-03-01')
+      delete :destroy, :id => employee_details_third.id
+      response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id] ))
+      (EmployeeDetail.last.effective_to).should eq(nil)
+    end
+
   end
 
 end

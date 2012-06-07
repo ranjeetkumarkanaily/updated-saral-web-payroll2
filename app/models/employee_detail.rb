@@ -19,7 +19,9 @@ class EmployeeDetail < ActiveRecord::Base
   validates_uniqueness_of :employee_id, :scope => [:effective_date],:message => "Details already exist for the same date"
   validate :effective_date_after_doj
   validate :effective_date_before_dol
-  validate :effective_date_validation
+  validate :date_validation_on_update, :on => :update
+  validate :date_validation_on_save, :on => :create
+
 
   delegate :salary_group_name, :to => :salary_group, :prefix => true
   delegate :empname, :to => :employee, :prefix => true
@@ -39,31 +41,34 @@ class EmployeeDetail < ActiveRecord::Base
     end
   end
 
-  def effective_date_validation
-    last_record_id = last_record employee_id
-    if last_record_id != 0
-      last_effective_date = EmployeeDetail.find(last_record_id).effective_date
-      if effective_date < last_effective_date then
-        errors.add(:effective_date, "should be after date of last saved Effective date")
-      end
+  def date_validation_on_save
+    last_record = EmployeeDetail.where(:employee_id=>employee_id).order('created_at desc').first
+    if !last_record.nil?
+      errors.add(:effective_date, "should be after date of last saved Effective date") if effective_date < last_record.effective_date
     end
   end
 
-  def update_last_record(employee_id=employee_id)
-    last_record_id = last_record employee_id
-    if last_record_id > 0
-      pre_employee_detail = EmployeeDetail.find(last_record_id)
-      pre_employee_detail.update_attribute(:effective_to,self.effective_date)
+  def date_validation_on_update
+    last_record = EmployeeDetail.where(:employee_id=>employee_id).order('created_at desc').second
+    if !last_record.nil?
+      errors.add(:effective_date, "should be after date of last saved Effective date") if effective_date < last_record.effective_date
     end
   end
 
-  def last_record(employee_id)
-    last_record_id = 0
-    if EmployeeDetail.count(:conditions => "employee_id = #{employee_id}") > 0 then
-      last_record_id = EmployeeDetail.where(:employee_id => employee_id).order('created_at desc')
-      last_record_id = last_record_id[0]['id']
+  def do_update_after_save
+    if EmployeeDetail.count(:conditions => "employee_id = #{employee_id}") >= 2
+       record_id_to_update = EmployeeDetail.where(:employee_id=>employee_id).order('created_at desc').second
+       if !record_id_to_update.nil?
+         record_id_to_update.update_attribute(:effective_to,effective_date-1)
+       end
     end
-    last_record_id
+  end
+
+  def do_update_after_delete
+    if EmployeeDetail.count(:conditions => "employee_id = #{employee_id}") >= 1
+      record_id_to_update = EmployeeDetail.where(:employee_id=>employee_id).order('created_at desc').first
+      record_id_to_update.update_attribute(:effective_to,nil)
+    end
   end
 
   def employee_salary_allotment

@@ -150,4 +150,23 @@ describe LeaveTakensController do
     end
   end
 
+  describe " Post Excel File Upload, Parse and Save" do
+    xit "save parse validate and redirects to upload with no error message" do
+      employee = FactoryGirl.create(:employee)
+      leaves = LeaveTaken.create! valid_attributes.merge(:employee_id => employee.id)
+      excel_file = fixture_file_upload("spec/factories/Leave_taken.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      assigns(:leaves).should eq(leaves)
+    end
+
+    xit "parse and validate and redirects to upload with error message" do
+      employee = FactoryGirl.create(:employee)
+      leave_definition = FactoryGirl.create(:leave_definition)
+      leave_opening_balance = FactoryGirl.create(:leave_opening_balance,:employee_id=>employee.id,:leave_definition_id=>leave_definition.id)
+      excel_file = fixture_file_upload("spec/factories/Leave_opening_balance.xls")
+      post :save_uploaded_data, :excel_file => excel_file
+      response.should redirect_to(upload_leave_opening_balances_path)
+
+    end
+  end
 end
