@@ -76,8 +76,8 @@
           %td.normal_txt{:width=>180} DOJ
           %td.normal_txt{:width=>200}= l @employee_payslip[:employee].date_of_joining, :format=>:default
         %tr
-          %td.normal_txt{:width=>180} Paid Days
-          %td.normal_txt{:width=>200}= number_with_precision(@employee_payslip[:no_of_day_in_selected_month], :precision => 2)
+          %td.normal_txt{:width=>180} Pay Days
+          %td.normal_txt{:width=>200}= number_with_precision(@employee_payslip[:no_of_pay_days], :precision => 2)
           %td{:width=>40} &nbsp;
           %td.normal_txt{:width=>180} Present Days
           %td.normal_txt{:width=>200}= number_with_precision(@employee_payslip[:no_of_present_days], :precision => 2)

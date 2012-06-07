@@ -45,19 +45,12 @@ describe Salary do
         leave_definition = FactoryGirl.create(:leave_definition)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
-        salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        get_leave_count = Salary.calculate_salary [salary],"Feb/2011"
-        get_leave_count.should eq(27)
-      end
-
-      it "should give no of present days with employee's date of leaving" do
-        employee = FactoryGirl.create(:employee,:date_of_leaving => "2011-02-15",:leaving_reason => 'Without Reason')
-        leave_definition = FactoryGirl.create(:leave_definition)
-        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
-        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
-        salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id)
-        get_leave_count = Salary.calculate_salary [salary],"Feb/2011"
-        get_leave_count.should eq(14)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id,:employee_id => employee.id,:employee_detail_id => employee_detail.id)
+        salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id, :present_days=>24, :pay_days=>28)
+        salary_send = {"0"=>[salary]}
+        get_leave_count = Salary.calculate_salary salary_send,"Feb/2011"
+        no_of_present_days = get_leave_count["0"][0][:present_days]
+        no_of_present_days.should eq(24)
       end
     end
 

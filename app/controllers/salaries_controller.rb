@@ -23,6 +23,7 @@ class SalariesController < ApplicationController
         File.open(save_path, 'wb') do |file|
           file << pdf
         end
+        @employee = Employee.find(params[:employee_id])
         UserMailer.mail_payslip(@employee,params[:month_year]).deliver
         UserMailer.cleanup
         flash[:notice] = 'Email has been sent successfully!!!'

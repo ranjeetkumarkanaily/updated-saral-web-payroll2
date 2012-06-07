@@ -51,6 +51,8 @@
                       %td.table_grid_td= employee[:empname]
                       %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]"
                       %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]"
+                      - if employee[:salary_allotment].count == 0
+                        = hidden_field_tag "salary[#{j}][][employee_id]", employee[:id]
                       - (0..head_count-1).each do |i|
                         = hidden_field_tag "salary[#{j}][][employee_id]", employee[:salary_allotment][i][:employee_id]
                         = hidden_field_tag "salary[#{j}][][employee_detail_id]", employee[:salary_allotment][i][:employee_detail_id]

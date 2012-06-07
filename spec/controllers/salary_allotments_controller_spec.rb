@@ -32,7 +32,7 @@ describe SalaryAllotmentsController do
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
       salary_allotment = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id,:salary_head_id=>salary_head.id)
       get :edit, :id => salary_allotment.employee_id
-      assigns(:allotSal).should eq([salary_allotment])
+      assigns(:allotSal_earnings).should eq([salary_allotment])
     end
   end
 
