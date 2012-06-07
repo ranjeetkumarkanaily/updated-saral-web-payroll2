@@ -8,7 +8,7 @@
       - @leaves["errors"].each do |error|
         %li
           Problems in line number #{error[0]}:
-          - error[1].full_messages.each do |msg|
+          - error[1].each do |msg|
             %p
               = msg
   - else

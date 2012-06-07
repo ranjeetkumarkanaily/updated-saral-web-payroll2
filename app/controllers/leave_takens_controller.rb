@@ -44,7 +44,7 @@ class LeaveTakensController < ApplicationController
 
     respond_to do |format|
       if @leave_taken.save
-        format.html { redirect_to @leave_taken, notice: 'Leave taken was successfully created.' }
+        format.html { redirect_to leave_takens_path, notice: 'Leave taken was successfully created.' }
         format.json { render json: @leave_taken, status: :created, location: @leave_taken }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class LeaveTakensController < ApplicationController
 
     respond_to do |format|
       if @leave_taken.update_attributes(params[:leave_taken])
-        format.html { redirect_to @leave_taken, notice: 'Leave taken was successfully updated.' }
+        format.html { redirect_to leave_takens_path, notice: 'Leave taken was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -92,13 +92,11 @@ class LeaveTakensController < ApplicationController
     book = Spreadsheet.open "#{file.store_path}"
     sheet1 = book.worksheet 0
     @leaves = LeaveTaken.process_leaves_excel_sheet sheet1
-
     file.remove!
   end
 
   def save
     params[:leaves_takens].each do |leave|
-      puts leave.inspect
       LeaveTaken.create(leave)
     end
     redirect_to leave_takens_path

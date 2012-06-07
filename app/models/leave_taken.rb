@@ -1,14 +1,14 @@
 class LeaveTaken < ActiveRecord::Base
-  attr_accessible :count, :employee_id, :from_date
+  attr_accessible :count, :employee_id, :from_date, :lop_count
   acts_as_audited
 
   belongs_to :employee, :validate => true
   validates_presence_of :from_date, :employee_id , :count
   validates_presence_of :employee, :message => " does not exists."
 
-  def set_to_date
-    Date.strptime(from_date.to_s,"%Y-%m-%d")+count
-  end
+  #def set_to_date
+  #  Date.strptime(from_date.to_s,"%Y-%m-%d")+count
+  #end
 
   def self.process_leaves_excel_sheet leave_excel_sheet
     leaves_takens = Hash.new
@@ -28,12 +28,14 @@ class LeaveTaken < ActiveRecord::Base
         liv.employee_id = Employee.find_by_refno("#{row[0]}").id
         liv.from_date = row[1]
         liv.count = row[2]
+        liv.lop_count = row[3]
+        leaves_takens["leaves_takens"] << liv
 
-        if liv.valid?
-          leaves_takens["leaves_takens"] << liv
-        else
-          errors["#{counter+1}"] = liv.errors
-        end
+        #if liv.valid?
+        #  leaves_takens["leaves_takens"] << liv
+        #else
+        #  errors["#{counter+1}"] = liv.errors
+        #end
       end
     end
     leaves_takens["errors"] = errors

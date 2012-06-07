@@ -67,7 +67,7 @@ describe LeaveTakensController do
       it "redirects to the created leave_taken" do
         employee = FactoryGirl.create(:employee)
         post :create, {:leave_taken => valid_attributes.merge(:employee_id => employee.id)}
-        response.should redirect_to(LeaveTaken.last)
+        response.should redirect_to(leave_takens_path)
       end
     end
 
@@ -108,7 +108,7 @@ describe LeaveTakensController do
         employee = FactoryGirl.create(:employee)
         leave_taken = LeaveTaken.create! valid_attributes.merge(:employee_id => employee.id)
         put :update, {:id => leave_taken.to_param, :leave_taken => valid_attributes}
-        response.should redirect_to(leave_taken)
+        response.should redirect_to(leave_takens_path)
       end
     end
 
@@ -151,22 +151,33 @@ describe LeaveTakensController do
   end
 
   describe " Post Excel File Upload, Parse and Save" do
-    xit "save parse validate and redirects to upload with no error message" do
+    it "parse, validate and redirects to save page with no error message" do
       employee = FactoryGirl.create(:employee)
       leaves = LeaveTaken.create! valid_attributes.merge(:employee_id => employee.id)
       excel_file = fixture_file_upload("spec/factories/Leave_taken.xls")
       post :upload_parse_validate, :excel_file => excel_file
-      assigns(:leaves).should eq(leaves)
+      response.should be_success
     end
 
-    xit "parse and validate and redirects to upload with error message" do
+    it "parse and validate and redirects to upload with error message" do
       employee = FactoryGirl.create(:employee)
-      leave_definition = FactoryGirl.create(:leave_definition)
-      leave_opening_balance = FactoryGirl.create(:leave_opening_balance,:employee_id=>employee.id,:leave_definition_id=>leave_definition.id)
-      excel_file = fixture_file_upload("spec/factories/Leave_opening_balance.xls")
-      post :save_uploaded_data, :excel_file => excel_file
-      response.should redirect_to(upload_leave_opening_balances_path)
+      leaves = LeaveTaken.create! valid_attributes.merge(:employee_id => employee.id)
+      excel_file = fixture_file_upload("spec/factories/Leave_taken_dup_col.xls")
+      post :upload_parse_validate, :excel_file => excel_file
+      response.should be_success
+    end
 
+    it "save excel upload data" do
+      #"leaves_takens"=>[{"employee_id"=>"1", "from_date"=>"2011-02-01", "count"=>"2.0"}]
+      post :save, :leaves_takens => [{"employee_id"=>"1", "from_date"=>"2011-02-01", "count"=>"2.0"}]
+      response.should redirect_to leave_takens_path
+    end
+  end
+
+  describe "Generate Sample excel sheet template" do
+    it "should render template excel sheet" do
+      get :generate_sample_excel_template, :format => "xls"
+      response.should render_template('leave_takens/generate_sample_excel_template')
     end
   end
 end
