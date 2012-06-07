@@ -168,7 +168,6 @@ describe LeaveTakensController do
     end
 
     it "save excel upload data" do
-      #"leaves_takens"=>[{"employee_id"=>"1", "from_date"=>"2011-02-01", "count"=>"2.0"}]
       post :save, :leaves_takens => [{"employee_id"=>"1", "from_date"=>"2011-02-01", "count"=>"2.0"}]
       response.should redirect_to leave_takens_path
     end
