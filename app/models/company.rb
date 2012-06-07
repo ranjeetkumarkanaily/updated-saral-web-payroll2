@@ -29,9 +29,6 @@ class Company < ActiveRecord::Base
     file = File.new(latest_dump, "w")
     BackupUtility.create!(:backup_date => Time.now.strftime('%d-%m-%Y'), :file_hash => file.hash, :employees_count => Employee.count, :last_sal_calculated => Salary.maximum(:effective_date), :backup_option => option, :file_name => File.basename(file))
     case option
-      when "Schema"
-        system("pg_dump --schema-only --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
-
       when "Skeleton"
         schema_file = File.new("schema","w")
         system("pg_dump --schema-only  --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{schema_file.path}")
@@ -41,21 +38,14 @@ class Company < ActiveRecord::Base
         system("#{pg_dump_skltn}")
         merged_two_files schema_file, data_file, latest_dump
 
-      when "Schema with data"
+      when "Data Backup"
         system("pg_dump --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
-
-      when "Data Only"
-        system("pg_dump --data-only --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -Fc #{config['database']} > #{file.path}")
     end
     file
   end
 
   def self.restore_db file_path, backup_option
-    if(backup_option == "Data Only")
-      delete_all_tables
-    else
-      drop_all_tables
-    end
+    drop_all_tables
     config = ActiveRecord::Base.configurations[Rails.env]
     pg_db_restore = "pg_restore --host=#{config['host']} --port=#{config['port']} --username=#{config['username']} --no-password -d #{config['database']} #{file_path}"
     system("#{pg_db_restore}")
@@ -76,12 +66,6 @@ class Company < ActiveRecord::Base
     conn = ActiveRecord::Base.connection
     tables = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';").map { |r| r["table_name"] }
     tables.each { |t| conn.execute("DROP TABLE IF EXISTS #{t} CASCADE")}
-  end
-
-  def self.delete_all_tables
-    conn = ActiveRecord::Base.connection
-    tables = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';").map { |r| r["table_name"] }
-    tables.each { |t| conn.execute("TRUNCATE TABLE #{t} CASCADE")}
   end
 
 end
