@@ -53,22 +53,44 @@ describe SalaryGroupDetailsController do
   end
 
   describe "POST create" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+      @salary_group = FactoryGirl.create(:salary_group)
+      @sal_head = FactoryGirl.create(:salary_head)
+      @branch = FactoryGirl.create(:branch)
+      @financial_institution = FactoryGirl.create(:financial_institution)
+      @attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      @salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_group_id => @salary_group.id, :salary_head_id => @sal_head.id)
+      @employee_detail = FactoryGirl.create(:employee_detail, :employee_id => @employee.id, :salary_group_id => @salary_group.id, :branch_id => @branch.id, :financial_institution_id => @financial_institution.id, :attendance_configuration_id => @attendance_configuration.id)
+
+      def val_attr
+        {
+            :calc_type => "Lumpsum",
+            :calculation => "",
+            :based_on => "Present Days",
+            :salary_group_id => @salary_group.id,
+            :salary_head_id=>@sal_head.id,
+            :effective_month=>"Jan/2012"
+        }
+      end
+    end
     describe "with valid params" do
       it "creates a new SalaryGroupDetail" do
         expect {
-          post :create, :salary_group_detail => valid_attributes
+          post :create, :salary_group_detail => val_attr
         }.to change(SalaryGroupDetail, :count).by(1)
       end
 
       it "assigns a newly created salary_group_detail as @salary_group_detail" do
-        post :create, :salary_group_detail => valid_attributes
+
+        post :create, :salary_group_detail => val_attr
         assigns(:salary_group_detail).should be_a(SalaryGroupDetail)
         assigns(:salary_group_detail).should be_persisted
       end
 
       it "redirects to the created salary_group_detail" do
-        post :create, :salary_group_detail => valid_attributes
-        response.should redirect_to(salary_group_details_path(:param1 => valid_attributes[:salary_group_id]))
+        post :create, :salary_group_detail => val_attr
+        response.should redirect_to(salary_group_details_path(:param1 => val_attr[:salary_group_id]))
       end
     end
 
