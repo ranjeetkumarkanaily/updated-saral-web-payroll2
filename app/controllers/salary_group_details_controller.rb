@@ -55,6 +55,7 @@ class SalaryGroupDetailsController < ApplicationController
     effective_month_existence = SalaryGroupDetail.chk_effective_month params[:salary_group_detail]["effective_month"],params[:id]
     if effective_month_existence.empty?
       @salary_group_detail = SalaryGroupDetail.new(params[:salary_group_detail])
+      puts @salary_group_detail.inspect
       if @salary_group_detail.save
         redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully created.'
       else
