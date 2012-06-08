@@ -18,13 +18,13 @@
                 %table
                   %tr
                     %td{:style=>"width:130px"} Pay Months:
-                    %td= select_tag "month_year", options_from_collection_for_select(Paymonth.order('created_at DESC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
+                    %td= select_tag "month_year", options_from_collection_for_select(Paymonth.months,'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
               %td
                 %table
                   %tr
                     %td
                       %td{:valign=>"top",:style=>"width:130px"} Salary Groups:
-                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.order('created_at ASC'),'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:300px;height:100px;",:prompt => 'Select Select Group'
+                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.assigned_salary_group,'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:300px;height:100px;",:prompt => 'Select Select Group'
             %tr
               %td
                 = submit_tag("Get Salary")
@@ -49,8 +49,8 @@
                     %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                       %td.table_grid_td= employee[:refno]
                       %td.table_grid_td= employee[:empname]
-                      %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]"
-                      %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]"
+                      %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]", employee[:pay_days],:readonly=>"readonly"
+                      %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]", employee[:present_days],:readonly=>"readonly"
                       - if employee[:salary_allotment].count == 0
                         = hidden_field_tag "salary[#{j}][][employee_id]", employee[:id]
                       - (0..head_count-1).each do |i|

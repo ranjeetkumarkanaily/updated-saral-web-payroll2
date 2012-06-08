@@ -1,7 +1,7 @@
 #left_content
   = render 'left'
 #right_content
-  %h1 Editing Generated Salary
+  %h1 Editing Generated Salary of #{Employee.find(params[:employee_id]).empname} for #{params[:month_year]}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;
@@ -24,7 +24,10 @@
                 %td.table_grid_td= sal.salary_head_head_name
                 %td.table_grid_td= sal.salary_head_short_name
                 %td.table_grid_td= sal.salary_head_salary_type
-                %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal.salary_amount
+                - if sal.salary_group_detail.calc_type == "Every Month"
+                  %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal.salary_amount
+                - else
+                  %td.table_grid_td= text_field_tag 'salary[][salary_amount]', sal.salary_amount, :readonly=>"readonly"
             %tr
               %td
                 &nbsp;

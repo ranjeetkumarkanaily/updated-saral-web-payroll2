@@ -309,6 +309,7 @@ FactoryGirl.define do
     employee_id 1
     from_date '2012-01-01'
     count 2
+    lop_count 2
   end
 
 end

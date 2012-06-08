@@ -15,15 +15,15 @@
             %td.std_td{:style=>"width:100%"}
               %table
                 %tr
-                  %td Employee:&nbsp;
-                  %td{:style=>"width:120px"}= f.select :employee_id, options_for_select(Employee.employees.collect{|em| [em.empname_and_refno,em.id]},leave_taken.employee_id),{:prompt => 'Select'}
-                  %td Effective Date:&nbsp
+                  %td{:style=>"width:130px"} Employee:&nbsp;
+                  %td{:style=>"width:200px"}= f.select :employee_id, options_for_select(Employee.employees.collect{|em| [em.empname_and_refno,em.id]},leave_taken.employee_id),{:prompt => 'Select'}
+                  %td{:style=>"width:130px"} Effective Date:&nbsp
                   %td= f.text_field :from_date, :id=>"leave_from_date", :class=>"date_input"
                 %tr
                   %td Leave Count:&nbsp
-                  %td{:style=>"width:120px"}= f.text_field :count
+                  %td= f.text_field :count,:style=>"width:145px"
                   %td LOP Count:&nbsp
-                  %td= f.text_field :lop_count
+                  %td= f.text_field :lop_count,:style=>"width:145px"
 
           %tr
             %td.std_td{:colspan=>3}
@@ -31,4 +31,4 @@
                 %tr
                   %td &nbsp;
                 %tr
-                  %td{:colspan=>3}= f.submit
+                  %td{:colspan=>3}= f.submit "Save"
