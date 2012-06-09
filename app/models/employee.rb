@@ -10,6 +10,8 @@ class Employee < ActiveRecord::Base
 
   has_many :leave_details, :dependent => :destroy
 
+  has_many :leave_takens, :dependent => :destroy
+
   has_many :salary_allotments, :dependent => :destroy
   has_one :employee_statutory, :dependent => :destroy
   has_many :pf_calculated_values, :dependent => :destroy

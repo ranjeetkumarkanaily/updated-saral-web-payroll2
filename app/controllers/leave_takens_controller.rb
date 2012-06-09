@@ -2,7 +2,7 @@ class LeaveTakensController < ApplicationController
   # GET /leave_takens
   # GET /leave_takens.json
   def index
-    @leave_takens = LeaveTaken.order('from_date desc').paginate(:page => params[:page], :per_page => 10)
+    @leave_takens = LeaveTaken.order('leave_detail_date desc').paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class LeaveTakensController < ApplicationController
   # GET /leave_takens/new.json
   def new
     @leave_taken = LeaveTaken.new
-
+    @leave_taken_employees = @leave_taken.employee_list
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @leave_taken }
@@ -41,16 +41,30 @@ class LeaveTakensController < ApplicationController
   # POST /leave_takens.json
   def create
     @leave_taken = LeaveTaken.new(params[:leave_taken])
+    @leave_takens = params[:leave_takens]
 
-    respond_to do |format|
-      if @leave_taken.save
-        format.html { redirect_to leave_takens_path, notice: 'Leave taken was successfully created.' }
-        format.json { render json: @leave_taken, status: :created, location: @leave_taken }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @leave_taken.errors, status: :unprocessable_entity }
+    month_year = Date.strptime params[:leave_taken][:leave_detail_date], "%b/%Y"
+    month_year = month_year.beginning_of_month
+    var = []
+    @leave_takens.each do |leave|
+      if !leave[1]["leave_count"].blank? or !leave[1]["lop_count"].blank?
+        var = {:employee_id => leave[1]["employee_id"],:leave_detail_date=>month_year,:leave_count=>leave[1]["leave_count"],:leave_from_date=>leave[1]["leave_from_date"],:leave_to_date=>leave[1]["leave_to_date"],:lop_count=>leave[1]["lop_count"],:lop_from_date=>leave[1]["lop_from_date"],:lop_to_date=>leave[1]["lop_to_date"]}
+        LeaveTaken.create(var)
       end
     end
+
+    respond_to do |format|
+      format.html { redirect_to leave_takens_path, notice: 'Leave Details successfully created.' }
+    end
+    #respond_to do |format|
+    #  if @leave_taken.save
+    #    format.html { redirect_to leave_takens_path, notice: 'Leave taken was successfully created.' }
+    #    format.json { render json: @leave_taken, status: :created, location: @leave_taken }
+    #  else
+    #    format.html { render action: "new" }
+    #    format.json { render json: @leave_taken.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # PUT /leave_takens/1

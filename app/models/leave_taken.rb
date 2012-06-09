@@ -1,10 +1,10 @@
 class LeaveTaken < ActiveRecord::Base
-  attr_accessible :count, :employee_id, :from_date, :lop_count
+  attr_accessible :employee_id, :leave_from_date, :leave_count, :lop_count,:leave_detail_date,:leave_to_date,:lop_from_date,:lop_to_date
   acts_as_audited
 
   belongs_to :employee, :validate => true
-  validates_presence_of :from_date, :employee_id , :count
-  validates_presence_of :employee, :message => " does not exists."
+  #validates_presence_of :from_date, :employee_id , :count
+  #validates_presence_of :employee, :message => " does not exists."
 
   #def set_to_date
   #  Date.strptime(from_date.to_s,"%Y-%m-%d")+count
@@ -45,5 +45,17 @@ class LeaveTaken < ActiveRecord::Base
   def self.duplicates_in_leave_columns? leave_columns
     leave_columns.size != leave_columns.uniq.size ? true : false
   end
+
+  def employee_list
+    employees = Employee.select('id,empname,refno').where('date_of_leaving is NULL')
+    employee_list = []
+    i=0
+    employees.each do |employee|
+      employee_list[i] = {:employee_id=>employee.id,:refno=>employee.refno,:empname=>employee.empname}
+      i=i+1
+    end
+    employee_list
+  end
+
 
 end

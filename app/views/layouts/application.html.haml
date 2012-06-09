@@ -69,7 +69,7 @@
           %li
             %a{:href => branches_path, :rel => "dropmenu2_b"} Master
           %li
-            %a{:href => leave_takens_path,:target=>"dropmenu6_b"}Leave
+            %a{:href => leave_takens_path,:rel=>"dropmenu6_b"}Leave
           -#%li
           -#  %a{:href => leave_details_path, :rel => "dropmenu5_b"} Leave
           %li
@@ -109,6 +109,7 @@
       #dropmenu5_b.dropmenudiv_b
         %a{:href => leave_definitions_path} Leave Definitions
         %a{:href => leave_details_path} Leave Details
+
       :javascript
         //SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
         tabdropdown.init("bluemenu")
