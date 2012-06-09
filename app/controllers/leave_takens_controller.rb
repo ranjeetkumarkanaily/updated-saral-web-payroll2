@@ -48,6 +48,8 @@ class LeaveTakensController < ApplicationController
     var = []
     @leave_takens.each do |leave|
       if !leave[1]["leave_count"].blank? or !leave[1]["lop_count"].blank?
+        leave[1]["leave_count"] = 0 if(leave[1]["leave_count"].nil? or leave[1]["leave_count"].blank?)
+        leave[1]["lop_count"] = 0 if(leave[1]["lop_count"].nil? or leave[1]["lop_count"].blank?)
         var = {:employee_id => leave[1]["employee_id"],:leave_detail_date=>month_year,:leave_count=>leave[1]["leave_count"],:leave_from_date=>leave[1]["leave_from_date"],:leave_to_date=>leave[1]["leave_to_date"],:lop_count=>leave[1]["lop_count"],:lop_from_date=>leave[1]["lop_from_date"],:lop_to_date=>leave[1]["lop_to_date"]}
         LeaveTaken.create(var)
       end
