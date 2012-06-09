@@ -1,10 +1,10 @@
 #left_content
   %ul
     %li= link_to "Back", @pt_group
-    %li= link_to 'Add New PT Rates', new_pt_rate_path(:paymonth_id => params[:paymonth_id], :pt_group_id => params[:pt_group_id])
+    %li= link_to 'Add New PT Slab', new_pt_rate_path(:paymonth_id => params[:paymonth_id], :pt_group_id => params[:pt_group_id])
 #right_content
   %h1
-    PT Rates of
+    PT Slab of
     = PtGroup.find_by_id(@pt_group_id).name
     for
     = Paymonth.find_by_id(@paymonth_id).month_name

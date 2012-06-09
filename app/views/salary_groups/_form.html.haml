@@ -15,7 +15,7 @@
             %td
               %table
                 %tr
-                  %td{:width=>180} Salary Group Name:&nbsp;
+                  %td{:width=>180} Salary Structure Name:&nbsp;
                   %td= f.text_field :salary_group_name, :size => '22'
                 %tr
                   %td Based on Gross:&nbsp;
@@ -23,5 +23,5 @@
                 %tr
                   %td &nbsp;
                 %tr
-                  %td{:colspan=>2}= f.submit
+                  %td{:colspan=>2}= f.submit 'Save Salary Structure'
 

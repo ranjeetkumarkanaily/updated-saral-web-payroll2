@@ -47,16 +47,17 @@
       %td.std_td
         %table
           %tr
-            %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
-            %td
-              = f.text_field :account_number_22, :size => '22'
-              = f.hidden_field :pf_group_id, :value => param_pf_group_id
+            %td Account No. 02(%):&nbsp;
+            %td= f.text_field :account_number_02 , :size => '22'
           %tr
             %td Account No. 21(%):&nbsp;
             %td= f.text_field :account_number_21, :size => '22'
           %tr
-            %td Account No. 02(%):&nbsp;
-            %td= f.text_field :account_number_02 , :size => '22'
+            %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
+            %td
+              = f.text_field :account_number_22, :size => '22'
+              = f.hidden_field :pf_group_id, :value => param_pf_group_id
+
       %td.std_td
         %table
           %tr
@@ -74,10 +75,10 @@
           %tr
             %td Restrict Employer Share:&nbsp;
             %td= f.check_box :restrict_employer_share
-          %tr
-            %td Restrict Employee Share to Employer Share:&nbsp;
-            %td= f.check_box :restrict_employee_share_to_employer_share
+          -#%tr
+          -#  %td Restrict Employee Share to Employer Share:&nbsp;
+          -#  %td= f.check_box :restrict_employee_share_to_employer_share
           %tr
             %td &nbsp;
           %tr
-            %td{:colspan=>2}= f.submit
+            %td{:colspan=>2}= f.submit 'Save'

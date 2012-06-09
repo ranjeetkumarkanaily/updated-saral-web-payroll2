@@ -15,11 +15,11 @@
             %td.std_td
               %table
                 %tr
-                  %td Classification Name:&nbsp;
+                  %td= heading_name+' Name:'
                   %td
                     = f.text_field :classification_name, :size => '22'
                     = f.hidden_field :classification_heading_id, :value => paramclassification_id
                 %tr
                   %td &nbsp;
                 %tr
-                  %td{:colspan=>2}= f.submit
+                  %td{:colspan=>2}= f.submit "Save "+heading_name

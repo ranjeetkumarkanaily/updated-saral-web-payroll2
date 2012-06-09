@@ -1,8 +1,8 @@
 #left_content
   %ul
-    %li= link_to 'Add New Salary Group', new_salary_group_path
+    %li= link_to 'Add New Salary Structure', new_salary_group_path
 #right_content
-  %h1 Listing Salary Groups
+  %h1 Listing Salary Structure
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;
@@ -10,7 +10,7 @@
       %td.std_td
         %table.table_grid{:width=>557, :cellpadding => 0, :cellspacing => 3}
           %tr
-            %td.table_grid_header Salary Group Name
+            %td.table_grid_header Salary Structure Name
             %td.table_grid_header Based on Gross
             %td.table_grid_header{:colspan => 4} Operations
           - @salary_groups.each do |salary_group|

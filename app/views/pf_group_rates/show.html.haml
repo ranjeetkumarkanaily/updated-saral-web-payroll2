@@ -34,15 +34,16 @@
       %td.std_td
         %table
           %tr
-            %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
-            %td
-              = @pf_group_rate.account_number_22
+            %td Account No. 02(%):&nbsp;
+            %td= @pf_group_rate.account_number_02
           %tr
             %td Account No. 21(%):&nbsp;
             %td= @pf_group_rate.account_number_21
           %tr
-            %td Account No. 02(%):&nbsp;
-            %td= @pf_group_rate.account_number_02
+            %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
+            %td
+              = @pf_group_rate.account_number_22
+
       %td.std_td
         %table
           %tr
@@ -60,6 +61,6 @@
           %tr
             %td Restrict Employer Share:&nbsp;
             %td= @pf_group_rate.restrict_employer_share == true ? "Yes" : "No"
-          %tr
-            %td Restrict Employee Share to Employer Share:&nbsp;
-            %td= @pf_group_rate.restrict_employee_share_to_employer_share == true ? "Yes" : "No"
+          -#%tr
+          -#  %td Restrict Employee Share to Employer Share:&nbsp;
+          -#  %td= @pf_group_rate.restrict_employee_share_to_employer_share == true ? "Yes" : "No"

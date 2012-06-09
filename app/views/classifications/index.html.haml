@@ -1,9 +1,9 @@
 #left_content
   %ul
     %li= link_to 'Back', classification_headings_path
-    %li= link_to 'Add New Classification', new_classification_path(:params1 => @paramclassification_id)
+    %li= link_to "Add New #{@heading_name}", new_classification_path(:params1 => @paramclassification_id)
 #right_content
-  %h1 Listing Classifications for #{@heading_name}
+  %h1 Listing #{@heading_name}
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td &nbsp;
@@ -15,7 +15,7 @@
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
-            %td.table_grid_header{:width=> 360} Classification Name
+            %td.table_grid_header{:width=> 360}= @heading_name +' Name'
             %td.table_grid_header{:colspan =>3} Operations
           - @classifications.each do |classification|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}

@@ -16,7 +16,12 @@ class PfGroup < ActiveRecord::Base
   validates_presence_of :address
 
   validates :extension, :numericality => true,
-            :length => {:maximum => 1}
+            :length => {:maximum => 1},:if => :extension_exist?
 
   scope :pf_groups, :order => 'created_at ASC'
+
+
+  def extension_exist?
+    !extension.blank? and !extension.nil?
+  end
 end
