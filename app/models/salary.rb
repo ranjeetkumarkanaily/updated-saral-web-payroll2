@@ -201,10 +201,10 @@ class Salary < ActiveRecord::Base
       end
       month_year = Date.strptime pay_month, '%b/%Y'
       total_no_of_days = month_year.end_of_month.day
-      leave_taken = LeaveTaken.select('sum(count) as count, sum(lop_count) as lop_count').where("extract(month from from_date) = #{month_year.month} and extract(year from from_date) = #{month_year.year} AND employee_id = #{employee.id}")
+      leave_taken = LeaveTaken.select('sum(leave_count) as leave_count, sum(lop_count) as lop_count').where("leave_detail_date = '#{month_year.beginning_of_month}' AND employee_id = #{employee.id}")
       if leave_taken.count != 0
         pay_days = total_no_of_days - leave_taken[0][:lop_count]
-        present_days = total_no_of_days - (leave_taken[0][:lop_count]+leave_taken[0][:count])
+        present_days = total_no_of_days - (leave_taken[0][:lop_count]+leave_taken[0][:leave_count])
       else
         pay_days = total_no_of_days
         present_days = total_no_of_days
