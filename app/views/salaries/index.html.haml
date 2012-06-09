@@ -3,8 +3,6 @@
 #right_content
   %h1
     Employee's Salary Detail
-    - if params[:month_year] && params[:salary_group]
-      = link_to image_tag('/assets/edit.png',:title => "Edit Salary"), edit_salaries_path(:month_year => params[:month_year], :employee_id => params[:employee_id])
   %table.std_table{:cellpadding=>0,:cellspacing=>0}
     %tr
       %td.std_td
@@ -21,13 +19,13 @@
                 %table
                   %tr
                     %td{:style=>"width:130px"} Pay Months:
-                    %td= select_tag "month_year", options_from_collection_for_select(Paymonth.order('created_at DESC'),'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
+                    %td= select_tag "month_year", options_from_collection_for_select(Paymonth.months,'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
               %td
                 %table
                   %tr
                     %td
                       %td{:valign=>"top",:style=>"width:130px"} Salary Groups:
-                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.order('created_at ASC'),'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:300px;height:100px;",:prompt => 'Select Select Group'
+                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.assigned_salary_group,'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:300px;height:100px;",:prompt => 'Select Select Group'
             %tr
               %td
                 = submit_tag("Get Salary Detail")
@@ -41,7 +39,7 @@
             #inner_table_wrapper
               %table.table_grid{:cellpadding => 0, :cellspacing => 3}
                 %tr
-                  %td.table_grid_header{:colspan=>2} Operations
+                  %td.table_grid_header{:colspan=>3} Operations
                   %td.table_grid_header Emp ID
                   %td.table_grid_header Emp Name
                   %td.table_grid_header Pay Days
@@ -62,6 +60,7 @@
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                     %td.table_grid_icon= link_to image_tag('/assets/pdf.png',:title => "Generate Payslip"), salaries_path(:month_year => params[:month_year],:employee_id => salary_detail[:id],:salary_group => params[:salary_group], :format => "pdf")
                     %td.table_grid_icon= link_to image_tag('/assets/email.png',:title => "Generate Payslip & Send Email"), salaries_path(:month_year => params[:month_year],:employee_id => salary_detail[:id], :email => "yes", :format => "html")
+                    %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Salary"), edit_salaries_path(:month_year => params[:month_year], :employee_id => salary_detail[:id])
                     %td.table_grid_td= salary_detail[:refno]
                     %td.table_grid_td= salary_detail[:empname]
                     %td.table_grid_td{:align=>"right"}= salary_detail[:no_of_pay_days]

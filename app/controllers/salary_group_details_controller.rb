@@ -44,6 +44,12 @@ class SalaryGroupDetailsController < ApplicationController
 
     respond_to do |format|
       if @salary_group_detail.save
+        @emp_details = @salary_group_detail.salary_group.employee_details
+        if @emp_details
+          @emp_details.each do |emp_det|
+            SalaryAllotment.create!(:employee_id => emp_det.employee_id, :employee_detail_id => emp_det.id, :effective_date => emp_det.effective_date, :salary_head_id => @salary_group_detail.salary_head_id, :salary_group_detail_id => @salary_group_detail.id, :salary_allotment =>0)
+          end
+        end
         format.html { redirect_to salary_group_details_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary group detail was successfully created.' }
       else
         format.html { redirect_to new_salary_group_detail_path(:param1 => params[:salary_group_detail]['salary_group_id']), notice: 'Salary Head has already been taken' }

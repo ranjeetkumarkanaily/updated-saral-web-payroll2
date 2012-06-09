@@ -76,17 +76,19 @@ class Salary < ActiveRecord::Base
     else
       esi_effective_date = esi_effective_date_detail[0]['esi_effective_date']
       if esi_effective_date <= month_year.beginning_of_month
-        esi_applicable_salary = SalaryAllotment.select('salary_allotment').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+        #esi_applicable_salary = SalaryAllotment.select('salary_allotment').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+        #
+        #if esi_applicable_salary.count > 0
+        #  esi_applicable_salary_amount = esi_applicable_salary
+        #else
+        #  esi_applicable_salary_amount = SalaryAllotment.select('salary_allotment').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})")
+        #end
 
-        if esi_applicable_salary.count > 0
-          esi_applicable_salary_amount = esi_applicable_salary
-        else
-          esi_applicable_salary_amount = SalaryAllotment.select('salary_allotment').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})")
-        end
+        esi_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("esi_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
 
         @esi_applicable_sal = 0
         esi_applicable_salary_amount.each do |esi_appli_sal|
-          @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_allotment
+          @esi_applicable_sal = @esi_applicable_sal+esi_appli_sal.salary_amount
         end
 
         esi_rate_value = EsiGroupRate.find_by_esi_group_id(employee_esi_group)
@@ -139,8 +141,9 @@ class Salary < ActiveRecord::Base
     LeaveDetail.where("employee_id = #{employee_id} and leave_date between '#{from_date}' and '#{to_date}'" ).count
   end
 
-  def self.employee_salary_det_header salary_group_id, salary_type
-    det_head = SalaryHead.select('head_name').joins(:salary_group_details).where("salary_group_id = ? and salary_type = ?",salary_group_id, salary_type).order("salary_heads.created_at ASC")
+  def self.employee_salary_det_header salary_group_id, salary_type,pay_month
+    month_year = Date.strptime pay_month, '%b/%Y'
+    det_head = SalaryHead.select('head_name').joins(:salary_group_details).where("salary_group_id = ? and salary_type = ? and to_date(effective_month,'Mon/YYYY') <= '#{month_year.beginning_of_month}'",salary_group_id, salary_type).order("salary_heads.created_at ASC")
   end
 
   def self.employee_salary_detail pay_month, salary_group_id
@@ -196,19 +199,33 @@ class Salary < ActiveRecord::Base
       else
         salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date pay_month, employee.id, 1
       end
-      employee_salary_calc[i] = {:id=>employee.id,:refno=>employee.refno,:empname=>employee.empname,:salary_allotment=>salary_allotments}
+      month_year = Date.strptime pay_month, '%b/%Y'
+      total_no_of_days = month_year.end_of_month.day
+      leave_taken = LeaveTaken.select('sum(count) as count, sum(lop_count) as lop_count').where("extract(month from from_date) = #{month_year.month} and extract(year from from_date) = #{month_year.year} AND employee_id = #{employee.id}")
+      if leave_taken.count != 0
+        pay_days = total_no_of_days - leave_taken[0][:lop_count]
+        present_days = total_no_of_days - (leave_taken[0][:lop_count]+leave_taken[0][:count])
+      else
+        pay_days = total_no_of_days
+        present_days = total_no_of_days
+      end
+      employee_salary_calc[i] = {:id=>employee.id,:refno=>employee.refno,:empname=>employee.empname,:present_days=>present_days,:pay_days=>pay_days,:salary_allotment=>salary_allotments}
       i=i+1
     end
     employee_salary_calc
   end
 
-  def self.emp_salary_calc_header salary_group_id
-    SalaryHead.select('head_name').joins(:salary_group_details).where("salary_group_id = ? and calc_type = 'Every Month'",salary_group_id).order("salary_heads.created_at ASC")
+  def self.emp_salary_calc_header salary_group_id, pay_month
+    month_year = Date.strptime pay_month, '%b/%Y'
+    SalaryHead.select('head_name').joins(:salary_group_details).where("salary_group_id = ? and calc_type = 'Every Month' and to_date(effective_month,'Mon/YYYY') <= '#{month_year.beginning_of_month}'",salary_group_id).order("salary_heads.created_at ASC")
   end
 
   def self.calculate_salary salaries, pay_month
     month_year = Date.strptime pay_month, '%b/%Y'
     salaries.each do |salary|
+      Salary.destroy_all("employee_id = #{salary[1][0]["employee_id"]} and effective_date = '#{month_year.beginning_of_month}'")
+      PfCalculatedValue.destroy_all("employee_id = #{salary[1][0]["employee_id"]} and effective_date = '#{month_year.beginning_of_month}'")
+      EsiCalculatedValue.destroy_all("employee_id = #{salary[1][0]["employee_id"]} and effective_date = '#{month_year.beginning_of_month}'")
       leave_count = Salary.find_employees_leave month_year.beginning_of_month, month_year.end_of_month ,salary[1][0]["employee_id"]
       no_of_day_in_selected_month = Paymonth.select('number_of_days').where("to_date = '#{month_year.end_of_month}'")
       no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i

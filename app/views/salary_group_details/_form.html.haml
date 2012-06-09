@@ -57,6 +57,9 @@
                   %td= f.text_field :effective_month, :readonly => 'readonly',:style=>"width:178px"
                   %td
                     %div#boxMonthYear
+                %tr
+                  %td Round off:&nbsp;
+                  %td= f.select :round_off, options_for_select(['Nearest Rupee','Actual'], :round_off),:prompt => 'Select Round off'
           %tr
             %td.std_td{:colspan=>2}
               %table

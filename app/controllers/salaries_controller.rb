@@ -1,7 +1,7 @@
 class SalariesController < ApplicationController
   def new
     if params[:month_year] && params[:salary_group]
-      @employee_salary_calc_header = Salary.emp_salary_calc_header params[:salary_group]
+      @employee_salary_calc_header = Salary.emp_salary_calc_header params[:salary_group], params[:month_year]
       @employee_salary_calc = Salary.employees_salary_calculation params[:month_year], params[:salary_group]
     end
   end
@@ -9,8 +9,8 @@ class SalariesController < ApplicationController
   def index
     flash[:notice] = ""
     if params[:month_year] && params[:salary_group]
-      @earning_det_head = Salary.employee_salary_det_header params[:salary_group],'Earnings'
-      @deduction_det_head = Salary.employee_salary_det_header params[:salary_group],'Deductions'
+      @earning_det_head = Salary.employee_salary_det_header params[:salary_group],'Earnings',params[:month_year]
+      @deduction_det_head = Salary.employee_salary_det_header params[:salary_group],'Deductions',params[:month_year]
       @employee_salary_det = Salary.employee_salary_detail params[:month_year], params[:salary_group]
 
       if params[:employee_id]
@@ -51,7 +51,7 @@ class SalariesController < ApplicationController
   def edit
     month_year = Date.strptime params[:month_year], '%b/%Y'
     employee_id = params[:employee_id]
-    @salary = Salary.where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id}")
+    @salary = Salary.where("extract(month from effective_date) = #{month_year.month} and extract(year from effective_date) = #{month_year.year} AND employee_id = #{employee_id} and salary_head_id != 2 and salary_head_id != 3")
   end
 
   def update

@@ -57,5 +57,12 @@ class LeaveTaken < ActiveRecord::Base
     employee_list
   end
 
+  def month_year
+    (Date.strptime leave_detail_date, "%Y-%m-%d").strftime("%b/%Y")
+  end
+
+  def employee_name
+
+  end
 
 end
