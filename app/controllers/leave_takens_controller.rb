@@ -26,6 +26,7 @@ class LeaveTakensController < ApplicationController
   def new
     @leave_taken = LeaveTaken.new
     @leave_taken_employees = @leave_taken.employee_list
+    @employee_count = @leave_taken_employees.count
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @leave_taken }

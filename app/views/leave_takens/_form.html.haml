@@ -1,4 +1,4 @@
-= form_for(leave_taken) do |f|
+= form_for(leave_taken,:html => {:onsubmit => "return ValidateForm();"}) do |f|
   - if leave_taken.errors.any?
     #error_explanation
     %h2
@@ -18,7 +18,7 @@
             %td.std_td
               %table
                 %tr
-                  %td{:style=>'width:100px'} Month/Year:&nbsp;
+                  %td{:style=>'width:100px'} Pay Month:&nbsp;
                   %td= f.select :leave_detail_date, options_for_select(Paymonth.months.collect{|mon| [mon.month_name,mon.month_name]},leave_taken.leave_detail_date),{:prompt => 'Select'}
           %tr
             %td.std_td
@@ -28,33 +28,35 @@
                     %tr
                       %td.table_grid_header Employee ID
                       %td.table_grid_header Employee Name
-                      %td.table_grid_header Leave Count
-                      %td.table_grid_header Date Wise(Leave)
-                      %td.table_grid_header From Date(Leave)
-                      %td.table_grid_header To Date(Leave)
-                      %td.table_grid_header LOP Count
-                      %td.table_grid_header Date Wise(LOP)
-                      %td.table_grid_header From Date(LOP)
-                      %td.table_grid_header To Date(LOP)
+                      %td.table_grid_header Leave Days
+                      %td.table_grid_header Date(Leave)
+                      %td.table_grid_header LOP Days
+                      %td.table_grid_header Date(LOP)
                     - j=0
                     - @leave_taken_employees.each do |employee|
                       %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                         %td.table_grid_td= employee[:refno]
                         %td.table_grid_td= employee[:empname]
-                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_count]"
-                        %td.table_grid_td= check_box_tag "leave_date_wise" ,j,nil,:onclick=>'leave_date(this)'
-                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_from_date]",'', :class=>"date_input",:disabled => true
-                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_to_date]",'', :class=>"date_input",:disabled => true
-                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_count]"
-                        %td.table_grid_td= check_box_tag "lop_date_wise",j,nil,:onclick=>'lop_date(this)'
-                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_from_date]",'', :class=>"date_input",:disabled => true
-                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_to_date]",'', :class=>"date_input",:disabled => true
+                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_count]",'',:placeholder=> "Enter Count"
+                        %td
+                          %table
+                            %tr
+                              %td.table_grid_td= check_box_tag "leave_date_wise" ,j,nil,:onclick=>'leave_date(this)'
+                            %tr
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_from_date]",'', :class=>"date_input"
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_to_date]",'', :class=>"date_input"
+                        %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_count]",'',:placeholder=> "Enter Count"
+                        %td
+                          %table
+                            %tr
+                              %td.table_grid_td= check_box_tag "lop_date_wise",j,nil,:onclick=>'lop_date(this)'
+                            %tr
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_from_date]",'', :class=>"date_input"
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_to_date]",'', :class=>"date_input"
                         = hidden_field_tag "leave_takens[#{j}][employee_id]", employee[:employee_id]
-                        -#= hidden_field_tag "leave_takens[#{j}][][leave_from_date]"
-                        -#= hidden_field_tag "leave_takens[#{j}][][leave_to_date]"
-                        -#= hidden_field_tag "leave_takens[#{j}][][lop_from_date]"
-                        -#= hidden_field_tag "leave_takens[#{j}][][lop_to_date]"
                         - j=j+1
+          %tr
+            %td= hidden_field_tag "employee_count",employee_count
           %tr
             %td.std_td= submit_tag "Save"
 
