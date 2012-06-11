@@ -24,11 +24,18 @@ class LeaveTaken < ActiveRecord::Base
     else
       leave_excel_sheet.each 1 do |row|
         counter+=1
+        p row[1].beginning_of_month
+        #pay_month = Date.strptime , "%b/%Y"
+        #pay_month = pay_month.beginning_of_month
         liv = LeaveTaken.new
         liv.employee_id = Employee.find_by_refno("#{row[0]}").id
-        liv.from_date = row[1]
-        liv.count = row[2]
-        liv.lop_count = row[3]
+        liv.leave_detail_date = row[1].beginning_of_month
+        liv.leave_count = row[2]
+        liv.leave_from_date = row[3]
+        liv.leave_to_date = row[4]
+        liv.lop_count = row[5]
+        liv.lop_from_date = row[6]
+        liv.lop_to_date = row[7]
         leaves_takens["leaves_takens"] << liv
 
         #if liv.valid?
@@ -62,7 +69,7 @@ class LeaveTaken < ActiveRecord::Base
   end
 
   def employee_name
-
+     Employee.find(employee_id).empname
   end
 
 end

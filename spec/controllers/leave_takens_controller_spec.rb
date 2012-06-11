@@ -5,12 +5,15 @@ describe LeaveTakensController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
   end
+  #attr_accessible :employee_id, :leave_from_date, :leave_count, :lop_count,:leave_detail_date,:leave_to_date,:lop_from_date,:lop_to_date
 
   def valid_attributes
     {
         :employee_id => 1,
-        :from_date => '2012-01-01',
-        :count => 1
+        :leave_detail_date => 'jan-2012',
+        :leave_count => 1,
+        :lop_count => 2
+
     }
   end
 

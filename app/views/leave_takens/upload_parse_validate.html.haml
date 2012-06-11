@@ -12,26 +12,43 @@
             %p
               = msg
   - else
-    %h1 Success
+    %h1 Check Uploaded leaves
   = form_tag save_leave_takens_path do
     %table.std_table{:cellpadding=>0,:cellspacing=>0}
       %tr
         %td &nbsp;
       %tr
         %td.std_td
-          %table.table_grid{:width=>500, :cellpadding => 0, :cellspacing => 3}
+          %table.table_grid{:width=>900, :cellpadding => 0, :cellspacing => 3}
             %tr
               %td.table_grid_header Ref. No.
               %td.table_grid_header Employee Name
-              %td.table_grid_header Leave Date
+              %td.table_grid_header Pay Month
+              %td.table_grid_header Leave days
+              %td.table_grid_header Leave From date
+              %td.table_grid_header Leave To date
+              %td.table_grid_header LOP days
+              %td.table_grid_header LOP From date
+              %td.table_grid_header LOP To date
             - @leaves["leaves_takens"].each do |leave|
               %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                 %td.table_grid_td= leave.employee_id
-                %td.table_grid_td= leave.from_date
-                %td.table_grid_td= leave.count
+                %td.table_grid_td= leave.employee_name
+                %td.table_grid_td= l leave.leave_detail_date, :format=>:type2
+                %td.table_grid_td= leave.leave_count
+                %td.table_grid_td= leave.leave_from_date
+                %td.table_grid_td= leave.leave_to_date
+                %td.table_grid_td= leave.lop_count
+                %td.table_grid_td= leave.lop_from_date
+                %td.table_grid_td= leave.lop_to_date
                 %input{:name => "leaves_takens[][employee_id]", :value => leave.employee_id, :type => "hidden"}
-                %input{:name => "leaves_takens[][from_date]", :value => leave.from_date, :type => "hidden"}
-                %input{:name => "leaves_takens[][count]", :value => leave.count, :type => "hidden"}
+                %input{:name => "leaves_takens[][leave_detail_date]", :value => leave.leave_detail_date, :type => "hidden"}
+                %input{:name => "leaves_takens[][leave_count]", :value => leave.leave_count, :type => "hidden"}
+                %input{:name => "leaves_takens[][leave_from_date]", :value => leave.leave_from_date, :type => "hidden"}
+                %input{:name => "leaves_takens[][leave_to_date]", :value => leave.leave_to_date, :type => "hidden"}
+                %input{:name => "leaves_takens[][lop_count]", :value => leave.lop_count, :type => "hidden"}
+                %input{:name => "leaves_takens[][lop_from_date]", :value => leave.lop_from_date, :type => "hidden"}
+                %input{:name => "leaves_takens[][lop_to_date]", :value => leave.lop_to_date, :type => "hidden"}
             %tr
               %td &nbsp;
             %tr
