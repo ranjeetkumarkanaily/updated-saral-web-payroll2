@@ -18,7 +18,7 @@
             %td.table_grid_header DB File Code
             %td.table_grid_header Extn.
             %td.table_grid_header Address
-            %td.table_grid_header{:colspan => 4} Operations
+            %td.table_grid_header{:colspan => 3} Operations
           - @pf_groups.each do |pf_group|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= pf_group.pf_group
@@ -27,7 +27,8 @@
               %td.table_grid_td= pf_group.extension
               %td.table_grid_td= pf_group.address
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit PF Group"), edit_pf_group_path(pf_group)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy PF Group"), pf_group, confirm: 'Are you sure?', method: :delete
+              - if pf_group != PfGroup.first
+                %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy PF Group"), pf_group, confirm: 'Are you sure?', method: :delete
               %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "Details"), pf_group_rates_path(:params1 => pf_group.id)
         %br/
         .digg_pagination

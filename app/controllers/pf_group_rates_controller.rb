@@ -24,6 +24,13 @@ class PfGroupRatesController < ApplicationController
   def new
     @pf_group_rate = PfGroupRate.new
     @pf_group = PfGroup.find(@param_pf_group_id).pf_group
+
+    @values = Hash.new
+    pf_rate_values = CustomSettingValue.find_all_by_group("PF Rate")
+    pf_rate_values.each do |rate|
+      @values["#{rate.group_column}"] = rate.group_column_value
+    end
+
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @pf_group_rate }

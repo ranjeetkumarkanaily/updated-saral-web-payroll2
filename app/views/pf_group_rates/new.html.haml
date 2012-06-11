@@ -3,5 +3,88 @@
     %li= link_to 'Back', pf_group_rates_path(:params1 => @param_pf_group_id)
 #right_content
   %h1 New PF Group Rate for #{@pf_group}
-  = render 'form', :pf_group_rate => @pf_group_rate, :param_pf_group_id => @param_pf_group_id, :month_name => @month_name
+  -#= render 'form', :pf_group_rate => @pf_group_rate, :param_pf_group_id => @param_pf_group_id, :month_name => @month_name
+  %script{:language => "JavaScript"}
+    function calculate()
+    {
+    val1 = document.getElementById('pf_group_rate_epf').value;
+    val2 = document.getElementById('pf_group_rate_pension_fund').value;
+    if(val1 != '' && val2 != '')
+    {
+    getValue = val1-val2
+    document.getElementById('pf_group_rate_employer_epf').value = getValue.toFixed(2)
+    }
+    }
+  = form_for(@pf_group_rate) do |f|
+    - if @pf_group_rate.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@pf_group_rate.errors.count, "error")
+          prohibited this PF Group Rate from being saved:
+        %ul
+          - @pf_group_rate.errors.full_messages.each do |msg|
+            %li= msg
 
+    %table.std_table{:cellpadding=>0,:cellspacing=>0}
+      %tr
+        %td.std_td
+          %h3{:style=>"text-decoration:underline"} For Employee
+      %tr
+        %td.std_td
+          %table
+            %tr
+              %td{:style=>"width:130px"} Effective Month:&nbsp;
+              -if @pf_group_rate.id == nil
+                %td= f.select :paymonth_id, options_for_select(Paymonth.months.collect {|pm| [ pm.month_name, pm.id ]}, @pf_group_rate.paymonth_id),:prompt => "Select Effective Month"
+              -else
+                %td= @month_name
+            %tr
+              %td EPF :&nbsp;
+              %td= f.text_field :epf, :size => '22',:onchange=>"calculate()", :value => "#{@values["epf"]}"
+        %td.std_td
+          %table
+            %tr
+              %td{:style=>"width:130px"} Cutoff :&nbsp;
+              %td= f.text_field :cutoff, :value => "#{@values["cutoff"]}"
+      %tr
+        %td.std_td
+          %h3{:style=>"text-decoration:underline"} For Employer
+      %tr
+        %td.std_td
+          %table
+            %tr
+              %td Account No. 02(%):&nbsp;
+              %td= f.text_field :account_number_02 , :size => '22', :value => "#{@values["account_number_02"]}"
+            %tr
+              %td Account No. 21(%):&nbsp;
+              %td= f.text_field :account_number_21, :size => '22', :value => "#{@values["account_number_21"]}"
+            %tr
+              %td{:style=>"width:130px"} Account No. 22(%):&nbsp;
+              %td
+                = f.text_field :account_number_22, :size => '22', :value => "#{@values["account_number_22"]}"
+                = f.hidden_field :pf_group_id, :value => @param_pf_group_id
+
+        %td.std_td
+          %table
+            %tr
+              %td{:style=>"width:130px"} Pension Fund(%) :&nbsp;
+              %td= f.text_field :pension_fund, :size => '22',:onchange=>"calculate()", :value => "#{@values["pension_fund"]}"
+            %tr
+              %td EPF :&nbsp;
+              %td= f.text_field :employer_epf, :size => '22',:readonly => "readonly", :value => "#{@values["employer_epf"]}"
+            %tr
+              %td Round off:&nbsp;
+              %td= f.select :round_off, options_for_select(['Nearest Rupee','Higher Rupee'], "#{@values["round_off"]}"),:prompt => 'Select Round off Group'
+      %tr
+        %td.std_td{:colspan=>2}
+          %table
+            %tr
+              %td Restrict Employer Share:&nbsp;
+              %td= f.check_box :restrict_employer_share
+            -#%tr
+            -#  %td Restrict Employee Share to Employer Share:&nbsp;
+            -#  %td= f.check_box :restrict_employee_share_to_employer_share
+            %tr
+              %td &nbsp;
+            %tr
+              %td{:colspan=>2}= f.submit 'Save'

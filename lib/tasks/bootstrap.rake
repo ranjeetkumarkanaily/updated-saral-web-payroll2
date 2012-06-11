@@ -413,6 +413,34 @@ namespace :bootstrap do
     UploadFileType.create(:max_file_size => 5120, :file_type => "application/pdf,application/doc")
   end
 
+  desc "Create PF Group 'Default'"
+  task :pf_group => :environment do
+    PfGroup.create(:pf_group => 'Default', :pf_number => "123456", :db_file_code => 'IFC000', :extension => 1, :address => 'Bangalore')
+  end
+
+  desc "Create ESI Group 'Default'"
+  task :esi_group => :environment do
+    EsiGroup.create(:esi_group_name => 'Default', :esi_no => "123456", :esi_local_office => 'Bangalore', :address => 'Bangalore')
+  end
+
+  desc "Default values for PF"
+  task :custom_setting_value => :environment do
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "epf", :group_column_value => "12")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "cutoff", :group_column_value => "6500")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "account_number_02", :group_column_value => "1.1")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "account_number_21", :group_column_value => "0.5")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "account_number_22", :group_column_value => "0.01")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "pension_fund", :group_column_value => "3.67")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "employer_epf", :group_column_value => "8.33")
+    CustomSettingValue.create(:group => "PF Rate", :group_column => "round_off", :group_column_value => "Nearest Rupee")
+
+    CustomSettingValue.create(:group => "ESI Rate", :group_column => "employee_rate", :group_column_value => "1.75")
+    CustomSettingValue.create(:group => "ESI Rate", :group_column => "employer_rate", :group_column_value => "4.75")
+    CustomSettingValue.create(:group => "ESI Rate", :group_column => "cut_off", :group_column_value => "15000")
+    CustomSettingValue.create(:group => "ESI Rate", :group_column => "minimum_limit_dailywage", :group_column_value => "70")
+    CustomSettingValue.create(:group => "ESI Rate", :group_column => "round_off", :group_column_value => "Higher Rupee")
+  end
+
   desc "Run all bootstrapping tasks"
-  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution, :classification_heading, :hr_category, :country, :option_settings, :upload_file_type]
+  task :all => [:default_user, :salary_head, :state, :attendance_configuration, :financial_institution, :classification_heading, :hr_category, :country, :option_settings, :upload_file_type, :pf_group, :esi_group, :custom_setting_value]
 end

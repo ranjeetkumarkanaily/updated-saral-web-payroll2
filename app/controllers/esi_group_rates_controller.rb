@@ -13,8 +13,16 @@ class EsiGroupRatesController < ApplicationController
   end
 
   def new
+
     @esi_group_rate = EsiGroupRate.new
     @esi_group = EsiGroup.find(@param_esi_group_id).esi_group_name
+
+    @values = Hash.new
+    esi_rate_values = CustomSettingValue.find_all_by_group("ESI Rate")
+    esi_rate_values.each do |rate|
+      @values["#{rate.group_column}"] = rate.group_column_value
+    end
+
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @esi_group_rate }
