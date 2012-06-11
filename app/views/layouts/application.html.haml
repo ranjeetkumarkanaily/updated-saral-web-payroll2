@@ -8,8 +8,10 @@
     = javascript_include_tag  "jquery.date_input"
     = stylesheet_link_tag    "date_input"
     = csrf_meta_tags
+    %script{:src => "http://code.jquery.com/jquery-latest.js"}
     %script{:language => "javascript"}
       $($.date_input.initialize);
+
     %script{:language => "JavaScript"}
       $(document).ready(function(){
 

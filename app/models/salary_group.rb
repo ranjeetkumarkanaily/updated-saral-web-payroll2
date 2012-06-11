@@ -13,7 +13,7 @@ class SalaryGroup < ActiveRecord::Base
   scope :salary_groups, :order => 'created_at ASC'
 
   scope :assigned_salary_group, lambda {
-    SalaryGroup.select("DISTINCT(salary_groups.id), salary_group_name").joins(:employee_details)
+    SalaryGroup.select("DISTINCT(salary_groups.id),salary_groups.created_at, salary_group_name").joins(:employee_details).order("salary_groups.created_at ASC")
   }
 
 end
