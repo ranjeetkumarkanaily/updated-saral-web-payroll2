@@ -4,6 +4,7 @@ class SalaryGroupDetailsController < ApplicationController
   before_filter :find_salary_group_detail, :only => [:update, :destroy]
 
   def index
+    puts @param_sal_grp_id.inspect
     if @param_sal_grp_id
       @salary_group_details = SalaryGroupDetail.all_salary_group_details(@param_sal_grp_id).paginate(:page => params[:page], :per_page => 10)
     else
@@ -76,10 +77,11 @@ class SalaryGroupDetailsController < ApplicationController
   end
 
   def destroy
+    param1 = @salary_group_detail.salary_group_id
     @salary_group_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to salary_group_details_path }
+      format.html { redirect_to salary_group_details_path(:param1 => param1) }
       format.json { head :ok }
     end
   end
