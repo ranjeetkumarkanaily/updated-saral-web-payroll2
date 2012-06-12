@@ -205,6 +205,7 @@ class Salary < ActiveRecord::Base
   def self.employees_salary_calculation pay_month, salary_group_id
     month_year = Date.strptime pay_month, '%b/%Y'
     chk_salary_group_exist = SalaryGroup.select("DISTINCT(salary_groups.id), salary_group_name").joins(:employee_details).where("salary_group_id = #{salary_group_id} and effective_date <= '#{month_year.beginning_of_month}'" )
+
     if chk_salary_group_exist.empty?
       employee_salary_calc = []
     else
@@ -270,16 +271,8 @@ class Salary < ActiveRecord::Base
       end
 
       salary_allotments.each do |sal|
-        calc_based_on = (SalaryGroupDetail.based_on sal["salary_group_detail_id"])[0][:based_on]
-        if calc_based_on == "Pay Days"
-          days_for_calculation = no_of_pay_days
-        elsif calc_based_on == "Present Days"
-          days_for_calculation = no_of_present_days
-        else
-          days_for_calculation = no_of_day_in_selected_month
-        end
-        #
-        #days_for_calculation = (calc_based_on == "Pay Days")?no_of_pay_days:no_of_present_days
+        days_for_calculation = salary_calculation_days sal["salary_group_detail_id"],no_of_pay_days,no_of_present_days,no_of_day_in_selected_month
+
         updated_salary_amount = (sal["salary_allotment"].to_i * days_for_calculation.to_i / no_of_day_in_selected_month).round.to_f
         updated_actual_salary_amount = sal["salary_allotment"].to_i * days_for_calculation.to_i / no_of_day_in_selected_month
 
@@ -290,14 +283,8 @@ class Salary < ActiveRecord::Base
       ##########  Salary Calculation with heads which are Every Month components ##############
       salary[1].each do |sal|
         if sal["salary_amount"]
-          calc_based_on = (SalaryGroupDetail.based_on sal["salary_group_detail_id"])[0][:based_on]
-          if calc_based_on == "Pay Days"
-            days_for_calculation = no_of_pay_days
-          elsif calc_based_on == "Present Days"
-            days_for_calculation = no_of_present_days
-          else
-            days_for_calculation = no_of_day_in_selected_month
-          end
+          days_for_calculation = salary_calculation_days sal["salary_group_detail_id"],no_of_pay_days,no_of_present_days,no_of_day_in_selected_month
+
           updated_salary_amount = (sal["salary_amount"].to_i * days_for_calculation.to_i / no_of_day_in_selected_month).round.to_f
           updated_actual_salary_amount = sal["salary_amount"].to_i * days_for_calculation.to_i / no_of_day_in_selected_month
 
@@ -321,6 +308,18 @@ class Salary < ActiveRecord::Base
 
       no_of_present_days
     end
+  end
+
+  def self.salary_calculation_days sal_grp_det_id,no_of_pay_days,no_of_present_days,no_of_day_in_selected_month
+    calc_based_on = (SalaryGroupDetail.based_on sal_grp_det_id)[0][:based_on]
+    if calc_based_on == "Pay Days"
+      days_for_calculation = no_of_pay_days
+    elsif calc_based_on == "Present Days"
+      days_for_calculation = no_of_present_days
+    else
+      days_for_calculation = no_of_day_in_selected_month
+    end
+    days_for_calculation
   end
 
   def self.salary_on_salary_sheet salary_type, month_year, employee_id

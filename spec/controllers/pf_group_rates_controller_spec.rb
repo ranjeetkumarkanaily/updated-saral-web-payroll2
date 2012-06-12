@@ -47,6 +47,7 @@ describe PfGroupRatesController do
 
   describe "GET new" do
     it "assigns a new pf_group_rate as @pf_group_rate" do
+      custom_setting_value = FactoryGirl.create(:custom_setting_value,:group=>"PF Rate")
       get :new, {:params1 => @pf_group.id}
       assigns(:pf_group_rate).should be_a_new(PfGroupRate)
     end

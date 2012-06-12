@@ -30,6 +30,7 @@ describe EsiGroupRatesController do
 
   describe "GET new" do
     it "assigns a new esi_group_rate as @esi_group_rate" do
+      custom_setting_value = FactoryGirl.create(:custom_setting_value)
       get :new, {:params1 => @esi_group.id}, valid_session
       assigns(:esi_group_rate).should be_a_new(EsiGroupRate)
     end

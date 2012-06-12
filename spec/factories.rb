@@ -60,7 +60,7 @@ FactoryGirl.define do
     salary_head
     calc_type 'Lumpsum'
     calculation ""
-    based_on "PayDays"
+    based_on "Pay Days"
     pf_applicability true
     esi_applicability true
     pt_applicability true
@@ -310,6 +310,12 @@ FactoryGirl.define do
     leave_detail_date 'Jan/2012'
     leave_count 2
     lop_count 2
+  end
+
+  factory :custom_setting_value do
+    group "ESI Rate"
+    group_column "employee_rate"
+    group_column_value "1.75"
   end
 
 end

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "esi_group_rates/new" do
   before(:each) do
+    @custom_setting_value = FactoryGirl.create(:custom_setting_value)
     @esi_group = FactoryGirl.create(:esi_group)
     assign(:param_esi_group_id,@esi_group.id)
     assign(:esi_group_rate, stub_model(EsiGroupRate,
@@ -14,7 +15,10 @@ describe "esi_group_rates/new" do
     ).as_new_record)
   end
 
-  xit "renders new esi_group_rate form" do
+
+
+  it "renders new esi_group_rate form" do
+    assign(:values, @custom_setting_value)
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers

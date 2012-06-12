@@ -69,7 +69,7 @@
                           = hidden_field_tag "salary[#{j}][][effective_date]", employee[:salary_allotment][i][:effective_date]
                           = hidden_field_tag "salary[#{j}][][salary_head_id]", employee[:salary_allotment][i][:salary_head_id]
                           = hidden_field_tag "salary[#{j}][][salary_group_detail_id]", employee[:salary_allotment][i][:salary_group_detail_id]
-                          %td.table_grid_td= text_field_tag "salary[#{j}][][salary_amount]", (employee[:salary_allotment][i][:salary_allotment]>0)?employee[:salary_allotment][i][:salary_allotment]:""
+                          %td.table_grid_td= text_field_tag "salary[#{j}][][salary_amount]", (employee[:salary_allotment][i][:salary_allotment]!=0)?employee[:salary_allotment][i][:salary_allotment]:""
                         - j=j+1
           %tr
             %td.std_td= submit_tag "Process Salary"

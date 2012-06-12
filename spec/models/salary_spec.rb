@@ -28,7 +28,6 @@ describe Salary do
     describe "calculate salary" do
       before :each do
         @salary_head = FactoryGirl.create(:salary_head)
-        @salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => @salary_head.id)
         @attendance_configuration = FactoryGirl.create(:attendance_configuration)
         @financial_institution = FactoryGirl.create(:financial_institution)
         pf_group = FactoryGirl.create(:pf_group)
@@ -45,14 +44,53 @@ describe Salary do
         leave_definition = FactoryGirl.create(:leave_definition)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
-        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id,:employee_id => employee.id,:employee_detail_id => employee_detail.id)
-        salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => @salary_group_detail.id, :present_days=>24, :pay_days=>28)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => @salary_head.id)
+        salary_allotment = FactoryGirl.create(:salary_allotment,:salary_head_id => @salary_head.id, :salary_group_detail_id => salary_group_detail.id,:employee_id => employee.id,:employee_detail_id => employee_detail.id)
+        salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => salary_group_detail.id, :present_days=>24, :pay_days=>28)
+        salary_send = {"0"=>[salary]}
+        get_leave_count = Salary.calculate_salary salary_send,"Feb/2011"
+        no_of_present_days = get_leave_count["0"][0][:present_days]
+        no_of_present_days.should eq(24)
+      end
+
+      it "should give no of present days if salary_allotment is not there" do
+        employee = FactoryGirl.create(:employee)
+        leave_definition = FactoryGirl.create(:leave_definition)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
+        leave_detail = FactoryGirl.create(:leave_detail,:leave_date => "2011-02-02", :employee_id => employee.id,:leave_definition_id=>leave_definition.id)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => @salary_head.id)
+        salary = FactoryGirl.create(:salary,:employee_id => employee.id, :salary_head_id => @salary_head.id, :salary_group_detail_id => salary_group_detail.id, :present_days=>24, :pay_days=>28)
         salary_send = {"0"=>[salary]}
         get_leave_count = Salary.calculate_salary salary_send,"Feb/2011"
         no_of_present_days = get_leave_count["0"][0][:present_days]
         no_of_present_days.should eq(24)
       end
     end
+
+    describe "find salary calculation days" do
+      it "should give pay days as 28" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        day_count = Salary.salary_calculation_days salary_group_detail.id,28,25,28
+        day_count.should eq(28)
+      end
+
+      it "should give present days as 25" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id,:based_on=>"Present Days")
+        day_count = Salary.salary_calculation_days salary_group_detail.id,28,25,28
+        day_count.should eq(25)
+      end
+
+      it "should give total days as 28" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id,:based_on=>"Independent Days")
+        day_count = Salary.salary_calculation_days salary_group_detail.id,28,25,28
+        day_count.should eq(28)
+      end
+
+    end
+
 
     describe "find employee Leave" do
       it "should find employee leave" do

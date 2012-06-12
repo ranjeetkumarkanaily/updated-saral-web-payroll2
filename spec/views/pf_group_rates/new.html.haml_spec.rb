@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "pf_group_rates/new" do
   before(:each) do
+    @custom_setting_value = FactoryGirl.create(:custom_setting_value, :group=>"PF Rate")
     @pf_group = FactoryGirl.create(:pf_group)
     @paymonth = FactoryGirl.create(:paymonth)
     assign(:param_pf_group_id,@pf_group.id)
@@ -12,7 +13,8 @@ describe "pf_group_rates/new" do
     ).as_new_record)
   end
 
-  xit "renders new pf_group_rate form" do
+  it "renders new pf_group_rate form" do
+    assign(:values, @custom_setting_value)
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers

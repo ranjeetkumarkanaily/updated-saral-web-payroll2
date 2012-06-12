@@ -73,12 +73,30 @@ describe SalariesController do
       salary_group = FactoryGirl.create(:salary_group)
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id=>salary_head.id,:calc_type=>"Every Month")
-      employee_details = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id, :salary_group_id=>salary_group.id)
+      employee_details = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :effective_date=>'2011-02-01',:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id, :salary_group_id=>salary_group.id)
       leave_taken = FactoryGirl.create(:leave_taken, :employee_id=>employee.id, :leave_detail_date=>"2011-02-01")
       sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
+
       get :new, :month_year => "Feb/2011", :salary_group=> salary_group.id
       sal_allotment = {"id"=>employee.id,"refno"=>employee.refno.to_s,"empname"=>employee.empname,"salary_allotment"=>[sal_allot],"pay_days"=>26,"present_days"=>24}
       assigns(:employee_salary_calc).should eq([sal_allotment])
+    end
+
+    it "assigns empty @SalaryAllotment with leave taken" do
+      employee = FactoryGirl.create(:employee)
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      branch = FactoryGirl.create(:branch)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      salary_group = FactoryGirl.create(:salary_group)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id=>salary_head.id,:calc_type=>"Every Month")
+      employee_details = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :effective_date=>'2011-02-10',:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id, :salary_group_id=>salary_group.id)
+      leave_taken = FactoryGirl.create(:leave_taken, :employee_id=>employee.id, :leave_detail_date=>"2011-02-01")
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
+
+      get :new, :month_year => "Feb/2011", :salary_group=> salary_group.id
+      sal_allotment = {"id"=>employee.id,"refno"=>employee.refno.to_s,"empname"=>employee.empname,"salary_allotment"=>[sal_allot],"pay_days"=>26,"present_days"=>24}
+      assigns(:employee_salary_calc).should be_empty
     end
 
     it "assigns a requested SalaryAllotment as @SalaryAllotment without leave for same month" do
@@ -89,7 +107,7 @@ describe SalariesController do
       salary_group = FactoryGirl.create(:salary_group)
       salary_head = FactoryGirl.create(:salary_head)
       salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id=>salary_head.id,:calc_type=>"Every Month")
-      employee_details = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id, :salary_group_id=>salary_group.id)
+      employee_details = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :effective_date=>'2011-02-01', :attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id, :salary_group_id=>salary_group.id)
       sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
       get :new, :month_year => "Feb/2011", :salary_group=> salary_group.id
       sal_allotment = {"id"=>employee.id,"refno"=>employee.refno.to_s,"empname"=>employee.empname,"salary_allotment"=>[sal_allot],"pay_days"=>28,"present_days"=>28}
@@ -136,6 +154,22 @@ describe SalariesController do
 
       get :index, :month_year => "Feb/2011", :salary_group => salary_group.id
       assigns(:employee_salary_det)[0][:salary_earning][0].salary_amount.should eq(salary.salary_amount)
+    end
+
+    it "give empty value for salary" do
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group = FactoryGirl.create(:salary_group)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=> salary_head.id,:salary_group_id=>salary_group.id)
+      pt_detail = FactoryGirl.create(:pt_detail,:branch_id => @branch.id,:pt_group_id => @pt_group.id,:pt_effective_date => '2011-01-01')
+      employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => financial_institution.id,:salary_group_id=>salary_group.id)
+      employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
+      pf_calculated_value = FactoryGirl.create(:pf_calculated_value, :employee_id => employee.id)
+
+      get :index, :month_year => "Feb/2011", :salary_group => salary_group.id
+      assigns(:employee_salary_det).should be_empty
     end
 
     #it "get salary deductions for the given employee" do

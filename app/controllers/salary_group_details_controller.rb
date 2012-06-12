@@ -4,7 +4,6 @@ class SalaryGroupDetailsController < ApplicationController
   before_filter :find_salary_group_detail, :only => [:update, :destroy]
 
   def index
-    puts @param_sal_grp_id.inspect
     if @param_sal_grp_id
       @salary_group_details = SalaryGroupDetail.all_salary_group_details(@param_sal_grp_id).paginate(:page => params[:page], :per_page => 10)
     else

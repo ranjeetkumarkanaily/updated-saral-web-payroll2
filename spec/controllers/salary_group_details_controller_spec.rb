@@ -169,17 +169,20 @@ describe SalaryGroupDetailsController do
   end
 
   describe "DELETE destroy" do
+    before :each do
+      @salary_group = FactoryGirl.create(:salary_group)
+    end
     it "destroys the requested salary_group_detail" do
-      salary_group_detail = SalaryGroupDetail.create! valid_attributes
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>@salary_group.id)
       expect {
-        delete :destroy, :id => salary_group_detail.id
+        delete :destroy, :id => salary_group_detail.id, :param1=> @salary_group.id
       }.to change(SalaryGroupDetail, :count).by(-1)
     end
 
     it "redirects to the salary_group_details list" do
-      salary_group_detail = SalaryGroupDetail.create! valid_attributes
-      delete :destroy, :id => salary_group_detail.id
-      response.should redirect_to(salary_group_details_path)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>@salary_group.id)
+      delete :destroy, :id => salary_group_detail.id, :param1=> @salary_group.id
+      response.should redirect_to(salary_group_details_path(:param1 => @salary_group.id))
     end
   end
 
