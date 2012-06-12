@@ -33,7 +33,16 @@ class EmployeeStatutoriesController < ApplicationController
   # POST /employee_statutories
   # POST /employee_statutories.json
   def create
-    @employee_statutory = EmployeeStatutory.new(params[:employee_statutory])
+    employee=params[:employee_statutory]
+     dates_value=[employee[:pan_effective_date],employee[:pf_effective_date], employee[:esi_effective_date]]
+    date_format=OptionSetting.date_format_value
+    if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y")
+      dates=OptionSetting.convert_date(dates_value)
+      val=employee.merge!(:pan_effective_date=>dates[0],:pf_effective_date=>dates[1],:esi_effective_date=>dates[2])
+      @employee_statutory = EmployeeStatutory.new(val)
+    else
+      @employee_statutory = EmployeeStatutory.new(params[:employee_statutory])
+    end
     @employee_statutory.pan = params[:panoption] if ( params[:employee_statutory][:pan].blank? and !params[:panoption].blank? and params[:panoption] != "ADD PAN")
     @employee_id = @employee_statutory.employee_id
     params[:chk_vol_pf_pertg] ? @employee_statutory.vol_pf_percentage = params[:vol_pf_value] : @employee_statutory.vol_pf_amount = params[:vol_pf_value]
@@ -61,6 +70,16 @@ class EmployeeStatutoriesController < ApplicationController
       params[:employee_statutory][:vol_pf_percentage] = nil
     end
     params[:employee_statutory][:based_on] = params[:based_on]
+
+    dates_value=[params[:employee_statutory][:pan_effective_date],params[:employee_statutory][:pf_effective_date], params[:employee_statutory][:esi_effective_date]]
+    date_format=OptionSetting.date_format_value
+    if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y")
+      dates=OptionSetting.convert_date(dates_value)
+      params[:employee_statutory].merge!(:pan_effective_date=>dates[0],:pf_effective_date=>dates[1],:esi_effective_date=>dates[2])
+    else
+      params[:employee_statutory]
+    end
+
     @employee_statutory = EmployeeStatutory.find(params[:id])
     respond_to do |format|
       if @employee_statutory.update_attributes(params[:employee_statutory])

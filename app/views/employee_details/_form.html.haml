@@ -20,7 +20,10 @@
                       %tr
                         %td{:width=>130} Effective From:&nbsp;
                         %td
-                          = f.text_field :effective_date, :id=>"sed", :class=>"date_input"
+                          - if employee_detail.effective_date?
+                            = f.text_field :effective_date, :id=>"sed", :class=>"date_input",:value => OptionSetting.date_format_type(employee_detail.effective_date,1)
+                          - else
+                            = f.text_field :effective_date, :id=>"sed", :class=>"date_input"
                           = f.hidden_field :employee_id, :value => paramempid
                       %tr
                         %td Salary Group:&nbsp;
