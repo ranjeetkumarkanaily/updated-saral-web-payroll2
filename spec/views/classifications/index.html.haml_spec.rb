@@ -4,6 +4,7 @@ describe "classifications/index" do
   before(:each) do
     @classification_heading = FactoryGirl.create(:classification_heading)
     assign(:paramclassification_id, @classification_heading.id)
+    assign(:heading_name,ClassificationHeading.find(@classification_heading.id).classification_heading_name)
     assign(:classifications, [
       stub_model(Classification,
         :classification_heading => @classification_heading,

@@ -12,14 +12,14 @@ class LeaveTakensController < ApplicationController
 
   # GET /leave_takens/1
   # GET /leave_takens/1.json
-  def show
-    @leave_taken = LeaveTaken.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @leave_taken }
-    end
-  end
+  #def show
+  #  @leave_taken = LeaveTaken.find(params[:id])
+  #
+  #  respond_to do |format|
+  #    format.html # show.html.erb
+  #    format.json { render json: @leave_taken }
+  #  end
+  #end
 
   # GET /leave_takens/new
   # GET /leave_takens/new.json
@@ -34,9 +34,9 @@ class LeaveTakensController < ApplicationController
   end
 
   # GET /leave_takens/1/edit
-  def edit
-    @leave_taken = LeaveTaken.find(params[:id])
-  end
+  #def edit
+  #  @leave_taken = LeaveTaken.find(params[:id])
+  #end
 
   # POST /leave_takens
   # POST /leave_takens.json
@@ -72,19 +72,19 @@ class LeaveTakensController < ApplicationController
 
   # PUT /leave_takens/1
   # PUT /leave_takens/1.json
-  def update
-    @leave_taken = LeaveTaken.find(params[:id])
-
-    respond_to do |format|
-      if @leave_taken.update_attributes(params[:leave_taken])
-        format.html { redirect_to leave_takens_path, notice: 'Leave taken was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @leave_taken.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+  #  @leave_taken = LeaveTaken.find(params[:id])
+  #
+  #  respond_to do |format|
+  #    if @leave_taken.update_attributes(params[:leave_taken])
+  #      format.html { redirect_to leave_takens_path, notice: 'Leave taken was successfully updated.' }
+  #      format.json { head :no_content }
+  #    else
+  #      format.html { render action: "edit" }
+  #      format.json { render json: @leave_taken.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   # DELETE /leave_takens/1
   # DELETE /leave_takens/1.json

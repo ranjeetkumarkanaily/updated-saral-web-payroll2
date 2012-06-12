@@ -4,6 +4,7 @@ describe "classifications/new" do
   before(:each) do
     @classification_heading = FactoryGirl.create(:classification_heading)
     assign(:paramclassification_id, @classification_heading.id)
+    assign(:heading_name,ClassificationHeading.find(@classification_heading.id).classification_heading_name)
     assign(:classification, stub_model(Classification,
       :classification_heading_id => 1,
       :classification_name => "MyString"

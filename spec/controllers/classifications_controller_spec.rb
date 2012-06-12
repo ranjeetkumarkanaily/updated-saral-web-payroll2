@@ -29,8 +29,9 @@ describe ClassificationsController do
 
   describe "GET edit" do
     it "assigns the requested classification as @classification" do
+      classification_heading = FactoryGirl.create(:classification_heading)
       classification = Classification.create! valid_attributes
-      get :edit, {:id => classification.to_param}
+      get :edit, {:id => classification.to_param,:params1=>classification_heading.id}
       assigns(:classification).should eq(classification)
     end
   end

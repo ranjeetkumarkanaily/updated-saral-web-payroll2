@@ -22,6 +22,8 @@ class ClassificationsController < ApplicationController
   end
 
   def edit
+    @paramclassification_id = params[:params1]
+    @heading_name = ClassificationHeading.find(@paramclassification_id).classification_heading_name
     @classification = Classification.find(params[:id])
   end
 
