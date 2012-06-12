@@ -41,7 +41,16 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    @employee = Employee.new(params[:employee])
+    employee=params[:employee]
+     dates_value=[employee[:date_of_birth],employee[:date_of_joining], employee[:probation_complete_date], employee[:salary_start_date], employee[:confirmation_date], employee[:date_of_leaving], employee[:retirement_date], employee[:resignation_date]]
+    date_format=OptionSetting.date_format_value
+    if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y")
+      dates=OptionSetting.convert_date(dates_value)
+      val=employee.merge!(:date_of_birth=>dates[0],:date_of_joining=>dates[1],:probation_complete_date=>dates[2],:salary_start_date=>dates[3], :confirmation_date=>dates[4], :date_of_leaving=>dates[5],:retirement_date=>dates[6],:resignation_date=>dates[7])
+      @employee = Employee.new(val)
+    else
+      @employee = Employee.new(params[:employee])
+    end
     respond_to do |format|
       if @employee.save
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
@@ -54,7 +63,15 @@ class EmployeesController < ApplicationController
   end
 
   def update
-     respond_to do |format|
+    dates_value=[params[:employee][:date_of_birth],params[:employee][:date_of_joining], params[:employee][:probation_complete_date], params[:employee][:salary_start_date], params[:employee][:confirmation_date], params[:employee][:date_of_leaving], params[:employee][:retirement_date], params[:employee][:resignation_date]]
+    date_format=OptionSetting.date_format_value
+    if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y")
+      dates=OptionSetting.convert_date(dates_value)
+      params[:employee].merge!(:date_of_birth=>dates[0],:date_of_joining=>dates[1],:probation_complete_date=>dates[2],:salary_start_date=>dates[3], :confirmation_date=>dates[4], :date_of_leaving=>dates[5],:retirement_date=>dates[6],:resignation_date=>dates[7])
+    else
+      params[:employee]
+    end
+    respond_to do |format|
         if @employee.update_attributes(params[:employee])
           format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
           format.json { head :ok }
