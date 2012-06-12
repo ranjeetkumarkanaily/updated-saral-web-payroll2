@@ -47,16 +47,16 @@
                             %tr
                               %td.table_grid_td= check_box_tag "leave_date_wise" ,j,nil,:onclick=>'leave_date(this)'
                             %tr
-                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_from_date]",'', :class=>"date_input"
-                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_to_date]",'', :class=>"date_input"
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_from_date]",'', :class=>"date_input",:placeholder=> "From Date"
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][leave_to_date]",'', :class=>"date_input",:placeholder=> "To Date"
                         %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_count]",'',:placeholder=> "Enter Count"
                         %td
                           %table
                             %tr
                               %td.table_grid_td= check_box_tag "lop_date_wise",j,nil,:onclick=>'lop_date(this)'
                             %tr
-                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_from_date]",'', :class=>"date_input"
-                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_to_date]",'', :class=>"date_input"
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_from_date]",'', :class=>"date_input",:placeholder=> "From Date"
+                              %td.table_grid_td= text_field_tag "leave_takens[#{j}][lop_to_date]",'', :class=>"date_input",:placeholder=> "To Date"
                         = hidden_field_tag "leave_takens[#{j}][employee_id]", employee[:employee_id]
                         - j=j+1
           %tr
