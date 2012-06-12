@@ -6,7 +6,9 @@ class PaymonthsController < ApplicationController
 
   def new
     @paymonth = Paymonth.new
-    @next_month = Paymonth.next_paymonth if Paymonth.count > 0
+    com_start_month = OptionSetting.first.salary_calc
+    Paymonth.count > 0 ? @next_month = Paymonth.next_paymonth : @next_month = com_start_month
+    #@next_month = Paymonth.next_paymonth if Paymonth.count > 0
   end
 
   def show
