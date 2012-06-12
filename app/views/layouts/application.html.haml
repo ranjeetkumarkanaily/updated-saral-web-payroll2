@@ -2,13 +2,12 @@
 %html
   %head
     %title #{Company.first.companyname if Company.exists?} Web Payroll
-    = javascript_include_tag "jquery-1.7.2"
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
-    = javascript_include_tag  "jquery.date_input"
-    = stylesheet_link_tag    "date_input"
     = csrf_meta_tags
     %script{:src => "http://code.jquery.com/jquery-latest.js"}
+    = javascript_include_tag  "jquery.date_input"
+    = stylesheet_link_tag    "date_input"
     %script{:language => "javascript"}
       $($.date_input.initialize);
 

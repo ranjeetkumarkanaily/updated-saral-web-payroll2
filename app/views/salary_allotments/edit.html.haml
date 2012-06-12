@@ -52,7 +52,7 @@
 
                   %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]',calc_value,:readonly=>"readonly"
                 -else
-                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', number_with_precision(allotSal_earn.salary_allotment, :precision => 2),:onblur=>"calculate_value(this.id)",:class=>"salAllotEarn"
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', (allotSal_earn.salary_allotment>0)?number_with_precision(allotSal_earn.salary_allotment, :precision => 2):"",:onblur=>"calculate_value(this.id)",:class=>"salAllotEarn"
             %tr
               %td
               %td
@@ -74,7 +74,7 @@
 
                   %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]',calc_value,:readonly=>"readonly"
                 -else
-                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', number_with_precision(allotSal_deduct.salary_allotment, :precision => 2),:class=>"salAllotDeduct"
+                  %td.table_grid_td= text_field_tag 'salAllotment[][salary_allotment]', (allotSal_deduct.salary_allotment>0)?number_with_precision(allotSal_deduct.salary_allotment, :precision => 2):"",:class=>"salAllotDeduct"
             - if @allotSal_deductions.count != 0
               %tr
                 %td
