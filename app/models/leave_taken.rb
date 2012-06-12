@@ -24,7 +24,6 @@ class LeaveTaken < ActiveRecord::Base
     else
       leave_excel_sheet.each 1 do |row|
         counter+=1
-        p row[1].beginning_of_month
         #pay_month = Date.strptime , "%b/%Y"
         #pay_month = pay_month.beginning_of_month
         liv = LeaveTaken.new

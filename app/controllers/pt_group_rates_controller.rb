@@ -16,6 +16,7 @@ class PtGroupRatesController < ApplicationController
 
     respond_to do |format|
       if @pt_group_rate.save
+        @pt_group_rate.create_pt_slabs
         format.html { redirect_to pt_group_path(:id => @pt_group_rate.pt_group_id), notice: 'Pt group rate was successfully created.' }
         format.json { render json: @pt_group_rate, status: :created, location: @pt_group_rate }
       else
