@@ -146,6 +146,18 @@
                               %tr
                                 %td Asset Tracker:&nbsp;
                                 %td= f.check_box :asset_tracker
+                  %div{:class=>'tabbertab',:id=>"date_format"}
+                    %h2 Date Format
+                    %div
+                      %table
+                        %tr
+                          %td.std_td
+                            %table
+                              %tr
+                                %td Select the Date Format:&nbsp;
+                                %td= f.collection_select :date_format, DateFormat.order('created_at ASC'),:date_format,:date_format
+                                %td
+                                  %div{:id => "date_format_example",:style => "color:red;"}
             %tr
               %td &nbsp;
             %tr

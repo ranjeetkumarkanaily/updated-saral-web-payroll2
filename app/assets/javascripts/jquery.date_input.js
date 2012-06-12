@@ -152,14 +152,17 @@ DateInput.prototype = {
   },
   
   selectDate: function(date) {
+
     if (typeof(date) == "undefined") {
       date = this.stringToDate(this.input.val());
+
     };
     if (!date) date = new Date();
-    
+
     this.selectedDate = date;
+
 	//select1=this.selectedDate-3;
-    this.selectedDateString = this.dateToString(this.selectedDate);
+    this.selectedDateString = this.dateToString(this.selectedDate);//alert(this.selectedDateString);
     this.selectMonth(this.selectedDate);
   },
   
@@ -234,83 +237,253 @@ DateInput.prototype = {
     }
     event.preventDefault();
   },
-  // date format dd month yyyy
-  
- /* stringToDate: function(string) {
-    var matches;
-    if (matches = string.match(/^(\d{2,2}) ([^\s]+) (\d{4,4})$/ig)) {
-      return new Date(matches[3], this.shortMonthNum(matches[2]), matches[1], 12, 00);
-    } else {
-      return null;
-    };
-  },
-  
-  dateToString: function(date) {
-    return date.getDate() + " " + this.short_month_names[date.getMonth()] + " " + date.getFullYear();
-  },*/
-  
-  
-  // date format of yyyy-mm-dd
-  
-  stringToDate: function(string) {
-    var matches;
-    if (matches = string.match(/^(\d{4,4})-(\d{2,2})-(\d{2,2})$/)) {
-      return new Date(matches[1], matches[2] - 1, matches[3]);
-    } else {
-      return null;
-    };
-  },
-  
-  
-  dateToString: function(date) {
-    var month = (date.getMonth() + 1).toString();
-    var dom = date.getDate().toString();
-    if (month.length == 1) month = "0" + month;
-    if (dom.length == 1) dom = "0" + dom;
-    return date.getFullYear() + "-" + month + "-" + dom;
-  },
-  
-  // date format of mm-yyyy-dd
-  
- /*stringToDate: function(string) {
-    var matches;
-    if (matches = string.match(/^(\d{2,2})-(\d{4,4})-(\d{2,2})$/i)) {
-      return new Date(matches[1], matches[2]-1, matches[3]);
-    } else {
-      return null;
-    };
-  },
-  
-  dateToString: function(date) {
-    var month = (date.getMonth() + 1).toString();
-    var dom = date.getDate().toString();
-    if (month.length == 1) month = "0" + month;
-    if (dom.length == 1) dom = "0" + dom;
-    return  month + "/" + dom + "/" + date.getFullYear();
-  },  */
-  
-  // date format of dd-mm-yyyy
-  
- /*stringToDate: function(string) {
-    var matches;
-    //var dy=string.substring(0,4);
-    //var dm=string.substring(5,7);
-    //var dd=string.substring(8,10);
-    if (matches = string.match(/^(\d{2,2})-(\d{2,2})-(\d{4,4})$/)) {
-      return new Date(matches[3], matches[2]-1,matches[1]);
-    } else {
-      return null;
-    };
-  },
-  
-  dateToString: function(date) {
-    var month = (date.getMonth() + 1).toString();
-    var dom = date.getDate().toString();
-    if (month.length == 1) month = "0" + month;
-    if (dom.length == 1) dom = "0" + dom;
-    return  dom + "-" + month + "-" + date.getFullYear();
-  },*/
-  
+
+    stringToDate: function(string) {
+        format=$("#date_format").val();
+        var matches;
+        if(format === "%d/%m/%Y")
+        {
+            //alert(string);
+            if (matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{4,4})$/)) {         // dd/mm/yyyy   1
+                //alert(matches[3]+"-"+(matches[2]) +"-"+ matches[1]);
+                return new Date(matches[3], matches[2]-1,matches[1]);
+            } else {
+              return null;
+            }
+        }
+        if (format == "%d-%m-%Y")
+        {
+            if (matches = string.match(/^(\d{2,2})-(\d{2,2})-(\d{4,4})$/)) {         // dd-mm-yyyy    2
+              return new Date(matches[3], matches[2]-1,matches[1]);
+            } else {
+              return null;
+            }
+        }
+        if (format == "%m/%d/%Y")
+        {
+            if (matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{4,4})$/)) {         // mm/dd/yyyy  3
+                return new Date(matches[3], matches[1]-1,matches[2]);
+            } else {
+              return null;
+            }
+        }
+        if (format == "%m-%d-%Y")
+        {
+            if (matches = string.match(/^(\d{2,2})-(\d{2,2})-(\d{4,4})$/)) {         // mm-dd-yyyy     4
+                return new Date(matches[3], matches[1]-1,matches[2]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%Y/%m/%d")
+        {
+            if (matches = string.match(/^(\d{4,4})\/(\d{2,2})\/(\d{2,2})$/)) {       // yyyy/mm/dd     5
+                return new Date(matches[1], matches[2] - 1, matches[3]);
+            } else {
+                return null;
+            }
+        }
+        if (format === "%Y-%m-%d")
+        {
+            if (matches = string.match(/^(\d{4,4})-(\d{2,2})-(\d{2,2})$/)) {       // yyyy-mm-dd        6
+                return new Date(matches[1], matches[2] - 1, matches[3]);
+            } else {
+                return null;
+            }
+        }
+        if (format === "%b/%d/%Y")
+        {
+            if (matches = string.match(/^([^\s]+)\/(\d{2,2})\/(\d{4,4})$/)) {       // mon/dd/yyyy     7
+              return new Date(matches[3],this.shortMonthNum(matches[1]),matches[2]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%b-%d-%Y")
+        {
+            if (matches = string.match(/^([^\s]+)-(\d{2,2})-(\d{4,4})$/)) {        //  mon-dd-yyyy     8
+              return new Date(matches[3],this.shortMonthNum(matches[1]),matches[2]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%d/%b/%Y")
+        {
+            if (matches = string.match(/^(\d{2,2})\/([^\s]+)\/(\d{4,4})$/)) {     //  dd/mon/yyyy     9
+              return new Date(matches[3], this.shortMonthNum(matches[2]), matches[1]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%d-%b-%Y")
+        {
+            if (matches = string.match(/^(\d{2,2})-([^\s]+)-(\d{4,4})$/)) {     //  dd/mon/yyyy     10
+              return new Date(matches[3], this.shortMonthNum(matches[2]), matches[1]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%Y/%b/%d")
+        {
+            if (matches = string.match(/^(\d{4,4})\/([^\s]+)\/(\d{2,2})$/)) {   //  yyyy/mon/dd     11
+              return new Date(matches[1], this.shortMonthNum(matches[2]), matches[3]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%Y-%b-%d")
+        {
+            if (matches = string.match(/^(\d{4,4})-([^\s]+)-(\d{2,2})$/)) {    //  yyyy-mon-dd      12
+              return new Date(matches[1], this.shortMonthNum(matches[2]), matches[3]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%B %d, %Y")
+        {
+            if (matches = string.match(/^([^\s]+) (\d{2,2}), (\d{4,4})$/)) {       // month dd, yyyy    13
+              return new Date(matches[3],this.monthNum(matches[1]),matches[2]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%d %B %Y")
+        {
+            if (matches = string.match(/^(\d{2,2}) ([^\s]+) (\d{4,4})$/)) {       //  dd month yyyy    14
+              return new Date(matches[3], this.monthNum(matches[2]), matches[1]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "")
+        {
+            if (matches = string.match(/^(\d{4,4})-(\d{2,2})-(\d{2,2})$/)) {       // yyyy-mm-dd        0
+                return new Date(matches[1], matches[2] - 1, matches[3]);
+            } else {
+                return null;
+            }
+        }
+        if (format === "%m-%Y-%d")
+        {
+            if (matches = string.match(/^(\d{2,2})-(\d{4,4})-(\d{2,2})$/)) {     //  mm-yyyy-dd      15
+              return new Date(matches[2], matches[1]-1,matches[3]);
+            } else {
+              return null;
+            }
+        }
+        if (format === "%d/%m/%y" )
+        {
+            if (matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{2,2})$/)) {   //  dd/mm/yy        16
+                var year_value=this.convertYear(matches[3]);
+              return new Date(year_value, matches[2]-1,matches[1]);
+            } else {
+              return null;
+            };
+        }
+        if (format === "%d-%m-%y" )
+        {
+            if (matches = string.match(/^(\d{2,2})-(\d{2,2})-(\d{2,2})$/)) {   //  dd-mm-yy        17
+                var year_value=this.convertYear(matches[3]);
+              return new Date(year_value, matches[2]-1,matches[1]);
+            } else {
+              return null;
+            };
+        }
+
+      },
+
+      dateToString: function(date) {
+          format=$("#date_format").val();
+        var month = (date.getMonth() + 1).toString();
+        var dom = date.getDate().toString();
+        var yr= date.getFullYear().toString();
+        var year = yr.slice(2);
+        if (month.length == 1) month = "0" + month;
+        if (dom.length == 1) dom = "0" + dom;
+        if (format === "%d/%m/%Y")
+        {
+            return  dom + "/" + month + "/" + date.getFullYear();
+        }
+        if (format === "%d-%m-%Y")
+        {
+            return  dom + "-" + month + "-" + date.getFullYear();
+        }
+        if (format === "%m/%d/%Y")
+        {
+            return  month + "/" + dom + "/" + date.getFullYear();
+        }
+        if (format === "%m-%d-%Y")
+        {
+            return  month + "-" + dom + "-" + date.getFullYear();
+        }
+        if (format === "%Y/%m/%d")
+        {
+            return date.getFullYear() + "/" + month + "/" + dom;
+        }
+        if (format === "%Y-%m-%d" || format == "")
+        {
+            return date.getFullYear() + "-" + month + "-" + dom;
+        }
+        if (format === "%b/%d/%Y")
+        {
+            return this.short_month_names[date.getMonth()] + "/" + dom + "/" + date.getFullYear();
+        }
+        if (format === "%b-%d-%Y")
+        {
+            return this.short_month_names[date.getMonth()] + "-" + dom + "-" + date.getFullYear();
+        }
+        if (format === "%d/%b/%Y")
+        {
+            return dom + "/" + this.short_month_names[date.getMonth()] + "/" + date.getFullYear();
+        }
+        if (format === "%d-%b-%Y")
+        {
+            return dom + "-" + this.short_month_names[date.getMonth()] + "-" + date.getFullYear();
+        }
+        if (format === "%Y/%b/%d")
+        {
+            return date.getFullYear() + "/" + this.short_month_names[date.getMonth()] + "/" + dom;
+        }
+        if (format === "%Y-%b-%d")
+        {
+            return date.getFullYear() + "-" + this.short_month_names[date.getMonth()] + "-" + dom;
+        }
+        if (format === "%B %d, %Y")
+        {
+            return this.month_names[date.getMonth()] + " " + dom + ", " + date.getFullYear();
+        }
+        if (format === "%d %B %Y")
+        {
+            return dom + " " + this.month_names[date.getMonth()] + " " + date.getFullYear();
+        }
+        if (format === "%m-%Y-%d")
+        {
+            return  month + "-" + date.getFullYear() + "-" + dom;
+        }
+        if (format === "%d/%m/%y")
+        {
+            return  dom + "/" + month + "/" + year;
+        }
+        if (format === "%d-%m-%y")
+        {
+            return  dom + "-" + month + "-" + year;
+        }
+      },
+
+    convertYear : function(yr)
+      {
+        var dyear="";
+        if(yr<=68)
+        {
+            dyear="20"+yr;
+        }
+        if(yr>68)
+        {
+            dyear="19"+yr;
+        }
+        return dyear;
+      },
+
   setPosition: function() {
     var offset = this.input.offset();
     this.rootLayers.css({
@@ -417,7 +590,8 @@ DateInput.prototype = {
 };
 
 $.fn.date_input = function(opts) {
-  return this.each(function() { new DateInput(this, opts); });
+    this.date_format = $("#date_format").val();
+    return this.each(function() { new DateInput(this, opts); });
 };
 $.date_input = { initialize: function(opts) {
   $("input.date_input").date_input(opts);
@@ -432,4 +606,4 @@ $.date_input = { initialize: function(opts) {
 } };
 
 return DateInput;
-})(jQuery); 
+})(jQuery);
