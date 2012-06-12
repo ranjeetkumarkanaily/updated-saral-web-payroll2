@@ -5,15 +5,12 @@ describe LeaveTakensController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
   end
-  #attr_accessible :employee_id, :leave_from_date, :leave_count, :lop_count,:leave_detail_date,:leave_to_date,:lop_from_date,:lop_to_date
-
   def valid_attributes
     {
         :employee_id => 1,
         :leave_detail_date => 'jan-2012',
         :leave_count => 1,
         :lop_count => 2
-
     }
   end
 
@@ -63,11 +60,11 @@ describe LeaveTakensController do
       it "assigns a newly created leave_taken as @leave_taken" do
         employee = FactoryGirl.create(:employee)
         post :create, {:leave_taken => {"leave_detail_date"=>"Oct/2012"},:leave_takens=>{"0"=>{"leave_count"=>"2", "leave_from_date"=>"2012-06-01", "leave_to_date"=>"2012-06-02", "lop_count"=>"3", "lop_from_date"=>"2012-06-13", "lop_to_date"=>"2012-06-15", "employee_id"=>employee.id}}}
-        #assigns(:leave_takens[1]).should be_a(LeaveTaken)
+        #assigns(:leave_taken).should be_a(LeaveTaken)
         #assigns(:leave_takens[1]).should be_persisted
       end
 
-      it "redirects to the created leave_taken" do
+      it "redirects to the index page" do
         employee = FactoryGirl.create(:employee)
         post :create,{:leave_taken => {"leave_detail_date"=>"Oct/2012"},:leave_takens=>{"0"=>{"leave_count"=>"2", "leave_from_date"=>"2012-06-01", "leave_to_date"=>"2012-06-02", "lop_count"=>"3", "lop_from_date"=>"2012-06-13", "lop_to_date"=>"2012-06-15", "employee_id"=>employee.id}}}
         response.should redirect_to(leave_takens_path)

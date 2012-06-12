@@ -24,8 +24,6 @@ class LeaveTaken < ActiveRecord::Base
     else
       leave_excel_sheet.each 1 do |row|
         counter+=1
-        #pay_month = Date.strptime , "%b/%Y"
-        #pay_month = pay_month.beginning_of_month
         liv = LeaveTaken.new
         liv.employee_id = Employee.find_by_refno("#{row[0]}").id
         liv.leave_detail_date = row[1].beginning_of_month
@@ -36,12 +34,6 @@ class LeaveTaken < ActiveRecord::Base
         liv.lop_from_date = row[6]
         liv.lop_to_date = row[7]
         leaves_takens["leaves_takens"] << liv
-
-        #if liv.valid?
-        #  leaves_takens["leaves_takens"] << liv
-        #else
-        #  errors["#{counter+1}"] = liv.errors
-        #end
       end
     end
     leaves_takens["errors"] = errors
@@ -69,6 +61,24 @@ class LeaveTaken < ActiveRecord::Base
 
   def employee_name
      Employee.find(employee_id).empname
+  end
+
+  def self.save_leaves leave_takens,paymonth
+    pay_month = Date.strptime paymonth, "%b/%Y"
+    pay_month = pay_month.beginning_of_month
+    leave_taken = []
+    if !leave_takens.nil?
+      leave_takens.each do |leave|
+        if !leave[1]["leave_count"].blank? or !leave[1]["lop_count"].blank?
+
+          leave[1]["leave_count"] = 0 if(leave[1]["leave_count"].nil? or leave[1]["leave_count"].blank?)
+          leave[1]["lop_count"] = 0 if(leave[1]["lop_count"].nil? or leave[1]["lop_count"].blank?)
+
+          leave_taken = {:employee_id => leave[1]["employee_id"],:leave_from_date=>leave[1]["leave_from_date"],:leave_detail_date=>pay_month,:leave_to_date=>leave[1]["leave_to_date"],:lop_from_date=>leave[1]["lop_from_date"],:lop_to_date=>leave[1]["lop_to_date"],:lop_count=>leave[1]["lop_count"],:leave_count=>leave[1]["leave_count"]}
+          LeaveTaken.create(leave_taken)
+        end
+      end
+    end
   end
 
 end

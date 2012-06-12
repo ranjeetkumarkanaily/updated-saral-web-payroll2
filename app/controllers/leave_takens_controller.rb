@@ -41,21 +41,7 @@ class LeaveTakensController < ApplicationController
   # POST /leave_takens
   # POST /leave_takens.json
   def create
-    @leave_takens = params[:leave_takens]
-    pay_month = Date.strptime params[:leave_taken][:leave_detail_date], "%b/%Y"
-    pay_month = pay_month.beginning_of_month
-    var = []
-    if !@leave_takens.nil?
-      @leave_takens.each do |leave|
-        if !leave[1]["leave_count"].blank? or !leave[1]["lop_count"].blank?
-          leave[1]["leave_count"] = 0 if(leave[1]["leave_count"].nil? or leave[1]["leave_count"].blank?)
-          leave[1]["lop_count"] = 0 if(leave[1]["lop_count"].nil? or leave[1]["lop_count"].blank?)
-          @var = {:employee_id => leave[1]["employee_id"],:leave_detail_date=>pay_month,:leave_count=>leave[1]["leave_count"],:leave_from_date=>leave[1]["leave_from_date"],:leave_to_date=>leave[1]["leave_to_date"],:lop_count=>leave[1]["lop_count"],:lop_from_date=>leave[1]["lop_from_date"],:lop_to_date=>leave[1]["lop_to_date"]}
-          LeaveTaken.create(@var)
-        end
-      end
-    end
-
+    LeaveTaken.save_leaves params[:leave_takens],params[:leave_taken][:leave_detail_date]
     respond_to do |format|
       format.html { redirect_to leave_takens_path, notice: 'Leave Details successfully created.' }
     end
