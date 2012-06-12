@@ -1,3 +1,7 @@
+%script
+  $(document).ready(function() {
+  make_invisible();
+  });
 = form_for(leave_taken,:html => {:onsubmit => "return ValidateForm();"}) do |f|
   - if leave_taken.errors.any?
     #error_explanation

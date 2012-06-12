@@ -1,7 +1,3 @@
-$(document).ready(function() {
-    make_invisible()
-});
-
 function make_invisible(){
     employee_count = document.getElementById("employee_count").value
     for(i=0;i<employee_count;i++)
