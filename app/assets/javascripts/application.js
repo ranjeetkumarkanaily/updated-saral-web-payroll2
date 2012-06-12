@@ -10,20 +10,6 @@
 
 $(function() {
 
-  $("#search_field").keyup(function() {
-    $.get($("#emp_search").attr("action"), $("#emp_search").serialize(), null, "script");
-    return false;
-  });
 
-  $("#option_setting_country_id").change(function()
-  {
-    $.get($("#currency_form").attr("action"), $("#option_setting_country_id").serialize(), null, "script");
-    return false;
-  });
 
 });
-
-function alertTest()
-{
-    alert("kanaily");
-}
