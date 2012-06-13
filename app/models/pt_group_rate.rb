@@ -11,7 +11,7 @@ class PtGroupRate < ActiveRecord::Base
 
   def to_date
     next_row = next_row_on_pf_group_id
-    (Date.strptime(Paymonth.find(next_row.paymonth_id).month_name, "%b/%Y")-1).strftime("%d-%m-%Y") if next_row
+    (Date.strptime(Paymonth.find(next_row.paymonth_id).month_name, "%b/%Y")-1).strftime(OptionSetting.date_format_value) if next_row
   end
 
   def next_row_on_pf_group_id
