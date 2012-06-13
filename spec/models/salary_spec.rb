@@ -36,7 +36,7 @@ describe Salary do
         @branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
 
         pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => @pay_month.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id, :paymonth_id => @pay_month.id)
       end
 
       it "should give no of present days" do
@@ -272,7 +272,7 @@ describe Salary do
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id, :paymonth_id => paymonth.id)
 
         salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
@@ -290,7 +290,7 @@ describe Salary do
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id, :paymonth_id => paymonth.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
@@ -308,7 +308,7 @@ describe Salary do
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id, :paymonth_id => paymonth.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-01-01')
@@ -326,7 +326,7 @@ describe Salary do
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id, :paymonth_id => paymonth.id)
 
         salary = FactoryGirl.create(:salary,:salary_amount => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_detail = FactoryGirl.create(:esi_detail,:branch_id => branch.id,:esi_group_id => esi_group.id,:esi_effective_date => '2011-03-01')
@@ -359,7 +359,7 @@ describe Salary do
         branch = FactoryGirl.create(:branch,:esi_group_id => esi_group.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => esi_group.id, :paymonth_id => paymonth.id)
 
         salary_allotment = FactoryGirl.create(:salary_allotment,:salary_allotment => 15000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
         esi_amount = Salary.get_esi_amount "Feb/2011", 1

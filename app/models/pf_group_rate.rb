@@ -1,4 +1,4 @@
-class PfGroupRate < ActiveRecord::Base
+ class PfGroupRate < ActiveRecord::Base
   attr_accessible :pf_group_id, :paymonth_id, :account_number_21, :pension_fund,:epf,:account_number_02,:account_number_22,:round_off,:restrict_employer_share,:restrict_employee_share_to_employer_share,:employer_epf,:cutoff
   acts_as_audited
 
@@ -15,6 +15,8 @@ class PfGroupRate < ActiveRecord::Base
   validates :pension_fund , :numericality => {:less_than_or_equal_to => 100}
 
   validates :epf , :numericality => {:less_than_or_equal_to => 100}
+
+  validates :paymonth_id, :presence => true, :uniqueness => true
 
   def to_date
     next_row = next_row_on_pf_group_id
