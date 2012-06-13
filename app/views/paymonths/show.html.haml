@@ -16,7 +16,11 @@
                   %td= @paymonth.month_year
                 %tr
                   %td Form Date:&nbsp;
-                  %td= @paymonth.from_date
+                  %td
+                    - if @paymonth.from_date?
+                      = l @paymonth.from_date, :format => OptionSetting.date_format_type("",2)
+                    - else
+                      = @paymonth.from_date
                 %tr
                   %td Month Name:&nbsp;
                   %td= @paymonth.month_name
@@ -27,4 +31,8 @@
                   %td= @paymonth.number_of_days
                 %tr
                   %td To Date:&nbsp;
-                  %td= @paymonth.to_date
+                  %td
+                    - if @paymonth.to_date?
+                      = l @paymonth.to_date, :format => OptionSetting.date_format_type("",2)
+                    - else
+                      = @paymonth.to_date

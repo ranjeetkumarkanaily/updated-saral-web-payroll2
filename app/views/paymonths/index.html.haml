@@ -23,8 +23,16 @@
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= paymonth.month_name
               %td.table_grid_td= paymonth.number_of_days
-              %td.table_grid_td= l paymonth.from_date, :format => :default
-              %td.table_grid_td= l paymonth.to_date, :format => :default
+              %td.table_grid_td
+                - if paymonth.from_date?
+                  = l paymonth.from_date, :format => OptionSetting.date_format_type("",2)
+                - else
+                  = l paymonth.from_date
+              %td.table_grid_td
+                - if paymonth.to_date?
+                  = l paymonth.to_date, :format => OptionSetting.date_format_type("",2)
+                - else
+                  = l paymonth.to_date
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Pay Month"), paymonth
               %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Pay Month"), paymonth, confirm: 'Are you sure?', method: :delete
         %br/
