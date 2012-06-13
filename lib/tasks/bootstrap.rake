@@ -408,10 +408,31 @@ namespace :bootstrap do
     Country.create( :name => "Zambia", :currency => "Zambian Kwacha")
     Country.create( :name => "Zimbabwe", :currency => "Zimbabwe Dollar")
 
- end
+  end
+
+  desc "Create Date Formats 'Default'"
+  task :date_format => :environment do
+    DateFormat.create(date_format: "Y-m-d", date_format_value: "%Y-%m-%d")
+    DateFormat.create(date_format: "d/m/Y", date_format_value: "%d/%m/%Y")
+    DateFormat.create(date_format: "d-m-Y", date_format_value: "%d-%m-%Y")
+    DateFormat.create(date_format: "Y/m/d", date_format_value: "%Y/%m/%d")
+    DateFormat.create(date_format: "M/d/Y", date_format_value: "%b/%d/%Y")
+    DateFormat.create(date_format: "M-d-Y", date_format_value: "%b-%d-%Y")
+    DateFormat.create(date_format: "d/M/Y", date_format_value: "%d/%b/%Y")
+    DateFormat.create(date_format: "d-M-Y", date_format_value: "%d-%b-%Y")
+    DateFormat.create(date_format: "Y-M-d", date_format_value: "%Y-%b-%d")
+    DateFormat.create(date_format: "Y/M/d", date_format_value: "%Y/%b/%d")
+    DateFormat.create(date_format: "d MM Y", date_format_value: "%d %B %Y")
+    DateFormat.create(date_format: "MM d Y", date_format_value: "%B %d, %Y")
+    DateFormat.create(date_format: "m/d/Y", date_format_value: "%m/%d/%Y")
+    DateFormat.create(date_format: "m-Y-d", date_format_value: "%m-%Y-%d")
+    DateFormat.create(date_format: "d/m/y", date_format_value: "%d/%m/%y")
+    DateFormat.create(date_format: "d-m-y", date_format_value: "%d-%m-%y")
+  end
+
   desc "Add default option settings"
   task :option_settings => :environment do
-    OptionSetting.create(:country_id => "120", :time_zone => "(GMT+05:30) Kolkata", :currency => "Rupee", :recruitment => false, :lv_atdn_mgmt => true, :appraisal => true, :training => false, :help_desk => false, :travel_cummute => false, :pf_applicable => true, :esi_applicable => true, :pt_applicable => true, :multi_state_pt => false, :multi_pt => false, :tds_applicable => false, :multi_branch => false, :multi_hr => false, :salary_calc => 'Jan/2012', :allow_brnch_admin => false, :approval_flow => false, :audit_trail => true, :remibursement => false, :bonus_and_exgratia => false, :gratuity => false, :loans_adv => false, :arrears => true, :attdn_intgration => false, :asset_tracker => false)
+    OptionSetting.create(:country_id => "120", :time_zone => "(GMT+05:30) Kolkata", :currency => "Rupee", :recruitment => false, :lv_atdn_mgmt => true, :appraisal => true, :training => false, :help_desk => false, :travel_cummute => false, :pf_applicable => true, :esi_applicable => true, :pt_applicable => true, :multi_state_pt => false, :multi_pt => false, :tds_applicable => false, :multi_branch => false, :multi_hr => false, :salary_calc => 'Jan/2012', :allow_brnch_admin => false, :approval_flow => false, :audit_trail => true, :remibursement => false, :bonus_and_exgratia => false, :gratuity => false, :loans_adv => false, :arrears => true, :attdn_intgration => false, :asset_tracker => false, :date_format=> "Y-m-d")
   end
 
   desc "Company document's file upload Type "
