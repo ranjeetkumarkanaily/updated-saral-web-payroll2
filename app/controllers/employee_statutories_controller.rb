@@ -34,9 +34,9 @@ class EmployeeStatutoriesController < ApplicationController
   # POST /employee_statutories.json
   def create
     employee=params[:employee_statutory]
-     dates_value=[employee[:pan_effective_date],employee[:pf_effective_date], employee[:esi_effective_date]]
     date_format=OptionSetting.date_format_value
-    if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y")
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[employee[:pan_effective_date],employee[:pf_effective_date], employee[:esi_effective_date]]
       dates=OptionSetting.convert_date(dates_value)
       val=employee.merge!(:pan_effective_date=>dates[0],:pf_effective_date=>dates[1],:esi_effective_date=>dates[2])
       @employee_statutory = EmployeeStatutory.new(val)
@@ -71,9 +71,9 @@ class EmployeeStatutoriesController < ApplicationController
     end
     params[:employee_statutory][:based_on] = params[:based_on]
 
-    dates_value=[params[:employee_statutory][:pan_effective_date],params[:employee_statutory][:pf_effective_date], params[:employee_statutory][:esi_effective_date]]
     date_format=OptionSetting.date_format_value
-    if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y")
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[params[:employee_statutory][:pan_effective_date],params[:employee_statutory][:pf_effective_date], params[:employee_statutory][:esi_effective_date]]
       dates=OptionSetting.convert_date(dates_value)
       params[:employee_statutory].merge!(:pan_effective_date=>dates[0],:pf_effective_date=>dates[1],:esi_effective_date=>dates[2])
     else
