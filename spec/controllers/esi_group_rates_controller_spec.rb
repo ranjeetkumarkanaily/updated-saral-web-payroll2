@@ -5,10 +5,13 @@ describe EsiGroupRatesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
     @esi_group = FactoryGirl.create(:esi_group)
+    @paymonth = FactoryGirl.create(:paymonth)
   end
 
   def valid_attributes
-    {:esi_group_id => 1,
+    {
+      :paymonth_id => @paymonth.id,
+      :esi_group_id => 1,
       :employee_rate => 12,
       :employer_rate => 6,
       :cut_off => 500,

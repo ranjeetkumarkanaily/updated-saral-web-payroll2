@@ -52,6 +52,16 @@ class EmployeeDetailsController < ApplicationController
   # POST /employee_details
   # POST /employee_details.json
   def create
+    employee=params[:employee_detail]
+    date_format=OptionSetting.date_format_value
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[employee[:effective_date]]
+      dates=OptionSetting.convert_date(dates_value)
+      val=employee.merge!(:effective_date=>dates[0])
+      @employee_detail = EmployeeDetail.new(val)
+    else
+      @employee_detail = EmployeeDetail.new(params[:employee_detail])
+    end
     @employee_detail = EmployeeDetail.new(params[:employee_detail])
     @paramempid = @employee_detail.employee_id
     @classification_headings = ClassificationHeading.order('display_order')
@@ -77,6 +87,14 @@ class EmployeeDetailsController < ApplicationController
   # PUT /employee_details/1
   # PUT /employee_details/1.json
   def update
+    date_format=OptionSetting.date_format_value
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[params[:employee_detail][:effective_date]]
+      dates=OptionSetting.convert_date(dates_value)
+      params[:employee_detail].merge!(:effective_date=>dates[0])
+    else
+      params[:employee_detail]
+    end
     @employee_detail = EmployeeDetail.find(params[:id])
     @paramempid = params[:employee_detail]['employee_id']
     @classification_headings = ClassificationHeading.order('display_order')

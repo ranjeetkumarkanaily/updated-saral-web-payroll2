@@ -42,13 +42,25 @@
               %table
                 %tr
                   %td#pandate Effective Date(PAN):&nbsp;
-                  %td= f.text_field :pan_effective_date, :id=>"pan_ed", :class=>"date_input"
+                  %td
+                  -if employee_statutory.pan_effective_date?
+                    = f.text_field :pan_effective_date, :id=>"pan_ed", :class=>"date_input",:value => OptionSetting.date_format_type(employee_statutory.pan_effective_date,1)
+                  -else
+                    = f.text_field :pan_effective_date, :id=>"pan_ed", :class=>"date_input"
                 %tr
                   %td#pfdate Effective Date(PF):&nbsp;
-                  %td= f.text_field :pf_effective_date, :id=>"pf_ed" , :class=>"date_input"
+                  %td
+                  -if employee_statutory.pf_effective_date?
+                    = f.text_field :pf_effective_date, :id=>"pf_ed" , :class=>"date_input",:value => OptionSetting.date_format_type(employee_statutory.pf_effective_date,1)
+                  -else
+                    = f.text_field :pf_effective_date, :id=>"pf_ed" , :class=>"date_input"
                 %tr
                   %td#esidate Effective Date(ESI):&nbsp;
-                  %td= f.text_field :esi_effective_date, :id=>"esi_ed", :class=>"date_input"
+                  %td
+                  -if employee_statutory.esi_effective_date?
+                    = f.text_field :esi_effective_date, :id=>"esi_ed", :class=>"date_input", :value => OptionSetting.date_format_type(employee_statutory.esi_effective_date,1)
+                  - else
+                    = f.text_field :esi_effective_date, :id=>"esi_ed", :class=>"date_input"
                 %tr
                   %td Zero Pension
                   %td= f.check_box :zero_pension

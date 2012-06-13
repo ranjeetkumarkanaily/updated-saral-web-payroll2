@@ -15,7 +15,7 @@
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
-            %td.table_grid_header ESI Group
+            %td.table_grid_header Month Year
             %td.table_grid_header Employee rate
             %td.table_grid_header Employer rate
             %td.table_grid_header Cut off
@@ -24,7 +24,7 @@
             %td.table_grid_header{:colspan =>2} Operations
           - @esi_group_rates.each do |esi_group_rate|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= esi_group_rate.esi_group_id
+              %td.table_grid_td= esi_group_rate.paymonth.month_name
               %td.table_grid_td= esi_group_rate.employee_rate
               %td.table_grid_td= esi_group_rate.employer_rate
               %td.table_grid_td= esi_group_rate.cut_off

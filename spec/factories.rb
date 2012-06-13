@@ -318,14 +318,22 @@ FactoryGirl.define do
     group_column_value "1.75"
   end
 
-  factory :option_setting do
-    salary_calc "jan/2012"
-  end
-
   factory :pt_slab do
     state_id 18
     minimum_sal_range 1200
     pt 120
+  end
+  factory :date_format do
+    date_format "Y-m-d"
+    date_format_value "%Y-%m-%d"
+  end
+
+  factory :option_setting do
+    country_id "120"
+    time_zone "(GMT+05:30) Kolkata"
+    currency "Rupee"
+    salary_calc "Jan/2012"
+    date_format "Y-m-d"
   end
 
 end

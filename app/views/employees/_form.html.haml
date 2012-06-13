@@ -25,8 +25,10 @@
                   %td= f.select :marital_status, options_for_select(["Married", "Single", "Divorced"],employee.marital_status), {:prompt => 'Select Marital Status'}
                 %tr
                   %td Date of Birth:&nbsp;
-                  %td= f.text_field :date_of_birth, :id=>"dob", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
-
+                  - if employee.date_of_birth?
+                    %td= f.text_field :date_of_birth, :id=>"dob", :value => OptionSetting.date_format_type(employee.date_of_birth,1), :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
+                  -else
+                    %td= f.text_field :date_of_birth, :id=>"dob", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
             %td.std_td
               %table
                 %tr
@@ -40,8 +42,10 @@
                   %td{:colspan=>2}= f.text_field :spouse_name, :size => '22'
                 %tr
                   %td Date of Joining:&nbsp;
-                  %td{:colspan=>2}= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
-
+                  - if employee.date_of_joining?
+                    %td{:colspan=>2}= f.text_field :date_of_joining, :id=>"doj", :value => OptionSetting.date_format_type(employee.date_of_joining,1), :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                  -else
+                    %td{:colspan=>2}= f.text_field :date_of_joining, :id=>"doj", :class=>"date_input2", :include_blank => true,  :start_year => 2000, :end_year => 2014
 
         %table.std_table{:cellpadding=>0,:cellspacing=>0, :style=>"border:none;"}
           %tr
@@ -148,7 +152,10 @@
                               %td= f.text_field :probation_period, :size => '22', :onchange=>'cal_prob_complt_date(this.value)', :onblur=>'cal_prob_complt_date(this.value)'
                             %tr
                               %td Probation completion Date:&nbsp;
-                              %td{:colspan=>2}= f.text_field :probation_complete_date, :id=>"probtn_date", :class=>"date_input4", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - if employee.probation_complete_date?
+                                %td{:colspan=>2}= f.text_field :probation_complete_date, :id=>"probtn_date", :value => OptionSetting.date_format_type(employee.probation_complete_date,1), :class=>"date_input4", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              -else
+                                %td{:colspan=>2}= f.text_field :probation_complete_date, :id=>"probtn_date", :class=>"date_input4", :include_blank => true,  :start_year => 2000, :end_year => 2014
                             %tr
                               %td{:width=>130} Handicapped:&nbsp;
                               %td= f.check_box :handicapped, :size => '22'
@@ -158,9 +165,15 @@
                               %td &nbsp;
                             %tr
                               %td Date of Salary:&nbsp;
-                              %td{:colspan=>2}= f.text_field :salary_start_date, :id=>"sal_date", :class=>"date_input3", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - if employee.salary_start_date?
+                                %td{:colspan=>2}= f.text_field :salary_start_date, :id=>"sal_date", :value => OptionSetting.date_format_type(employee.salary_start_date,1), :class=>"date_input3", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - else
+                                %td{:colspan=>2}= f.text_field :salary_start_date, :id=>"sal_date", :class=>"date_input3", :include_blank => true,  :start_year => 2000, :end_year => 2014
                             %tr
                               %td Confirmation Date:&nbsp;
+                              - if employee.confirmation_date?
+                                %td= f.text_field :confirmation_date, :id=>"conf_date", :value => OptionSetting.date_format_type(employee.confirmation_date,1), :class=>"date_input5", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - else
                               %td= f.text_field :confirmation_date, :id=>"conf_date", :class=>"date_input5", :include_blank => true,  :start_year => 2000, :end_year => 2014
 
                 %div{:class=>'tabbertab',:id=>"Separation"}
@@ -174,10 +187,16 @@
                               %td &nbsp
                             %tr
                               %td Date of Leaving:&nbsp;
+                              - if employee.date_of_leaving?
+                                %td= f.text_field :date_of_leaving, :id=>"dol", :value => OptionSetting.date_format_type(employee.date_of_leaving,1), :class=>"date_input1", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - else
                               %td= f.text_field :date_of_leaving, :id=>"dol", :class=>"date_input1", :include_blank => true,  :start_year => 2000, :end_year => 2014
                             %tr
                               %td Date of Retirement:&nbsp;
-                              %td= f.text_field :retirement_date, :id=>"ret_date", :class=>"date_input6", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - if employee.retirement_date?
+                                %td= f.text_field :retirement_date, :id=>"ret_date", :value => OptionSetting.date_format_type(employee.retirement_date,1), :class=>"date_input6", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - else
+                                %td= f.text_field :retirement_date, :id=>"ret_date", :class=>"date_input6", :include_blank => true,  :start_year => 2000, :end_year => 2014
                             %tr
                               %td Notice Period(days):&nbsp;
                               %td= f.text_field :notice_period
@@ -190,7 +209,10 @@
                               %td{:colspan=>2}= f.select :leaving_reason, options_for_select(["Without Reason", "On Leave","Left Service","Retired","Out of Coverage","Expired","Non Implemented area","Compliance by Immediate Employer","Suspension of work","Strike/Lockout","Retrenchment","No Work","Doesn't Belong To This Employer"],employee.leaving_reason), {:prompt => 'Select Reason'}
                             %tr
                               %td Resignation Date:&nbsp;
-                              %td= f.text_field :resignation_date, :id=>"resignation_date", :class=>"date_input7", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - if employee.resignation_date?
+                                %td= f.text_field :resignation_date, :id=>"resignation_date", :value => OptionSetting.date_format_type(employee.resignation_date,1), :class=>"date_input7", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                              - else
+                                %td= f.text_field :resignation_date, :id=>"resignation_date", :class=>"date_input7", :include_blank => true,  :start_year => 2000, :end_year => 2014
                             %tr
                               %td Remarks:&nbsp;
                               %td= f.text_area :remarks, :rows=>1

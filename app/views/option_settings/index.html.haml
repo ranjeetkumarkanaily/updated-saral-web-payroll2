@@ -136,3 +136,13 @@
                             %tr
                               %td Asset Tracker:&nbsp;
                               %td= @option_setting.asset_tracker == true ? "Yes" : "No"
+                %div{:class=>'tabbertab',:id=>"date_format"}
+                  %h2 Date Format
+                  %div
+                    %table
+                      %tr
+                        %td.std_td
+                          %table
+                            %tr
+                              %td Date Format:&nbsp;
+                              %td= @option_setting.date_format
