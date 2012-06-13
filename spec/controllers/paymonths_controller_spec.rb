@@ -36,12 +36,8 @@ describe PaymonthsController do
 
   describe "GET new" do
     it "assigns a new paymonth as @paymonth" do
-<<<<<<< HEAD
-      option_setting = FactoryGirl.create(:option_setting)
-=======
-      FactoryGirl.create(:option_setting)
->>>>>>> f51d3385699e792bd47b2e901fa0e2aea7e2197a
-      get :new
+    option_setting = FactoryGirl.create(:option_setting)
+    get :new
       assigns(:paymonth).should be_a_new(Paymonth)
     end
   end
