@@ -14,19 +14,17 @@
               - flash.each do |name, msg|
                 = content_tag :div, msg, :id => "flash_#{name}"
           %tr
-            %td.table_grid_header Month Year
+            %td.table_grid_header Month Name
             %td.table_grid_header Number of Days
             %td.table_grid_header From Date
             %td.table_grid_header To Date
-            %td.table_grid_header Month Name
             %td.table_grid_header{:colspan =>2} Operations
           - @paymonths.each do |paymonth|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-              %td.table_grid_td= paymonth.month_year
+              %td.table_grid_td= paymonth.month_name
               %td.table_grid_td= paymonth.number_of_days
               %td.table_grid_td= l paymonth.from_date, :format => :default
               %td.table_grid_td= l paymonth.to_date, :format => :default
-              %td.table_grid_td= paymonth.month_name
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Pay Month"), paymonth
               %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Pay Month"), paymonth, confirm: 'Are you sure?', method: :delete
         %br/

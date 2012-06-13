@@ -19,9 +19,12 @@ class PtGroupRate < ActiveRecord::Base
   end
 
   def create_pt_slabs
-    #state_id = PtGroup.find(pt_group_id).state_id
-    #pt_slabs = PtSlabs.find_by_state_id(state_id)
-    #puts pt_slabs
-
+    new_pt_slab = []
+    state_id = PtGroup.find(pt_group_id).state_id
+    pt_slabs = PtSlab.find_all_by_state_id(state_id)
+    pt_slabs.each do |ptslab|
+      new_pt_slab = {:pt_group_id =>pt_group_id ,:paymonth_id=>paymonth_id,:min_sal_range=>ptslab.minimum_sal_range,:pt=>ptslab.pt}
+      PtRate.create(new_pt_slab)
+    end
   end
 end

@@ -318,4 +318,14 @@ FactoryGirl.define do
     group_column_value "1.75"
   end
 
+  factory :option_setting do
+    salary_calc "jan/2012"
+  end
+
+  factory :pt_slab do
+    state_id 18
+    minimum_sal_range 1200
+    pt 120
+  end
+
 end

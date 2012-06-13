@@ -20,4 +20,12 @@ describe PtGroupRate do
     to_date.should eq("31-12-2010")
   end
 
+  it "should insert pt slabs of particular state for the selected month if it pt slabs exists" do
+    state = FactoryGirl.create(:state)
+    pt_slab = FactoryGirl.create(:pt_slab,:state_id=>state.id)
+    pt_group_rate = PtGroupRate.new(:pt_group_id => @pt_group.id,:paymonth_id => @paymonth.id)
+    pt_group_rate.save
+    pt_group_rate.create_pt_slabs
+  end
+
 end
