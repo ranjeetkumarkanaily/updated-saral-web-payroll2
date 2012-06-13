@@ -19,7 +19,11 @@
                   %td= f.text_field :companyname, :size => '22'
                 %tr
                   %td Estd. Date:&nbsp;
-                  %td= f.text_field :dateofestablishment, :id=>"doe", :class=>"date_input", :start_year => 1980, :end_year => 2012
+                  %td
+                    - if company.dateofestablishment?
+                      = f.text_field :dateofestablishment, :id=>"doe", :class=>"date_input", :value => OptionSetting.date_format_type(company.dateofestablishment,1), :start_year => 1980, :end_year => 2012
+                    - else
+                      = f.text_field :dateofestablishment, :id=>"doe", :class=>"date_input", :start_year => 1980, :end_year => 2012
                 %tr
                   %td Address Line 1:&nbsp;
                   %td= f.text_field :address, :size => '22'
