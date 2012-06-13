@@ -33,7 +33,7 @@ class OptionSetting < ActiveRecord::Base
      date_format=OptionSetting.first.date_format
      if date_format == "m-Y-d"
        aray.each do |dt|
-         if dt==""
+         if dt=="" || dt == nil
            y=""
          else
            x=Date.strptime("{#{dt}}","{%m-%Y-%d}")
@@ -44,7 +44,7 @@ class OptionSetting < ActiveRecord::Base
      end
      if date_format == "m/d/Y"
         aray.each do |dt|
-          if dt==""
+          if dt=="" || dt == nil
             y=""
           else
             x=Date.strptime("{#{dt}}","{%m/%d/%Y}")
@@ -55,7 +55,7 @@ class OptionSetting < ActiveRecord::Base
      end
      if date_format == "d/m/y"
        aray.each do |dt|
-         if dt==""
+         if dt=="" || dt == nil
            y=""
          else
            x=Date.strptime("{#{dt}}","{%d/%m/%y}")
@@ -66,7 +66,7 @@ class OptionSetting < ActiveRecord::Base
      end
      if date_format == "d-m-y"
         aray.each do |dt|
-          if dt==""
+          if dt=="" || dt == nil
             y=""
           else
             x=Date.strptime("{#{dt}}","{%d-%m-%y}")

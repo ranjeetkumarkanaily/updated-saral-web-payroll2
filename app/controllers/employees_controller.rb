@@ -42,7 +42,7 @@ class EmployeesController < ApplicationController
 
   def create
     employee=params[:employee]
-     dates_value=[employee[:date_of_birth],employee[:date_of_joining], employee[:probation_complete_date], employee[:salary_start_date], employee[:confirmation_date], employee[:date_of_leaving], employee[:retirement_date], employee[:resignation_date]]
+    dates_value=[employee[:date_of_birth],employee[:date_of_joining], employee[:probation_complete_date], employee[:salary_start_date], employee[:confirmation_date], employee[:date_of_leaving], employee[:retirement_date], employee[:resignation_date]]
     date_format=OptionSetting.date_format_value
     if(date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y")
       dates=OptionSetting.convert_date(dates_value)
