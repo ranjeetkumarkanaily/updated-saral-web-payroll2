@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "pt_groups/show" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     state = FactoryGirl.create(:state)
     paymonth = FactoryGirl.create(:paymonth)
     @pt_group = assign(:pt_group, stub_model(PtGroup,

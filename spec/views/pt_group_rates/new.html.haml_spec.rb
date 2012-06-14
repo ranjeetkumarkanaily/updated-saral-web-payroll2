@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "pt_group_rates/new" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     assign(:pt_group_rate, stub_model(PtGroupRate,
       :pt_group => nil,
       :paymonth => nil

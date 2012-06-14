@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "pf_group_rates/index" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     @pf_group = FactoryGirl.create(:pf_group)
     @paymonth = FactoryGirl.create(:paymonth)
     assign(:param_pf_group_id,@pf_group.id)
