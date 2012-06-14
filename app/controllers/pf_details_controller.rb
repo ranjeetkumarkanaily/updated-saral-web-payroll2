@@ -23,7 +23,17 @@ class PfDetailsController < ApplicationController
   # POST /pf_details
   # POST /pf_details.json
   def create
-    @pf_detail = @branch.pf_details.build(params[:pf_detail])
+    pf_det=params[:pf_detail]
+    date_format=OptionSetting.date_format_value
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[pf_det[:pf_effective_date]]
+      dates=OptionSetting.convert_date(dates_value)
+      val=pf_det.merge!(:pf_effective_date=>dates[0])
+      @pf_detail = @branch.pf_details.build(val)
+    else
+      @pf_detail = @branch.pf_details.build(params[:pf_detail])
+    end
+
     respond_to do |format|
       if @pf_detail.save
         # updating Branch pf_group_id
@@ -41,6 +51,15 @@ class PfDetailsController < ApplicationController
   # PUT /pf_details/1
   # PUT /pf_details/1.json
   def update
+
+    date_format=OptionSetting.date_format_value
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[params[:pf_detail][:pf_effective_date]]
+      dates=OptionSetting.convert_date(dates_value)
+      params[:pf_detail].merge!(:pf_effective_date=>dates[0])
+    else
+      params[:pf_detail]
+    end
     respond_to do |format|
       if @pf_detail.update_attributes(params[:pf_detail])
         # updating Branch pf_group_id

@@ -25,7 +25,11 @@
                     %td= f.select :pt_group_id, options_for_select(PtGroup.pt_groups.collect {|pt| [ pt.name, pt.id ] }, @pt_detail.pt_group_id),:prompt => 'Select PT Group'
                   %tr
                     %td{:width=> 130} Effective Date:&nbsp;
-                    %td= f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
+                    %td
+                      - if @pt_detail.pt_effective_date?
+                        = f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :value => OptionSetting.date_format_type(@pt_detail.pt_effective_date,1), :include_blank => true,  :start_year => 1920, :end_year => 2010
+                      - else
+                        = f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
                   %tr
                     %td &nbsp;
                   %tr
@@ -45,7 +49,11 @@
                 - sl_no = sl_no + 1
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                     %td.table_grid_td= pt_detail.pt_group_name
-                    %td.table_grid_td= pt_detail.pt_effective_date
+                    %td.table_grid_td
+                      - if pt_detail.pt_effective_date?
+                        = l pt_detail.pt_effective_date, :format => OptionSetting.date_format_type("",2)
+                      - else
+                        = pt_detail.pt_effective_date
                     %td.table_grid_td= pt_detail.effective_to
                     - if sl_no == 1
                       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch PT Details"), edit_branch_pt_detail_path(@branch, pt_detail)

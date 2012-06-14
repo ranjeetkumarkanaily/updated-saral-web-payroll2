@@ -24,7 +24,11 @@
                     %td= @pt_detail.pt_group_name
                   %tr
                     %td{:width=> 130} Effective Date:&nbsp;
-                    %td= f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
+                    %td
+                      - if @pt_detail.pt_effective_date?
+                        = f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :value=> OptionSetting.date_format_type(@pt_detail.pt_effective_date,1), :include_blank => true,  :start_year => 1920, :end_year => 2010
+                      - else
+                        = f.text_field :pt_effective_date, :id=>"pt_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
                   %tr
                     %td &nbsp;
                   %tr

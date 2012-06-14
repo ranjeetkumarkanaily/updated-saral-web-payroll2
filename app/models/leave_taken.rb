@@ -70,11 +70,17 @@ class LeaveTaken < ActiveRecord::Base
     if !leave_takens.nil?
       leave_takens.each do |leave|
         if !leave[1]["leave_count"].blank? or !leave[1]["lop_count"].blank?
-
           leave[1]["leave_count"] = 0 if(leave[1]["leave_count"].nil? or leave[1]["leave_count"].blank?)
           leave[1]["lop_count"] = 0 if(leave[1]["lop_count"].nil? or leave[1]["lop_count"].blank?)
 
-          leave_taken = {:employee_id => leave[1]["employee_id"],:leave_from_date=>leave[1]["leave_from_date"],:leave_detail_date=>pay_month,:leave_to_date=>leave[1]["leave_to_date"],:lop_from_date=>leave[1]["lop_from_date"],:lop_to_date=>leave[1]["lop_to_date"],:lop_count=>leave[1]["lop_count"],:leave_count=>leave[1]["leave_count"]}
+          date_format=OptionSetting.date_format_value
+          if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+            dates_value=[leave[1]["leave_from_date"],leave[1]["leave_to_date"],leave[1]["lop_from_date"],leave[1]["lop_to_date"]]
+            dates=OptionSetting.convert_date(dates_value)
+            leave_taken = {:employee_id => leave[1]["employee_id"],:leave_from_date=>dates[0],:leave_detail_date=>pay_month,:leave_to_date=>dates[1],:lop_from_date=>dates[2],:lop_to_date=>dates[3],:lop_count=>leave[1]["lop_count"],:leave_count=>leave[1]["leave_count"]}
+          else
+            leave_taken = {:employee_id => leave[1]["employee_id"],:leave_from_date=>leave[1]["leave_from_date"],:leave_detail_date=>pay_month,:leave_to_date=>leave[1]["leave_to_date"],:lop_from_date=>leave[1]["lop_from_date"],:lop_to_date=>leave[1]["lop_to_date"],:lop_count=>leave[1]["lop_count"],:leave_count=>leave[1]["leave_count"]}
+          end
           LeaveTaken.create(leave_taken)
         end
       end

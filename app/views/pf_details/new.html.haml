@@ -25,7 +25,11 @@
                     %td= f.select :pf_group_id, options_for_select(PfGroup.pf_groups.collect {|pf| [ pf.pf_group, pf.id ] }, @pf_detail.pf_group_id),:prompt => 'Select PF Group'
                   %tr
                     %td{:width=> 130} Effective Date:&nbsp;
-                    %td= f.text_field :pf_effective_date, :id=>"pf_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
+                    %td
+                      - if @pf_detail.pf_effective_date?
+                        = f.text_field :pf_effective_date, :id=>"pf_effective_date", :class=>"date_input", :value => OptionSetting.date_format_type(@pf_detail.pf_effective_date,1), :include_blank => true,  :start_year => 1920, :end_year => 2010
+                      - else
+                        = f.text_field :pf_effective_date, :id=>"pf_effective_date", :class=>"date_input", :include_blank => true,  :start_year => 1920, :end_year => 2010
                   %tr
                     %td &nbsp;
                   %tr
@@ -45,7 +49,11 @@
                 - sl_no = sl_no + 1
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                     %td.table_grid_td= pf_detail.pf_group_pf_group
-                    %td.table_grid_td= pf_detail.pf_effective_date
+                    %td.table_grid_td
+                      - if pf_detail.pf_effective_date?
+                        = l pf_detail.pf_effective_date, :format => OptionSetting.date_format_type("",2)
+                      - else
+                        = pf_detail.pf_effective_date
                     %td.table_grid_td= pf_detail.effective_to
                     - if sl_no == 1
                       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch PF Details"), edit_branch_pf_detail_path(@branch, pf_detail)

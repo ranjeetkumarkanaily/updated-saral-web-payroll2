@@ -34,7 +34,11 @@
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                     %td.table_grid_td= not_allot_sal.refno
                     %td.table_grid_td= not_allot_sal.empname
-                    %td.table_grid_td= l not_allot_sal.date_of_joining, :format => :default
+                    %td.table_grid_td
+                      - if not_allot_sal.date_of_joining?
+                        = l not_allot_sal.date_of_joining, :format => OptionSetting.date_format_type("",2)
+                      - else
+                        = l not_allot_sal.date_of_joining
                     %td.table_grid_icon= link_to "Allot Salary", edit_salary_allotment_path(not_allot_sal.id)
             .digg_pagination
               .page_info
@@ -53,7 +57,11 @@
                   %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                     %td.table_grid_td= allotted_sal.refno
                     %td.table_grid_td= allotted_sal.empname
-                    %td.table_grid_td= l allotted_sal.date_of_joining, :format => :default
+                    %td.table_grid_td
+                      - if allotted_sal.date_of_joining?
+                        = l allotted_sal.date_of_joining, :format => OptionSetting.date_format_type("",2)
+                      - else
+                        = l allotted_sal.date_of_joining
                     %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Allotted Salary"), edit_salary_allotment_path(allotted_sal.id,:param1=>@param_selected_tab)
             .digg_pagination
               .page_info
