@@ -2,8 +2,8 @@ class SalaryGroup < ActiveRecord::Base
   attr_accessible :salary_group_name, :based_on_gross
   acts_as_audited
 
-  has_many :salary_group_details, :dependent => :destroy
-  has_many :employee_details, :dependent => :destroy
+  has_many :salary_group_details, :dependent => :restrict
+  has_many :employee_details, :dependent => :restrict
 
   validates :salary_group_name,
                   :presence => true,

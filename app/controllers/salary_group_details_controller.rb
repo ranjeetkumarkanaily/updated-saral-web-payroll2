@@ -77,11 +77,17 @@ class SalaryGroupDetailsController < ApplicationController
 
   def destroy
     param1 = @salary_group_detail.salary_group_id
-    @salary_group_detail.destroy
-
-    respond_to do |format|
-      format.html { redirect_to salary_group_details_path(:param1 => param1) }
-      format.json { head :ok }
+    begin
+      @salary_group_detail.destroy
+      flash[:success] = "successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @salary_group_detail.errors.add(:base, e)
+      flash[:error] = "Selected head is already assigned to employee. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to salary_group_details_path(:param1 => param1) }
+        format.json { head :ok }
+      end
     end
   end
 

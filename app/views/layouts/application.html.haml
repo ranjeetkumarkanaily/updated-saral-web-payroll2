@@ -25,6 +25,12 @@
       return false;
       });
 
+      $("#salary_group_details_salary_head_id").change(function()
+      {
+      $.get($("#new_salary_group_detail").attr("action"), $("#salary_group_details_salary_head_id").serialize(), null, "script");
+      return false;
+      });
+
       -# Begin :-
       $("#option_setting_date_format").change(function(){
       var date_format=this.value;

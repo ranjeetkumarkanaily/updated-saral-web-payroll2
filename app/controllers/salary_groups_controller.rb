@@ -52,11 +52,15 @@ class SalaryGroupsController < ApplicationController
 
   def destroy
     @salary_group = SalaryGroup.find(params[:id])
-    @salary_group.destroy
-
-    respond_to do |format|
-      format.html { redirect_to salary_groups_url }
-      format.json { head :ok }
+    begin
+      @salary_group.destroy
+    rescue ActiveRecord::DeleteRestrictionError => e
+      flash[:error] = "Selected Salary Structure is already assigned to employee."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to salary_groups_url }
+        format.json { head :ok }
+      end
     end
   end
 

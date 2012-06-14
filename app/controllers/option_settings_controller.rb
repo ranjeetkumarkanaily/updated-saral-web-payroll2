@@ -9,7 +9,6 @@ class OptionSettingsController < ApplicationController
     end
   end
 
-
   def edit
     @option_setting = OptionSetting.find(params[:id])
 

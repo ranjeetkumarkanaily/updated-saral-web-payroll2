@@ -4,8 +4,8 @@ class SalaryGroupDetail < ActiveRecord::Base
 
   belongs_to :salary_group
   belongs_to :salary_head
-  has_many :salary_allotments
-  has_many :salaries
+  has_many :salary_allotments, :dependent => :restrict
+  has_many :salaries, :dependent => :restrict
 
   delegate :head_name, :to => :salary_head, :prefix => true
   delegate :salary_group_name, :to => :salary_group, :prefix => true
