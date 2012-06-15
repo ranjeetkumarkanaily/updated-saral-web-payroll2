@@ -5,12 +5,23 @@ describe HolidaysController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
     @attendance_configuration = FactoryGirl.create(:attendance_configuration,:id=>1)
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
   end
 
   def valid_attributes
     {
         :attendance_configuration_id => @attendance_configuration.id,
         :holiday_date => '2012-01-26',
+        :description => 'Republic Day',
+        :national_holiday => true
+    }
+  end
+
+  def update_valid_attributes
+    {
+        :attendance_configuration_id => @attendance_configuration.id,
+        :holiday_date => '01/26/2012',
         :description => 'Republic Day',
         :national_holiday => true
     }
@@ -73,6 +84,16 @@ describe HolidaysController do
       end
     end
 
+    describe "create with date format of %m/%d/%Y" do
+      it "should create employee statutory detail  with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        expect {
+          post :create, {:holiday => update_valid_attributes}
+        }.to change(Holiday, :count).by(1)
+      end
+    end
+
     describe "with invalid params" do
       it "assigns a newly created but unsaved holiday as @holiday" do
         # Trigger the behavior that occurs when invalid params are submitted
@@ -121,6 +142,16 @@ describe HolidaysController do
         holiday = Holiday.create! valid_attributes
         put :update, {:id => holiday.to_param, :holiday => valid_attributes}
         response.should redirect_to(holiday)
+      end
+    end
+
+    describe "update with date format of %m/%d/%Y" do
+      it "should update employee statutory details with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        holiday = Holiday.create! valid_attributes
+        put :update, {:id => holiday.to_param, :holiday => update_valid_attributes}
+        assigns(:holiday).should eq(holiday)
       end
     end
 

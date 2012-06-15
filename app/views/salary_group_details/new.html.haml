@@ -1,6 +1,30 @@
+%script{:language => "JavaScript"}
+  $(document).ready(function() {
+  monthYearCalendar.init("boxMonthYear",show);
+  });
+  function show() {
+  $("#salary_group_detail_effective_month").val(monthYearCalendar.monthNames[monthYearCalendar.selectedMonth - 1] + "/" + monthYearCalendar.selectedYear);
+  $("#containerMonthYear").css("display", "none")
+  }
 #left_content
   %ul
     %li= link_to 'Back', salary_group_details_path(:param1=>@param_sal_grp_id)
 #right_content
   %h1 New #{SalaryGroup.find_by_id(@param_sal_grp_id).salary_group_name}'s Salary Head
-  = render 'form', :salary_group_detail => @salary_group_detail, :param_sal_grp_id => @param_sal_grp_id
+  -#= render 'form', :salary_group_detail => @salary_group_detail, :param_sal_grp_id => @param_sal_grp_id
+  %table.std_table{:cellpadding=>0,:cellspacing=>0}
+    %tr
+      %td{:colspan => 2}
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}"
+    %tr
+      %td.std_td
+        = form_tag 'group_details', :id => 'group_details', :method => "post" do
+          %table
+            %tr
+              %td{:width=>130} Salary Head:&nbsp;
+              %td= select_tag "salary_head_n_grp_ids", options_for_select(SalaryHead.where('id != 2 and id != 3').order('created_at ASC').collect {|sal_hd| [ sal_hd.head_name, "#{sal_hd.id}-#{params[:param1]}" ]}), :prompt => "Select Salary Head"
+    %tr
+      %td{:colspan => 2}
+        %div{:id=>"salary_group_details"}
+          = render "salary_group_detail"

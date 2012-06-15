@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "leave_takens/new" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     employee = FactoryGirl.create(:employee)
     assign(:leave_taken_employees,[{:employee_id=>employee.id, :refno=>"1003", :empname=>"sana"}])
     assign(:employee_count,1)

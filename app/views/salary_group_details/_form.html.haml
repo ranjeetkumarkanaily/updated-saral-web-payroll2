@@ -21,7 +21,9 @@
                 = f.hidden_field :salary_group_id, :value => param_sal_grp_id
                 %tr
                   %td{:width=>130} Salary Head:&nbsp;
-                  %td= f.collection_select :salary_head_id, SalaryHead.where('id != 2 and id != 3').order('created_at ASC'), :id, :head_name, :prompt => "Select Salary Head"
+                  = f.hidden_field :salary_head_id, :value => salary_group_detail.salary_head_id
+                  -#%td= f.collection_select :salary_head_id, SalaryHead.where('id != 2 and id != 3').order('created_at ASC'), :id, :head_name, :prompt => "Select Salary Head"
+                  %td= salary_group_detail.salary_head_head_name
                 -#%tr
                 -#  %td{:width=>130} Print Name:&nbsp;
                 -#  %td= f.text_field :print_name, :size => '22'
