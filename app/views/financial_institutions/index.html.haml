@@ -21,7 +21,7 @@
               %td.table_grid_td= financial_institution.name
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Financial Institution"), financial_institution
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Financial Institution"), edit_financial_institution_path(financial_institution)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Financial Institution"), financial_institution, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Financial Institution"), financial_institution, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

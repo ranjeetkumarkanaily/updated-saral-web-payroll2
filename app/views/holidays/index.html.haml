@@ -26,7 +26,7 @@
               %td.table_grid_td= holiday.description
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Holiday"), holiday
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Holiday"), edit_holiday_path(holiday)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Holiday"), holiday, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Holiday"), holiday, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

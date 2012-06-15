@@ -56,4 +56,4 @@
                     %td.table_grid_td= esi_detail.effective_to
                     - if sl_no == 1
                       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch ESI Details"), edit_branch_esi_detail_path(@branch, esi_detail)
-                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch ESI Details"), [@branch, esi_detail], confirm: 'Are you sure?', method: :delete
+                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch ESI Details"), [@branch, esi_detail], :data=>{:confirm => 'Are you sure?'}, method: :delete

@@ -29,7 +29,7 @@
               %td.table_grid_td= pt_group.address
               %td.table_grid_td= pt_group.return_period
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit PT Group"), edit_pt_group_path(pt_group)
-              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete PT Group"), pt_group, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete PT Group"), pt_group, :data=>{:confirm => 'Are you sure?'}, method: :delete
               %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "View PT Group's Details"), pt_group
         %br/
         .digg_pagination

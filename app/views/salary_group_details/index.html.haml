@@ -30,7 +30,7 @@
               %td.table_grid_td= salary_group_detail.based_on
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Salary Group Configuration"), salary_group_detail_path(salary_group_detail,:param1=>@param_sal_grp_id )
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group Configuration"), edit_salary_group_detail_path(salary_group_detail,:param1=>@param_sal_grp_id)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Delete Salary Group Configuration"), salary_group_detail, confirm: 'Are you sure? You want to delete this configuration.', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Delete Salary Group Configuration"), salary_group_detail, :data=>{:confirm=>'You want to delete this configuration.'}, method: :delete
 
         %br/
         .digg_pagination

@@ -24,7 +24,7 @@
               %td.table_grid_td= attendance_configuration.short_name
               %td.table_grid_td= attendance_configuration.salary_calendar_days
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Configuration"), edit_attendance_configuration_path(attendance_configuration)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Configuration"), attendance_configuration, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Configuration"), attendance_configuration, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

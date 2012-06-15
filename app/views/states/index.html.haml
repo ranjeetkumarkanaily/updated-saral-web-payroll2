@@ -20,7 +20,7 @@
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= state.state_name
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit State"), edit_state_path(state)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy State"), state, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy State"), state, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

@@ -30,7 +30,7 @@
               %td.table_grid_td= branch.address
               %td.table_grid_icon= link_to image_tag('/assets/show.png',:title => "Show Branch"), branch
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch"), edit_branch_path(branch)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch"), branch, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch"), branch, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

@@ -19,7 +19,7 @@
               %td.table_grid_td= hr_category_detail.name
               %td.table_grid_td= hr_category_detail.required ? 'Yes' : 'No'
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit HR Category Detail"), edit_hr_category_detail_path(hr_category_detail, :param1 => @hr_category_id)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Category Detail"), hr_category_detail, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Category Detail"), hr_category_detail, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

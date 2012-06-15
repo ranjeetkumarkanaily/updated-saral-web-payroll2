@@ -31,7 +31,7 @@
               %td.table_grid_td= esi_group_rate.minimum_limit_dailywage
               %td.table_grid_td= esi_group_rate.round_off
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit ESI Group Rate"), edit_esi_group_rate_path(esi_group_rate,:params1 => @param_esi_group_id)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy ESI Group Rate"), esi_group_rate, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy ESI Group Rate"), esi_group_rate, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

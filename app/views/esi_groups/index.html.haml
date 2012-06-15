@@ -26,7 +26,7 @@
               %td.table_grid_td= esi_group.esi_local_office
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit ESI Group"), edit_esi_group_path(esi_group)
               - if esi_group != EsiGroup.first
-                %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete ESI Group"), esi_group, confirm: 'Are you sure?', method: :delete
+                %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete ESI Group"), esi_group,:data=>{:confirm => 'Are you sure?'}, method: :delete
               %td.table_grid_icon{:align => "center"}= link_to image_tag('/assets/details.png',:title => "Details"), esi_group_rates_path(:params1 => esi_group.id)
         %br/
         .digg_pagination

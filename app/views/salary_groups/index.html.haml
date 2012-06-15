@@ -22,7 +22,7 @@
               %td.table_grid_td= salary_group.salary_group_name
               %td.table_grid_td= (salary_group.based_on_gross==true)?"Yes":"No"
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Salary Group"), edit_salary_group_path(salary_group)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Salary Group"), salary_group, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Salary Group"), salary_group, :data=>{:confirm => 'Are you sure?'}, method: :delete
               %td.table_grid_icon= link_to image_tag('/assets/settings.png',:title => "Salary Group Configuration"), salary_group_details_path(:param1=>salary_group.id)
         %br/
         .digg_pagination

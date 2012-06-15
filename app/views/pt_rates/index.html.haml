@@ -30,7 +30,7 @@
               %td.table_grid_td{:align => "right"}= pt_rate.pt
               -#%td.table_grid_td{:align => "center"}= link_to image_tag('/assets/show.png',:title => "Show PT Rate"), pt_rate
               %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/edit.png',:title => "Edit PT Rate"), edit_pt_rate_path(pt_rate, :pt_group_id => pt_rate.pt_group_id)
-              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete PT Rate"), pt_rate, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_td{:align => "center"}= link_to image_tag('/assets/delete.png',:title => "Delete PT Rate"), pt_rate, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

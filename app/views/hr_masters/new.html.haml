@@ -26,7 +26,7 @@
                     -#%td{:style => "text-align:center"}= value[1]
                     %td.table_grid_td= value[1]
                   %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit HR Master"), edit_hr_master_path(hr_master)
-                  %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Master"), hr_master, confirm: 'Are you sure?', method: :delete
+                  %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Master"), hr_master, :data=>{:confirm => 'Are you sure?'}, method: :delete
     %tr
       %td &nbsp;
     %tr

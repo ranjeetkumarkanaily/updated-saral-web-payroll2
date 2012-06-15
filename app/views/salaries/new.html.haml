@@ -69,8 +69,8 @@
                               %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
                                 %td.table_grid_td= employee[:refno]
                                 %td.table_grid_td= employee[:empname]
-                                %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]", employee[:pay_days],:readonly=>"readonly"
-                                %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]", employee[:present_days],:readonly=>"readonly"
+                                %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]", number_with_precision(employee[:pay_days], :precision => 1),:readonly=>"readonly"
+                                %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]", number_with_precision(employee[:present_days], :precision => 1),:readonly=>"readonly"
                                 - if employee[:salary_allotment].count == 0
                                   = hidden_field_tag "salary[#{j}][][employee_id]", employee[:id]
                                 - (0..head_count-1).each do |i|

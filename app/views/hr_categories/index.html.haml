@@ -16,7 +16,7 @@
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= hr_category.category_name
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit HR Category"), edit_hr_category_path(hr_category)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Category"), hr_category, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy HR Category"), hr_category, :data=>{:confirm => 'Are you sure?'}, method: :delete
               %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "View Hr Category Details"), hr_category_details_path(:param1=>hr_category.id)
         %br/
         .digg_pagination

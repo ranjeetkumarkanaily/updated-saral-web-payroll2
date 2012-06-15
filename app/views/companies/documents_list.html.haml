@@ -32,7 +32,7 @@
                 %td.table_grid_td= docs.remarks
                 %td.table_grid_td= docs.created_at.strftime("%d-%m-%Y")
                 %td.table_grid_icon= link_to "Download File", download_company_documents_path(:id => docs.id)
-                %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy"), docs, confirm: 'Are you sure?', method: :delete
+                %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy"), docs, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
     %tr
       %td &nbsp;

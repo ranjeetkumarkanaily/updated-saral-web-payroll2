@@ -21,7 +21,7 @@
               %td.table_grid_td= leave.employee_empname
               %td.table_grid_td= leave.leave_date
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Detail"), edit_leave_detail_path(leave)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Detail"), leave, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Detail"), leave, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

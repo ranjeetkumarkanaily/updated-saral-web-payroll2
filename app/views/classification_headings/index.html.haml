@@ -24,7 +24,7 @@
               %td.table_grid_td= classification_heading.display_order
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Classification Heading"), edit_classification_heading_path(classification_heading)
               - if classification_heading.id != 1
-                %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Classification Heading"), classification_heading, confirm: 'Are you sure?', method: :delete
+                %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Classification Heading"), classification_heading, :data=>{:confirm => 'Are you sure?'}, method: :delete
               %td.table_grid_icon= link_to image_tag('/assets/details.png',:title => "Details"), classifications_path(:params1 => classification_heading.id)
         %br/
         .digg_pagination

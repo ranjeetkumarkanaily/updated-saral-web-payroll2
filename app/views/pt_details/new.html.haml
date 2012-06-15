@@ -57,4 +57,4 @@
                     %td.table_grid_td= pt_detail.effective_to
                     - if sl_no == 1
                       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch PT Details"), edit_branch_pt_detail_path(@branch, pt_detail)
-                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PT Details"), [@branch, pt_detail], confirm: 'Are you sure?', method: :delete
+                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PT Details"), [@branch, pt_detail], :data=>{:confirm => 'Are you sure?'}, method: :delete

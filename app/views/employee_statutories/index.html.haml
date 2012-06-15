@@ -34,6 +34,6 @@
           = employee_statutory.esi_effective_date
       %td= link_to 'Show', employee_statutory
       %td= link_to 'Edit', edit_employee_statutory_path(employee_statutory)
-      %td= link_to 'Destroy', employee_statutory, confirm: 'Are you sure?', method: :delete
+      %td= link_to 'Destroy', employee_statutory, :data=>{:confirm => 'Are you sure?'}, method: :delete
 %br/
 = link_to 'New Employee statutory', new_employee_statutory_path

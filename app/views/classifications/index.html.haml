@@ -21,7 +21,7 @@
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= classification.classification_name
               %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Classification"), edit_classification_path(classification,:params1 => @paramclassification_id)
-              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Classification"), classification, confirm: 'Are you sure?', method: :delete
+              %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Classification"), classification, :data=>{:confirm => 'Are you sure?'}, method: :delete
         %br/
         .digg_pagination
           .page_info

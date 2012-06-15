@@ -57,4 +57,4 @@
                     %td.table_grid_td= pf_detail.effective_to
                     - if sl_no == 1
                       %td.table_grid_icon= link_to image_tag('/assets/edit.png',:title => "Edit Branch PF Details"), edit_branch_pf_detail_path(@branch, pf_detail)
-                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PF Details"), [@branch, pf_detail], confirm: 'Are you sure?', method: :delete
+                      %td.table_grid_icon= link_to image_tag('/assets/delete.png',:title => "Destroy Branch PF Details"), [@branch, pf_detail], :data=>{:confirm => 'Are you sure?'}, method: :delete
