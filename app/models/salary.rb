@@ -39,36 +39,41 @@ class Salary < ActiveRecord::Base
     employee_branch = EmployeeDetail.employee_branch month_year,employee_id
     employee_pf_group = Branch.find(employee_branch[0]['branch_id']).pf_group_id
     pf_effective_date_detail = PfDetail.effective_date employee_branch[0]['branch_id'],employee_pf_group
+    pf_restriction = Employee.find(employee_id).restrct_pf
 
-    if pf_effective_date_detail.empty?
+    if pf_restriction == true
       pf_amount = 0
     else
-      pf_effective_date = pf_effective_date_detail[0]['pf_effective_date']
-      if pf_effective_date <= month_year.beginning_of_month
-        pf_rate_value = PfGroupRate.pf_rate month_year,employee_pf_group
-
-        pf_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("pf_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
-
-        @pf_applicable_sal = 0
-        pf_applicable_salary_amount.each do |pf_appli_sal|
-           @pf_applicable_sal = @pf_applicable_sal+pf_appli_sal.salary_amount
-        end
-
-        if @pf_applicable_sal >= pf_rate_value[0]['cutoff']
-          pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
-          epf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['employer_epf']/100
-          eps_amount = ((EmployeeStatutory.zero_pension employee_id).empty?)?((pf_rate_value[0]['cutoff'])*pf_rate_value[0]['pension_fund']/100):0
-        else
-          pf_amount = (@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)
-          epf_amount = (@pf_applicable_sal)*pf_rate_value[0]['employer_epf']/100
-          eps_amount = ((EmployeeStatutory.zero_pension employee_id).empty?)?((@pf_applicable_sal)*pf_rate_value[0]['pension_fund']/100):0
-        end
-
-        vol_pf_amount = EmployeeStatutory.get_vol_pf_amount employee_id, @pf_applicable_sal
-
-        PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => vol_pf_amount,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
-      else
+      if pf_effective_date_detail.empty?
         pf_amount = 0
+      else
+        pf_effective_date = pf_effective_date_detail[0]['pf_effective_date']
+        if pf_effective_date <= month_year.beginning_of_month
+          pf_rate_value = PfGroupRate.pf_rate month_year,employee_pf_group
+
+          pf_applicable_salary_amount = Salary.select('salary_amount').joins(:salary_group_detail).where("pf_applicability = true and employee_id = #{employee_id} and effective_date = '#{month_year.beginning_of_month}'")
+
+          @pf_applicable_sal = 0
+          pf_applicable_salary_amount.each do |pf_appli_sal|
+            @pf_applicable_sal = @pf_applicable_sal+pf_appli_sal.salary_amount
+          end
+
+          if @pf_applicable_sal >= pf_rate_value[0]['cutoff']
+            pf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['epf']/100
+            epf_amount = (pf_rate_value[0]['cutoff'])*pf_rate_value[0]['employer_epf']/100
+            eps_amount = ((EmployeeStatutory.zero_pension employee_id).empty?)?((pf_rate_value[0]['cutoff'])*pf_rate_value[0]['pension_fund']/100):0
+          else
+            pf_amount = (@pf_applicable_sal)*(pf_rate_value[0]['epf']/100)
+            epf_amount = (@pf_applicable_sal)*pf_rate_value[0]['employer_epf']/100
+            eps_amount = ((EmployeeStatutory.zero_pension employee_id).empty?)?((@pf_applicable_sal)*pf_rate_value[0]['pension_fund']/100):0
+          end
+
+          vol_pf_amount = EmployeeStatutory.get_vol_pf_amount employee_id, @pf_applicable_sal
+
+          PfCalculatedValue.create :pf_earning => @pf_applicable_sal, :pf_amount => pf_amount, :epf_amount => epf_amount, :eps_amount => eps_amount,:vol_pf_amount => vol_pf_amount,:employee_id => employee_id,:effective_date => month_year.beginning_of_month
+        else
+          pf_amount = 0
+        end
       end
     end
     pf_amount
@@ -204,6 +209,7 @@ class Salary < ActiveRecord::Base
 
   def self.employees_salary_calculation pay_month, salary_group_id
     month_year = Date.strptime pay_month, '%b/%Y'
+    pay_month_id = Paymonth.find_by_month_name(pay_month)[:id]
     chk_salary_group_exist = SalaryGroup.select("DISTINCT(salary_groups.id), salary_group_name").joins(:employee_details).where("salary_group_id = #{salary_group_id} and effective_date <= '#{month_year.beginning_of_month}'" )
 
     if chk_salary_group_exist.empty?
@@ -220,6 +226,19 @@ class Salary < ActiveRecord::Base
         else
           salary_allotments = SalaryAllotment.get_allotted_salaries_for_max_effective_date pay_month, employee.id, 1
         end
+
+        every_month_comp_value = EveryMonthCompValue.select("salary_amount").where("employee_id = ? and paymonth_id = ? and salary_group_id =?",employee.id, pay_month_id, salary_group_id)
+
+        if every_month_comp_value.empty?
+          salary_allotments
+        else
+          j=0
+          every_month_comp_value[0][:salary_amount].each do |sal_head_id, value|
+            salary_allotments[j]["salary_allotment"] = value
+            j=j+1
+          end
+        end
+
         total_no_of_days = month_year.end_of_month.day
         leave_taken = LeaveTaken.select('sum(leave_count) as leave_count, sum(lop_count) as lop_count').where("leave_detail_date = '#{month_year.beginning_of_month}' AND employee_id = #{employee.id}")
         if leave_taken.count != 0
@@ -309,6 +328,27 @@ class Salary < ActiveRecord::Base
       no_of_present_days
     end
   end
+
+  def self.save_component_value salaries, pay_month
+    pay_month_id = Paymonth.find_by_month_name(pay_month)[:id]
+    salaries.each do |salary|
+      salary_group_id = EmployeeDetail.find(salary[1][0]["employee_detail_id"])[:salary_group_id]
+      chk_available_component_value = EveryMonthCompValue.where("employee_id = ? and paymonth_id = ? and salary_group_id =?",salary[1][0]["employee_id"],pay_month_id,salary_group_id).count
+
+      if chk_available_component_value == 0
+        @salary_amount = Hash.new
+        salary[1].each do |sal|
+          @salary_amount[sal["salary_head_id"]] = sal["salary_amount"].to_i
+        end
+        EveryMonthCompValue.create :paymonth_id => pay_month_id, :employee_id => salary[1][0]["employee_id"], :salary_group_id => salary_group_id, :salary_amount => @salary_amount
+      else
+        salary[1].each do |sal|
+          EveryMonthCompValue.connection.execute("UPDATE every_month_comp_values SET salary_amount = salary_amount || ('#{sal["salary_head_id"]}' => '#{sal["salary_amount"]}') where employee_id = '#{salary[1][0]["employee_id"]}' and paymonth_id = '#{pay_month_id}' and salary_group_id = '#{salary_group_id}'")
+        end
+      end
+    end
+  end
+
 
   def self.salary_calculation_days sal_grp_det_id,no_of_pay_days,no_of_present_days,no_of_day_in_selected_month
     calc_based_on = (SalaryGroupDetail.based_on sal_grp_det_id)[0][:based_on]

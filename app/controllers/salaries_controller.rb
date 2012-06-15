@@ -44,7 +44,15 @@ class SalariesController < ApplicationController
   def create
     if(params[:salary])
       Salary.calculate_salary params[:salary], params[:month_year]
-      redirect_to salaries_path
+      redirect_to salaries_path, notice: 'Salary processed successfully.'
+    end
+  end
+
+  # Save every month component to table named as every_month_comp_values
+  def save_every_month_comp
+    if(params[:salary])
+      Salary.save_component_value params[:salary], params[:month_year]
+      redirect_to new_salary_path(:month_year=>params[:month_year],:salary_group=>params[:salary_group]), notice: 'Saved successfully.'
     end
   end
 

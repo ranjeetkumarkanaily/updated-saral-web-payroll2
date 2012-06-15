@@ -39,7 +39,7 @@ describe PfDetailsController do
   describe "GET edit" do
     it "assigns the requested pf_detail as @pf_detail" do
       @pf_detail = FactoryGirl.create(:pf_detail)
-      get :edit, {:id => @pf_detail.id}, valid_session
+      get :edit, {:id => @pf_detail.id, :branch_id => @pf_detail.branch_id}, valid_session
       assigns(:pf_detail).should eq(@pf_detail)
     end
   end
@@ -99,16 +99,16 @@ describe PfDetailsController do
     describe "with valid params" do
       it "updates the requested pf_detail" do
         PfDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => @pf_detail.to_param, :pf_detail => {'these' => 'params'}}, valid_session
+        put :update, {:id => @pf_detail.to_param, :branch_id => @pf_detail.branch_id, :pf_detail => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested pf_detail as @pf_detail" do
-        put :update, {:id => @pf_detail.to_param, :pf_detail => valid_attributes}, valid_session
+        put :update, {:id => @pf_detail.to_param,:branch_id => @pf_detail.branch_id, :pf_detail => valid_attributes}, valid_session
         assigns(:pf_detail).should eq(@pf_detail)
       end
 
       it "redirects to the pf_detail" do
-        put :update, {:id => @pf_detail.to_param, :pf_detail => valid_attributes}, valid_session
+        put :update, {:id => @pf_detail.to_param, :branch_id => @pf_detail.branch_id, :pf_detail => valid_attributes}, valid_session
         response.should redirect_to(new_branch_pf_detail_path(@pf_detail.branch))
       end
     end
@@ -117,7 +117,7 @@ describe PfDetailsController do
       it "should update employee statutory details with converted date format" do
         DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
         OptionSetting.first.update_attribute("date_format","m/d/Y")
-        put :update, {:id => @pf_detail.to_param, :pf_detail => update_valid_attributes}, valid_session
+        put :update, {:id => @pf_detail.to_param, :branch_id => @pf_detail.branch_id, :pf_detail => update_valid_attributes}, valid_session
         assigns(:pf_detail).should eq(@pf_detail)
       end
     end
@@ -125,13 +125,13 @@ describe PfDetailsController do
     describe "with invalid params" do
       it "assigns the pf_detail as @pf_detail" do
         PfDetail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @pf_detail.to_param, :pf_detail => {}}, valid_session
+        put :update, {:id => @pf_detail.to_param, :branch_id => @pf_detail.branch_id, :pf_detail => {}}, valid_session
         assigns(:pf_detail).should eq(@pf_detail)
       end
 
       it "re-renders the 'edit' template" do
         PfDetail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @pf_detail.to_param, :pf_detail => {}}, valid_session
+        put :update, {:id => @pf_detail.to_param, :branch_id => @pf_detail.branch_id, :pf_detail => {}}, valid_session
         response.should render_template("edit")
       end
     end
