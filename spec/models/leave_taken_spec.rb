@@ -3,9 +3,11 @@ require 'spec_helper'
 describe LeaveTaken do
 
   it "should return employee list" do
+    paymonth = FactoryGirl.create(:paymonth,:month_name => 'Jan/2012')
     employee = FactoryGirl.create(:employee)
     leave_taken = LeaveTaken.new()
-    employee_list = leave_taken.employee_list
+
+    employee_list = leave_taken.employee_list paymonth.month_name
     employee_list.count.should eq(1)
   end
 

@@ -17,7 +17,7 @@ describe "leave_takens/new" do
   it "renders new leave_taken form" do
     render
     assert_select "form", :action => leave_takens_path, :method => "post" do
-      assert_select "select#leave_taken_leave_detail_date", :name => "leave_taken[leave_detail_date]"
+      assert_select "select#leave_detail_date", :name => "leave_detail_date"
     end
   end
 end
