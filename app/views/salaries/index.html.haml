@@ -1,3 +1,8 @@
+%script
+  function hide_editor()
+  {
+  document.getElementById("salary_editor").style.display = "none";
+  }
 #left_content
   = render 'left'
 #right_content
@@ -19,75 +24,79 @@
                 %table
                   %tr
                     %td{:style=>"width:130px"} Pay Months:
-                    %td= select_tag "month_year", options_from_collection_for_select(Salary.salary_month,"month_name","month_name", params[:month_year]),:prompt => 'Select Pay Month'
+                    %td= select_tag "month_year", options_from_collection_for_select(Salary.salary_month,"month_name","month_name", params[:month_year]),:prompt => 'Select Pay Month',:onchange=>"hide_editor()"
               %td
                 %table
                   %tr
                     %td
                       %td{:valign=>"top",:style=>"width:130px"} Salary Structure:
-                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.assigned_salary_group,'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:280px;height:100px;"
+                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.assigned_salary_group,'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:280px;height:100px;",:onchange=>"hide_editor()"
             %tr
               %td
                 = submit_tag("Get Salary Detail")
             %tr
               %td
                 &nbsp;
-    - if params[:month_year] && params[:salary_group]
-      - if @employee_salary_det.empty?
-        %tr
-          %td.std_td
-            %table
-              %tr
-                %td
-                  %img{:src=>"/assets/alert.png"}
-                %td{:style=>"color:#e9322d;"} Salary is not calculated for selected pay month and salary structure.
-        %tr
-          %td &nbsp;
-      - else
-        %tr
-          %td.std_td
-            #table_wrappper
-              #inner_table_wrapper
-                %table.table_grid{:cellpadding => 0, :cellspacing => 3}
-                  %tr
-                    %td.table_grid_header{:colspan=>2} Operations
-                    %td.table_grid_header Emp ID
-                    %td.table_grid_header Emp Name
-                    %td.table_grid_header Pay Days
-                    %td.table_grid_header Present Days
-                    - @earning_det_head.each do |earning|
-                      %td.table_grid_header= earning.head_name
-                    %td.table_grid_header Total Earnings
-                    %td.table_grid_header PF
-                    %td.table_grid_header ESI
-                    - if @deduction_det_head.count != 0
-                      - @deduction_det_head.each do |deduction|
-                        %td.table_grid_header= deduction.head_name
-                    %td.table_grid_header PT
-                    %td.table_grid_header Vol. PF
-                    %td.table_grid_header Total Deductions
-                    %td.table_grid_header Net Salary
-                  - @employee_salary_det.each do |salary_detail|
-                    %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-                      %td.table_grid_icon= link_to image_tag('/assets/pdf.png',:title => "Generate Payslip"), salaries_path(:month_year => params[:month_year],:employee_id => salary_detail[:id],:salary_group => params[:salary_group], :format => "pdf")
-                      %td.table_grid_icon= link_to image_tag('/assets/email.png',:title => "Generate Payslip & Send Email"), salaries_path(:month_year => params[:month_year],:employee_id => salary_detail[:id], :email => "yes", :format => "html")
-                      %td.table_grid_td= salary_detail[:refno]
-                      %td.table_grid_td= salary_detail[:empname]
-                      %td.table_grid_td{:align=>"right"}= salary_detail[:no_of_pay_days]
-                      %td.table_grid_td{:align=>"right"}= salary_detail[:no_of_present_days]
-                      - earning_total = 0
-                      - deduction_total = 0
-                      - salary_detail[:salary_earning].each do |salary_earnings|
-                        %td.table_grid_td{:align=>"right"}= number_with_precision(salary_earnings.salary_amount, :precision => 2)
-                        - earning_total = salary_earnings.salary_amount + earning_total
-                      %td.table_grid_td{:align=>"right",:style=>"font-weight:bold"}= number_with_precision(earning_total, :precision => 2)
-                      - salary_detail[:salary_deduction].each do |salary_deductions|
-                        %td.table_grid_td{:align=>"right"}= number_with_precision(salary_deductions.salary_amount, :precision => 2)
-                        - deduction_total = salary_deductions.salary_amount + deduction_total
-                      %td.table_grid_td{:align=>"right"}= number_with_precision(salary_detail[:pt_amount], :precision => 2)
-                      - deduction_total = salary_detail[:pt_amount] + deduction_total
-                      %td.table_grid_td{:align=>"right"}= number_with_precision(salary_detail[:vol_pf_amount], :precision => 2)
-                      - deduction_total = salary_detail[:vol_pf_amount] + deduction_total
-                      %td.table_grid_td{:align=>"right",:style=>"font-weight:bold"}= number_with_precision(deduction_total, :precision => 2)
-                      %td.table_grid_td{:align=>"right",:style=>"font-weight:bold"}= number_with_precision(earning_total-deduction_total, :precision => 2)
+    %tr
+      %td
+        #salary_editor
+          %table
+            - if params[:month_year] && params[:salary_group]
+              - if @employee_salary_det.empty?
+                %tr
+                  %td
+                    %table
+                      %tr
+                        %td
+                          %img{:src=>"/assets/alert.png"}
+                        %td{:style=>"color:#e9322d;"} Salary is not calculated for selected pay month and salary structure.
+                %tr
+                  %td &nbsp;
+              - else
+                %tr
+                  %td.std_td
+                    #table_wrappper
+                      #inner_table_wrapper
+                        %table.table_grid{:cellpadding => 0, :cellspacing => 3}
+                          %tr
+                            %td.table_grid_header{:colspan=>2} Operations
+                            %td.table_grid_header Emp ID
+                            %td.table_grid_header Emp Name
+                            %td.table_grid_header Pay Days
+                            %td.table_grid_header Present Days
+                            - @earning_det_head.each do |earning|
+                              %td.table_grid_header= earning.head_name
+                            %td.table_grid_header Total Earnings
+                            %td.table_grid_header PF
+                            %td.table_grid_header ESI
+                            - if @deduction_det_head.count != 0
+                              - @deduction_det_head.each do |deduction|
+                                %td.table_grid_header= deduction.head_name
+                            %td.table_grid_header PT
+                            %td.table_grid_header Vol. PF
+                            %td.table_grid_header Total Deductions
+                            %td.table_grid_header Net Salary
+                          - @employee_salary_det.each do |salary_detail|
+                            %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                              %td.table_grid_icon= link_to image_tag('/assets/pdf.png',:title => "Generate Payslip"), salaries_path(:month_year => params[:month_year],:employee_id => salary_detail[:id],:salary_group => params[:salary_group], :format => "pdf")
+                              %td.table_grid_icon= link_to image_tag('/assets/email.png',:title => "Generate Payslip & Send Email"), salaries_path(:month_year => params[:month_year],:employee_id => salary_detail[:id], :email => "yes", :format => "html")
+                              %td.table_grid_td= salary_detail[:refno]
+                              %td.table_grid_td= salary_detail[:empname]
+                              %td.table_grid_td{:align=>"right"}= salary_detail[:no_of_pay_days]
+                              %td.table_grid_td{:align=>"right"}= salary_detail[:no_of_present_days]
+                              - earning_total = 0
+                              - deduction_total = 0
+                              - salary_detail[:salary_earning].each do |salary_earnings|
+                                %td.table_grid_td{:align=>"right"}= number_with_precision(salary_earnings.salary_amount, :precision => 2)
+                                - earning_total = salary_earnings.salary_amount + earning_total
+                              %td.table_grid_td{:align=>"right",:style=>"font-weight:bold"}= number_with_precision(earning_total, :precision => 2)
+                              - salary_detail[:salary_deduction].each do |salary_deductions|
+                                %td.table_grid_td{:align=>"right"}= number_with_precision(salary_deductions.salary_amount, :precision => 2)
+                                - deduction_total = salary_deductions.salary_amount + deduction_total
+                              %td.table_grid_td{:align=>"right"}= number_with_precision(salary_detail[:pt_amount], :precision => 2)
+                              - deduction_total = salary_detail[:pt_amount] + deduction_total
+                              %td.table_grid_td{:align=>"right"}= number_with_precision(salary_detail[:vol_pf_amount], :precision => 2)
+                              - deduction_total = salary_detail[:vol_pf_amount] + deduction_total
+                              %td.table_grid_td{:align=>"right",:style=>"font-weight:bold"}= number_with_precision(deduction_total, :precision => 2)
+                              %td.table_grid_td{:align=>"right",:style=>"font-weight:bold"}= number_with_precision(earning_total-deduction_total, :precision => 2)
 

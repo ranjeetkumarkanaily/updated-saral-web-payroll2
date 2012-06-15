@@ -259,6 +259,27 @@ describe Salary do
         pf_amount = Salary.get_pf_amount "Feb/2011", 1
         pf_amount.should eq(0.0)
       end
+
+      it "should not give PF amount for selected employee if pf restriction is applicable" do
+        salary_head = FactoryGirl.create(:salary_head)
+        paymonth = FactoryGirl.create(:paymonth)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_head_id => salary_head.id)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        pf_group = FactoryGirl.create(:pf_group)
+        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id)
+        employee = FactoryGirl.create(:employee,:restrct_pf=>true)
+        employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => attendance_configuration.id,:branch_id => branch.id, :financial_institution_id => financial_institution.id)
+        employee_statutory = FactoryGirl.create(:employee_statutory, :employee_id => employee.id)
+        pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => pf_group.id, :paymonth_id => paymonth.id)
+
+
+        salary = FactoryGirl.create(:salary,:salary_amount => 17000, :salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id)
+        pf_detail = FactoryGirl.create(:pf_detail,:branch_id => branch.id,:pf_group_id => pf_group.id,:pf_effective_date => '2011-01-01')
+
+        pf_amount = Salary.get_pf_amount "Feb/2011", 1
+        pf_amount.should eq(0.0)
+      end
     end
 
     describe "get ESI amount" do

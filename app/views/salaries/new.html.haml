@@ -1,3 +1,8 @@
+%script
+  function hide_editor()
+  {
+  document.getElementById("salary_editor").style.display = "none";
+  }
 #left_content
   = render 'left'
 #right_content
@@ -11,68 +16,102 @@
               %td &nbsp;
             %tr
               %td{:colspan=>2}
-                - flash.each do |name, msg|
-                  = content_tag :div, msg, :id => "flash_#{name}"
+                - if params[:month_year] && params[:salary_group]
+                  - flash.each do |name, msg|
+                    = content_tag :div, msg, :id => "flash_#{name}"
             %tr
               %td{:valign=>"top",:style=>"width:45%"}
                 %table
                   %tr
                     %td{:style=>"width:130px"} Pay Months:
-                    %td= select_tag "month_year", options_from_collection_for_select(Paymonth.months,'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month'
+                    %td= select_tag "month_year", options_from_collection_for_select(Paymonth.months,'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month',:onchange=>"hide_editor()"
               %td
                 %table
                   %tr
                     %td
                       %td{:valign=>"top",:style=>"width:130px"} Salary Structure:
-                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.assigned_salary_group,'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:280px;height:100px;"
+                      %td= select_tag "salary_group", options_from_collection_for_select(SalaryGroup.assigned_salary_group,'id','salary_group_name', params[:salary_group]),:size => "4", :style=>"width:280px;height:100px;",:onchange=>"hide_editor()"
             %tr
               %td
-                = submit_tag("Get Salary")
-    - if params[:month_year] && params[:salary_group]
-    - if @employee_salary_calc.empty?
-      %tr
-        %td.std_td
+                = submit_tag("Get Values")
+    %tr
+      %td
+        #salary_editor
           %table
-            %tr
-              %td
-                %img{:src=>"/assets/alert.png"}
-              %td{:style=>"color:#e9322d;"} No Employees were assigned for selected pay month and salary structure.
-    - else
-      - head_count = @employee_salary_calc_header.count
-        = form_tag salaries_path, :method => :post do
-          %tr
-            %td.std_td
-              #table_wrappper
-                #inner_table_wrapper
-                  %table.table_grid{:cellpadding => 0, :cellspacing => 3}
-                    = hidden_field_tag "month_year", params[:month_year]
+            - if params[:month_year] && params[:salary_group]
+            - if @employee_salary_calc.empty?
+              %tr
+                %td
+                  %table
                     %tr
-                      %td.table_grid_header Emp ID
-                      %td.table_grid_header Emp Name
-                      %td.table_grid_header Pay Days
-                      %td.table_grid_header Present Days
-                      - @employee_salary_calc_header.each do |header|
-                        %td.table_grid_header= header.head_name
-                    - j=0
-                    -
-                    - @employee_salary_calc.each do |employee|
-                      %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
-                        %td.table_grid_td= employee[:refno]
-                        %td.table_grid_td= employee[:empname]
-                        %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]", employee[:pay_days],:readonly=>"readonly"
-                        %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]", employee[:present_days],:readonly=>"readonly"
-                        - if employee[:salary_allotment].count == 0
-                          = hidden_field_tag "salary[#{j}][][employee_id]", employee[:id]
-                        - (0..head_count-1).each do |i|
-                          = hidden_field_tag "salary[#{j}][][employee_id]", employee[:salary_allotment][i][:employee_id]
-                          = hidden_field_tag "salary[#{j}][][employee_detail_id]", employee[:salary_allotment][i][:employee_detail_id]
-                          = hidden_field_tag "salary[#{j}][][effective_date]", employee[:salary_allotment][i][:effective_date]
-                          = hidden_field_tag "salary[#{j}][][salary_head_id]", employee[:salary_allotment][i][:salary_head_id]
-                          = hidden_field_tag "salary[#{j}][][salary_group_detail_id]", employee[:salary_allotment][i][:salary_group_detail_id]
-                          %td.table_grid_td= text_field_tag "salary[#{j}][][salary_amount]", (employee[:salary_allotment][i][:salary_allotment]!=0)?employee[:salary_allotment][i][:salary_allotment]:""
-                        - j=j+1
-          %tr
-            %td.std_td= submit_tag "Process Salary"
+                      %td
+                        %img{:src=>"/assets/alert.png"}
+                      %td{:style=>"color:#e9322d;"} No Employees were assigned for selected pay month and salary structure.
+            - else
+              - head_count = @employee_salary_calc_header.count
+                = form_tag 'save_every_month_comp', :method => :post do
+                  %tr
+                    %td.std_td
+                      #table_wrappper
+                        #inner_table_wrapper
+                          %table.table_grid{:cellpadding => 0, :cellspacing => 3}
+                            = hidden_field_tag "month_year", params[:month_year]
+                            = hidden_field_tag "salary_group", params[:salary_group]
+                            %tr
+                              %td.table_grid_header Emp ID
+                              %td.table_grid_header Emp Name
+                              %td.table_grid_header Pay Days
+                              %td.table_grid_header Present Days
+                              - @employee_salary_calc_header.each do |header|
+                                %td.table_grid_header= header.head_name
+                            - j=0
+                            - @employee_salary_calc.each do |employee|
+                              %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
+                                %td.table_grid_td= employee[:refno]
+                                %td.table_grid_td= employee[:empname]
+                                %td.table_grid_td= text_field_tag "salary[#{j}][][pay_days]", employee[:pay_days],:readonly=>"readonly"
+                                %td.table_grid_td= text_field_tag "salary[#{j}][][present_days]", employee[:present_days],:readonly=>"readonly"
+                                - if employee[:salary_allotment].count == 0
+                                  = hidden_field_tag "salary[#{j}][][employee_id]", employee[:id]
+                                - (0..head_count-1).each do |i|
+                                  = hidden_field_tag "salary[#{j}][][employee_id]", employee[:salary_allotment][i][:employee_id]
+                                  = hidden_field_tag "salary[#{j}][][employee_detail_id]", employee[:salary_allotment][i][:employee_detail_id]
+                                  = hidden_field_tag "salary[#{j}][][effective_date]", employee[:salary_allotment][i][:effective_date]
+                                  = hidden_field_tag "salary[#{j}][][salary_head_id]", employee[:salary_allotment][i][:salary_head_id]
+                                  = hidden_field_tag "salary[#{j}][][salary_group_detail_id]", employee[:salary_allotment][i][:salary_group_detail_id]
+                                  %td.table_grid_td= text_field_tag "salary[#{j}][][salary_amount]", (employee[:salary_allotment][i][:salary_allotment]!=0)?number_with_precision(employee[:salary_allotment][i][:salary_allotment], :precision => 2):""
+                                - j=j+1
+                          - if @employee_salary_calc[0][:salary_allotment].count == 0
+                            %tr
+                              %td.std_td
+                                %table
+                                  %tr
+                                    %td
+                                      %img{:src=>"/assets/alert.png"}
+                                    %td{:style=>"color:#e9322d;"} No fields available to save values for selected pay month and salary structure.
+                            %tr
+                              %td.std_td{:colspan=>2}= submit_tag "Save Values", :disabled=>"disabled"
+                          - else
+                            %tr
+                              %td.std_td= submit_tag "Save Values"
+                = form_tag salaries_path, :method => :post do
+                  = hidden_field_tag "month_year", params[:month_year]
+                  - k=0
+                  - @employee_salary_calc.each do |employee|
+                    = hidden_field_tag "salary[#{k}][][pay_days]", employee[:pay_days]
+                    = hidden_field_tag "salary[#{k}][][present_days]", employee[:present_days]
+                    - if employee[:salary_allotment].count == 0
+                      = hidden_field_tag "salary[#{k}][][employee_id]", employee[:id]
+                    - (0..head_count-1).each do |i|
+                      = hidden_field_tag "salary[#{k}][][employee_id]", employee[:salary_allotment][i][:employee_id]
+                      = hidden_field_tag "salary[#{k}][][employee_detail_id]", employee[:salary_allotment][i][:employee_detail_id]
+                      = hidden_field_tag "salary[#{k}][][effective_date]", employee[:salary_allotment][i][:effective_date]
+                      = hidden_field_tag "salary[#{k}][][salary_head_id]", employee[:salary_allotment][i][:salary_head_id]
+                      = hidden_field_tag "salary[#{k}][][salary_group_detail_id]", employee[:salary_allotment][i][:salary_group_detail_id]
+                      = hidden_field_tag "salary[#{k}][][salary_amount]", (employee[:salary_allotment][i][:salary_allotment]!=0)?number_with_precision(employee[:salary_allotment][i][:salary_allotment], :precision => 2):""
 
+                    - k=k+1
+                  %tr
+                    %td.std_td{:style=>"position:absolute;margin-left:100px;margin-top:-33px"}= submit_tag "Process Salary"
     %tr
       %td &nbsp;

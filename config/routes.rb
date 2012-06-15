@@ -127,9 +127,10 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :sessions, :only => [:new, :create, :destroy]
   resources :users
-  resources :salaries, :only => [:index, :create, :new] do
+  resources :salaries do
     get 'edit', :on => :collection
     put :update, :on => :collection
+    post "save_every_month_comp", :on => :collection
 
     get "salary_sheet",  :on => :collection
   end

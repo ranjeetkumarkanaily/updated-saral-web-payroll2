@@ -53,7 +53,7 @@ gem 'active_record_hstore_serializer'
 gem 'breadcrumbs_on_rails'
 gem "acts_as_audited"
 gem 'rails_best_practices'
-gem "thin"
+#gem "thin"
 gem 'launchy'
 #gem 'heroku'
 # Use unicorn as the web server
