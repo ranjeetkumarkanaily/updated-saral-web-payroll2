@@ -24,7 +24,11 @@
               %table
                 %tr
                   %td{:width=>130} Date:&nbsp;
-                  %td= f.text_field :holiday_date, :id => "hdd", :class => "date_input"
+                  %td
+                    - if holiday.holiday_date?
+                      = f.text_field :holiday_date, :id => "hdd", :class => "date_input", :value => OptionSetting.date_format_type(holiday.holiday_date,1)
+                    - else
+                      = f.text_field :holiday_date, :id => "hdd", :class => "date_input"
                 %tr
                   %td{:width=>130} National Holiday:&nbsp;
                   %td= f.check_box :national_holiday
