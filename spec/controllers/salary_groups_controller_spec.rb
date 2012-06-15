@@ -123,18 +123,46 @@ describe SalaryGroupsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested salary_group" do
+    xit "destroys the requested salary_group" do
       salary_group = SalaryGroup.create! valid_attributes
       expect {
         delete :destroy, :id => salary_group.id
       }.to change(SalaryGroup, :count).by(-1)
     end
 
-    it "redirects to the salary_groups list" do
+    xit "redirects to the salary_groups list" do
       salary_group = SalaryGroup.create! valid_attributes
       delete :destroy, :id => salary_group.id
       response.should redirect_to(salary_groups_url)
     end
+
+    it "does not allow to delete records" do
+      salary_group = FactoryGirl.create(:salary_group)
+      sal_head = FactoryGirl.create(:salary_head)
+      sal_grp_det = FactoryGirl.create(:salary_group_detail, :salary_group_id => salary_group.id, :salary_head_id => sal_head.id)
+      emp = FactoryGirl.create(:employee)
+      fin_inst = FactoryGirl.create(:financial_institution)
+      branch = FactoryGirl.create(:branch)
+      attn_config = FactoryGirl.create(:attendance_configuration)
+      emp_det = FactoryGirl.create(:employee_detail, :employee_id => emp.id, :salary_group_id => salary_group.id, :branch_id => branch.id, :financial_institution_id => fin_inst.id, :attendance_configuration_id => attn_config.id)
+
+      #delete :destroy, :id => salary_group.id
+      #flash[:error].should == "Selected Salary Structure is already assigned to employee."
+      #response.should raise_error("Cannot delete record because of dependent salary_group_details")
+      #flash[:error].should eq("Selected Salary Structure is already assigned to employee.")
+      #raise ActiveRecord::DeleteRestrictionError
+      #response.should redirect_to(salary_groups_url)
+
+      expect {
+        delete :destroy, :id => salary_group.id
+      }.to raise_error(ActiveRecord::DeleteRestrictionError)
+      #.should raise_error(ActiveRecord::DeleteRestrictionError)
+      #expect
+      #{
+      #  delete :destroy, :id => salary_group.id
+      #}.should raise_error(ActiveRecord::DeleteRestrictionError ["Cannot delete record because of dependent salary_group_details"])
+    end
+
   end
 
 end

@@ -25,9 +25,9 @@
       return false;
       });
 
-      $("#salary_group_details_salary_head_id").change(function()
+      $("#salary_head_n_grp_ids").change(function()
       {
-      $.get($("#new_salary_group_detail").attr("action"), $("#salary_group_details_salary_head_id").serialize(), null, "script");
+      $.get($("#group_details").attr("action"), $("#salary_head_n_grp_ids").serialize(), null, "script");
       return false;
       });
 

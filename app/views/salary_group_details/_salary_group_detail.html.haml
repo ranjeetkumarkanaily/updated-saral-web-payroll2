@@ -1,0 +1,45 @@
+= form_for(@salary_group_detail) do |f|
+  %table
+    = f.hidden_field :salary_group_id, :value => @salary_group_detail.salary_group_id
+    = f.hidden_field :salary_head_id, :value => @salary_group_detail.salary_head_id
+    %tr
+      %td.std_td{:style=>"width:48%"}
+        %table
+          %tr
+            %td{:width=>130} Payslip Print Order:&nbsp;
+            %td= f.text_field :print_order, :style=>"width:100px"
+          %tr
+            %td{:width=>130} Based On:&nbsp;
+            %td= f.select :based_on, options_for_select(["Pay Days","Present Days","Independent Days"],@salary_group_detail.based_on), {:prompt => 'Select'}
+          %tr
+            %td{:width=>130} PF Applicability:&nbsp;
+            %td= f.check_box :pf_applicability
+          %tr
+            %td{:width=>130} ESI Applicability:&nbsp;
+            %td= f.check_box :esi_applicability
+          %tr
+            %td{:width=>130} PT Applicability:&nbsp;
+            %td= f.check_box :pt_applicability
+      %td.std_td{:style=>"width:52%"}
+        %table
+          %tr
+            %td{:width=>160} Calculation Type:&nbsp;
+            %td{:colspan=>2}= f.select :calc_type, options_for_select(["Formula","Lumpsum","Every Month","Not Applicable"],@salary_group_detail.calc_type),  {:prompt => 'Select Type'}
+          %tr
+            %td{:width=>160} Calculation:&nbsp;
+            %td{:colspan=>2}= f.text_area :calculation, :rows => 2, :cols => 30
+          %tr
+            %td{:width=>160} Effective Month:&nbsp;
+            %td= f.text_field :effective_month, :readonly => 'readonly',:style=>"width:178px"
+            %td
+              %div#boxMonthYear
+          %tr
+            %td Round off:&nbsp;
+            %td= f.select :round_off, options_for_select(['Actual','Nearest Rupee'], @salary_group_detail.round_off)
+      %tr
+        %td.std_td{:colspan=>2}
+          %table
+            %tr
+              %td &nbsp;
+            %tr
+              %td{:colspan=>2}= f.submit
