@@ -33,6 +33,7 @@
                   %td.std_td= submit_tag "Get Employee",:style=>'height:27px'
       - if employee_count > 0
         = form_for(leave_taken,:html => {:onsubmit => "return ValidateForm();"}) do |f|
+          = hidden_field_tag "leave_taken[leave_detail_date]", params[:leave_detail_date]
           %table{:cellpadding=>0,:cellspacing=>0,:border=>0}
             %tr
               %td.std_td

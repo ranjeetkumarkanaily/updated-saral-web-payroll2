@@ -151,13 +151,13 @@
                     %div
                       %table
                         %tr
-                          %td.std_td
+                          %td
                             %table
                               %tr
                                 %td Select the Date Format:&nbsp;
                                 %td= f.collection_select :date_format, DateFormat.order('created_at ASC'),:date_format,:date_format
                                 %td
-                                  %div{:id => "date_format_example",:style => "color:red;"}
+                                  %div{:id => "date_format_example",:style => "color:red;padding-left:10px"}
             %tr
               %td &nbsp;
             %tr
