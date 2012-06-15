@@ -101,7 +101,9 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     post 'restore_backup', :on => :collection
   end
 
-  resources :salary_group_details
+  resources :salary_group_details do
+    get 'group_details', :on => :collection
+  end
 
   resources :salary_heads, :except => [:show]
 

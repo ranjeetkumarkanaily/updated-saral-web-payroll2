@@ -91,6 +91,17 @@ class SalaryGroupDetailsController < ApplicationController
     end
   end
 
+  def group_details
+    complex_sal_grp_id = params[:salary_head_n_grp_ids]
+    ids = complex_sal_grp_id.split("-")
+    salary_group_detail = SalaryGroupDetail.where("salary_head_id = ? and salary_group_id = ?", ids[0], ids[1]).order("created_at DESC").first
+    if salary_group_detail
+      @salary_group_detail = salary_group_detail
+    else
+      @salary_group_detail = SalaryGroupDetail.new(:salary_head_id => ids[0], :salary_group_id => ids[1])
+    end
+  end
+
   protected
     def param_salary_grp_id
       @param_sal_grp_id = params[:param1]
