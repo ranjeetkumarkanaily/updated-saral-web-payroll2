@@ -6,8 +6,6 @@ UpdatedSaralWebPayroll::Application.routes.draw do
     post 'upload_parse_validate', :on => :collection
     post 'save', :on => :collection
     get 'generate_sample_excel_template',  :on => :collection
-
-    post 'load_employee', :on => :collection
   end
 
   resources :leave_opening_balances do

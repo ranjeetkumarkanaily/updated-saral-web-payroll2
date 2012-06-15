@@ -121,8 +121,6 @@ class LeaveTakensController < ApplicationController
     end
   end
 
-  def load_employee
-    @leave_taken = LeaveTaken.new
-  end
+
 
 end
