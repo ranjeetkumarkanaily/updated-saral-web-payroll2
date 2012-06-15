@@ -11,7 +11,11 @@
       %td.table_grid_td= employee.refno
       %td.table_grid_td= employee.empname
       %td.table_grid_td= employee.gender
-      %td.table_grid_td= l employee.date_of_joining, :format => :default
+      %td.table_grid_td
+        -if employee.date_of_joining?
+          = l employee.date_of_joining, :format => OptionSetting.date_format_type("",2)
+        - else
+          = employee.date_of_joining
       %td.table_grid_td= employee.email
       -#%td.table_grid_icon
       -#  %a{:href => "/employees/"+employee.id.to_s}

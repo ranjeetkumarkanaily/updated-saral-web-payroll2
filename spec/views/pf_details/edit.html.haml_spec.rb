@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "pf_details/edit" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     @branch = FactoryGirl.create(:branch)
     @pf_group = FactoryGirl.create(:pf_group)
     @pf_detail = assign(:pf_detail, stub_model(PfDetail,

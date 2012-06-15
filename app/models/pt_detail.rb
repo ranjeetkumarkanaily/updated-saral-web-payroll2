@@ -10,7 +10,11 @@ class PtDetail < ActiveRecord::Base
   delegate :name, :to => :pt_group, :prefix => true
   def effective_to
     next_row = self.class.first(:conditions => ["created_at > ?", created_at], :order => "created_at ASC")
-    next_row ? next_row.pt_effective_date - 1 : 'Till Date'
+    if next_row
+      (next_row.pt_effective_date - 1).strftime(OptionSetting.date_format_value)
+    else
+     'Till Date'
+    end
   end
 
   scope :effective_date, lambda { |branch_id,pt_group_id|

@@ -24,13 +24,7 @@ class PfGroupRatesController < ApplicationController
   def new
     @pf_group_rate = PfGroupRate.new
     @pf_group = PfGroup.find(@param_pf_group_id).pf_group
-
-    @values = Hash.new
-    pf_rate_values = CustomSettingValue.find_all_by_group("PF Rate")
-    pf_rate_values.each do |rate|
-      @values["#{rate.group_column}"] = rate.group_column_value
-    end
-
+    default_values
     respond_to do |format|
       format.html # new.html.haml
       format.json { render json: @pf_group_rate }
@@ -45,14 +39,15 @@ class PfGroupRatesController < ApplicationController
   def create
     @param_pf_group_id = params[:pf_group_rate][:pf_group_id]
     @pf_group_rate = PfGroupRate.new(params[:pf_group_rate])
-    effective_date = Paymonth.find(params[:pf_group_rate][:paymonth_id]).from_date
     respond_to do |format|
       if @pf_group_rate.save
+        effective_date = Paymonth.find(params[:pf_group_rate][:paymonth_id]).from_date
         last_saved = PfGroupRate.find(@pf_group_rate.id)
         last_saved.update_attribute(:effective_date,effective_date)
         format.html { redirect_to pf_group_rates_url(:params1 => @param_pf_group_id), notice: 'Pf group rate was successfully created.' }
         format.json { render json: @pf_group_rate, status: :created, location: @pf_group_rate }
       else
+        default_values
         format.html { render 'new' }
         format.json { render json: @pf_group_rate.errors, status: :unprocessable_entity }
       end
@@ -89,5 +84,13 @@ class PfGroupRatesController < ApplicationController
 
     def find_pf_group_rate
       @pf_group_rate = PfGroupRate.find(params[:id])
+    end
+
+    def default_values
+      @values = Hash.new
+      pf_rate_values = CustomSettingValue.find_all_by_group("PF Rate")
+      pf_rate_values.each do |rate|
+        @values["#{rate.group_column}"] = rate.group_column_value
+      end
     end
 end

@@ -3,6 +3,8 @@ require 'spec_helper'
 describe "salary_allotments/index" do
 
   it "render index page" do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     employee = FactoryGirl.create(:employee)
     assign(:need_to_allot_Sal,[stub_model(Employee,
                                           :id => employee.id,

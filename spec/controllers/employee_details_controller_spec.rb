@@ -4,7 +4,8 @@ require 'spec_helper'
 describe EmployeeDetailsController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
-
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
     @branch = FactoryGirl.create(:branch)
     @financial_institution = FactoryGirl.create(:financial_institution)
     @attendance_configuration = FactoryGirl.create(:attendance_configuration)
@@ -23,6 +24,20 @@ describe EmployeeDetailsController do
     :effective_to => '',
     }
   end
+
+  def update_valid_attributes
+      {:employee_id => "1",
+      :effective_date => "01/21/2012",
+      :salary_group_id => "1",
+      :allotted_gross => 5000,
+      :classification =>{'Department' => 'development'},
+      :branch_id => @branch.id,
+      :financial_institution_id => @financial_institution.id,
+      :attendance_configuration_id => @attendance_configuration.id,
+      :bank_account_number => 2316,
+      :effective_to => '',
+      }
+    end
 
   describe "GET index" do
     before :each do
@@ -108,6 +123,19 @@ describe EmployeeDetailsController do
 
     end
 
+    describe "create with date format of %m/%d/%Y" do
+      before :each do
+        @employee = FactoryGirl.create(:employee)
+      end
+      it "should create employee_details with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        expect {
+          post :create, :employee_detail => update_valid_attributes
+        }.to change(EmployeeDetail, :count).by(1)
+      end
+    end
+
     describe "with invalid params" do
 
       it "assigns a newly created but unsaved employee_detail as @employee_detail" do
@@ -174,6 +202,16 @@ describe EmployeeDetailsController do
         employee_detail = EmployeeDetail.create! valid_attributes
         put :update, :id => employee_detail.id, :employee_detail => valid_attributes
         response.should redirect_to(employee_details_path(:param1 => valid_attributes[:employee_id]))
+      end
+    end
+
+    describe "update with date format of %m/%d/%Y" do
+      it "should update employee_details with converted date format" do
+        employee_detail =  EmployeeDetail.create! valid_attributes
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        put :update, :id => employee_detail.id, :employee_detail => update_valid_attributes
+        response.should redirect_to(employee_details_path(:param1 => update_valid_attributes[:employee_id]))
       end
     end
 

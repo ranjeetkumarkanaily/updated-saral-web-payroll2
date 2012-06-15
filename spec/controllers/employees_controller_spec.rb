@@ -4,6 +4,8 @@ require 'spec_helper'
 describe EmployeesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
   end
 
 
@@ -16,6 +18,18 @@ describe EmployeesController do
       :refno => "A1",
       :email => "ganny@gnaa.com",
       :restrct_pf => false
+    }
+  end
+
+  def update_employee_attributes
+    {
+        :empname => "GaneshL",
+        :date_of_joining => "10/31/2009",
+        :date_of_leaving => "",
+        :present_state_id => "1",
+        :refno => "A1",
+        :email => "ganny@gnaa.com",
+        :restrct_pf => false
     }
   end
 
@@ -113,6 +127,15 @@ describe EmployeesController do
       end
     end
 
+    describe "create with date format of %m/%d/%Y" do
+      it "should create employee with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        post :create, :employee => update_employee_attributes
+        assigns(:employee).should be_a(Employee)
+      end
+    end
+
     describe "with invalid params" do
       it "assigns a newly created but unsaved employee as @employee" do
         # Trigger the behavior that occurs when invalid params are submitted
@@ -129,6 +152,19 @@ describe EmployeesController do
       end
     end
   end
+
+  describe "update with date format of %m/%d/%Y" do
+    before :each do
+      @employee = FactoryGirl.create(:employee)
+    end
+    it "should create employee with converted date format" do
+      DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+      OptionSetting.first.update_attribute("date_format","m/d/Y")
+      put :update, :id => @employee.id, :employee => update_employee_attributes
+      response.should redirect_to(@employee)
+    end
+  end
+
 
   describe "PUT update" do
     describe "with valid params" do

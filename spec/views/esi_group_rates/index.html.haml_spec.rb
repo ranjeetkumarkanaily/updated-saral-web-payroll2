@@ -3,9 +3,11 @@ require 'spec_helper'
 describe "esi_group_rates/index" do
   before(:each) do
     @esi_group = FactoryGirl.create(:esi_group)
+    @paymonth = FactoryGirl.create(:paymonth)
     assign(:param_esi_group_id,@esi_group.id)
     assign(:esi_group_rates, [
       stub_model(EsiGroupRate,
+        :paymonth_id => @paymonth.id,
         :esi_group_id => 1,
         :employee_rate => 1.5,
         :employer_rate => 1.5,
@@ -14,6 +16,7 @@ describe "esi_group_rates/index" do
         :round_off => "Round Off"
       ),
       stub_model(EsiGroupRate,
+        :paymonth_id => @paymonth.id,
         :esi_group_id => 1,
         :employee_rate => 1.5,
         :employer_rate => 1.5,

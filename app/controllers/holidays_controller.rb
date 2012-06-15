@@ -46,6 +46,16 @@ class HolidaysController < ApplicationController
         format.html { render 'new'}
       end
     else
+      holiday=params[:holiday]
+      date_format=OptionSetting.date_format_value
+      if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+        dates_value=[holiday[:holiday_date]]
+        dates=OptionSetting.convert_date(dates_value)
+        val=holiday.merge!(:holiday_date=>dates[0])
+        @holiday = Holiday.new(val)
+      else
+        @holiday = Holiday.new(params[:holiday])
+      end
       respond_to do |format|
         if @holiday.save
           format.html { redirect_to @holiday, notice: 'Holiday was successfully created.' }
@@ -59,6 +69,14 @@ class HolidaysController < ApplicationController
   end
 
   def update
+    date_format=OptionSetting.date_format_value
+    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+      dates_value=[params[:holiday][:holiday_date]]
+      dates=OptionSetting.convert_date(dates_value)
+      params[:holiday].merge!(:holiday_date=>dates[0])
+    else
+      params[:holiday]
+    end
     respond_to do |format|
       if @holiday.update_attributes(params[:holiday])
         format.html { redirect_to @holiday, notice: 'Holiday was successfully updated.' }

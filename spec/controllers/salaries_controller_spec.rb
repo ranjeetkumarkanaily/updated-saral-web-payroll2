@@ -20,7 +20,7 @@ describe SalariesController do
       it "Count should be increases by one" do
         pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
         pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => @pf_group.id, :paymonth_id => pay_month.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => @esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => @esi_group.id, :paymonth_id => pay_month.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_definition = FactoryGirl.create(:leave_definition)
@@ -36,7 +36,7 @@ describe SalariesController do
       it "Count should be increases by one" do
         pay_month =  FactoryGirl.create(:paymonth, :month_year => 24135, :number_of_days => 31,:from_date => "2011-03-01",:to_date => "2011-03-31",:month_name => "Mar/2011")
         pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => @pf_group.id, :paymonth_id => pay_month.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => @esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => @esi_group.id, :paymonth_id => pay_month.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_definition = FactoryGirl.create(:leave_definition)
@@ -51,7 +51,7 @@ describe SalariesController do
       it "redirects to salary index path" do
         pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
         pf_group_rate = FactoryGirl.create(:pf_group_rate,:pf_group_id => @pf_group.id, :paymonth_id => pay_month.id)
-        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => @esi_group.id)
+        esi_group_rate = FactoryGirl.create(:esi_group_rate,:esi_group_id => @esi_group.id, :paymonth_id => pay_month.id)
         employee = FactoryGirl.create(:employee)
         employee_detail = FactoryGirl.create(:employee_detail,:attendance_configuration_id => @attendance_configuration.id,:branch_id => @branch.id, :financial_institution_id => @financial_institution.id)
         leave_definition = FactoryGirl.create(:leave_definition)

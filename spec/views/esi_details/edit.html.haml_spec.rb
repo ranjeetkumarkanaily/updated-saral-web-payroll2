@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "esi_details/edit" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     @branch = FactoryGirl.create(:branch)
     @esi_group = FactoryGirl.create(:esi_group)
     @esi_detail = assign(:esi_detail, stub_model(EsiDetail,

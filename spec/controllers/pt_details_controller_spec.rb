@@ -4,15 +4,25 @@ describe PtDetailsController do
 
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
   end
 
   def valid_attributes
     {
         #:branch_id => FactoryGirl.create(:branch).id,
         #:pt_group_id => FactoryGirl.create(:pt_group).id,
-        #:pt_effective_date =>  "2012-01-01"
+        :pt_effective_date =>  "2012-01-01"
     }
   end
+
+  def update_valid_attributes
+  {
+      #:branch_id => FactoryGirl.create(:branch).id,
+      #:pt_group_id => FactoryGirl.create(:pt_group).id,
+      :pt_effective_date =>  "01/01/2012"
+  }
+    end
 
   def valid_session
     {}
@@ -54,6 +64,16 @@ describe PtDetailsController do
       end
     end
 
+    describe "create with date format of %m/%d/%Y" do
+      it "should create employee statutory detail  with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        expect {
+          post :create, {:pt_detail => {"branch_id" => @branch.id, "pt_group_id" => @pt_group.id, "pt_effective_date" => "01/01/2012"}, :branch_id => @branch.id}, valid_session
+        }.to change(PtDetail, :count).by(1)
+      end
+    end
+
     describe "with invalid params" do
       it "assigns a newly created but unsaved pt_detail as @pt_detail" do
         # Trigger the behavior that occurs when invalid params are submitted
@@ -91,6 +111,15 @@ describe PtDetailsController do
       it "redirects to the pt_detail" do
         put :update, {:id => @pt_detail.to_param, :pt_detail => valid_attributes}, valid_session
         response.should redirect_to(new_branch_pt_detail_path(@pt_detail.branch))
+      end
+    end
+
+    describe "update with date format of %m/%d/%Y" do
+      it "should update employee statutory details with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        put :update, {:id => @pt_detail.to_param, :pt_detail => update_valid_attributes}, valid_session
+        assigns(:pt_detail).should eq(@pt_detail)
       end
     end
 

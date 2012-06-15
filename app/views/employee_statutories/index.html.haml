@@ -15,11 +15,23 @@
     %tr
       %td= employee_statutory.employee
       %td= employee_statutory.pan
-      %td= employee_statutory.pan_effective_date
+      %td
+        -if employee_statutory.pan_effective_date?
+          = l employee_statutory.pan_effective_date, :format => OptionSetting.date_format_type("",2)
+        - else
+          = employee_statutory.pan_effective_date
       %td= employee_statutory.pf_number
-      %td= employee_statutory.pf_effective_date
+      %td
+        -if employee_statutory.pf_effective_date?
+          = l employee_statutory.pf_effective_date, :format => OptionSetting.date_format_type("",2)
+        - else
+          = employee_statutory.pf_effective_date
       %td= employee_statutory.esi
       %td= employee_statutory.esi_effective_date
+        -if employee_statutory.esi_effective_date?
+          = l employee_statutory.esi_effective_date, :format => OptionSetting.date_format_type("",2)
+        - else
+          = employee_statutory.esi_effective_date
       %td= link_to 'Show', employee_statutory
       %td= link_to 'Edit', edit_employee_statutory_path(employee_statutory)
       %td= link_to 'Destroy', employee_statutory, confirm: 'Are you sure?', method: :delete

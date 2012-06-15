@@ -4,6 +4,8 @@ describe CompaniesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
     @file_specs= FactoryGirl.create(:upload_file_type)
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
   end
 
   def valid_attributes
@@ -12,6 +14,21 @@ describe CompaniesController do
     :address => "My company address",
     :website => "www.mycompany.com",
     :dateofestablishment => "2010-10-30",
+    :pf => true,
+    :esi => true,
+    :phonenumber1 => "080201256",
+    :phonenumber2 => "080201256" ,
+    :address2 => "My company address 2",
+    :address3 => "My company address 3",
+    :email => "mycomap@comp.com"}
+  end
+
+  def update_valid_attributes
+    {:companyname => "Its My company Ltd.",
+    :responsible_person => "Myself",
+    :address => "My company address",
+    :website => "www.mycompany.com",
+    :dateofestablishment => "10/30/2010",
     :pf => true,
     :esi => true,
     :phonenumber1 => "080201256",
@@ -60,6 +77,16 @@ describe CompaniesController do
         end
       end
 
+      describe "create with date format of %m/%d/%Y" do
+        it "should create employee statutory detail  with converted date format" do
+          DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+          OptionSetting.first.update_attribute("date_format","m/d/Y")
+          expect {
+            post :create, {:company => update_valid_attributes}
+          }.to change(Company, :count).by(1)
+        end
+      end
+
       describe "with invalid params" do
         it "assigns a newly created but unsaved company as @company" do
           Company.any_instance.stub(:save).and_return(false)
@@ -85,6 +112,16 @@ describe CompaniesController do
         it "assigns the requested company as @company" do
           company = Company.create! valid_attributes
           put :update, :id => company.id, :companyname => valid_attributes
+          assigns(:company).should eq(company)
+        end
+      end
+
+      describe "update with date format of %m/%d/%Y" do
+        it "should update employee statutory details with converted date format" do
+          DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+          OptionSetting.first.update_attribute("date_format","m/d/Y")
+          company = Company.create! valid_attributes
+          put :update, :id => company.id, :company => update_valid_attributes
           assigns(:company).should eq(company)
         end
       end

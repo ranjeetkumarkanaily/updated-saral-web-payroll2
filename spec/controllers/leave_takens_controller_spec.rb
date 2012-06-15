@@ -4,6 +4,8 @@ describe LeaveTakensController do
 
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
   end
   def valid_attributes
     {

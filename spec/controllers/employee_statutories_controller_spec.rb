@@ -4,6 +4,8 @@ require 'spec_helper'
 describe EmployeeStatutoriesController do
   before :each do
     controller.stub(:logged_in?).and_return(true)
+    @date_format = FactoryGirl.create(:date_format)
+    @option_setting = FactoryGirl.create(:option_setting)
     @employee = FactoryGirl.create(:employee, :date_of_birth => '1980-01-01')
   end
   def valid_attributes
@@ -20,6 +22,21 @@ describe EmployeeStatutoriesController do
       :vol_pf_percentage => nil,
       :vol_pf_amount => '3500.00'}
   end
+
+  def update_valid_attributes
+      { :employee_id => @employee.id ,
+        :pan => 'aaaaa1234a',
+        :pan_effective_date => '01/01/2012',
+        :pf_number => '1234',
+        :pf_effective_date => '01/01/2012',
+        :esi_number => 'a1234',
+        :esi_effective_date => '01/01/2012',
+        :zero_pt => 'true',
+        :zero_pension => 'true',
+        :vol_pf => 'true',
+        :vol_pf_percentage => nil,
+        :vol_pf_amount => '3500.00'}
+    end
 
   describe "GET new" do
     it "assigns a new employee_statutory as @employee_statutory" do
@@ -53,6 +70,16 @@ describe EmployeeStatutoriesController do
       it "redirects to the created employee_statutory" do
         post :create, {:employee_statutory => valid_attributes}
         response.should redirect_to(employee_url(:id => @employee.id ))
+      end
+    end
+
+    describe "create with date format of %m/%d/%Y" do
+      it "should create employee statutory detail  with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        expect {
+          post :create, {:employee_statutory => update_valid_attributes}
+        }.to change(EmployeeStatutory, :count).by(1)
       end
     end
 
@@ -97,6 +124,16 @@ describe EmployeeStatutoriesController do
         employee_statutory = EmployeeStatutory.create! valid_attributes
         put :update, {:id => employee_statutory.to_param, :employee_statutory => valid_attributes}
         response.should redirect_to(employee_url(:id => @employee.id ))
+      end
+    end
+
+    describe "update with date format of %m/%d/%Y" do
+      it "should update employee statutory details with converted date format" do
+        DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
+        OptionSetting.first.update_attribute("date_format","m/d/Y")
+        employee_statutory = EmployeeStatutory.create! valid_attributes
+        put :update, {:id => employee_statutory.to_param, :employee_statutory => update_valid_attributes}
+        assigns(:employee_statutory).should eq(employee_statutory)
       end
     end
 

@@ -23,7 +23,10 @@
                                         %td= @company.companyname
                                     %tr
                                         %td Estd. Date:&nbsp;
-                                        %td= l @company.dateofestablishment, :format => :default
+                                        - if @company.dateofestablishment?
+                                            %td= l @company.dateofestablishment, :format => OptionSetting.date_format_type("",2)
+                                        -else
+                                            %td= @company.dateofestablishment
                                     %tr
                                         %td Address:&nbsp;
                                         %td= @company.address + ", " + @company.address2 + ", " + @company.address3

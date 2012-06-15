@@ -1,0 +1,3 @@
+%tr
+  %td{:width=>130} Salary Head:&nbsp;
+  %td= select_tag "salary_group_details[salary_head_id]", options_for_select(SalaryHead.where('id != 2 and id != 3').order('created_at ASC').collect {|sal_hd| [ sal_hd.head_name, sal_hd.id ]}), :prompt => "Select Salary Head"

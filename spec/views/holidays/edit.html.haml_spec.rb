@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "holidays/edit" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     @holiday = assign(:holiday, stub_model(Holiday,
       :attendance_configuration_id => 1,
       :description => "MyString",

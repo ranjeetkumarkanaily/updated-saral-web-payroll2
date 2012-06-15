@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "paymonths/index" do
   before(:each) do
+    FactoryGirl.create(:date_format)
+    FactoryGirl.create(:option_setting)
     assign(:paymonths, [
       stub_model(Paymonth,
         :month_year => 24144,

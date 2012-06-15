@@ -10,6 +10,10 @@
       %td.std_td
         %table.table_grid{:width=>557, :cellpadding => 0, :cellspacing => 3}
           %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}", :style => "color:#e9322d"
+          %tr
             %td.table_grid_header Salary Structure Name
             %td.table_grid_header Based on Gross
             %td.table_grid_header{:colspan => 4} Operations
