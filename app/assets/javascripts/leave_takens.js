@@ -11,6 +11,13 @@ function make_invisible(){
         invisible(from_date_id_lop,'none')
         invisible(to_date_id_lop,'none')
     }
+    //invisible('new_leave_taken','none')
+//    invisible('save','none')
+
+}
+
+function visible_invisible_emplist(){
+    document.getElementById('table_wrappper').style.display = 'none';
 }
 
 function invisible(input_id,val){

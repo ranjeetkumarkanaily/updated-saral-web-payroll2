@@ -25,8 +25,13 @@ class LeaveTakensController < ApplicationController
   # GET /leave_takens/new.json
   def new
     @leave_taken = LeaveTaken.new
-    @leave_taken_employees = @leave_taken.employee_list
-    @employee_count = @leave_taken_employees.count
+    @employee_count = 0
+    if !params[:leave_detail_date].blank?
+      @leave_taken_employees = @leave_taken.employee_list params[:leave_detail_date]
+      @employee_count = @leave_taken_employees.count
+
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @leave_taken }
@@ -114,6 +119,10 @@ class LeaveTakensController < ApplicationController
                :template => 'leave_takens/generate_sample_excel_template'
       end
     end
+  end
+
+  def load_employee
+    @leave_taken = LeaveTaken.new
   end
 
 end
