@@ -39,7 +39,7 @@ describe PtDetailsController do
   describe "GET edit" do
     it "assigns the requested pt_detail as @pt_detail" do
       @pt_detail = FactoryGirl.create(:pt_detail)
-      get :edit, {:id => @pt_detail.id}, valid_session
+      get :edit, {:id => @pt_detail.id, :branch_id => @pt_detail.branch_id}, valid_session
       assigns(:pt_detail).should eq(@pt_detail)
     end
   end
@@ -100,16 +100,16 @@ describe PtDetailsController do
     describe "with valid params" do
       it "updates the requested pt_detail" do
         PtDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => @pt_detail.to_param, :pt_detail => {'these' => 'params'}}, valid_session
+        put :update, {:id => @pt_detail.to_param, :branch_id => @pt_detail.branch_id, :pt_detail => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested pt_detail as @pt_detail" do
-        put :update, {:id => @pt_detail.to_param, :pt_detail => valid_attributes}, valid_session
+        put :update, {:id => @pt_detail.to_param, :branch_id => @pt_detail.branch_id, :pt_detail => valid_attributes}, valid_session
         assigns(:pt_detail).should eq(@pt_detail)
       end
 
       it "redirects to the pt_detail" do
-        put :update, {:id => @pt_detail.to_param, :pt_detail => valid_attributes}, valid_session
+        put :update, {:id => @pt_detail.to_param, :branch_id => @pt_detail.branch_id, :pt_detail => valid_attributes}, valid_session
         response.should redirect_to(new_branch_pt_detail_path(@pt_detail.branch))
       end
     end
@@ -118,7 +118,7 @@ describe PtDetailsController do
       it "should update employee statutory details with converted date format" do
         DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
         OptionSetting.first.update_attribute("date_format","m/d/Y")
-        put :update, {:id => @pt_detail.to_param, :pt_detail => update_valid_attributes}, valid_session
+        put :update, {:id => @pt_detail.to_param, :branch_id => @pt_detail.branch_id, :pt_detail => update_valid_attributes}, valid_session
         assigns(:pt_detail).should eq(@pt_detail)
       end
     end
@@ -126,13 +126,13 @@ describe PtDetailsController do
     describe "with invalid params" do
       it "assigns the pt_detail as @pt_detail" do
         PtDetail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @pt_detail.to_param, :pt_detail => {}}, valid_session
+        put :update, {:id => @pt_detail.to_param, :branch_id => @pt_detail.branch_id, :pt_detail => {}}, valid_session
         assigns(:pt_detail).should eq(@pt_detail)
       end
 
       it "re-renders the 'edit' template" do
         PtDetail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @pt_detail.to_param, :pt_detail => {}}, valid_session
+        put :update, {:id => @pt_detail.to_param, :branch_id => @pt_detail.branch_id, :pt_detail => {}}, valid_session
         response.should render_template("edit")
       end
     end

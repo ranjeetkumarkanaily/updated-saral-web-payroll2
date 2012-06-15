@@ -39,7 +39,7 @@ describe EsiDetailsController do
   describe "GET edit" do
     it "assigns the requested esi_detail as @esi_detail" do
       @esi_detail = FactoryGirl.create(:esi_detail)
-      get :edit, {:id => @esi_detail.id}, valid_session
+      get :edit, {:id => @esi_detail.id, :branch_id => @esi_detail.branch_id}, valid_session
       assigns(:esi_detail).should eq(@esi_detail)
     end
   end
@@ -100,16 +100,16 @@ describe EsiDetailsController do
     describe "with valid params" do
       it "updates the requested esi_detail" do
         EsiDetail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => @esi_detail.to_param, :esi_detail => {'these' => 'params'}}, valid_session
+        put :update, {:id => @esi_detail.to_param, :branch_id => @esi_detail.branch_id, :esi_detail => {'these' => 'params'}}, valid_session
       end
 
       it "assigns the requested esi_detail as @esi_detail" do
-        put :update, {:id => @esi_detail.to_param, :esi_detail => valid_attributes}, valid_session
+        put :update, {:id => @esi_detail.to_param, :branch_id => @esi_detail.branch_id, :esi_detail => valid_attributes}, valid_session
         assigns(:esi_detail).should eq(@esi_detail)
       end
 
       it "redirects to the esi_detail" do
-        put :update, {:id => @esi_detail.to_param, :esi_detail => valid_attributes}, valid_session
+        put :update, {:id => @esi_detail.to_param, :branch_id => @esi_detail.branch_id, :esi_detail => valid_attributes}, valid_session
         response.should redirect_to(new_branch_esi_detail_path(@esi_detail.branch))
       end
     end
@@ -118,7 +118,7 @@ describe EsiDetailsController do
       it "should update employee statutory details with converted date format" do
         DateFormat.first.update_attributes(:date_format => "m/d/Y",:date_format_value=>"%m/%d/%Y")
         OptionSetting.first.update_attribute("date_format","m/d/Y")
-        put :update, {:id => @esi_detail.to_param, :esi_detail => update_valid_attributes}, valid_session
+        put :update, {:id => @esi_detail.to_param, :branch_id => @esi_detail.branch_id, :esi_detail => update_valid_attributes}, valid_session
         assigns(:esi_detail).should eq(@esi_detail)
       end
     end
@@ -126,13 +126,13 @@ describe EsiDetailsController do
     describe "with invalid params" do
       it "assigns the esi_detail as @esi_detail" do
         EsiDetail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @esi_detail.to_param, :esi_detail => {}}, valid_session
+        put :update, {:id => @esi_detail.to_param, :branch_id => @esi_detail.branch_id, :esi_detail => {}}, valid_session
         assigns(:esi_detail).should eq(@esi_detail)
       end
 
       it "re-renders the 'edit' template" do
         EsiDetail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @esi_detail.to_param, :esi_detail => {}}, valid_session
+        put :update, {:id => @esi_detail.to_param, :branch_id => @esi_detail.branch_id, :esi_detail => {}}, valid_session
         response.should render_template("edit")
       end
     end
