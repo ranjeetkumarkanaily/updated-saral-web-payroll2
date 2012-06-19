@@ -2,7 +2,7 @@ class ClassificationHeading < ActiveRecord::Base
   attr_accessible :classification_heading_name,:display_order
   acts_as_audited
 
-  has_many :classifications ,:dependent => :destroy
+  has_many :classifications, :dependent => :restrict
   belongs_to :employee_detail
 
   validates :classification_heading_name ,

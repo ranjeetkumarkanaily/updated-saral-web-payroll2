@@ -11,9 +11,13 @@
       %td.std_td
         %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
           %tr
+            %td{:colspan=>4}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}", :style => "color:#e9322d"
+          %tr
             %td.table_grid_header Label
             %td.table_grid_header Required
-            %td.table_grid_header{:colspan => 3} Operations
+            %td.table_grid_header{:colspan => 2} Operations
           - @hr_category_details.each do |hr_category_detail|
             %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
               %td.table_grid_td= hr_category_detail.name

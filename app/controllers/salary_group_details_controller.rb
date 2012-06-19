@@ -79,7 +79,7 @@ class SalaryGroupDetailsController < ApplicationController
     param1 = @salary_group_detail.salary_group_id
     begin
       @salary_group_detail.destroy
-      flash[:success] = "successfully destroyed."
+      flash[:success] = "Successfully destroyed."
     rescue ActiveRecord::DeleteRestrictionError => e
       @salary_group_detail.errors.add(:base, e)
       flash[:error] = "Selected head is already assigned to employee. Not allow to delete."
@@ -95,10 +95,14 @@ class SalaryGroupDetailsController < ApplicationController
     complex_sal_grp_id = params[:salary_head_n_grp_ids]
     ids = complex_sal_grp_id.split("-")
     salary_group_detail = SalaryGroupDetail.where("salary_head_id = ? and salary_group_id = ?", ids[0], ids[1]).order("created_at DESC").first
+
     if salary_group_detail
       @salary_group_detail = salary_group_detail
     else
       @salary_group_detail = SalaryGroupDetail.new(:salary_head_id => ids[0], :salary_group_id => ids[1])
+    end
+    respond_to do |format|
+      format.js
     end
   end
 

@@ -51,11 +51,17 @@ class StatesController < ApplicationController
   end
 
   def destroy
-    @state.destroy
-
-    respond_to do |format|
-      format.html { redirect_to states_url }
-      format.json { head :ok }
+    begin
+      @state.destroy
+      flash[:notice] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @state.errors.add(:base, e)
+      flash[:error] = "State is being used. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to states_url }
+        format.json { head :ok }
+      end
     end
   end
 

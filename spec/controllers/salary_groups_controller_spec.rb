@@ -123,14 +123,14 @@ describe SalaryGroupsController do
   end
 
   describe "DELETE destroy" do
-    xit "destroys the requested salary_group" do
+    it "destroys the requested salary_group" do
       salary_group = SalaryGroup.create! valid_attributes
       expect {
         delete :destroy, :id => salary_group.id
       }.to change(SalaryGroup, :count).by(-1)
     end
 
-    xit "redirects to the salary_groups list" do
+    it "redirects to the salary_groups list" do
       salary_group = SalaryGroup.create! valid_attributes
       delete :destroy, :id => salary_group.id
       response.should redirect_to(salary_groups_url)

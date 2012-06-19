@@ -21,8 +21,6 @@ describe PaymonthsController do
   describe "GET index" do
     it "assigns all paymonths as @paymonths" do
       paymonth = Paymonth.create! valid_attributes
-      puts paymonth.inspect
-      puts Paymonth.all.inspect
       get :index
       assigns(:paymonths).should eq([paymonth])
     end

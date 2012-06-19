@@ -20,7 +20,7 @@ class Employee < ActiveRecord::Base
 
   has_many :leave_takens, :dependent => :destroy
 
-  belongs_to :present_state, :class_name => "State"
+  belongs_to :present_state, :class_name => "State", :foreign_key => 'present_state_id', :validate => true
   delegate :state_name, :to => :present_state, :prefix => true
 
   #belongs_to :perm_state, :class_name => "State"

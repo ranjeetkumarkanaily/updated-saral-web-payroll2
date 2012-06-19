@@ -13,5 +13,7 @@ class AttendanceConfiguration < ActiveRecord::Base
 
   has_many :holidays, :dependent => :destroy
 
+  has_many :employee_details, :dependent => :restrict
+
   scope :attendances, :order => 'created_at ASC'
 end

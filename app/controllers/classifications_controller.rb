@@ -57,10 +57,15 @@ class ClassificationsController < ApplicationController
 
   def destroy
     @paramclassification_id = @classification.classification_heading_id
-    @classification.destroy
-
+    emp_det = EmployeeDetail.where("classification -> '#{@classification.classification_heading.classification_heading_name}' = '#{@classification.classification_name}'")
+    if emp_det.empty?
+      @classification.destroy
+      flash[:notice] = "Successfully destroyed."
+    else
+      flash[:error] = "Classification is being used. Not allow to delete."
+    end
     respond_to do |format|
-      format.html { redirect_to classifications_url(:params1 => @paramclassification_id), notice: 'Classification was successfully Destroyed.'  }
+      format.html { redirect_to classifications_url(:params1 => @paramclassification_id)}
       format.json { head :ok }
     end
   end

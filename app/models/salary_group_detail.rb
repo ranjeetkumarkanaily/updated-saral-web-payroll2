@@ -4,6 +4,7 @@ class SalaryGroupDetail < ActiveRecord::Base
 
   belongs_to :salary_group
   belongs_to :salary_head
+
   has_many :salary_allotments, :dependent => :restrict
   has_many :salaries, :dependent => :restrict
 

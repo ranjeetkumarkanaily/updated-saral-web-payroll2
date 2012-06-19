@@ -186,4 +186,26 @@ describe SalaryGroupDetailsController do
     end
   end
 
+  describe "GET group details" do
+    it "assigned @salary_group_detail" do
+      salary_group = FactoryGirl.create(:salary_group)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail, :salary_group_id => salary_group.id, :salary_head_id => salary_head.id)
+
+      get :group_details, :salary_head_n_grp_ids => "#{salary_head.id}-#{salary_group.id}"
+      assigns(:salary_group_detail).should eq(salary_group_detail)
+      #response.should be_success
+    end
+    it "assigned @salary_group_detail as New Salary Group detail" do
+      #salary_group_detail = FactoryGirl.create(:salary_group_detail)
+      salary_group = FactoryGirl.create(:salary_group)
+      salary_head = FactoryGirl.create(:salary_head)
+      #sal_grp_new = SalaryGroupDetail.new(:salary_head_id => salary_group_detail.salary_head_id, :salary_group_id => salary_group_detail.salary_group_id)
+      get :group_details, :salary_head_n_grp_ids => "#{salary_head.id}-#{salary_group.id}"
+      sal_grp_new = SalaryGroupDetail.new(:salary_head_id => salary_head.id, :salary_group_id => salary_group.id)
+      assigns(:salary_group_detail).should == sal_grp_new
+      #response.should be_success
+    end
+  end
+
 end

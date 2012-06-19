@@ -56,7 +56,12 @@ class HrCategoryDetailsController < ApplicationController
 
   def destroy
     hr_cat_det_id = @hr_category_detail.hr_category_id
-    @hr_category_detail.destroy
+    if HrMaster.where("category_values -> '#{@hr_category_detail.name}' != ''").empty?
+      @hr_category_detail.destroy
+      flash[:notice] = "Successfully destroyed."
+    else
+      flash[:error] = "Category Value is being used. Not allow to delete."
+    end
 
     respond_to do |format|
       format.html { redirect_to hr_category_details_url(:param1 => hr_cat_det_id) }

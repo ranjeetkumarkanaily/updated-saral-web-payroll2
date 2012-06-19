@@ -13,7 +13,7 @@
             %td{:colspan=>4}
               - if @classification_headings
                 - flash.each do |name, msg|
-                  = content_tag :div, msg, :id => "flash_#{name}"
+                  = content_tag :div, msg, :id => "flash_#{name}", :style => "color:#e9322d"
           %tr
             %td.table_grid_header{:width=> 360} Classification Headings
             %td.table_grid_header{:width=> 360} Display Order

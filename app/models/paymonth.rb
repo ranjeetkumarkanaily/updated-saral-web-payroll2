@@ -2,10 +2,11 @@ class Paymonth < ActiveRecord::Base
   attr_accessible :month_year, :number_of_days, :from_date, :to_date,:month_name
   acts_as_audited
 
-  has_many :pt_rates, :dependent => :destroy
-  has_many :pf_group_rates, :dependent => :destroy
-  has_many :pt_group_rates, :dependent => :destroy
-  has_many :esi_group_rates, :dependent => :destroy
+  has_many :pt_rates, :dependent => :restrict
+  has_many :pf_group_rates, :dependent => :restrict
+  has_many :pt_group_rates, :dependent => :restrict
+  has_many :esi_group_rates, :dependent => :restrict
+
   regex_for_date = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(-|\/|\\)(19|20)\d\d/i
 
   validates :month_name,   :presence   => true,
