@@ -5,7 +5,7 @@ class EmployeeDetail < ActiveRecord::Base
 
   attr_accessor :current_employee_id
 
-  serialize :classification,HstoreSerializer
+  serialize :classification, ActiveRecord::Coders::Hstore
   belongs_to :employee
   belongs_to :salary_group
   belongs_to :financial_institution

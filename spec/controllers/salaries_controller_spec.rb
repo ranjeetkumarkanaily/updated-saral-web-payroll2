@@ -64,6 +64,45 @@ describe SalariesController do
     end
   end
 
+  describe "POST save_every_month_comp" do
+    it "Count should be increases by one" do
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group = FactoryGirl.create(:salary_group)
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      pf_group = FactoryGirl.create(:pf_group)
+      esi_group = FactoryGirl.create(:esi_group)
+      branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
+      paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>31,:from_date=> "2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")
+      employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:employee_id=>employee.id,:salary_group_id=>salary_group.id,:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id => salary_head.id,:calc_type=>"Every Month")
+      salary = FactoryGirl.build(:salary,:employee_id => employee.id,:employee_detail_id=>employee_detail.id,:salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id, :present_days=>24, :pay_days=>28)
+
+      expect {
+        post :save_every_month_comp, :salary => {"0"=>[salary.attributes]},:month_year=>'Feb/2011'
+      }.to change(EveryMonthCompValue, :count).by(1)
+    end
+
+    it "redirect to salary new page with selected paymonth and salary group" do
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group = FactoryGirl.create(:salary_group)
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      pf_group = FactoryGirl.create(:pf_group)
+      esi_group = FactoryGirl.create(:esi_group)
+      branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
+      paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>31,:from_date=> "2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")
+      employee = FactoryGirl.create(:employee)
+      employee_detail = FactoryGirl.create(:employee_detail,:employee_id=>employee.id,:salary_group_id=>salary_group.id,:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id => salary_head.id,:calc_type=>"Every Month")
+      salary = FactoryGirl.build(:salary,:employee_id => employee.id,:employee_detail_id=>employee_detail.id,:salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id, :present_days=>24, :pay_days=>28)
+
+      post :save_every_month_comp, :salary => {"0"=>[salary.attributes]},:month_year=>'Feb/2011',:salary_group=>salary_group.id
+      response.should redirect_to  new_salary_path(:month_year=>paymonth.month_name,:salary_group=>salary_group.id)
+    end
+  end
+
   describe "GET new" do
     it "assigns a requested SalaryAllotment as @SalaryAllotment with leave taken" do
       paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>28,:from_date=>"2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")

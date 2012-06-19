@@ -31,6 +31,8 @@ describe Employee do
 
   it { should have_many(:leave_takens)}
 
+  it { should have_many(:every_month_comp_values)}
+
   it "should require a name" do
     no_name_employee = Employee.new(@attr.merge(:empname => ""))
     no_name_employee.should_not be_valid

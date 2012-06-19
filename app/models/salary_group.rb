@@ -4,6 +4,7 @@ class SalaryGroup < ActiveRecord::Base
 
   has_many :salary_group_details, :dependent => :restrict
   has_many :employee_details, :dependent => :restrict
+  has_many :every_month_comp_values
 
   validates :salary_group_name,
                   :presence => true,
