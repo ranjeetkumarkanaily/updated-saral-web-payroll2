@@ -33,7 +33,7 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    #config.use_transactional_fixtures = true
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
@@ -42,7 +42,7 @@ Spork.prefork do
 
     # for database cleaner -- start --
     config.before(:suite) do
-      DatabaseCleaner.strategy = :truncation, {:except => %w[salary_heads leave_opening_balance]}
+      DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
     end
 
@@ -51,7 +51,7 @@ Spork.prefork do
     end
 
     config.after(:each) do
-      #DatabaseCleaner.clean
+      DatabaseCleaner.clean
     end
 
     # for database cleaner -- end --
