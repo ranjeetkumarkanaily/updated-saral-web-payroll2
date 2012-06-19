@@ -32,15 +32,15 @@ $(document).ready(function(){
       var date_format=this.value;
       if(date_format==="Y-m-d")
       {
-      $("#date_format_example").html("\"Display as: 2012-08-25\"");
+      $("#date_format_example").html("\"Display as: 2012-01-25\"");
       }
       if(date_format==="d/m/Y")
       {
-      $("#date_format_example").html("\"Display as: 25/08/2012\"");
+      $("#date_format_example").html("\"Display as: 25/01/2012\"");
       }
       if(date_format==="d-m-Y")
       {
-      $("#date_format_example").html("\"Display as: 25-08-2012\"");
+      $("#date_format_example").html("\"Display as: 25-01-2012\"");
       }
       if(date_format==="M/d/Y")
       {
@@ -52,7 +52,7 @@ $(document).ready(function(){
       }
       if(date_format==="Y/m/d")
       {
-      $("#date_format_example").html("\"Display as: 2012/08/20\"");
+      $("#date_format_example").html("\"Display as: 2012/01/25\"");
       }
       if(date_format==="d/M/Y")
       {

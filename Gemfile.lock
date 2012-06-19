@@ -14,7 +14,6 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.1.3)
-    active_record_hstore_serializer (0.0.4)
     activemodel (3.2.6)
       activesupport (= 3.2.6)
       builder (~> 3.0.0)
@@ -99,9 +98,9 @@ GEM
     guard-bundler (1.0.0)
       bundler (~> 1.0)
       guard (~> 1.1)
-    guard-rspec (1.0.1)
+    guard-rspec (1.1.0)
       guard (>= 1.1)
-    guard-spork (1.0.0)
+    guard-spork (1.0.1)
       guard (>= 1.0.0)
       spork (>= 0.8.4)
     haml (3.1.6)
@@ -131,7 +130,7 @@ GEM
       subexec (~> 0.2.1)
     multi_json (1.3.6)
     nokogiri (1.5.4)
-    paperclip (3.0.4)
+    paperclip (3.1.1)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -196,7 +195,7 @@ GEM
     ruby-ole (1.2.11.3)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
-    rubyzip (0.9.8)
+    rubyzip (0.9.9)
     sass (3.1.19)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -243,7 +242,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_record_hstore_serializer
   activerecord-postgres-hstore
   acts_as_audited
   breadcrumbs_on_rails

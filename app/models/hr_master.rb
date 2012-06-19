@@ -2,7 +2,7 @@ class HrMaster < ActiveRecord::Base
   attr_accessible :hr_category_id, :employee_id, :category_values
   acts_as_audited
 
-  serialize :category_values, HstoreSerializer
+  serialize :category_values, ActiveRecord::Coders::Hstore
   belongs_to :hr_category
   belongs_to :employee
 

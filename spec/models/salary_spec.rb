@@ -67,6 +67,45 @@ describe Salary do
       end
     end
 
+    describe "Save Every Month Component value" do
+      it "should save every month component value for salary and paymonth" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group = FactoryGirl.create(:salary_group)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        pf_group = FactoryGirl.create(:pf_group)
+        esi_group = FactoryGirl.create(:esi_group)
+        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
+        paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>31,:from_date=> "2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:employee_id=>employee.id,:salary_group_id=>salary_group.id,:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id => salary_head.id,:calc_type=>"Every Month")
+        salary = FactoryGirl.create(:salary,:employee_id => employee.id,:employee_detail_id=>employee_detail.id,:salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id, :present_days=>24, :pay_days=>28)
+        salary_send = {"0"=>[salary]}
+        salary_save = Salary.save_component_value salary_send, paymonth.month_name
+        salary_save.count.should eq(1)
+      end
+
+      it "should update every month component value for salary and paymonth" do
+        salary_head = FactoryGirl.create(:salary_head)
+        salary_group = FactoryGirl.create(:salary_group)
+        attendance_configuration = FactoryGirl.create(:attendance_configuration)
+        financial_institution = FactoryGirl.create(:financial_institution)
+        pf_group = FactoryGirl.create(:pf_group)
+        esi_group = FactoryGirl.create(:esi_group)
+        branch = FactoryGirl.create(:branch,:pf_group_id => pf_group.id, :esi_group_id => esi_group.id)
+        paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>31,:from_date=> "2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")
+        employee = FactoryGirl.create(:employee)
+        employee_detail = FactoryGirl.create(:employee_detail,:employee_id=>employee.id,:salary_group_id=>salary_group.id,:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id)
+        salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id => salary_head.id,:calc_type=>"Every Month")
+        every_month_comp_value = EveryMonthCompValue.create(:paymonth_id=>paymonth.id,:employee_id=>employee.id,:salary_group_id=>salary_group.id,:salary_amount=>{salary_head.id=>1000})
+        salary = FactoryGirl.create(:salary,:employee_id => employee.id,:employee_detail_id=>employee_detail.id,:salary_head_id => salary_head.id, :salary_group_detail_id => salary_group_detail.id, :present_days=>24, :pay_days=>28)
+        salary_send = {"0"=>[salary]}
+        salary_save = Salary.save_component_value salary_send, paymonth.month_name
+        salary_save.should be_true
+      end
+    end
+
     describe "find salary calculation days" do
       it "should give pay days as 28" do
         salary_head = FactoryGirl.create(:salary_head)

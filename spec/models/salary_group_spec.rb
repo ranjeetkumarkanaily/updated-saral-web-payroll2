@@ -10,6 +10,10 @@ describe SalaryGroup do
   end
   it { should have_many(:salary_group_details)}
 
+  it { should have_many(:employee_details)}
+
+  it { should have_many(:every_month_comp_values)}
+
   it "should require a salary group name" do
     no_grp_name = SalaryGroup.new(@attr.merge(:salary_group_name => ""))
     no_grp_name.should_not be_valid

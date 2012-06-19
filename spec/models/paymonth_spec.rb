@@ -17,6 +17,10 @@ describe Paymonth do
 
   it { should have_many(:pt_group_rates)}
 
+  it { should have_many(:esi_group_rates)}
+
+  it { should have_many(:every_month_comp_values)}
+
   it "should require a month_name" do
     no_name_month = Paymonth.new(@attr.merge(:month_name => ""))
     no_name_month.should_not be_valid

@@ -340,10 +340,8 @@ class Salary < ActiveRecord::Base
         salary[1].each do |sal|
           @salary_amount[sal["salary_head_id"]] = sal["salary_amount"]
         end
-        #currentDate = Time.now
-        #EveryMonthCompValue.connection.execute("INSERT INTO every_month_comp_values (employee_id, paymonth_id, salary_amount, salary_group_id, created_at, updated_at) VALUES ('#{salary[1][0]["employee_id"]}','#{pay_month_id}','#{@salary_amount}','#{salary_group_id}','#{currentDate}','#{currentDate}')")
 
-        #EveryMonthCompValue.create :paymonth_id => pay_month_id, :employee_id => salary[1][0]["employee_id"], :salary_group_id => salary_group_id, :salary_amount => @salary_amount
+        EveryMonthCompValue.create :paymonth_id => pay_month_id, :employee_id => salary[1][0]["employee_id"], :salary_group_id => salary_group_id, :salary_amount => @salary_amount
       else
         salary[1].each do |sal|
           EveryMonthCompValue.connection.execute("UPDATE every_month_comp_values SET salary_amount = salary_amount || ('#{sal["salary_head_id"]}' => '#{sal["salary_amount"]}') where employee_id = '#{salary[1][0]["employee_id"]}' and paymonth_id = '#{pay_month_id}' and salary_group_id = '#{salary_group_id}'")
