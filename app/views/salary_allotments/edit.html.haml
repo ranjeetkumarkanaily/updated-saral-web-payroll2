@@ -35,6 +35,9 @@
         = form_tag salary_allotments_path, :method => :put do
           %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
             %tr
+              %td Effective Form
+              %td= select_tag "month_year", options_from_collection_for_select(Paymonth.months,'month_name','month_name', params[:month_year]),:prompt => 'Select Pay Month',:onchange=>"hide_editor()"
+            %tr
               %td.table_grid_header{:style=>"width:180px"} Salary Heads
               %td.table_grid_header{:style=>"width:180px"} Short Name
               %td.table_grid_header{:style=>"width:180px"} Salary Head Type
