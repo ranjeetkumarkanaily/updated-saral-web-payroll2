@@ -7,7 +7,7 @@ describe UserMailer do
   include Rails.application.routes.url_helpers
 
 
-  before(:all) do
+  before(:each) do
     @user_detail =FactoryGirl.create(:employee)
     @company= FactoryGirl.create(:company,:photo => Rails.root.join("spec/factories/icon_a.png").open)
     paymonth = FactoryGirl.create(:paymonth, :month_year =>24134, :number_of_days => 28, :from_date =>"2011-02-01",:to_date => "2011-02-28", :month_name => "Feb/2011")
