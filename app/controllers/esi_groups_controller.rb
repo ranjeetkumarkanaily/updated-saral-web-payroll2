@@ -51,12 +51,20 @@ class EsiGroupsController < ApplicationController
   end
 
   def destroy
-    @esi_group.destroy
 
-    respond_to do |format|
-      format.html { redirect_to esi_groups_url }
-      format.json { head :ok }
+    begin
+      @esi_group.destroy
+      flash[:success] = "Successfully detroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @esi_group.errors.add(:base, e)
+      flash[:error] = "Selected ESI Group is assigned to Branch. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to esi_groups_url }
+        format.json { head :ok }
+      end
     end
+
   end
 
   protected

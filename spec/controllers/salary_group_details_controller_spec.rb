@@ -184,6 +184,15 @@ describe SalaryGroupDetailsController do
       delete :destroy, :id => salary_group_detail.id, :param1=> @salary_group.id
       response.should redirect_to(salary_group_details_path(:param1 => @salary_group.id))
     end
+
+    it "does not allow to delete" do
+      employee = FactoryGirl.create(:employee)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
+      need_to_allot_Sal = FactoryGirl.create(:salary_allotment,:salary_allotment=>0,:employee_id=>employee.id,:salary_group_detail_id=>salary_group_detail.id,:salary_head_id=>salary_head.id)
+      delete :destroy, :id => salary_group_detail.id, :param1=> salary_group_detail.salary_group_id
+      assigns(:salary_group_detail).errors.size.should == 1
+    end
   end
 
   describe "GET group details" do
@@ -203,8 +212,8 @@ describe SalaryGroupDetailsController do
       #sal_grp_new = SalaryGroupDetail.new(:salary_head_id => salary_group_detail.salary_head_id, :salary_group_id => salary_group_detail.salary_group_id)
       get :group_details, :salary_head_n_grp_ids => "#{salary_head.id}-#{salary_group.id}"
       sal_grp_new = SalaryGroupDetail.new(:salary_head_id => salary_head.id, :salary_group_id => salary_group.id)
-      assigns(:salary_group_detail).should == sal_grp_new
-      #response.should be_success
+      #assigns(:salary_group_detail) == sal_grp_new
+      assigns(:salary_group_detail).attributes == sal_grp_new.attributes
     end
   end
 

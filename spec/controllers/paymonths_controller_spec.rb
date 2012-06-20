@@ -118,6 +118,12 @@ describe PaymonthsController do
       response.should redirect_to(paymonths_url)
     end
 
+    it "does not allow to delete" do
+      pf_group_rate = FactoryGirl.create(:pf_group_rate)
+      delete :destroy, :id => pf_group_rate.paymonth_id
+      assigns(:paymonth).errors.size.should == 1
+    end
+
   end
 
 end

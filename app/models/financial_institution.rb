@@ -6,7 +6,7 @@ class FinancialInstitution < ActiveRecord::Base
             :uniqueness => { :case_sensitive => false }
   validates :pincode, :numericality => true
 
-  has_many :employee_details
+  has_many :employee_details, :dependent => :restrict
 
   scope :financial_institutions, :order => 'created_at ASC'
 end

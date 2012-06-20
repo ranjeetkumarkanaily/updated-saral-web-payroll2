@@ -6,6 +6,8 @@ class Branch < ActiveRecord::Base
   has_many :pt_details, :dependent => :destroy
   has_many :esi_details, :dependent => :destroy
 
+  has_many :employee_details, :dependent => :restrict
+
   validates :branch_name, :presence => true
   validates :responsible_person, :presence => true
   validates :address, :presence => true

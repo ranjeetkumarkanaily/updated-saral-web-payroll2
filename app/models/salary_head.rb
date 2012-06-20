@@ -2,7 +2,7 @@ class SalaryHead < ActiveRecord::Base
   attr_accessible :head_name, :short_name, :salary_type
   acts_as_audited
 
-  has_many :salary_group_details
+  has_many :salary_group_details, :dependent => :restrict
   has_many :salaries
   has_many :salary_allotments
 

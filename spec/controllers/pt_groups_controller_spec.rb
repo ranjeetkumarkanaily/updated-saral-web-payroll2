@@ -145,6 +145,13 @@ describe PtGroupsController do
       delete :destroy, {:id => pt_group.to_param}, valid_session
       response.should redirect_to(pt_groups_url)
     end
+
+    it "does not allow to delete" do
+      pt_grp = FactoryGirl.create(:pt_group)
+      banch = FactoryGirl.create(:branch, :pt_group_id => pt_grp.id)
+      delete :destroy, :id => pt_grp.id
+      assigns(:pt_group).errors.size.should == 1
+    end
   end
 
 end

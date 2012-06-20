@@ -58,12 +58,20 @@ class FinancialInstitutionsController < ApplicationController
   end
 
   def destroy
-    @financial_institution.destroy
 
-    respond_to do |format|
-      format.html { redirect_to financial_institutions_url }
-      format.json { head :ok }
+    begin
+      @financial_institution.destroy
+      flash[:notice] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @financial_institution.errors.add(:base, e)
+      flash[:error] = "Selected Financial Institution is assigned. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to financial_institutions_url }
+        format.json { head :ok }
+      end
     end
+
   end
 
   protected

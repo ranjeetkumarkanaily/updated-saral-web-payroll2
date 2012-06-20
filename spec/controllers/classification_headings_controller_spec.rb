@@ -124,6 +124,13 @@ describe ClassificationHeadingsController do
       delete :destroy, {:id => classification_heading.to_param}
       response.should redirect_to(classification_headings_url)
     end
+
+    it "does not allow to delete" do
+      clasficn_hd = FactoryGirl.create(:classification_heading)
+      classification = FactoryGirl.create(:classification, :classification_heading_id => clasficn_hd.id, :classification_name => "development")
+      delete :destroy, :id =>clasficn_hd.id
+      assigns(:classification_heading).errors.size.should == 1
+    end
   end
 
 end

@@ -79,7 +79,7 @@ class SalaryGroupDetailsController < ApplicationController
     param1 = @salary_group_detail.salary_group_id
     begin
       @salary_group_detail.destroy
-      flash[:success] = "Successfully destroyed."
+      flash[:success] = "Successfully detroyed."
     rescue ActiveRecord::DeleteRestrictionError => e
       @salary_group_detail.errors.add(:base, e)
       flash[:error] = "Selected head is already assigned to employee. Not allow to delete."

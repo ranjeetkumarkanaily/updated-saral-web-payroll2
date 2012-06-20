@@ -127,6 +127,13 @@ describe EsiGroupsController do
       delete :destroy, {:id => esi_group.to_param}
       response.should redirect_to(esi_groups_url)
     end
+
+    it "does not allow to delete" do
+      esi_grp = FactoryGirl.create(:esi_group)
+      banch = FactoryGirl.create(:branch, :esi_group_id => esi_grp.id)
+      delete :destroy, :id => esi_grp.id
+      assigns(:esi_group).errors.size.should == 1
+    end
   end
 
 end

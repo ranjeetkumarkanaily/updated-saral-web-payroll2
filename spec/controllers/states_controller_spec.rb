@@ -128,6 +128,13 @@ describe StatesController do
       delete :destroy, :id => state.id
       response.should redirect_to(states_url)
     end
+
+    it "does not allow to delete" do
+      state = State.create! valid_attributes
+      employee = FactoryGirl.create(:employee, :present_state_id => state.id)
+      delete :destroy, :id => state.id
+      assigns(:state).errors.size.should == 1
+    end
   end
 
 end

@@ -6,7 +6,7 @@ class Paymonth < ActiveRecord::Base
   has_many :pf_group_rates, :dependent => :restrict
   has_many :pt_group_rates, :dependent => :restrict
   has_many :esi_group_rates, :dependent => :restrict
-  has_many :every_month_comp_values
+  has_many :every_month_comp_values, :dependent => :restrict
 
   regex_for_date = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(-|\/|\\)(19|20)\d\d/i
 

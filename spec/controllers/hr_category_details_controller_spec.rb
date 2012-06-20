@@ -132,6 +132,13 @@ describe HrCategoryDetailsController do
       delete :destroy, :id => category_detail.id
       response.should redirect_to(hr_category_details_url(:param1 => hr_cat_det_id))
     end
+
+    it "gives error 'Category Value is being used. Not allow to delete.' " do
+      hr_cat_det = FactoryGirl.create(:hr_category_detail, :hr_category_id => @hr_category.id)
+      hr_master = FactoryGirl.create(:hr_master, :hr_category_id => @hr_category.id)
+      delete :destroy, :id => hr_cat_det.id
+      response.should redirect_to(hr_category_details_url(:param1 => @hr_category.id))
+    end
   end
 
 end
