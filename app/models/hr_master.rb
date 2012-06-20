@@ -12,16 +12,20 @@ class HrMaster < ActiveRecord::Base
   delegate :category_name, :to => :hr_category, :prefix => true
 
   def validates_presence
-    required_fields = HrCategoryDetail.select("name").where("required = 't' and hr_category_id = ?", hr_category_id)
+    required_fields = HrCategoryDetail.select("id,name").where("required = 't' and hr_category_id = ?", hr_category_id)
     required_fields.each do |field|
-      if validate field.name
-        errors.add(:hr_master, "category values for \"#{field.name}\" is required")
+      if validate field.id
+        self.errors.add(:hr_master, "category values for \"#{field.name}\" is required")
       end
     end
   end
 
-  def validate name
-    self["category_values"]["#{name}"].blank?
+  def validate id
+    self["category_values"]["#{id}"].blank?
+  end
+
+  def category_name id,category_id
+    HrCategoryDetail.find_by_id_and_hr_category_id(id,category_id).name
   end
 
 end

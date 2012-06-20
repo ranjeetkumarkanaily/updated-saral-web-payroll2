@@ -18,7 +18,7 @@
           %tr
             - if !@hr_masters.empty?
               - @hr_masters[0].category_values.keys.each do |key|
-                %td.table_grid_header= key
+                %td.table_grid_header= @hr_master.category_name key,@hr_category.id
               %td.table_grid_header{:colspan => 2}= "Operations"
               - @hr_masters.each do |hr_master|
                 %tr{:class => "#{cycle('table_grid_odd_row', 'table_grid_even_row')}"}
@@ -42,7 +42,7 @@
                   - @hr_category_details.each do |hr_category_detail|
                     %tr
                       %td= hr_category_detail.name
-                      %td= text_field_tag "hr_master[category_values][#{hr_category_detail.name}]"
+                      %td= text_field_tag "hr_master[category_values][#{hr_category_detail.id}]"
                   %tr
                     %td &nbsp;
                   %tr

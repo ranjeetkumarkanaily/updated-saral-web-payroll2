@@ -212,7 +212,7 @@ FactoryGirl.define do
   factory :hr_master do
     hr_category
     employee
-    category_values {'Name => Kanaily'}
+    category_values {'1=>Kanaily'}
   end
 
   factory :pf_group_rate do
