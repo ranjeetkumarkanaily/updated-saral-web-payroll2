@@ -13,10 +13,18 @@ class SalaryAllotmentsController < ApplicationController
 
   def edit
     @param_selected_tab = params[:param1]
+    if params[:month_year]
+      @allotSal_earnings = SalaryAllotment.row_for_salary_allotment params[:id], "Earnings", params[:month_year]
+      @allotSal_deductions = SalaryAllotment.row_for_salary_allotment params[:id], "Deductions", params[:month_year]
+    else
+      @allotSal_earnings = SalaryAllotment.row_for_salary_allotment params[:id], "Earnings"
+      @allotSal_deductions = SalaryAllotment.row_for_salary_allotment params[:id], "Deductions"
+    end
 
-    @allotSal_earnings = SalaryAllotment.row_for_salary_allotment params[:id], "Earnings"
-    @allotSal_deductions = SalaryAllotment.row_for_salary_allotment params[:id], "Deductions"
+
     @emp_name = Employee.find(params[:id]).empname
+    date_val = @allotSal_earnings[0][:effective_date]
+    @effective_date = date_val.strftime("%b/%Y")
   end
 
   def update

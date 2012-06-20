@@ -53,7 +53,11 @@ class SalaryAllotment < ActiveRecord::Base
     SalaryAllotment.joins(:salary_group_detail).select("salary_allotments.id, employee_id, employee_detail_id,date_trunc('month', date('#{month_year.year}-#{month_year.month}-01')) as effective_date, salary_allotments.salary_head_id, salary_allotment, salary_group_detail_id").where("employee_id = #{employee_id} and to_date(effective_month,'Mon/YYYY') <= '#{month_year.beginning_of_month}' #{condition} and salary_allotments.effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order("salary_allotments.salary_head_id ASC")
   end
 
-  def self.row_for_salary_allotment employee_id, salary_type
+  def self.row_for_salary_allotment employee_id, salary_type, pay_month=""
+    if pay_month != ""
+      month_year = Date.strptime pay_month, '%b/%Y'
+    end
+
     SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
   end
 
