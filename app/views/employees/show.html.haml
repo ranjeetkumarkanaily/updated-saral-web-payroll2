@@ -165,7 +165,7 @@
                               %td Probation completion Date:&nbsp;
                               %td
                                 - if @employee.probation_complete_date?
-                                  = l @employee.probation_complete_date, :format => OptionSetting.date_format_type("",1)
+                                  = l @employee.probation_complete_date, :format => OptionSetting.date_format_type("",2)
                                 - else
                                   = ""
                             %tr
@@ -199,7 +199,7 @@
                               %td Date of Leaving:&nbsp;
                               %td
                                 - if @employee.date_of_leaving != nil
-                                  = l @employee.date_of_leaving, :format => :default
+                                  = l @employee.date_of_leaving, :format => OptionSetting.date_format_type("",2)
                                 - else
                                   = ""
                             %tr

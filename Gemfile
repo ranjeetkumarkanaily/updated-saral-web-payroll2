@@ -52,7 +52,7 @@ gem 'wicked_pdf'
 gem 'breadcrumbs_on_rails'
 gem "acts_as_audited"
 gem 'rails_best_practices'
-#gem "thin"
+gem "thin"
 gem 'launchy'
 #gem 'heroku'
 # Use unicorn as the web server

@@ -190,7 +190,7 @@
                               - if employee.date_of_leaving?
                                 %td= f.text_field :date_of_leaving, :id=>"dol", :value => OptionSetting.date_format_type(employee.date_of_leaving,1), :class=>"date_input1", :include_blank => true,  :start_year => 2000, :end_year => 2014
                               - else
-                              %td= f.text_field :date_of_leaving, :id=>"dol", :class=>"date_input1", :include_blank => true,  :start_year => 2000, :end_year => 2014
+                                %td= f.text_field :date_of_leaving, :id=>"dol", :class=>"date_input1", :include_blank => true,  :start_year => 2000, :end_year => 2014
                             %tr
                               %td Date of Retirement:&nbsp;
                               - if employee.retirement_date?

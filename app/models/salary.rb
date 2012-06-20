@@ -163,7 +163,7 @@ class Salary < ActiveRecord::Base
 
   def self.employee_salary_detail pay_month, salary_group_id
     month_year = Date.strptime pay_month, '%b/%Y'
-    valid_employee = Employee.select('DISTINCT(employees.id),employees.created_at,refno, empname').joins("INNER JOIN salaries ON employees.id = salaries.employee_id INNER JOIN salary_group_details ON salaries.salary_group_detail_id = salary_group_details.id INNER JOIN salary_groups ON salary_group_details.salary_group_id = salary_groups.id").where("date_of_leaving IS NULL and salary_groups.id = ? and salaries.effective_date = '#{month_year.beginning_of_month}'", salary_group_id).order("employees.created_at ASC")
+    valid_employee = Employee.select('DISTINCT(employees.id),employees.created_at,refno, empname').joins("INNER JOIN salaries ON employees.id = salaries.employee_id INNER JOIN salary_group_details ON salaries.salary_group_detail_id = salary_group_details.id INNER JOIN salary_groups ON salary_group_details.salary_group_id = salary_groups.id").where("(date_of_leaving IS NULL OR extract(month from date_of_leaving) = #{month_year.month} and extract(year from date_of_leaving) = #{month_year.year}) and salary_groups.id = ? and salaries.effective_date = '#{month_year.beginning_of_month}'", salary_group_id).order("employees.created_at ASC")
 
     if valid_employee.empty?
       employee_salary_det = []
@@ -215,7 +215,7 @@ class Salary < ActiveRecord::Base
     if chk_salary_group_exist.empty?
       employee_salary_calc = []
     else
-      valid_employee = Employee.select('employees.id,refno, empname').joins("INNER JOIN employee_details ON employees.id = employee_details.employee_id INNER JOIN salary_groups ON employee_details.salary_group_id = salary_groups.id").where("date_of_leaving IS NULL and salary_groups.id = ? and (effective_to IS NULL OR effective_to = '#{month_year.end_of_month}')", salary_group_id)
+      valid_employee = Employee.select('employees.id,refno, empname,date_of_joining,date_of_leaving').joins("INNER JOIN employee_details ON employees.id = employee_details.employee_id INNER JOIN salary_groups ON employee_details.salary_group_id = salary_groups.id").where("(date_of_leaving IS NULL OR extract(month from date_of_leaving) = #{month_year.month} and extract(year from date_of_leaving) = #{month_year.year}) and salary_groups.id = ? and (effective_to IS NULL OR effective_to = '#{month_year.end_of_month}')", salary_group_id)
 
       employee_salary_calc = []
       i=0
@@ -239,14 +239,18 @@ class Salary < ActiveRecord::Base
           end
         end
 
-        total_no_of_days = month_year.end_of_month.day
+        employee_doj = employee.date_of_joining
+        employee_dol = employee.date_of_leaving
+
+        actual_no_of_days = get_actual_days employee_doj, employee_dol, month_year
+
         leave_taken = LeaveTaken.select('sum(leave_count) as leave_count, sum(lop_count) as lop_count').where("leave_detail_date = '#{month_year.beginning_of_month}' AND employee_id = #{employee.id}")
         if leave_taken.count != 0
-          pay_days = total_no_of_days - leave_taken[0][:lop_count]
-          present_days = total_no_of_days - (leave_taken[0][:lop_count]+leave_taken[0][:leave_count])
+          pay_days = actual_no_of_days - leave_taken[0][:lop_count]
+          present_days = actual_no_of_days - (leave_taken[0][:lop_count]+leave_taken[0][:leave_count])
         else
-          pay_days = total_no_of_days
-          present_days = total_no_of_days
+          pay_days = actual_no_of_days
+          present_days = actual_no_of_days
         end
 
         employee_salary_calc[i] = {:id=>employee.id,:refno=>employee.refno,:empname=>employee.empname,:present_days=>present_days,:pay_days=>pay_days,:salary_allotment=>salary_allotments}
@@ -257,9 +261,20 @@ class Salary < ActiveRecord::Base
     employee_salary_calc
   end
 
+  def self.get_actual_days doj, dol, month_year
+    join_from = (doj.month == month_year.month && doj.year == month_year.year)?(doj.day):0
+    if dol.nil?
+      actual_days = (month_year.end_of_month.day)-join_from
+    else
+      left_from = (dol.month == month_year.month && dol.year == month_year.year)?(dol.day):0
+      actual_days = left_from-join_from
+    end
+    actual_days
+  end
+
   def self.emp_salary_calc_header salary_group_id, pay_month
     month_year = Date.strptime pay_month, '%b/%Y'
-    SalaryHead.select('head_name').joins(:salary_group_details).where("salary_group_id = ? and calc_type = 'Every Month' and to_date(effective_month,'Mon/YYYY') <= '#{month_year.beginning_of_month}'",salary_group_id).order("salary_heads.created_at ASC")
+    SalaryHead.select('DISTINCT(head_name),salary_heads.created_at').joins(:salary_group_details).where("salary_group_id = ? and calc_type = 'Every Month' and to_date(effective_month,'Mon/YYYY') <= '#{month_year.beginning_of_month}'",salary_group_id).order("salary_heads.created_at ASC")
   end
 
   def self.calculate_salary salaries, pay_month
@@ -273,13 +288,6 @@ class Salary < ActiveRecord::Base
       no_of_day_in_selected_month = no_of_day_in_selected_month[0]['number_of_days'].to_i
       no_of_present_days = salary[1][0]["present_days"]
       no_of_pay_days = salary[1][0]["pay_days"]
-      employee_dol = Employee.chk_dol salary[1][0]['employee_id']
-      #if employee_dol
-      #  no_of_day_if_dol_exist = employee_dol.day
-      #  @no_of_present_days = no_of_day_if_dol_exist - leave_count
-      #else
-      #  @no_of_present_days = no_of_day_in_selected_month - leave_count
-      #end
 
       ######## Salary calculation with heads which are NOT Every Month components ##########
       allotted_salaries = SalaryAllotment.get_allotted_salaries pay_month, salary[1][0]["employee_id"]
