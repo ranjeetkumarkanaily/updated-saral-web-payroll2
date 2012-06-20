@@ -262,7 +262,7 @@ class Salary < ActiveRecord::Base
   end
 
   def self.get_actual_days doj, dol, month_year
-    join_from = (doj.month == month_year.month && doj.year == month_year.year)?(doj.day):0
+    join_from = (doj.month == month_year.month && doj.year == month_year.year)?(doj.day)-1:0
     if dol.nil?
       actual_days = (month_year.end_of_month.day)-join_from
     else

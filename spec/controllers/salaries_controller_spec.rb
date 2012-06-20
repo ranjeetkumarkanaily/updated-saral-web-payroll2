@@ -122,6 +122,24 @@ describe SalariesController do
       assigns(:employee_salary_calc).should eq([sal_allotment])
     end
 
+    it "assigns a requested SalaryAllotment as @SalaryAllotment with leave taken" do
+      paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>28,:from_date=>"2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")
+      employee = FactoryGirl.create(:employee,:date_of_leaving=>"2011-02-15",:leaving_reason=>"Left Service")
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      branch = FactoryGirl.create(:branch)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      salary_group = FactoryGirl.create(:salary_group)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id=>salary_head.id,:calc_type=>"Every Month")
+      employee_details = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :effective_date=>'2011-02-01',:attendance_configuration_id=>attendance_configuration.id,:branch_id=>branch.id, :financial_institution_id=>financial_institution.id, :salary_group_id=>salary_group.id)
+      leave_taken = FactoryGirl.create(:leave_taken, :employee_id=>employee.id, :leave_detail_date=>"2011-02-01")
+      sal_allot = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id, :employee_id => employee.id,:salary_head_id=>salary_head.id)
+
+      get :new, :month_year => "Feb/2011", :salary_group=> salary_group.id
+      sal_allotment = {"id"=>employee.id,"refno"=>employee.refno.to_s,"empname"=>employee.empname,"salary_allotment"=>[sal_allot],"pay_days"=>13,"present_days"=>11}
+      assigns(:employee_salary_calc).should eq([sal_allotment])
+    end
+
     it "assigns empty @SalaryAllotment with leave taken" do
       paymonth = FactoryGirl.create(:paymonth,:month_year=>24134,:number_of_days=>28,:from_date=>"2011-02-01",:to_date=>"2011-02-28",:month_name=>"Feb/2011")
       employee = FactoryGirl.create(:employee)
