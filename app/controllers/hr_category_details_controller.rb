@@ -56,7 +56,7 @@ class HrCategoryDetailsController < ApplicationController
 
   def destroy
     hr_cat_det_id = @hr_category_detail.hr_category_id
-    if HrMaster.where("category_values -> '#{@hr_category_detail.name}' != ''").empty?
+    if HrMaster.where("category_values -> '#{@hr_category_detail.id}' != ''").empty?
       @hr_category_detail.destroy
       flash[:notice] = "Successfully destroyed."
     else
