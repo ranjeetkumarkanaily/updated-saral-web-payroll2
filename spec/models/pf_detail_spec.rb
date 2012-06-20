@@ -14,8 +14,8 @@ describe PfDetail do
     end
 
     it "return effective to " do
-      pf_grp = FactoryGirl.create(:pf_group, :id => 3, :pf_number => "DL12345", :pf_group => "Delhi")
-      pf_grp1 = FactoryGirl.create(:pf_group, :id => 4, :pf_number => "DL12346", :pf_group => "Karnataka")
+      pf_grp = FactoryGirl.create(:pf_group,:pf_number => "DL12345", :pf_group => "Delhi")
+      pf_grp1 = FactoryGirl.create(:pf_group, :pf_number => "DL12347", :pf_group => "Karnataka")
       pf_det = PfDetail.create(:branch_id => @pf_detail.branch_id, :pf_group_id => pf_grp.id, :pf_effective_date => "2012-05-01")
       pf_det1 = PfDetail.create(:branch_id => @pf_detail.branch_id, :pf_group_id => pf_grp1.id, :pf_effective_date => "2012-05-12")
       pf_det.effective_to.should eq('2012-05-11')

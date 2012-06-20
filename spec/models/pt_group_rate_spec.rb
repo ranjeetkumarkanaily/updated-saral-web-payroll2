@@ -29,6 +29,7 @@ describe PtGroupRate do
     pt_group_rate = PtGroupRate.new(:pt_group_id => @pt_group.id,:paymonth_id => @paymonth.id)
     pt_group_rate.save
     pt_group_rate.create_pt_slabs
+
   end
 
 end
