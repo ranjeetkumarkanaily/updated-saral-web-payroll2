@@ -4,6 +4,7 @@
 
   belongs_to :pf_group
   belongs_to :paymonth
+
   delegate :month_name, :to => :paymonth, :prefix => true
 
   validates :account_number_21 , :numericality => {:less_than_or_equal_to => 100}
@@ -16,7 +17,9 @@
 
   validates :epf , :numericality => {:less_than_or_equal_to => 100}
 
-  validates :paymonth_id, :presence => true, :uniqueness => true
+  validates_uniqueness_of :paymonth_id, :scope => [:pf_group_id]
+
+  validates :paymonth_id, :presence => true
 
   def to_date
     next_row = next_row_on_pf_group_id

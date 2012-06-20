@@ -134,5 +134,11 @@ describe HrCategoriesController do
       delete :destroy, {:id => category.to_param}
       response.should redirect_to(hr_categories_url)
     end
+
+    it "does not allow to delete" do
+      hr_master = FactoryGirl.create(:hr_master)
+      delete :destroy, :id => hr_master.hr_category_id
+      assigns(:hr_category).errors.size.should == 1
+    end
   end
 end

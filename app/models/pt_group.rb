@@ -6,7 +6,7 @@ class PtGroup < ActiveRecord::Base
   validates_presence_of :state_id, :name, :address
   validates_uniqueness_of :name
   has_many :pt_rates
-  has_many :branches
+  has_many :branches, :dependent => :restrict
 
   has_many :pt_group_rates
   has_many :pt_details

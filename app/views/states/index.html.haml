@@ -12,7 +12,7 @@
           %tr
             %td{:colspan=>4}
               - flash.each do |name, msg|
-                = content_tag :div, msg, :id => "flash_#{name}"
+                = content_tag :div, msg, :id => "flash_#{name}", :style => "color:#e9322d"
           %tr
             %td.table_grid_header{:width=> 360} State Name
             %td.table_grid_header{:colspan =>3} Operations

@@ -51,11 +51,17 @@ class HrCategoriesController < ApplicationController
   end
 
   def destroy
-    @hr_category.destroy
-
-    respond_to do |format|
-      format.html { redirect_to hr_categories_url }
-      format.json { head :ok }
+    begin
+      @hr_category.destroy
+      flash[:notice] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @hr_category.errors.add(:base, e)
+      flash[:error] = "Selected HR Category is being used. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to hr_categories_url }
+        format.json { head :ok }
+      end
     end
   end
 

@@ -15,7 +15,7 @@ describe SalaryGroupsController do
   end
 
   after(:each) do
-    SalaryGroup.destroy_all
+    #SalaryGroup.destroy_all
   end
 
   describe "GET index" do
@@ -123,14 +123,14 @@ describe SalaryGroupsController do
   end
 
   describe "DELETE destroy" do
-    xit "destroys the requested salary_group" do
+    it "destroys the requested salary_group" do
       salary_group = SalaryGroup.create! valid_attributes
       expect {
         delete :destroy, :id => salary_group.id
       }.to change(SalaryGroup, :count).by(-1)
     end
 
-    xit "redirects to the salary_groups list" do
+    it "redirects to the salary_groups list" do
       salary_group = SalaryGroup.create! valid_attributes
       delete :destroy, :id => salary_group.id
       response.should redirect_to(salary_groups_url)
@@ -146,21 +146,8 @@ describe SalaryGroupsController do
       attn_config = FactoryGirl.create(:attendance_configuration)
       emp_det = FactoryGirl.create(:employee_detail, :employee_id => emp.id, :salary_group_id => salary_group.id, :branch_id => branch.id, :financial_institution_id => fin_inst.id, :attendance_configuration_id => attn_config.id)
 
-      #delete :destroy, :id => salary_group.id
-      #flash[:error].should == "Selected Salary Structure is already assigned to employee."
-      #response.should raise_error("Cannot delete record because of dependent salary_group_details")
-      #flash[:error].should eq("Selected Salary Structure is already assigned to employee.")
-      #raise ActiveRecord::DeleteRestrictionError
-      #response.should redirect_to(salary_groups_url)
-
-      expect {
-        delete :destroy, :id => salary_group.id
-      }.to raise_error(ActiveRecord::DeleteRestrictionError)
-      #.should raise_error(ActiveRecord::DeleteRestrictionError)
-      #expect
-      #{
-      #  delete :destroy, :id => salary_group.id
-      #}.should raise_error(ActiveRecord::DeleteRestrictionError ["Cannot delete record because of dependent salary_group_details"])
+      delete :destroy, :id => salary_group.id
+      assigns(:salary_group).errors.size.should == 1
     end
 
   end

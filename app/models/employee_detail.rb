@@ -6,9 +6,12 @@ class EmployeeDetail < ActiveRecord::Base
   attr_accessor :current_employee_id
 
   serialize :classification, ActiveRecord::Coders::Hstore
+
   belongs_to :employee
   belongs_to :salary_group
   belongs_to :financial_institution
+  belongs_to :branch
+
   has_many :salary_allotments, :dependent => :destroy
   has_many :salaries, :dependent => :destroy
   has_many :classification_headings

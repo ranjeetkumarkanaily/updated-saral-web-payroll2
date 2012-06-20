@@ -51,12 +51,19 @@ class AttendanceConfigurationsController < ApplicationController
   end
 
   def destroy
-    @attendance_configuration.destroy
-
-    respond_to do |format|
-      format.html { redirect_to attendance_configurations_url }
-      format.json { head :ok }
+    begin
+      @attendance_configuration.destroy
+      flash[:success] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @attendance_configuration.errors.add(:base, e)
+      flash[:error] = "Selected Attendance Configuration is being used. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to attendance_configurations_url }
+        format.json { head :ok }
+      end
     end
+
   end
 
   protected

@@ -53,11 +53,17 @@ class ClassificationHeadingsController < ApplicationController
   end
 
   def destroy
-    @classification_heading.destroy
-
-    respond_to do |format|
-      format.html { redirect_to classification_headings_url }
-      format.json { head :ok }
+    begin
+      @classification_heading.destroy
+      flash[:notice] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @classification_heading.errors.add(:base, e)
+      flash[:error] = "Classification is being used. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to classification_headings_url }
+        format.json { head :ok }
+      end
     end
   end
 

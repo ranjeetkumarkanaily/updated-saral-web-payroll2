@@ -131,6 +131,14 @@ describe SalaryHeadsController do
       delete :destroy, :id => salary_head.id
       response.should redirect_to(salary_heads_url)
     end
+
+    it "does not allow to delete" do
+      sal_grp = FactoryGirl.create(:salary_group)
+      sal_grp_det = FactoryGirl.create(:salary_group_detail, :salary_group_id => sal_grp.id)
+      delete :destroy, :id => sal_grp_det.salary_head_id
+      assigns(:salary_head).errors.size.should == 1
+    end
+
   end
 
 end

@@ -137,6 +137,20 @@ describe FinancialInstitutionsController do
       delete :destroy, {:id => financial_institution.to_param}
       response.should redirect_to(financial_institutions_url)
     end
+
+    it "does not allow to delete records" do
+      salary_group = FactoryGirl.create(:salary_group)
+      sal_head = FactoryGirl.create(:salary_head)
+      sal_grp_det = FactoryGirl.create(:salary_group_detail, :salary_group_id => salary_group.id, :salary_head_id => sal_head.id)
+      emp = FactoryGirl.create(:employee)
+      fin_inst = FactoryGirl.create(:financial_institution)
+      branch = FactoryGirl.create(:branch)
+      attn_config = FactoryGirl.create(:attendance_configuration)
+      emp_det = FactoryGirl.create(:employee_detail, :employee_id => emp.id, :salary_group_id => salary_group.id, :branch_id => branch.id, :financial_institution_id => fin_inst.id, :attendance_configuration_id => attn_config.id)
+
+      delete :destroy, :id => fin_inst.id
+      assigns(:financial_institution).errors.size.should == 1
+    end
   end
 
 end

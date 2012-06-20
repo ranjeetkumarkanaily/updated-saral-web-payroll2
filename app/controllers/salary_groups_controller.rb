@@ -54,8 +54,10 @@ class SalaryGroupsController < ApplicationController
     @salary_group = SalaryGroup.find(params[:id])
     begin
       @salary_group.destroy
+      flash[:notice] = "Successfully destroyed."
     rescue ActiveRecord::DeleteRestrictionError => e
-      flash[:error] = "Selected Salary Structure is already assigned to employee."
+      @salary_group.errors.add(:base, e)
+      flash[:error] = "Selected Salary Structure is already assigned to employee. Not allow to delete."
     ensure
       respond_to do |format|
         format.html { redirect_to salary_groups_url }

@@ -118,9 +118,10 @@ describe ClassificationsController do
 
   describe "DELETE destroy" do
     it "destroys the requested classification" do
-      classification = Classification.create! valid_attributes
+      clasficn_hd = FactoryGirl.create(:classification_heading)
+      classification = FactoryGirl.create(:classification, :classification_heading_id => clasficn_hd.id)
       expect {
-        delete :destroy, {:id => classification.to_param}
+        delete :destroy, {:id => classification.id}
       }.to change(Classification, :count).by(-1)
     end
 
@@ -129,6 +130,20 @@ describe ClassificationsController do
       classification = Classification.create! valid_attributes.merge(:classification_heading_id => classification_heading.id)
       delete :destroy, {:id => classification.to_param}
       response.should redirect_to(classifications_url(:params1 => classification_heading.id))
+    end
+
+    it "gives error 'Classification is being used. Not allow to delete.'" do
+      clasficn_hd = FactoryGirl.create(:classification_heading)
+      classification = FactoryGirl.create(:classification, :classification_heading_id => clasficn_hd.id, :classification_name => "development")
+      emp = FactoryGirl.create(:employee)
+      sal_grp = FactoryGirl.create(:salary_group)
+      brnc = FactoryGirl.create(:branch)
+      fin = FactoryGirl.create(:financial_institution)
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+
+      emp_dtl = FactoryGirl.create(:employee_detail, :employee_id => emp.id, :salary_group_id => sal_grp.id, :branch_id => brnc.id, :financial_institution_id => fin.id, :attendance_configuration_id => attendance_configuration.id)
+      delete :destroy, {:id => classification.id}
+      response.should redirect_to(classifications_url(:params1 => clasficn_hd.id))
     end
   end
 

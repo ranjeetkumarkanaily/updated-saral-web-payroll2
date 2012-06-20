@@ -130,6 +130,13 @@ describe PfGroupsController do
       delete :destroy, {:id => pf_group.to_param}
       response.should redirect_to(pf_groups_url)
     end
+
+    it "does not allow to delete" do
+      pf_grp = FactoryGirl.create(:pf_group)
+      banch = FactoryGirl.create(:branch, :pf_group_id => pf_grp.id)
+      delete :destroy, :id => pf_grp.id
+      assigns(:pf_group).errors.size.should == 1
+    end
   end
 
 end

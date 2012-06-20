@@ -13,6 +13,10 @@
       %td.std_td
         %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
           %tr
+            %td{:colspan=>8}
+              - flash.each do |name, msg|
+                = content_tag :div, msg, :id => "flash_#{name}", :style => "color:#e9322d"
+          %tr
             %td.table_grid_header PF Group
             %td.table_grid_header PF Number
             %td.table_grid_header DB File Code

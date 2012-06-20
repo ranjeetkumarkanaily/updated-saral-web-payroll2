@@ -51,12 +51,20 @@ class SalaryHeadsController < ApplicationController
   end
 
   def destroy
-    @salary_head.destroy
 
-    respond_to do |format|
-      format.html { redirect_to salary_heads_url }
-      format.json { head :ok }
+    begin
+      @salary_head.destroy
+      flash[:notice] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @salary_head.errors.add(:base, e)
+      flash[:error] = "Selected Salary Head is already assigned. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to salary_heads_url }
+        format.json { head :ok }
+      end
     end
+
   end
 
   protected

@@ -57,10 +57,17 @@ class PaymonthsController < ApplicationController
     @paymonth = Paymonth.find(params[:id])
 
     if( @paymonth.id == first_paymonth.id or @paymonth.id == last_paymonth.id )
-      @paymonth.destroy
-      respond_to do |format|
-        format.html { redirect_to paymonths_url, notice: 'Paymonth was successfully Deleted.'  }
-        format.json { head :ok }
+      begin
+        @paymonth.destroy
+        flash[:notice] = "Successfully destroyed."
+      rescue ActiveRecord::DeleteRestrictionError => e
+        @paymonth.errors.add(:base, e)
+        flash[:error] = "Paymonth is being used. Not allow to delete."
+      ensure
+        respond_to do |format|
+          format.html { redirect_to paymonths_url}
+          format.json { head :ok }
+        end
       end
     else
       respond_to do |format|

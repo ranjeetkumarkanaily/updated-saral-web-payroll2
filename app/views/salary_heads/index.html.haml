@@ -7,6 +7,10 @@
     %tr
       %td.msg{:style=>"padding:5px 0 0 13px"} Note : PF and ESI is already been created by default
     %tr
+      %td.msg{:style=>"padding:5px 0 0 13px"}
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}", :style => "color:#e9322d"
+    %tr
       %td.std_td
         .tabber
           %div{:class=>'tabbertab',:id=>'earnings'}

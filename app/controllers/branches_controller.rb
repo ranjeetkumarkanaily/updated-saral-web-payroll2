@@ -58,11 +58,17 @@ class BranchesController < ApplicationController
   end
 
   def destroy
-    @branch.destroy
-
-    respond_to do |format|
-      format.html { redirect_to branches_url }
-      format.json { head :ok }
+    begin
+      @branch.destroy
+      flash[:notice] = "Successfully destroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @branch.errors.add(:base, e)
+      flash[:error] = "Selected Branch is being used. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to branches_url }
+        format.json { head :ok }
+      end
     end
   end
 

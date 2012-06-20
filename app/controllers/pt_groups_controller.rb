@@ -59,12 +59,20 @@ class PtGroupsController < ApplicationController
   end
 
   def destroy
-    @pt_group.destroy
 
-    respond_to do |format|
-      format.html { redirect_to pt_groups_url }
-      format.json { head :ok }
+    begin
+      @pt_group.destroy
+      flash[:success] = "Successfully detroyed."
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @pt_group.errors.add(:base, e)
+      flash[:error] = "Selected PT Group is assigned to Branch. Not allow to delete."
+    ensure
+      respond_to do |format|
+        format.html { redirect_to pt_groups_url }
+        format.json { head :ok }
+      end
     end
+
   end
 
   protected
