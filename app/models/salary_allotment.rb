@@ -60,7 +60,14 @@ class SalaryAllotment < ActiveRecord::Base
       if sal_allot.count > 0
          sal_allot_final = sal_allot
       else
-        sal_allot_final = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
+        max_effective_date_val = SalaryAllotment.select("MAX(effective_date) as effective_date").where("employee_id = #{employee_id}")
+        max_effective_date = max_effective_date_val[0][:effective_date]
+        if max_effective_date > month_year
+          previous_effective_date = SalaryAllotment.select("effective_date").where("employee_id = #{employee_id} and effective_date < '#{month_year.beginning_of_month}'").group("effective_date,created_at").order("created_at DESC").limit(1)
+          sal_allot_final = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = '#{previous_effective_date[0][:effective_date]}'").order('salary_head_id ASC')
+        else
+          sal_allot_final = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
+        end
       end
     else
       sal_allot_final = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
