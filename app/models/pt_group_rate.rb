@@ -26,5 +26,6 @@ class PtGroupRate < ActiveRecord::Base
       new_pt_slab = {:pt_group_id =>pt_group_id ,:paymonth_id=>paymonth_id,:min_sal_range=>ptslab.minimum_sal_range,:pt=>ptslab.pt}
       PtRate.create(new_pt_slab)
     end
+
   end
 end

@@ -29,7 +29,7 @@ describe PtGroupRate do
     pt_group_rate = PtGroupRate.new(:pt_group_id => @pt_group.id,:paymonth_id => @paymonth.id)
     pt_group_rate.save
     pt_group_rate.create_pt_slabs
-
+    PtRate.select('id').where("pt_group_id = #{@pt_group.id} and paymonth_id = #{@paymonth.id} ").count.should eq(PtSlab.select('id').where("state_id = #{state.id}").count)
   end
 
 end
