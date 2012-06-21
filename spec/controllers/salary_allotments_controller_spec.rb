@@ -27,11 +27,31 @@ describe SalaryAllotmentsController do
 
   describe "Edit" do
     it "assigns the requested employee for salary allotment" do
-      FactoryGirl.create(:employee)
+      employee = FactoryGirl.create(:employee)
       salary_head = FactoryGirl.create(:salary_head)
-      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_head_id=>salary_head.id)
-      salary_allotment = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id,:salary_head_id=>salary_head.id)
+      salary_group = FactoryGirl.create(:salary_group)
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      branch = FactoryGirl.create(:branch)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id=>salary_head.id)
+      employee_detail = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :salary_group_id => salary_group.id, :financial_institution_id => financial_institution.id,:branch_id=>branch.id,:attendance_configuration_id=>attendance_configuration.id)
+      salary_allotment = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id,:salary_head_id=>salary_head.id,:employee_detail_id=>employee_detail.id)
       get :edit, :id => salary_allotment.employee_id
+      assigns(:allotSal_earnings).should eq([salary_allotment])
+    end
+
+    it "assigns the requested employee for salary allotment with paymonth" do
+      pay_month =  FactoryGirl.create(:paymonth, :month_year => 24134, :number_of_days => 28,:from_date => "2011-02-01",:to_date => "2011-02-28",:month_name => "Feb/2011")
+      employee = FactoryGirl.create(:employee)
+      salary_head = FactoryGirl.create(:salary_head)
+      salary_group = FactoryGirl.create(:salary_group)
+      attendance_configuration = FactoryGirl.create(:attendance_configuration)
+      financial_institution = FactoryGirl.create(:financial_institution)
+      branch = FactoryGirl.create(:branch)
+      salary_group_detail = FactoryGirl.create(:salary_group_detail,:salary_group_id=>salary_group.id,:salary_head_id=>salary_head.id)
+      employee_detail = FactoryGirl.create(:employee_detail, :employee_id => employee.id, :salary_group_id => salary_group.id, :financial_institution_id => financial_institution.id,:branch_id=>branch.id,:attendance_configuration_id=>attendance_configuration.id)
+      salary_allotment = FactoryGirl.create(:salary_allotment,:salary_group_detail_id=>salary_group_detail.id,:salary_head_id=>salary_head.id,:employee_detail_id=>employee_detail.id)
+      get :edit, :id => salary_allotment.employee_id,:month_year=>pay_month.month_name
       assigns(:allotSal_earnings).should eq([salary_allotment])
     end
   end

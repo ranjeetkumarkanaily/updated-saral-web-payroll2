@@ -25,6 +25,7 @@
   function hide_editor()
   {
   document.getElementById("salary_rate").style.display = "none";
+  document.getElementById("salary_structure").style.display = "none";
   }
 #left_content
   %ul
@@ -46,6 +47,13 @@
               %td= submit_tag "Get Rate"
     %tr
       %td.std_td
+        #salary_structure
+          %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
+            %tr
+              %td.bold_txt{:style=>"width:130px;"} Salary Structure:
+              %td.bold_txt= @salary_group
+    %tr
+      %td.std_td
         #salary_rate
           = form_tag salary_allotments_path, :method => :put do
             %table.table_grid{:width=>757, :cellpadding => 0, :cellspacing => 3}
@@ -56,10 +64,15 @@
                 %td.table_grid_header{:style=>"width:180px"} Salary Allotment
               - @allotSal_earnings.each do |allotSal_earn|
                 = hidden_field_tag "salAllotment[][id]", allotSal_earn.id
+                = hidden_field_tag "salAllotment[][month_year]", @effective_date
+                = hidden_field_tag "salAllotment[][employee_id]", allotSal_earn.employee_id
+                = hidden_field_tag "salAllotment[][employee_detail_id]", allotSal_earn.employee_detail_id
+                = hidden_field_tag "salAllotment[][salary_head_id]", allotSal_earn.salary_head_id
+                = hidden_field_tag "salAllotment[][salary_group_detail_id]", allotSal_earn.salary_group_detail_id
                 %tr
                   %td.table_grid_td= allotSal_earn.salaryHead
                   %td.table_grid_td= allotSal_earn.shortName
-                  %td.table_grid_td= allotSal_earn.salaryHeadType
+                  %td.table_grid_td{:style=>"color: #468847"}= allotSal_earn.salaryHeadType
                   -if allotSal_earn.salary_group_detail.calc_type == "Formula" || allotSal_earn.salary_group_detail.calc_type == "Every Month"
                     - values = {:GROSS => allotSal_earn.employee_detail.allotted_gross}
                     - f = allotSal_earn.generation_formula
@@ -74,14 +87,19 @@
                 %td{:colspan=>2}
                   %table
                     %tr
-                      %td{:style=>"padding-left:2px;font-weight:bold;width:180px"} Earnings Total:
+                      %td{:style=>"padding-left:4px;font-weight:bold;width:180px;color: #468847"} Earnings Total:
                       %td.table_grid_td= text_field_tag 'earning_total'
               - @allotSal_deductions.each do |allotSal_deduct|
                 = hidden_field_tag "salAllotment[][id]", allotSal_deduct.id
+                = hidden_field_tag "salAllotment[][month_year]", @effective_date
+                = hidden_field_tag "salAllotment[][employee_id]", allotSal_deduct.employee_id
+                = hidden_field_tag "salAllotment[][employee_detail_id]", allotSal_deduct.employee_detail_id
+                = hidden_field_tag "salAllotment[][salary_head_id]", allotSal_deduct.salary_head_id
+                = hidden_field_tag "salAllotment[][salary_group_detail_id]", allotSal_deduct.salary_group_detail_id
                 %tr
                   %td.table_grid_td= allotSal_deduct.salaryHead
                   %td.table_grid_td= allotSal_deduct.shortName
-                  %td.table_grid_td= allotSal_deduct.salaryHeadType
+                  %td.table_grid_td{:style=>"color: #e9322d"}= allotSal_deduct.salaryHeadType
                   -if allotSal_deduct.salary_group_detail.calc_type == "Formula" || allotSal_deduct.salary_group_detail.calc_type == "Every Month"
                     - values = {:GROSS => allotSal_deduct.employee_detail.allotted_gross}
                     - f = allotSal_deduct.generation_formula
@@ -97,7 +115,7 @@
                   %td{:colspan=>2}
                     %table
                       %tr
-                        %td{:style=>"padding-left:2px;font-weight:bold;width:180px"} Deductions Total:
+                        %td{:style=>"padding-left:4px;font-weight:bold;width:180px;color: #e9322d"} Deductions Total:
                         %td.table_grid_td= text_field_tag 'deduction_total'
               %tr
                 %td

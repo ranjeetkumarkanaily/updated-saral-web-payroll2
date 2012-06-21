@@ -56,9 +56,17 @@ class SalaryAllotment < ActiveRecord::Base
   def self.row_for_salary_allotment employee_id, salary_type, pay_month=""
     if pay_month != ""
       month_year = Date.strptime pay_month, '%b/%Y'
+      sal_allot = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = '#{month_year.beginning_of_month}'").order('salary_head_id ASC')
+      if sal_allot.count > 0
+         sal_allot_final = sal_allot
+      else
+        sal_allot_final = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
+      end
+    else
+      sal_allot_final = SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
     end
 
-    SalaryAllotment.joins(:salary_head).where("employee_id = #{employee_id} and salary_type = '#{salary_type}'and effective_date = (select MAX(effective_date) from salary_allotments where employee_id = #{employee_id})").order('salary_head_id ASC')
+    sal_allot_final
   end
 
   def self.process_salary_excel_sheet salary_rate_sheet
@@ -103,6 +111,18 @@ class SalaryAllotment < ActiveRecord::Base
   end
 
   def self.update_salary_allotments sal_allots
+    sal_allots.each do |sal_allot|
+      month_year = Date.strptime sal_allot['month_year'], '%b/%Y'
+      sal_allotment = SalaryAllotment.find_by_employee_id_and_employee_detail_id_and_effective_date_and_salary_head_id(sal_allot['employee_id'], sal_allot['employee_detail_id'], month_year.beginning_of_month, sal_allot['salary_head_id'])
+      if sal_allotment.nil?
+        SalaryAllotment.create :employee_id=>sal_allot['employee_id'],:employee_detail_id=>sal_allot['employee_detail_id'],:effective_date=>month_year.beginning_of_month,:salary_head_id=>sal_allot['salary_head_id'],:salary_allotment=>sal_allot['salary_allotment'],:salary_group_detail_id=>sal_allot['salary_group_detail_id']
+      else
+        sal_allotment.update_attributes(:salary_allotment => sal_allot['salary_allotment'])
+      end
+    end
+  end
+
+  def self.update_salary_allotment_excel sal_allots
     sal_allots.each do |sal_allot|
       sal_allotment = SalaryAllotment.find_by_employee_id_and_employee_detail_id_and_effective_date_and_salary_head_id(sal_allot.employee_id, sal_allot.employee_detail_id, sal_allot.effective_date, sal_allot.salary_head_id)
       sal_allotment.update_attributes(:salary_allotment => sal_allot.salary_allotment)

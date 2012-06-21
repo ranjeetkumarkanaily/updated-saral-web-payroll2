@@ -288,30 +288,32 @@ width: 100%;
 }
 
 .table_grid_header {
-    height : 30px;
-    background-color :#D3E3E2;
-    padding-left: 7px;
-    padding-right: 7px;
-    font-weight : bold;
+  height : 30px;
+  background-color :#D3E3E2;
+  padding-left: 7px;
+  padding-right: 7px;
+  font-weight : bold;
 }
 
 .table_grid_odd_row {
-    height : 25px;
-    background-color :#EAEBED;
+  height : 25px;
+  background-color :#EAEBED;
 }
 
 .table_grid_even_row {
-    height : 25px;
-    background-color : #ffffff;
+  height : 25px;
+  background-color : #ffffff;
 }
 
 .table_grid_td {
-    padding-left: 7px;
-    padding-right: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
 
-    input {
-      width:100px
-    }
+  input {
+    width:100px
+  }
+
+
 }
 
 .table_grid_icon {
