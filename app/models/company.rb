@@ -66,6 +66,7 @@ class Company < ActiveRecord::Base
     conn = ActiveRecord::Base.connection
     tables = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';").map { |r| r["table_name"] }
     tables.each { |t| conn.execute("DROP TABLE IF EXISTS #{t} CASCADE")}
+    #tables.each {|t| puts t}
   end
 
 end
