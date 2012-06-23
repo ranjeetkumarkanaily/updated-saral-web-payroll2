@@ -15,6 +15,8 @@ class Evaluator
     end
   end
 
+  puts "this is test line"
+
   #def self.formula gross_salary, salary_structure
   #  salary = 0.0
   #  salary_structure.each do |k,v|
