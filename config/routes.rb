@@ -61,7 +61,9 @@ UpdatedSaralWebPayroll::Application.routes.draw do
 
   resources :pt_groups
 
-  resources :paymonths, :except => [:edit, :update]
+  resources :paymonths, :except => [:edit, :update] do
+    post "save",:on => :collection
+  end
 
   resources :states, :except => [:show]
 
