@@ -24,16 +24,17 @@ class SalaryAllotmentsController < ApplicationController
 
     @emp_name = Employee.find(params[:id]).empname
     date_val = @allotSal_earnings[0][:effective_date]
-    @effective_date = date_val.strftime("%b/%Y")
+    if params[:month_year]
+      @effective_date = params[:month_year]
+    else
+      @effective_date = date_val.strftime("%b/%Y")
+    end
+    @salary_group = (SalaryGroup.employee_salary_group @allotSal_earnings[0][:employee_detail_id])[0][:salary_group_name]
   end
 
   def update
-
-    params[:salAllotment].each do |salAllot|
-      allotSal = SalaryAllotment.find(salAllot[:id])
-      allotSal.update_attributes(salAllot)
-    end
-    redirect_to salary_allotments_path(:param1 => params[:selected]), notice: 'Salary Allotted successfully'
+    SalaryAllotment.update_salary_allotments params[:salAllotment]
+    redirect_to salary_allotments_path(:param1 => "allotted"), notice: 'Salary Allotted successfully'
   end
 
   def upload
@@ -49,7 +50,7 @@ class SalaryAllotmentsController < ApplicationController
 
     @sal_allotments = SalaryAllotment.process_salary_excel_sheet theoretical_salary_sheet
     if @sal_allotments["errors"].empty?
-      SalaryAllotment.update_salary_allotments @sal_allotments["salary_allotments"]
+      SalaryAllotment.update_salary_allotment_excel @sal_allotments["salary_allotments"]
       redirect_to salary_allotments_path(:param1 => "allotted"), notice: 'Salary Allotted successfully'
     end
 

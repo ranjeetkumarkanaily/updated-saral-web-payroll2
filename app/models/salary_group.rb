@@ -17,4 +17,8 @@ class SalaryGroup < ActiveRecord::Base
     SalaryGroup.select("DISTINCT(salary_groups.id),salary_groups.created_at, salary_group_name").joins(:employee_details).order("salary_groups.created_at ASC")
   }
 
+  scope :employee_salary_group, lambda { |emp_det_id|
+    SalaryGroup.select("salary_group_name").joins(:employee_details).where("employee_details.id=#{emp_det_id}")
+  }
+
 end
