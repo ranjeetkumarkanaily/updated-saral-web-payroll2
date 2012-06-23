@@ -20,15 +20,16 @@ class CompaniesController < ApplicationController
 
   def create
     company=params[:company]
-    date_format=OptionSetting.date_format_value
-    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
-      dates_value=[company[:dateofestablishment]]
-      dates=OptionSetting.convert_date(dates_value)
-      val=company.merge!(:dateofestablishment=>dates[0])
-      @company = Company.new(val)
-    else
-      @company = Company.new(params[:company])
-    end
+    @company = Company.new(params[:company])
+    #date_format=OptionSetting.date_format_value
+    #if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+    #  dates_value=[company[:dateofestablishment]]
+    #  dates=OptionSetting.convert_date(dates_value)
+    #  val=company.merge!(:dateofestablishment=>dates[0])
+    #  @company = Company.new(val)
+    #else
+    #  @company = Company.new(params[:company])
+    #end
 
     respond_to do |format|
       if @company.save
@@ -40,14 +41,14 @@ class CompaniesController < ApplicationController
   end
 
   def update
-    date_format=OptionSetting.date_format_value
-    if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
-      dates_value=[params[:company][:dateofestablishment]]
-      dates=OptionSetting.convert_date(dates_value)
-      params[:company].merge!(:dateofestablishment=>dates[0])
-    else
-      params[:company]
-    end
+    #date_format=OptionSetting.date_format_value
+    #if date_format == "%m-%Y-%d" || date_format == "%m/%d/%Y" || date_format == "%d/%m/%y" || date_format == "%d-%m-%y"
+    #  dates_value=[params[:company][:dateofestablishment]]
+    #  dates=OptionSetting.convert_date(dates_value)
+    #  params[:company].merge!(:dateofestablishment=>dates[0])
+    #else
+    #  params[:company]
+    #end
 
     @company = Company.find(params[:id])
 

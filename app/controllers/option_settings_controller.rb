@@ -24,6 +24,10 @@ class OptionSettingsController < ApplicationController
 
     respond_to do |format|
       if @option_setting.update_attributes(params[:option_setting])
+        glb = Global.instance
+        glb.setter_date_format_type
+
+        puts Global.instance.date_format_type.inspect
         format.html { redirect_to edit_option_setting_path(@option_setting), notice: 'Option setting was successfully updated.' }
         format.json { head :no_content }
       else
